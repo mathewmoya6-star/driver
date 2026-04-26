@@ -919,5 +919,34 @@ function addMsg(text,type){
 // Init exam placeholder
 resetExam();
 </script>
+  <script>
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  const btn = document.createElement('button');
+  btn.innerText = "📲 Install DriverPrep App";
+  btn.style.position = "fixed";
+  btn.style.bottom = "20px";
+  btn.style.left = "20px";
+  btn.style.padding = "12px 18px";
+  btn.style.border = "none";
+  btn.style.borderRadius = "10px";
+  btn.style.background = "#f5c518";
+  btn.style.color = "#000";
+  btn.style.fontWeight = "bold";
+  btn.style.zIndex = "9999";
+  document.body.appendChild(btn);
+
+  btn.addEventListener('click', async () => {
+    btn.remove();
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  });
+});
+</script>
 </body>
 </html>
