@@ -1,0 +1,48 @@
+{
+  "name": "VideoLesson",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Video lesson title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Brief description of what the video covers"
+    },
+    "youtube_url": {
+      "type": "string",
+      "description": "YouTube video URL or embed ID"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "highway_code",
+        "road_signs",
+        "traffic_act",
+        "defensive_driving",
+        "vehicle_maintenance",
+        "emergency_response",
+        "psv_training"
+      ],
+      "description": "Video category"
+    },
+    "duration_minutes": {
+      "type": "number",
+      "description": "Video duration in minutes"
+    },
+    "thumbnail_url": {
+      "type": "string",
+      "description": "Thumbnail image URL"
+    },
+    "order": {
+      "type": "number",
+      "description": "Display order"
+    }
+  },
+  "required": [
+    "title",
+    "category",
+    "youtube_url"
+  ]
+}
