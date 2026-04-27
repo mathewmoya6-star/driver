@@ -1,0 +1,23 @@
+{
+  "name": "UserProgress",
+  "type": "object",
+  "properties": {
+    "module_id": {
+      "type": "string",
+      "description": "Module ID"
+    },
+    "lesson_id": {
+      "type": "string",
+      "description": "Lesson ID"
+    },
+    "completed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the lesson is completed"
+    }
+  },
+  "required": [
+    "module_id",
+    "lesson_id"
+  ]
+}
