@@ -1,14 +1,19 @@
 const express = require("express");
+const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
 const bodyParser = require("body-parser");
 
 const app = express();
-app.use(bodyParser.json());
-app.use(express.static("public"));
 
+/* ================= MIDDLEWARE ================= */
+app.use(bodyParser.json());
+
+// CRITICAL FIX: absolute static path
+app.use(express.static(path.join(__dirname, "public")));
+
+/* ================= DATABASE ================= */
 const db = new sqlite3.Database("db.sqlite");
 
-/* ---------------- DATABASE ---------------- */
 db.serialize(() => {
   db.run(`
     CREATE TABLE IF NOT EXISTS users (
@@ -29,23 +34,18 @@ db.serialize(() => {
       b TEXT,
       c TEXT,
       d TEXT,
-      answer TEXT,
-      image TEXT
+      answer TEXT
     )
-  `);
-
-  db.run(`
-    INSERT INTO questions (category, question, a, b, c, d, answer)
-    VALUES ('Road Signs', 'What does STOP sign mean?', 'Go', 'Stop', 'Wait', 'Speed', 'Stop')
   `);
 });
 
-/* ---------------- AUTH ---------------- */
+/* ================= API ROUTES ================= */
+
 app.post("/api/register", (req, res) => {
   const { name, phone, password } = req.body;
 
   db.run(
-    "INSERT INTO users (name, phone, password) VALUES (?, ?, ?)",
+    "INSERT INTO users(name,phone,password) VALUES (?,?,?)",
     [name, phone, password],
     () => res.json({ success: true })
   );
@@ -64,14 +64,12 @@ app.post("/api/login", (req, res) => {
   );
 });
 
-/* ---------------- QUESTIONS ---------------- */
 app.get("/api/questions", (req, res) => {
   db.all("SELECT * FROM questions", (err, rows) => {
     res.json(rows);
   });
 });
 
-/* ---------------- PAYMENT (MOCK) ---------------- */
 app.post("/api/pay", (req, res) => {
   const { userId } = req.body;
 
@@ -80,8 +78,27 @@ app.post("/api/pay", (req, res) => {
   res.json({ success: true });
 });
 
-/* ---------------- START SERVER ---------------- */
+/* ================= CRITICAL FIX: ROUTING ================= */
+
+// FIX 404 for login.html, dashboard.html, etc.
+app.get("/:page", (req, res) => {
+  const page = req.params.page;
+  const filePath = path.join(__dirname, "public", page);
+
+  res.sendFile(filePath, (err) => {
+    if (err) {
+      res.status(404).send("Page not found");
+    }
+  });
+});
+
+// DEFAULT ROUTE
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+/* ================= START SERVER ================= */
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log("DriverPrep running on port " + PORT);
+  console.log("DriverPrep PRO running on port " + PORT);
 });
