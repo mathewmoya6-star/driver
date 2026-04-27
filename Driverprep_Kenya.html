@@ -1,0 +1,240 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { 
+  Shield, BookOpen, ClipboardCheck, SignpostBig, 
+  Bus, Wrench, ChevronRight, CheckCircle2,
+  Smartphone, Zap, Award, Users
+} from 'lucide-react';
+import { motion } from 'framer-motion';
+
+const features = [
+  { icon: BookOpen, title: 'Structured Learning', desc: 'NTSA-aligned curriculum covering Highway Code, Traffic Act, and defensive driving.' },
+  { icon: ClipboardCheck, title: 'Exam Simulator', desc: '40-question timed mock exams that replicate real NTSA testing conditions.' },
+  { icon: SignpostBig, title: 'Road Sign Mastery', desc: 'Visual learning system with all Kenyan regulatory, warning & info signs.' },
+  { icon: Bus, title: 'PSV Training', desc: 'Professional certification track for matatu & bus operators.' },
+  { icon: Wrench, title: 'Vehicle Maintenance', desc: 'Preventive maintenance knowledge for safer, longer-lasting vehicles.' },
+  { icon: Zap, title: 'Instant Access', desc: 'Mobile-first platform accessible from any device, anywhere in Kenya.' },
+];
+
+const pricing = [
+  { name: 'Daily Access', price: 'KES 50', period: '/day', features: ['All learning modules', 'Exam simulator', 'Road signs library', 'Video content'], popular: false },
+  { name: 'Premium Theory', price: 'KES 100', period: '/week', features: ['Everything in Daily', 'Extended curriculum', 'Progress tracking', 'Performance analytics'], popular: true },
+  { name: 'PSV Professional', price: 'KES 300', period: '/month', features: ['Everything in Premium', 'PSV certification track', 'SACCO compliance', 'Professional badge'], popular: false },
+];
+
+const stats = [
+  { value: '50K+', label: 'Learner Drivers' },
+  { value: '92%', label: 'Pass Rate' },
+  { value: '10K+', label: 'Practice Exams' },
+  { value: '4.8★', label: 'User Rating' },
+];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } }),
+};
+
+export default function Landing() {
+  return (
+    <div className="min-h-screen bg-background overflow-x-hidden">
+      {/* Nav */}
+      <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
+              <Shield className="w-5 h-5 text-primary-foreground" />
+            </div>
+            <span className="font-heading text-lg font-bold tracking-tight">DriverPrep</span>
+          </div>
+          <div className="hidden md:flex items-center gap-8">
+            <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Features</a>
+            <a href="#pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Pricing</a>
+            <a href="#about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">About</a>
+          </div>
+          <Link to="/dashboard">
+            <Button className="bg-primary hover:bg-primary/90 font-medium">
+              Get Started <ChevronRight className="w-4 h-4 ml-1" />
+            </Button>
+          </Link>
+        </div>
+      </nav>
+
+      {/* Hero */}
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 -right-40 w-[500px] h-[500px] rounded-full bg-primary/5 blur-3xl" />
+          <div className="absolute bottom-0 -left-40 w-[400px] h-[400px] rounded-full bg-accent/5 blur-3xl" />
+        </div>
+        <div className="max-w-7xl mx-auto relative">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            className="max-w-3xl mx-auto text-center"
+          >
+            <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8">
+              <Award className="w-4 h-4" />
+              <span>Kenya's #1 Driving Education Platform</span>
+            </motion.div>
+            <motion.h1 variants={fadeUp} custom={1} className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6">
+              Master the Road.{' '}
+              <span className="text-primary">Pass Your NTSA Exam.</span>
+            </motion.h1>
+            <motion.p variants={fadeUp} custom={2} className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
+              Structured learning, realistic exam simulation, and comprehensive road safety education — all in one platform built for Kenyan drivers.
+            </motion.p>
+            <motion.div variants={fadeUp} custom={3} className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link to="/dashboard">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 px-8 h-13 text-base font-medium shadow-lg shadow-primary/20">
+                  Start Learning Free
+                  <ChevronRight className="w-5 h-5 ml-2" />
+                </Button>
+              </Link>
+              <Link to="/exam">
+                <Button size="lg" variant="outline" className="px-8 h-13 text-base font-medium">
+                  Try Mock Exam
+                </Button>
+              </Link>
+            </motion.div>
+          </motion.div>
+
+          {/* Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+            className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto"
+          >
+            {stats.map((stat) => (
+              <div key={stat.label} className="text-center">
+                <div className="font-heading text-3xl sm:text-4xl font-bold text-foreground">{stat.value}</div>
+                <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section id="features" className="py-24 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-heading text-3xl sm:text-4xl font-bold mb-4">Everything You Need to Pass</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">A complete digital driving education system aligned with NTSA standards.</p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {features.map((f, i) => (
+              <motion.div
+                key={f.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                className="bg-card rounded-2xl p-6 border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
+              >
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                  <f.icon className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="font-heading text-lg font-semibold mb-2">{f.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{f.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section id="pricing" className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-heading text-3xl sm:text-4xl font-bold mb-4">Affordable for Every Kenyan Driver</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">Start with as little as KES 50 per day. M-Pesa supported.</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {pricing.map((plan, i) => (
+              <motion.div
+                key={plan.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15, duration: 0.5 }}
+                className={`rounded-2xl p-8 border relative ${
+                  plan.popular
+                    ? 'bg-foreground text-background border-foreground shadow-2xl scale-105'
+                    : 'bg-card border-border/50'
+                }`}
+              >
+                {plan.popular && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-accent text-accent-foreground text-xs font-bold uppercase tracking-wider">
+                    Most Popular
+                  </div>
+                )}
+                <h3 className="font-heading text-lg font-semibold mb-1">{plan.name}</h3>
+                <div className="flex items-baseline gap-1 mb-6">
+                  <span className="font-heading text-4xl font-bold">{plan.price}</span>
+                  <span className={`text-sm ${plan.popular ? 'opacity-60' : 'text-muted-foreground'}`}>{plan.period}</span>
+                </div>
+                <ul className="space-y-3 mb-8">
+                  {plan.features.map((f) => (
+                    <li key={f} className="flex items-center gap-3 text-sm">
+                      <CheckCircle2 className={`w-4 h-4 flex-shrink-0 ${plan.popular ? 'text-accent' : 'text-primary'}`} />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/dashboard">
+                  <Button
+                    className={`w-full ${
+                      plan.popular
+                        ? 'bg-background text-foreground hover:bg-background/90'
+                        : 'bg-primary text-primary-foreground hover:bg-primary/90'
+                    }`}
+                  >
+                    Get Started
+                  </Button>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About / CTA */}
+      <section id="about" className="py-24 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
+            <Users className="w-8 h-8 text-primary" />
+          </div>
+          <h2 className="font-heading text-3xl sm:text-4xl font-bold mb-6">
+            Building Safer Roads Across Kenya
+          </h2>
+          <p className="text-muted-foreground text-lg leading-relaxed mb-10">
+            DriverPrep Kenya is transforming driving education from outdated paper-based methods into a modern digital learning experience. Our mission is to empower every Kenyan driver with the knowledge and confidence to drive safely, pass their NTSA exam, and contribute to safer roads for all.
+          </p>
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <Smartphone className="w-5 h-5 text-primary" />
+            <span className="text-sm font-medium">Mobile-first • M-Pesa Ready • Works Offline</span>
+          </div>
+          <Link to="/dashboard">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 px-10 h-13 text-base font-medium shadow-lg shadow-primary/20 mt-4">
+              Start Your Journey <ChevronRight className="w-5 h-5 ml-2" />
+            </Button>
+          </Link>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-border/50">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+              <Shield className="w-4 h-4 text-primary-foreground" />
+            </div>
+            <span className="font-heading font-bold">DriverPrep Kenya</span>
+          </div>
+          <p className="text-sm text-muted-foreground">© 2026 DriverPrep Kenya. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+  );
+}
