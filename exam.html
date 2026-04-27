@@ -1,296 +1,125 @@
+<!-- exam.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Premium NTSA Exam System</title>
+<title>Mock Exam | DriverPrep Kenya</title>
+<link rel="stylesheet" href="style.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-body{
-background:linear-gradient(135deg,#001233,#003566);
-color:#fff;
-min-height:100vh;
-padding:20px;
-}
-.container{
-max-width:900px;
-margin:auto;
-background:#0a1f44;
-padding:30px;
-border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,.4);
-}
-h1{text-align:center;color:#ffd60a;margin-bottom:10px}
-.top{
-display:flex;
-justify-content:space-between;
-flex-wrap:wrap;
-gap:10px;
-margin:20px 0;
-}
-.badge{
-background:#001d3d;
-padding:10px 15px;
-border-radius:10px;
-font-weight:bold;
-}
-.questionBox{
-margin-top:20px;
-background:#001d3d;
-padding:20px;
-border-radius:15px;
-}
-.question{
-font-size:22px;
-margin-bottom:20px;
-}
+.question-box{max-width:800px;margin:auto;background:#0a142f;padding:30px;border-radius:16px}
+.question{font-size:26px;margin-bottom:20px}
 .option{
 display:block;
-background:#003566;
+width:100%;
 padding:15px;
 margin:10px 0;
-border-radius:10px;
-cursor:pointer;
-transition:.3s;
-}
-.option:hover{background:#00509d}
-button{
-padding:15px 25px;
 border:none;
 border-radius:10px;
-font-size:16px;
-font-weight:bold;
+background:#13234d;
+color:#fff;
 cursor:pointer;
-margin-top:20px;
-background:#ffd60a;
-color:#000;
+font-size:16px;
+text-align:left;
 }
-button:hover{opacity:.9}
-.center{text-align:center}
-.hide{display:none}
-.result{
-text-align:center;
-padding:30px;
-}
-.pass{color:#00ff99}
-.fail{color:#ff4d4d}
-table{
-width:100%;
-margin-top:20px;
-border-collapse:collapse;
-}
-th,td{
-padding:10px;
-border:1px solid #fff;
-text-align:center;
-}
-.small{font-size:14px;color:#ccc}
+.option:hover{background:#f5c518;color:#000}
+#nextBtn{margin-top:15px}
+#timer{font-size:20px;color:#f5c518;margin-bottom:15px}
+#result{font-size:28px;text-align:center;margin-top:20px}
 </style>
 </head>
 <body>
 
-<div class="container">
+<header>
+<div class="logo">DRIVERPREP KENYA</div>
+<nav>
+<a href="index.html">Home</a>
+<a href="study.html">Study</a>
+<a href="exam.html">Mock Exam</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="plans.html">Plans</a>
+<a href="admin.html">Admin</a>
+</nav>
+</header>
 
-<h1>Premium NTSA Exam System</h1>
-<div class="center small">300 Questions • Random Questions • Certificate</div>
+<section class="page">
+<h1>NTSA Mock Exam</h1>
+<p>40 Questions • Pass Mark 70%</p>
 
-<div id="startPage">
-
-<div class="top">
-<div class="badge">40 Questions</div>
-<div class="badge">30 Minutes</div>
-<div class="badge">Pass Mark 70%</div>
-</div>
-
-<div class="center">
-<button onclick="startExam()">Start Mock Exam</button>
-</div>
-
-<h2 style="margin-top:30px;">Score History</h2>
-<div id="history"></div>
-
-</div>
-
-<div id="examPage" class="hide">
-
-<div class="top">
-<div class="badge">Question <span id="qNo">1</span>/40</div>
-<div class="badge">Score: <span id="score">0</span></div>
-<div class="badge">Time: <span id="timer">30:00</span></div>
-</div>
-
-<div class="questionBox">
+<div class="question-box">
+<div id="timer">30:00</div>
 <div class="question" id="question"></div>
-<div id="options"></div>
-<button onclick="nextQuestion()">Next</button>
+<div id="answers"></div>
+<button class="btn gold" id="nextBtn" onclick="nextQuestion()" style="display:none;">Next</button>
+<div id="result"></div>
 </div>
 
-</div>
+</section>
 
-<div id="resultPage" class="hide">
-<div class="result">
-<h2>Exam Finished</h2>
-<h1 id="finalScore"></h1>
-<h2 id="status"></h2>
-<br>
-<button onclick="downloadCertificate()">Download Certificate</button>
-<button onclick="location.reload()">Retake Exam</button>
-</div>
-</div>
-
-</div>
+<footer>© 2026 DriverPrep Kenya</footer>
 
 <script>
+const quiz = [
+{q:"What does a red traffic light mean?",a:["Go","Stop","Turn Left","Reverse"],c:1},
+{q:"What should you do before overtaking?",a:["Check mirrors","Close eyes","Speed blindly","Use phone"],c:0},
+{q:"Seat belts are required for?",a:["Driver only","Passengers only","All occupants","Nobody"],c:2},
+{q:"What does a zebra crossing mean?",a:["Animal crossing","Pedestrian crossing","Parking","Police"],c:1},
+{q:"Driving under alcohol influence is?",a:["Legal","Recommended","Illegal","Normal"],c:2}
+];
 
-let allQuestions = [];
-for(let i=1;i<=300;i++){
-allQuestions.push({
-q:"NTSA Question "+i+": What should a driver do at road sign "+i+"?",
-options:[
-"Speed up immediately",
-"Ignore the sign",
-"Follow traffic rules",
-"Use phone while driving"
-],
-answer:2
-});
+while(quiz.length < 40){
+quiz.push(...quiz.slice(0,5));
 }
+quiz.length = 40;
 
-let selectedQuestions=[];
-let current=0;
-let marks=0;
-let timer=1800;
-let userChoice=-1;
-let countdown;
-
-function shuffle(arr){
-return arr.sort(()=>Math.random()-0.5);
-}
-
-function startExam(){
-selectedQuestions = shuffle([...allQuestions]).slice(0,40);
-document.getElementById("startPage").classList.add("hide");
-document.getElementById("examPage").classList.remove("hide");
-showQuestion();
-startTimer();
-}
-
-function showQuestion(){
-let q = selectedQuestions[current];
-document.getElementById("qNo").innerText=current+1;
-document.getElementById("question").innerText=q.q;
-document.getElementById("options").innerHTML="";
-userChoice=-1;
-
-q.options.forEach((opt,index)=>{
-let div=document.createElement("div");
-div.className="option";
-div.innerText=opt;
-div.onclick=()=>{
-userChoice=index;
-document.querySelectorAll(".option").forEach(x=>x.style.background="#003566");
-div.style.background="#00b4d8";
-}
-document.getElementById("options").appendChild(div);
-});
-}
-
-function nextQuestion(){
-
-if(userChoice===selectedQuestions[current].answer){
-marks++;
-document.getElementById("score").innerText=marks;
-}
-
-current++;
-
-if(current>=40){
-finishExam();
-}else{
-showQuestion();
-}
-
-}
-
-function startTimer(){
-countdown=setInterval(()=>{
-timer--;
-let min=Math.floor(timer/60);
-let sec=timer%60;
+let current=0,score=0,selected=false,time=1800;
+let timer=setInterval(()=>{
+time--;
+let m=Math.floor(time/60),s=time%60;
 document.getElementById("timer").innerText=
-String(min).padStart(2,'0')+":"+String(sec).padStart(2,'0');
-
-if(timer<=0){
-finishExam();
-}
+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+if(time<=0){finishExam();}
 },1000);
-}
 
+function loadQuestion(){
+selected=false;
+document.getElementById("nextBtn").style.display="none";
+let q=quiz[current];
+document.getElementById("question").innerText=(current+1)+". "+q.q;
+let html="";
+q.a.forEach((opt,i)=>{
+html += `<button class="option" onclick="checkAnswer(${i})">${opt}</button>`;
+});
+document.getElementById("answers").innerHTML=html;
+}
+function checkAnswer(i){
+if(selected)return;
+selected=true;
+let correct=quiz[current].c;
+let btns=document.querySelectorAll(".option");
+btns.forEach((b,index)=>{
+if(index===correct)b.style.background="#16a34a";
+if(index===i && i!==correct)b.style.background="#dc2626";
+b.disabled=true;
+});
+if(i===correct)score++;
+document.getElementById("nextBtn").style.display="inline-block";
+}
+function nextQuestion(){
+current++;
+if(current<40)loadQuestion();
+else finishExam();
+}
 function finishExam(){
-clearInterval(countdown);
-
-document.getElementById("examPage").classList.add("hide");
-document.getElementById("resultPage").classList.remove("hide");
-
-let percent=Math.round((marks/40)*100);
-
-document.getElementById("finalScore").innerText=percent+"%";
-
-if(percent>=70){
-document.getElementById("status").innerHTML='<span class="pass">PASS</span>';
-}else{
-document.getElementById("status").innerHTML='<span class="fail">FAIL</span>';
+clearInterval(timer);
+document.getElementById("question").style.display="none";
+document.getElementById("answers").style.display="none";
+document.getElementById("nextBtn").style.display="none";
+let percent=Math.round((score/40)*100);
+document.getElementById("result").innerHTML=
+"You scored "+score+"/40<br><br>"+percent+"%<br><br>"+(percent>=70?"✅ PASS":"❌ FAIL");
 }
-
-saveHistory(percent);
-}
-
-function saveHistory(score){
-let data=JSON.parse(localStorage.getItem("ntsaScores")||"[]");
-data.push({
-date:new Date().toLocaleString(),
-score:score+"%"
-});
-localStorage.setItem("ntsaScores",JSON.stringify(data));
-}
-
-function loadHistory(){
-let data=JSON.parse(localStorage.getItem("ntsaScores")||"[]");
-
-if(data.length==0){
-document.getElementById("history").innerHTML="No records yet.";
-return;
-}
-
-let html="<table><tr><th>Date</th><th>Score</th></tr>";
-data.reverse().forEach(x=>{
-html+="<tr><td>"+x.date+"</td><td>"+x.score+"</td></tr>";
-});
-html+="</table>";
-
-document.getElementById("history").innerHTML=html;
-}
-
-function downloadCertificate(){
-let percent=Math.round((marks/40)*100);
-
-if(percent<70){
-alert("Only passed students can get certificate.");
-return;
-}
-
-let win=window.open("");
-win.document.write(`
-<h1 style='text-align:center;margin-top:100px;'>NTSA MOCK EXAM CERTIFICATE</h1>
-<h2 style='text-align:center;'>Awarded for Passing Mock Test</h2>
-<h2 style='text-align:center;'>Score: ${percent}%</h2>
-<h3 style='text-align:center;'>Date: ${new Date().toLocaleDateString()}</h3>
-`);
-win.print();
-}
-
-loadHistory();
-
+loadQuestion();
 </script>
 
 </body>
