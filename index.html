@@ -1,164 +1,62 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DriverPrep Kenya Dashboard</title>
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial, sans-serif;
-}
-body{
-background:#0a0f1f;
-color:white;
-padding:30px;
-}
-.container{
-max-width:1200px;
-margin:auto;
-}
-h1{
-font-size:38px;
-margin-bottom:10px;
-}
-p{
-color:#aaa;
-margin-bottom:30px;
-}
-.stats{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-margin-bottom:40px;
-}
-.card{
-background:#11182e;
-padding:25px;
-border-radius:16px;
-box-shadow:0 10px 20px rgba(0,0,0,0.3);
-}
-.card h3{
-font-size:16px;
-color:#aaa;
-margin-bottom:10px;
-}
-.card h2{
-font-size:32px;
-color:#facc15;
-}
-.exam-box{
-background:linear-gradient(90deg,#facc15,#eab308);
-padding:30px;
-border-radius:20px;
-color:#111;
-display:flex;
-justify-content:space-between;
-align-items:center;
-flex-wrap:wrap;
-gap:20px;
-margin-bottom:40px;
-}
-.exam-box h2{
-font-size:28px;
-margin-bottom:10px;
-}
-.btn{
-background:#111;
-color:#fff;
-padding:14px 28px;
-border:none;
-border-radius:10px;
-font-size:16px;
-cursor:pointer;
-text-decoration:none;
-}
-.modules{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-}
-.module{
-background:#11182e;
-padding:20px;
-border-radius:16px;
-}
-.module h3{
-margin-bottom:10px;
-color:#facc15;
-}
-.module p{
-font-size:14px;
-}
-</style>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DriverPrep Kenya</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-
-<h1>Welcome Back 👋</h1>
-<p>Continue your journey to becoming a certified driver.</p>
-
-<div class="stats">
-<div class="card">
-<h3>Lessons Done</h3>
-<h2>12</h2>
-</div>
-
-<div class="card">
-<h3>Exams Taken</h3>
-<h2>8</h2>
-</div>
-
-<div class="card">
-<h3>Best Score</h3>
-<h2>89%</h2>
-</div>
-
-<div class="card">
-<h3>Latest Score</h3>
-<h2>74%</h2>
-</div>
-</div>
-
-<div class="exam-box">
+<header class="navbar">
+<div class="logo">
+<span class="icon">🚗</span>
 <div>
-<h2>Ready for a Mock Exam?</h2>
-<p>40 questions, 30 minutes — just like the real NTSA test.</p>
+<h1>DriverPrep</h1>
+<small>KENYA</small>
+</div>
 </div>
 
-<a href="exam.html" class="btn">Start Exam</a>
+<nav>
+<a href="index.html">Home</a>
+<a href="study.html">Study</a>
+<a href="exam.html">Mock Exam</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="plans.html">Plans</a>
+<a href="admin.html">Admin</a>
+</nav>
+</header>
+
+<section class="hero">
+<div class="badge">● NTSA Approved Content</div>
+
+<h2>Pass Your NTSA</h2>
+<h3>Driving Test</h3>
+
+<p>
+Master Kenya Highway Code, road signs and traffic rules
+with interactive lessons and realistic mock exams.
+</p>
+
+<div class="buttons">
+<a href="exam.html" class="btn gold">Start Free Trial</a>
+<a href="plans.html" class="btn dark">View Plans</a>
 </div>
+</section>
 
-<h1 style="font-size:30px;margin-bottom:20px;">Learning Modules</h1>
+<section class="features">
+<div class="card">300+ Questions</div>
+<div class="card">40 Mock Exams</div>
+<div class="card">Timer + Score</div>
+<div class="card">Certificate</div>
+<div class="card">Dashboard</div>
+<div class="card">Premium Plans</div>
+</section>
 
-<div class="modules">
-
-<div class="module">
-<h3>Road Signs</h3>
-<p>Learn all Kenya road signs and meanings.</p>
-</div>
-
-<div class="module">
-<h3>Traffic Rules</h3>
-<p>Master NTSA highway code and traffic laws.</p>
-</div>
-
-<div class="module">
-<h3>Vehicle Control</h3>
-<p>Basic driving skills and car control techniques.</p>
-</div>
-
-<div class="module">
-<h3>Safety Tips</h3>
-<p>Road safety practices for all drivers.</p>
-</div>
-
-</div>
-
-</div>
+<footer>
+© 2026 DriverPrep Kenya
+</footer>
 
 </body>
 </html>
