@@ -1,0 +1,18 @@
+<h2>Dashboard</h2>
+
+<button onclick="location='exam.html'">Start Exam</button>
+
+<button onclick="activate()">Activate (KES 50)</button>
+
+<script>
+function activate(){
+const user = JSON.parse(localStorage.getItem("user"));
+
+fetch("/api/pay",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({userId:user.id})
+})
+.then(()=>alert("Account Activated"));
+}
+</script>
