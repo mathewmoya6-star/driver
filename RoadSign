@@ -1,0 +1,37 @@
+{
+  "name": "RoadSign",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Sign name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "regulatory",
+        "warning",
+        "informational",
+        "directional"
+      ],
+      "description": "Sign category"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "URL to sign image"
+    },
+    "meaning": {
+      "type": "string",
+      "description": "What the sign means"
+    },
+    "context": {
+      "type": "string",
+      "description": "When and where you'd encounter this sign"
+    }
+  },
+  "required": [
+    "name",
+    "category",
+    "meaning"
+  ]
+}
