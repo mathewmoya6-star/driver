@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="DriverPrep Kenya Pro - NTSA Practice Tests, Car Value Checker, Road Users Academy">
+<title>DriverPrep Kenya Pro</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:#0b0f14;
+color:#fff;
+line-height:1.6;
+}
+header{
+background:#111827;
+padding:16px 20px;
+position:sticky;
+top:0;
+z-index:999;
+border-bottom:1px solid #222;
+}
+nav{
+max-width:1300px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:14px;
+}
+.logo{
+font-size:28px;
+font-weight:700;
+color:#f5c518;
+}
+.menu{
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+}
+.menu a{
+color:#ddd;
+text-decoration:none;
+font-size:14px;
+}
+.menu a:hover{color:#f5c518}
+
+.hero{
+padding:80px 20px;
+text-align:center;
+background:linear-gradient(135deg,#0b0f14,#111827);
+}
+.hero h1{
+font-size:52px;
+color:#f5c518;
+margin-bottom:15px;
+}
+.hero p{
+max-width:780px;
+margin:auto;
+font-size:18px;
+color:#bbb;
+}
+.offer{
+font-size:34px;
+color:#00e0ff;
+font-weight:bold;
+margin-top:18px;
+}
+.btn{
+display:inline-block;
+padding:14px 28px;
+border:none;
+border-radius:10px;
+background:#f5c518;
+color:#000;
+font-weight:bold;
+cursor:pointer;
+margin-top:18px;
+}
+.btn:hover{opacity:.92}
+
+.section{
+max-width:1300px;
+margin:auto;
+padding:60px 20px;
+}
+.section h2{
+font-size:34px;
+color:#f5c518;
+margin-bottom:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:20px;
+}
+
+.card,.question{
+background:#141b22;
+padding:22px;
+border-radius:16px;
+border:1px solid #222;
+margin-top:15px;
+}
+
+.card:hover,.question:hover{
+border-color:#00e0ff;
+}
+
+.option{
+display:block;
+background:#1d2630;
+padding:10px;
+border-radius:8px;
+margin-top:8px;
+cursor:pointer;
+}
+.option:hover{background:#2a3542}
+.correct{background:#14532d!important}
+.wrong{background:#7f1d1d!important}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:10px;
+background:#1d2630;
+border:1px solid #333;
+border-radius:8px;
+color:#fff;
+}
+
+.result{
+margin-top:15px;
+font-size:22px;
+font-weight:bold;
+color:#00e0ff;
+line-height:1.7;
+}
+
+.small{
+font-size:13px;
+color:#bbb;
+margin-top:10px;
+}
+
+footer{
+padding:30px;
+text-align:center;
+color:#888;
+border-top:1px solid #222;
+margin-top:40px;
+}
+
+@media(max-width:700px){
+.hero h1{font-size:36px}
+.offer{font-size:26px}
+.section h2{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<header>
+<nav>
+<div class="logo">DriverPrep Kenya</div>
+<div class="menu">
+<a href="#tests">NTSA Practice Tests</a>
+<a href="#value">Car Value Checker</a>
+<a href="#academy">Road Users Academy</a>
+<a href="#contact">Contact</a>
+</div>
+</nav>
+</header>
+
+<section class="hero">
+<h1>Pass NTSA Test & Value Vehicles Like A Pro</h1>
+<p>Professional Kenya platform for learner drivers, road users, mock tests, and smart car value estimation.</p>
+<div class="offer">🔥 DAILY PASS KES 49</div>
+<button class="btn" onclick="buyPass()">Buy Daily Pass</button>
+</section>
+
+<section class="section" id="tests">
+<h2>NTSA Practice Tests</h2>
+<div id="questionsBox"></div>
+</section>
+
+<section class="section" id="value">
+<h2>Car Value Checker</h2>
+
+<div class="card">
+
+<select id="make">
+<option value="">Vehicle Make</option>
+<option>Toyota</option>
+<option>Nissan</option>
+<option>Honda</option>
+<option>Mazda</option>
+<option>Subaru</option>
+<option>Mercedes</option>
+<option>BMW</option>
+<option>Isuzu</option>
+<option>Mitsubishi</option>
+<option>Kia</option>
+<option>Hyundai</option>
+</select>
+
+<input type="text" id="model" placeholder="Model">
+
+<select id="year">
+<option value="">Year</option>
+</select>
+
+<select id="colour">
+<option value="">Colour</option>
+<option>White</option>
+<option>Silver</option>
+<option>Black</option>
+<option>Blue</option>
+<option>Red</option>
+<option>Grey</option>
+<option>Green</option>
+<option>Yellow</option>
+<option>Other</option>
+</select>
+
+<input type="number" id="mileage" placeholder="Mileage KM">
+
+<select id="condition">
+<option value="">Condition</option>
+<option>Excellent</option>
+<option>Good</option>
+<option>Fair</option>
+<option>Poor</option>
+</select>
+
+<select id="dent">
+<option value="">Dent</option>
+<option>No Dent</option>
+<option>Minor Dent</option>
+<option>Major Dent</option>
+</select>
+
+<select id="scratch">
+<option value="">Scratch</option>
+<option>No Scratch</option>
+<option>Minor Scratch</option>
+<option>Major Scratch</option>
+</select>
+
+<select id="damage">
+<option value="">Damage Intensity</option>
+<option>None</option>
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+<option>Severe</option>
+</select>
+
+<select id="purpose">
+<option value="">Purpose</option>
+<option>Insurance</option>
+<option>Sale</option>
+<option>Loan</option>
+<option>Tax</option>
+<option>Court Bond</option>
+<option>Company Asset Update</option>
+</select>
+
+<button class="btn" onclick="estimate()">Check Value</button>
+
+<div class="result" id="valueResult"></div>
+<div class="small" id="reasonBox"></div>
+
+</div>
+</section>
+
+<section class="section" id="academy">
+<h2>Road Users Academy</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Driving Theory</h3>
+<p>Road signs, parking, lane use, overtaking, speed limits and safe driving habits.</p>
+</div>
+
+<div class="card">
+<h3>Practical Driving Skills</h3>
+<p>Moving off, clutch control, reversing, hill starts, parking and turning safely.</p>
+</div>
+
+<div class="card">
+<h3>Pedestrian Safety</h3>
+<p>Cross safely, zebra crossing rules, night walking and road awareness.</p>
+</div>
+
+<div class="card">
+<h3>Motorcycle Safety</h3>
+<p>Helmet use, visibility, lane discipline and defensive riding.</p>
+</div>
+
+<div class="card">
+<h3>Public Transport Etiquette</h3>
+<p>Passenger respect, queuing, lawful conduct and customer service.</p>
+</div>
+
+<div class="card">
+<h3>Emergency Handling</h3>
+<p>What to do after accidents, police stop, arrest, breakdown or injury scene.</p>
+</div>
+
+</div>
+</section>
+
+<section class="section" id="contact">
+<h2>Contact</h2>
+<div class="card">
+<p>WhatsApp: 0703738707</p>
+<p>M-Pesa Paybill: 4095377</p>
+</div>
+</section>
+
+<footer>
+© 2026 DriverPrep Kenya Pro
+</footer>
+
+<script>
+function buyPass(){
+alert("Pay KES 49 via M-Pesa Paybill 4095377 then send confirmation on WhatsApp 0703738707.");
+}
+
+for(let y=2026;y>=1980;y--){
+document.getElementById("year").innerHTML += "<option>"+y+"</option>";
+}
+
+function estimate(){
+let make=document.getElementById("make").value;
+let year=parseInt(document.getElementById("year").value);
+let mileage=parseInt(document.getElementById("mileage").value)||0;
+let condition=document.getElementById("condition").value;
+let dent=document.getElementById("dent").value;
+let scratch=document.getElementById("scratch").value;
+let damage=document.getElementById("damage").value;
+let colour=document.getElementById("colour").value;
+let purpose=document.getElementById("purpose").value;
+
+if(!make || !year){
+alert("Please select make and year");
+return;
+}
+
+let base=1600000-((2026-year)*50000)-((mileage/10000)*18000);
+
+if(make==="Mercedes"||make==="BMW") base+=800000;
+if(make==="Toyota") base+=120000;
+if(make==="Isuzu") base+=150000;
+
+if(condition==="Excellent") base*=1.12;
+if(condition==="Good") base*=1.05;
+if(condition==="Fair") base*=0.92;
+if(condition==="Poor") base*=0.75;
+
+if(dent==="Minor Dent") base*=0.96;
+if(dent==="Major Dent") base*=0.88;
+
+if(scratch==="Minor Scratch") base*=0.97;
+if(scratch==="Major Scratch") base*=0.90;
+
+if(damage==="Low") base*=0.97;
+if(damage==="Medium") base*=0.90;
+if(damage==="High") base*=0.80;
+if(damage==="Severe") base*=0.65;
+
+if(colour==="White"||colour==="Silver") base*=1.03;
+if(colour==="Yellow"||colour==="Green") base*=0.95;
+
+if(base<80000) base=80000;
+
+let forced=base*0.85;
+let insurance=base*1.08;
+
+document.getElementById("valueResult").innerHTML=
+"Market Value: KES "+Math.round(base).toLocaleString()+
+"<br>Forced Sale: KES "+Math.round(forced).toLocaleString()+
+"<br>Insurance Value: KES "+Math.round(insurance).toLocaleString();
+
+document.getElementById("reasonBox").innerHTML=
+"Calculated using age, mileage, make demand, dents, scratches, damage, colour and purpose ("+purpose+").";
+}
+
+function mark(el,right){
+if(right){el.classList.add("correct")}
+else{el.classList.add("wrong")}
+}
+
+function unlockQuestions(){
+alert("Questions 10 - 300 are premium. Buy Daily Pass KES 49.");
+}
+
+const bank=[
+["What does STOP sign mean?",["Stop fully","Ignore","Speed"],0],
+["Who has priority at zebra crossing?",["Pedestrians","Cars","Bikes"],0],
+["Red traffic light means?",["Stop","Go","Reverse"],0],
+["Safe following distance?",["2 seconds","0 seconds","Touch bumper"],0],
+["Before reversing?",["Check mirrors","Close eyes","Accelerate"],0],
+["At roundabout priority goes to?",["Vehicles inside","Outside","Biggest"],0],
+["Seatbelt should be worn by?",["All occupants","Driver only","None"],0],
+["Broken white line means?",["Overtake if safe","Parking","Closed road"],0],
+["When tired you should?",["Rest","Race","Ignore"],0]
+];
+
+let holder=document.getElementById("questionsBox");
+
+for(let i=1;i<=300;i++){
+if(i<=9){
+let q=bank[i-1];
+let html='<div class="question"><strong>'+i+'. '+q[0]+'</strong>';
+for(let x=0;x<q[1].length;x++){
+html+='<div class="option" onclick="mark(this,'+(x===q[2])+')">'+q[1][x]+'</div>';
+}
+html+='</div>';
+holder.innerHTML+=html;
+}else{
+holder.innerHTML+=`
+<div class="question">
+<strong>${i}. 🔒 Locked Premium Question</strong>
+<p>Unlock Questions 10 - 300 with Daily Pass.</p>
+<button class="btn" onclick="unlockQuestions()">Unlock Now</button>
+</div>`;
+}
+}
+</script>
+
+</body>
+</html>
