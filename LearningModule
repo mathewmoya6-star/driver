@@ -1,0 +1,60 @@
+{
+  "name": "LearningModule",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Module title"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly identifier"
+    },
+    "description": {
+      "type": "string",
+      "description": "Brief module description"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "highway_code",
+        "road_signs",
+        "traffic_act",
+        "defensive_driving",
+        "vehicle_maintenance",
+        "emergency_response",
+        "psv_training"
+      ],
+      "description": "Module category"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Lucide icon name"
+    },
+    "order": {
+      "type": "number",
+      "description": "Display order"
+    },
+    "lessons_count": {
+      "type": "number",
+      "description": "Number of lessons in this module"
+    },
+    "estimated_minutes": {
+      "type": "number",
+      "description": "Estimated time to complete in minutes"
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": [
+        "beginner",
+        "intermediate",
+        "advanced"
+      ],
+      "default": "beginner"
+    }
+  },
+  "required": [
+    "title",
+    "category"
+  ]
+}
