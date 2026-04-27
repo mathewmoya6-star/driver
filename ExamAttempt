@@ -1,0 +1,35 @@
+
+  "name": "ExamAttempt",
+  "type": "object",
+  "properties": {
+    "score": {
+      "type": "number",
+      "description": "Score as percentage"
+    },
+    "total_questions": {
+      "type": "number",
+      "description": "Total questions in exam"
+    },
+    "correct_answers": {
+      "type": "number",
+      "description": "Number of correct answers"
+    },
+    "time_taken_seconds": {
+      "type": "number",
+      "description": "Time taken in seconds"
+    },
+    "passed": {
+      "type": "boolean",
+      "description": "Whether the attempt passed (>=70%)"
+    },
+    "category_scores": {
+      "type": "object",
+      "description": "Breakdown of scores by category"
+    }
+  },
+  "required": [
+    "score",
+    "total_questions",
+    "correct_answers"
+  ]
+}
