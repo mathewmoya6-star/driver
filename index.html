@@ -3,415 +3,231 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>DriverPrep Kenya | Pass NTSA Test Like a Pro</title>
-<meta name="description" content="DriverPrep Kenya - NTSA mock exams, theory lessons, road users academy, car value checker, PSV refresher and more.">
+<title>DriverPrep Kenya | Pass NTSA Test</title>
+
+<link rel="stylesheet" href="css/style.css">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-font-family:Arial,Helvetica,sans-serif;
-background:#0a0f1c;
-color:#fff;
-line-height:1.6
-}
-header{
-background:#111827;
-padding:16px 20px;
-position:sticky;
-top:0;
-z-index:999;
-border-bottom:1px solid #222
-}
-nav{
-max-width:1300px;
-margin:auto;
-display:flex;
-justify-content:space-between;
-align-items:center;
-flex-wrap:wrap;
-gap:15px
-}
-.logo{
-font-size:30px;
-font-weight:700;
-color:#facc15
-}
-.menu{
-display:flex;
-gap:15px;
-flex-wrap:wrap
-}
-.menu a{
-text-decoration:none;
-color:#ddd;
-font-size:14px
-}
-.menu a:hover{color:#facc15}
-
-.hero{
-padding:90px 20px;
-text-align:center;
-background:linear-gradient(135deg,#0a0f1c,#16213e,#0a0f1c)
-}
-.hero h1{
-font-size:58px;
-line-height:1.1;
-margin-bottom:20px
-}
-.hero span{color:#facc15}
-.hero p{
-max-width:760px;
-margin:auto;
-color:#cbd5e1;
-font-size:20px
-}
-.pass{
-margin-top:25px;
-font-size:34px;
-font-weight:700;
-color:#22d3ee
-}
-.btn{
-display:inline-block;
-margin-top:25px;
-padding:14px 28px;
-border:none;
-border-radius:10px;
-background:#facc15;
-color:#000;
-font-weight:700;
-cursor:pointer;
-text-decoration:none
-}
-.btn:hover{opacity:.92}
-
-.section{
-max-width:1300px;
-margin:auto;
-padding:70px 20px
-}
-.section h2{
-font-size:38px;
-margin-bottom:20px;
-color:#facc15
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:22px
-}
-
-.card{
-background:#111827;
-padding:24px;
-border-radius:18px;
-border:1px solid #1f2937
-}
-.card:hover{
-border-color:#22d3ee;
-transform:translateY(-3px);
-transition:.3s
-}
-
-.price{
-font-size:28px;
-font-weight:700;
-margin:10px 0;
-color:#22d3ee
-}
-
-input,select{
-width:100%;
-padding:12px;
-margin-top:10px;
-background:#1e293b;
-border:1px solid #334155;
-border-radius:10px;
-color:#fff
-}
-
-.result{
-margin-top:20px;
-padding:15px;
-background:#0f172a;
-border-radius:10px;
-font-size:22px;
-color:#22d3ee
-}
-
-.question{
-background:#111827;
-padding:20px;
-border-radius:15px;
-margin-top:15px;
-border:1px solid #1f2937
-}
-.option{
-background:#1e293b;
-padding:10px;
-margin-top:8px;
-border-radius:10px;
-cursor:pointer
-}
-.option:hover{background:#334155}
-.correct{background:#166534!important}
-.wrong{background:#991b1b!important}
-
-footer{
-text-align:center;
-padding:35px 20px;
-border-top:1px solid #1f2937;
-color:#94a3b8
-}
-
-@media(max-width:700px){
-.hero h1{font-size:40px}
-.section h2{font-size:30px}
-.pass{font-size:26px}
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{background:#08111f;color:#fff}
+header{background:#0f1a30;padding:18px 40px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0}
+.logo{font-size:28px;font-weight:800;color:#f9c80e}
+nav a{color:#fff;text-decoration:none;margin-left:18px;font-size:15px}
+.hero{padding:80px 20px;text-align:center;background:linear-gradient(135deg,#08111f,#15233f)}
+.hero h1{font-size:58px;max-width:900px;margin:auto;line-height:1.2}
+.hero span{color:#f9c80e}
+.hero p{max-width:750px;margin:20px auto;color:#d0d0d0;font-size:20px}
+.btn{display:inline-block;background:#f9c80e;color:#000;text-decoration:none;padding:14px 30px;border-radius:8px;font-weight:700;margin-top:25px}
+.section{max-width:1200px;margin:auto;padding:70px 20px}
+.section h2{text-align:center;font-size:38px;color:#f9c80e;margin-bottom:40px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px}
+.card{background:#13213d;padding:25px;border-radius:14px}
+.card h3{color:#f9c80e;margin-bottom:14px}
+.card p, .card li{color:#ddd;line-height:1.7}
+.price{font-size:40px;font-weight:800;margin:15px 0}
+small{color:#aaa}
+ul{padding-left:18px}
+footer{background:#0f1a30;padding:25px;text-align:center;color:#bbb}
+.badge{display:inline-block;background:#f9c80e;color:#000;padding:7px 14px;border-radius:50px;font-size:12px;font-weight:700;margin-bottom:14px}
 </style>
 </head>
+
 <body>
 
 <header>
-<nav>
 <div class="logo">DriverPrep Kenya</div>
-<div class="menu">
-<a href="#tests">NTSA Tests</a>
-<a href="#academy">Road Users Academy</a>
-<a href="#value">Car Value Checker</a>
-<a href="#plans">Plans</a>
+<nav>
+<a href="#">Home</a>
+<a href="#plan">Plans</a>
+<a href="#materials">Materials</a>
+<a href="#courses">Courses</a>
 <a href="#contact">Contact</a>
-</div>
 </nav>
 </header>
 
 <section class="hero">
-<h1>Pass Your NTSA Test <span>As A Pro</span></h1>
-<p>Study theory lessons, practice 300+ questions, value vehicles, refresh PSV knowledge, and become a safer road user.</p>
-<div class="pass">🔥 Daily Pass KES 49</div>
-<a href="#plans" class="btn">Get Started</a>
+<h1>Pass Your NTSA Driving Test <span>As A Pro</span></h1>
+<p>Professional Kenyan learner driver platform with real notes, 300+ questions, mock tests, road signs, and full training materials.</p>
+<a href="#plan" class="btn">Start Learning</a>
 </section>
 
-<section class="section" id="plans">
-<h2>Premium Access Plans</h2>
-<div class="grid">
-
-<div class="card">
-<h3>Daily Pass</h3>
-<div class="price">KES 49</div>
-<p>24 hours access to tests, lessons and tools.</p>
-</div>
-
-<div class="card">
-<h3>PSV Refresher</h3>
-<div class="price">KES 200</div>
-<p>PSV laws, customer care, safety & compliance.</p>
-</div>
-
-<div class="card">
-<h3>PDF Books</h3>
-<div class="price">KES 150</div>
-<p>Download Highway Code, Traffic Act, Signs Book.</p>
-</div>
-
-</div>
-</section>
-
-<section class="section" id="tests">
-<h2>300+ NTSA Practice Tests</h2>
-<div id="questions"></div>
-</section>
-
-<section class="section" id="academy">
-<h2>Road Users Academy</h2>
+<section class="section" id="plan">
+<h2>Study Plans</h2>
 
 <div class="grid">
 
 <div class="card">
-<h3>Theory Class Self Learning</h3>
-<p>Road signs, rules, lane discipline, parking, overtaking, roundabouts, emergencies.</p>
+<div class="badge">BEST FOR LEARNERS</div>
+<h3>Learner Driver Plan</h3>
+<div class="price">KES 49 <small>/ day</small></div>
+<ul>
+<li>Access 300+ NTSA Questions</li>
+<li>Unlimited Daily Practice Tests</li>
+<li>Full Highway Code Notes</li>
+<li>Road Signs Masterclass</li>
+<li>Vehicle Controls Lessons</li>
+<li>Parking & Reversing Theory</li>
+<li>Score Tracking Dashboard</li>
+<li>Certificate After Completion</li>
+</ul>
+<a href="#" class="btn">Activate Now</a>
 </div>
 
 <div class="card">
-<h3>Learn to Drive</h3>
-<p>Starting, clutch control, mirrors, reverse parking, hill starts, safe driving habits.</p>
+<div class="badge">COMMERCIAL</div>
+<h3>PSV Refresher Plan</h3>
+<div class="price">KES 200 <small>/ day</small></div>
+<ul>
+<li>Passenger Handling</li>
+<li>Customer Care</li>
+<li>Town Route Rules</li>
+<li>Commercial Safety</li>
+<li>Police Stops Guide</li>
+<li>Accident Management</li>
+</ul>
+<a href="#" class="btn">Join PSV</a>
 </div>
 
 <div class="card">
-<h3>Refresher For Drivers</h3>
-<p>Experienced drivers improve on new rules, attitude, accident response, defensive driving.</p>
-</div>
-
-<div class="card">
-<h3>Customer Service</h3>
-<p>Passenger respect, conflict management, professionalism, courtesy, communication.</p>
-</div>
-
-<div class="card">
-<h3>After Accident or Arrest</h3>
-<p>Stay calm, call emergency services, cooperate with police, document scene, contact insurer.</p>
-</div>
-
-<div class="card">
-<h3>Safari Check Guide</h3>
-<p>Tyres, oil, coolant, battery, brakes, lights, mirrors, documents before journey.</p>
+<div class="badge">VALUATION</div>
+<h3>Car Value Checker</h3>
+<div class="price">KES 100 <small>/ attempt</small></div>
+<ul>
+<li>Market Price Estimate</li>
+<li>Insurance Value</li>
+<li>Loan Security Value</li>
+<li>Damage Adjustments</li>
+<li>Colour & Condition Factor</li>
+<li>Printable Report</li>
+</ul>
+<a href="#" class="btn">Check Value</a>
 </div>
 
 </div>
 </section>
 
-<section class="section" id="value">
-<h2>Car Value Checker</h2>
+<section class="section" id="materials">
+<h2>Learning Materials Included</h2>
+
+<div class="grid">
 
 <div class="card">
+<h3>1. NTSA Theory Notes</h3>
+<ul>
+<li>Meaning of road markings</li>
+<li>Right of way rules</li>
+<li>Junction procedure</li>
+<li>Lane discipline</li>
+<li>Use of mirrors</li>
+<li>Defensive driving</li>
+</ul>
+</div>
 
-<select id="make">
-<option value="">Vehicle Make</option>
-<option>Toyota</option>
-<option>Nissan</option>
-<option>Honda</option>
-<option>Mazda</option>
-<option>Subaru</option>
-<option>Mercedes</option>
-<option>BMW</option>
-<option>Isuzu</option>
-<option>Mitsubishi</option>
-<option>TukTuk</option>
-<option>Electric Vehicle</option>
-</select>
+<div class="card">
+<h3>2. Highway Code Kenya</h3>
+<ul>
+<li>Overtaking safely</li>
+<li>Night driving</li>
+<li>Rain driving</li>
+<li>Fog procedure</li>
+<li>Speed control</li>
+<li>Emergency braking</li>
+</ul>
+</div>
 
-<input type="text" id="model" placeholder="Model">
+<div class="card">
+<h3>3. Road Signs Library</h3>
+<ul>
+<li>Warning signs</li>
+<li>Mandatory signs</li>
+<li>Informative signs</li>
+<li>Temporary signs</li>
+<li>School zone signs</li>
+<li>Police signs</li>
+</ul>
+</div>
 
-<select id="year"><option value="">Year</option></select>
+<div class="card">
+<h3>4. Practical Lessons</h3>
+<ul>
+<li>Moving off safely</li>
+<li>Hill start theory</li>
+<li>Parallel parking</li>
+<li>Reversing correctly</li>
+<li>Roundabout entry</li>
+<li>Test route tips</li>
+</ul>
+</div>
 
-<select id="fuel">
-<option value="">Fuel Type</option>
-<option>Petrol</option>
-<option>Diesel</option>
-<option>Gas</option>
-<option>Electric</option>
-<option>Solar Hybrid</option>
-</select>
+<div class="card">
+<h3>5. Driver Safety Topics</h3>
+<ul>
+<li>What to do after accident</li>
+<li>If arrested by police</li>
+<li>Insurance reporting</li>
+<li>Breakdown procedure</li>
+<li>Tyre burst control</li>
+<li>Aqua planning control</li>
+</ul>
+</div>
 
-<select id="trans">
-<option value="">Transmission</option>
-<option>Automatic</option>
-<option>Manual</option>
-</select>
+<div class="card">
+<h3>6. Vehicle Checks</h3>
+<ul>
+<li>Safari Check Guide</li>
+<li>Oil check</li>
+<li>Coolant check</li>
+<li>Battery care</li>
+<li>Brake warning signs</li>
+<li>Preventive maintenance</li>
+</ul>
+</div>
 
-<select id="colour">
-<option value="">Colour</option>
-<option>White</option>
-<option>Silver</option>
-<option>Black</option>
-<option>Blue</option>
-<option>Red</option>
-<option>Green</option>
-<option>Yellow</option>
-</select>
+</div>
+</section>
 
-<input type="number" id="mileage" placeholder="Mileage KM">
+<section class="section" id="courses">
+<h2>Sample NTSA Questions</h2>
 
-<select id="dent">
-<option>No Dent</option>
-<option>Minor Dent</option>
-<option>Major Dent</option>
-</select>
+<div class="grid">
 
-<select id="scratch">
-<option>No Scratch</option>
-<option>Minor Scratch</option>
-<option>Major Scratch</option>
-</select>
+<div class="card">
+<h3>Q1</h3>
+<p>What does double yellow line mean?</p>
+<p><b>Answer:</b> No waiting / parking.</p>
+</div>
 
-<select id="purpose">
-<option>Sale</option>
-<option>Insurance</option>
-<option>Tax</option>
-<option>Loan</option>
-<option>Court Bond</option>
-<option>Company Asset Update</option>
-</select>
+<div class="card">
+<h3>Q2</h3>
+<p>Before changing lane, what must you do?</p>
+<p><b>Answer:</b> Mirror, signal, check blind spot, move safely.</p>
+</div>
 
-<button class="btn" onclick="estimate()">Estimate Value</button>
-
-<div class="result" id="output"></div>
+<div class="card">
+<h3>Q3</h3>
+<p>What should you do when skidding?</p>
+<p><b>Answer:</b> Ease accelerator and steer gently.</p>
+</div>
 
 </div>
 </section>
 
 <section class="section" id="contact">
-<h2>Contact</h2>
-<div class="card">
-<p>WhatsApp: 0703738707</p>
-<p>M-Pesa Paybill: 4095377</p>
-<p>Email: info@driverprep.co.ke</p>
+<h2>Join Today</h2>
+
+<div class="card" style="max-width:700px;margin:auto;text-align:center">
+<h3>Instant Activation</h3>
+<p>WhatsApp Support: 0703738707</p>
+<p>Pay and start learning immediately.</p>
+<a href="#" class="btn">Get Started</a>
 </div>
+
 </section>
 
 <footer>
-© 2026 DriverPrep Kenya. All rights reserved.
+© 2026 DriverPrep Kenya • Learn Smart • Pass Fast • Drive Safe
 </footer>
 
-<script>
-for(let y=2026;y>=1980;y--){
-document.getElementById("year").innerHTML += "<option>"+y+"</option>";
-}
-
-function estimate(){
-let make=document.getElementById("make").value;
-let year=parseInt(document.getElementById("year").value)||2020;
-let mileage=parseInt(document.getElementById("mileage").value)||0;
-let dent=document.getElementById("dent").value;
-let scratch=document.getElementById("scratch").value;
-let colour=document.getElementById("colour").value;
-let purpose=document.getElementById("purpose").value;
-
-let value=1600000-((2026-year)*60000)-(mileage/10000*15000);
-
-if(make=="Mercedes"||make=="BMW") value+=700000;
-if(make=="Toyota") value+=120000;
-if(make=="TukTuk") value=450000;
-if(make=="Electric Vehicle") value+=400000;
-
-if(dent=="Minor Dent") value*=0.95;
-if(dent=="Major Dent") value*=0.85;
-
-if(scratch=="Minor Scratch") value*=0.97;
-if(scratch=="Major Scratch") value*=0.90;
-
-if(colour=="White"||colour=="Silver") value*=1.03;
-
-if(value<80000)value=80000;
-
-document.getElementById("output").innerHTML=
-"Estimated Market Value: KES "+Math.round(value).toLocaleString()+
-"<br>Purpose: "+purpose+
-"<br>Reason: age, mileage, make, dents, scratches, colour demand.";
-}
-
-const qbox=document.getElementById("questions");
-
-for(let i=1;i<=300;i++){
-if(i<=10){
-qbox.innerHTML+=`
-<div class="question">
-<b>${i}. What should you do at a STOP sign?</b>
-<div class="option" onclick="this.className='option correct'">Stop fully and proceed when safe</div>
-<div class="option" onclick="this.className='option wrong'">Speed through</div>
-<div class="option" onclick="this.className='option wrong'">Ignore sign</div>
-</div>`;
-}else{
-qbox.innerHTML+=`
-<div class="question">
-<b>${i}. 🔒 Premium NTSA Question</b>
-<p>Unlock all questions with Daily Pass KES 49</p>
-</div>`;
-}
-}
-</script>
-
+<script src="js/script.js"></script>
 </body>
 </html>
