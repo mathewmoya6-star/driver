@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mei Drive Africa | Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Mei Drive Africa | Home | Driver Training & Fleet Management Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; line-height: 1.5; }
         :root { --gold: #d4af37; --gold-light: #f5e6a3; --bg-card: #111111; --border: #222222; --muted: #888888; }
 
         .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
 
-        /* Navigation - SAME ON ALL PAGES */
+        /* Navigation */
         .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 48px; max-width: 1400px; margin: 0 auto; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
         .logo { font-size: 24px; font-weight: 800; }
         .logo .mei { color: var(--gold); }
@@ -25,41 +25,56 @@
         .btn-gold { background: var(--gold); color: #000; padding: 8px 24px; border-radius: 40px; font-weight: 700; text-decoration: none; }
 
         /* Hero Section */
-        .hero { text-align: center; padding: 80px 0; background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); }
+        .hero { text-align: center; padding: 80px 0; background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); border-bottom: 1px solid var(--border); }
         .hero h1 { font-size: 52px; font-weight: 800; background: linear-gradient(135deg, #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
         .hero p { color: var(--muted); max-width: 700px; margin: 0 auto 30px; font-size: 18px; }
         .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-        .btn-primary { background: var(--gold); color: #000; padding: 14px 36px; border-radius: 50px; text-decoration: none; font-weight: 700; display: inline-block; }
-        .btn-secondary { background: transparent; border: 1.5px solid var(--gold); color: var(--gold); padding: 14px 36px; border-radius: 50px; text-decoration: none; font-weight: 600; }
+        .btn-primary { background: var(--gold); color: #000; padding: 14px 36px; border-radius: 50px; text-decoration: none; font-weight: 700; display: inline-block; transition: all 0.3s; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212,175,55,0.3); }
+        .btn-secondary { background: transparent; border: 1.5px solid var(--gold); color: var(--gold); padding: 14px 36px; border-radius: 50px; text-decoration: none; font-weight: 600; display: inline-block; transition: all 0.3s; }
+        .btn-secondary:hover { background: rgba(212,175,55,0.1); transform: translateY(-2px); }
+
+        /* Stats Section */
+        .stats { display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; padding: 50px 0; background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .stat { text-align: center; }
+        .stat h3 { font-size: 36px; color: var(--gold); }
+        .stat p { font-size: 14px; color: var(--muted); }
 
         /* Modules Grid */
         .modules { padding: 60px 0; }
-        .section-title { font-size: 32px; color: var(--gold); text-align: center; margin-bottom: 48px; }
-        .modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .section-title { font-size: 32px; color: var(--gold); text-align: center; margin-bottom: 16px; }
+        .section-subtitle { text-align: center; color: var(--muted); margin-bottom: 48px; font-size: 16px; }
+        .modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
         .module-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 30px; text-decoration: none; display: block; transition: all 0.3s; }
         .module-card:hover { border-color: var(--gold); transform: translateY(-5px); }
         .module-icon { font-size: 48px; margin-bottom: 15px; }
         .module-card h3 { color: var(--gold); font-size: 22px; margin-bottom: 10px; }
-        .module-card p { color: var(--muted); font-size: 14px; }
-        .module-link { color: var(--gold); margin-top: 15px; display: inline-block; font-weight: 600; }
+        .module-card p { color: var(--muted); font-size: 14px; line-height: 1.5; margin-bottom: 15px; }
+        .module-link { color: var(--gold); font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+        .module-card:hover .module-link { gap: 12px; }
 
+        /* Footer */
         .footer { background: #050505; padding: 40px; text-align: center; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 60px; }
         .gold-divider { height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); width: 100%; }
 
-        @media (max-width: 768px) { .navbar { flex-direction: column; gap: 15px; padding: 20px; } .hero h1 { font-size: 32px; } }
+        @media (max-width: 768px) { .navbar { flex-direction: column; gap: 15px; padding: 20px; } .hero h1 { font-size: 32px; } .stats { gap: 30px; } }
     </style>
 </head>
 <body>
 
 <div class="gold-divider"></div>
 <div class="navbar">
-    <div class="logo"><span class="mei">MEI</span> <span class="drive">DRIVE</span> <span class="africa">AFRICA</span></div>
+    <div class="logo">
+        <span class="mei">MEI</span> 
+        <span class="drive">DRIVE</span> 
+        <span class="africa">AFRICA</span>
+    </div>
     <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="learner-hub.html">Learner Hub</a>
         <a href="driver-academy.html">Driver Academy</a>
-        <a href="school-safety.html">School Safety</a>
-        <a href="valuation.html">Valuation</a>
+        <a href="school-transport-safety.html">School Transport Safety</a>
+        <a href="vehicle-value.html">Vehicle Value Estimator</a>
         <a href="safety-library.html">Safety Library</a>
         <a href="psv-course.html">PSV Course</a>
         <a href="#" class="btn-outline">Login</a>
@@ -70,31 +85,83 @@
 <section class="hero">
     <div class="container">
         <h1>Africa's Smartest Driver Learning & Mobility Platform</h1>
-        <p>Pass your driving test, certify your fleet, value your vehicle, and manage road safety — all from one intelligent platform.</p>
+        <p>Pass your driving test, certify your fleet, value your vehicle, and manage road safety — all from one intelligent platform. Trusted across Africa.</p>
         <div class="hero-buttons">
-            <a href="learner-hub.html" class="btn-primary">Start Learning</a>
-            <a href="valuation.html" class="btn-secondary">Value Your Vehicle</a>
+            <a href="learner-hub.html" class="btn-primary">🚀 Start Learning</a>
+            <a href="vehicle-value.html" class="btn-secondary">💰 Value Your Vehicle</a>
         </div>
     </div>
 </section>
 
-<section class="modules">
+<section class="stats">
+    <div class="stat"><h3>25,000+</h3><p>Active Drivers</p></div>
+    <div class="stat"><h3>800+</h3><p>Corporate Fleets</p></div>
+    <div class="stat"><h3>100+</h3><p>Driving Schools</p></div>
+    <div class="stat"><h3>98%</h3><p>Pass Rate</p></div>
+</section>
+
+<section class="modules" id="modules">
     <div class="container">
-        <h2 class="section-title">Six Complete Modules</h2>
+        <h2 class="section-title">📚 Six Complete Modules</h2>
+        <p class="section-subtitle">From first-time learner to professional fleet manager — all in one platform</p>
+        
         <div class="modules-grid">
-            <a href="learner-hub.html" class="module-card"><div class="module-icon">📚</div><h3>Learner Hub</h3><p>320 practice questions, model town simulator, mock exams</p><div class="module-link">Start Learning →</div></a>
-            <a href="driver-academy.html" class="module-card"><div class="module-icon">🎓</div><h3>Driver Academy</h3><p>Professional certification for all vehicle categories A-G</p><div class="module-link">View Courses →</div></a>
-            <a href="school-safety.html" class="module-card"><div class="module-icon">🚸</div><h3>School Transport Safety</h3><p>Child safety checklists, evacuation drills, NTSA compliant</p><div class="module-link">Manage Safety →</div></a>
-            <a href="valuation.html" class="module-card"><div class="module-icon">💰</div><h3>Vehicle Value Estimator</h3><p>10 legally defensible value bases for banks and insurance</p><div class="module-link">Value Vehicle →</div></a>
-            <a href="safety-library.html" class="module-card"><div class="module-icon">📁</div><h3>Digital Safety Library</h3><p>44 professional documents for fleet management</p><div class="module-link">Browse Library →</div></a>
-            <a href="psv-course.html" class="module-card"><div class="module-icon">🚌</div><h3>PSV Driver Course</h3><p>NTSA-compliant training for B3, D1, D2, D3 categories</p><div class="module-link">Enroll Now →</div></a>
+            <!-- Module 1: Learner Hub -->
+            <a href="learner-hub.html" class="module-card">
+                <div class="module-icon">📚</div>
+                <h3>Learner Hub</h3>
+                <p>Pass your NTSA driving test with 320 practice questions, model town simulator, and full-length mock exams. 98% pass rate.</p>
+                <div class="module-link">Start Learning →</div>
+            </a>
+
+            <!-- Module 2: Driver Academy -->
+            <a href="driver-academy.html" class="module-card">
+                <div class="module-icon">🎓</div>
+                <h3>Driver Academy</h3>
+                <p>Complete driver certification for all vehicle categories (A-G). NTSA-approved curriculum for PSV, HGV, taxi, and private hire.</p>
+                <div class="module-link">Start Academy →</div>
+            </a>
+
+            <!-- Module 3: School Transport Safety -->
+            <a href="school-transport-safety.html" class="module-card">
+                <div class="module-icon">🚸</div>
+                <h3>School Transport Safety</h3>
+                <p>Protect children on every trip with pre-trip/post-trip checklists, evacuation drills, and NTSA-compliant safety management.</p>
+                <div class="module-link">Manage Safety →</div>
+            </a>
+
+            <!-- Module 4: Vehicle Value Estimator -->
+            <a href="vehicle-value.html" class="module-card">
+                <div class="module-icon">💰</div>
+                <h3>Vehicle Value Estimator</h3>
+                <p>Legally defensible valuations for banks, insurance, and courts. 10 value bases including Open Market, Forced Sale, and Replacement.</p>
+                <div class="module-link">Value Vehicle →</div>
+            </a>
+
+            <!-- Module 5: Digital Safety Library -->
+            <a href="safety-library.html" class="module-card">
+                <div class="module-icon">📁</div>
+                <h3>Digital Safety Library</h3>
+                <p>44 professional documents including checklists, accident forms, maintenance logs, and training records. Printable and fillable PDFs.</p>
+                <div class="module-link">Browse Library →</div>
+            </a>
+
+            <!-- Module 6: PSV Driver Course -->
+            <a href="psv-course.html" class="module-card">
+                <div class="module-icon">🚌</div>
+                <h3>PSV Driver Course</h3>
+                <p>NTSA-compliant professional driver training for Categories B3, D1, D2, D3. Customer service, grooming, and safety compliance.</p>
+                <div class="module-link">Enroll Now →</div>
+            </a>
         </div>
     </div>
 </section>
 
 <footer class="footer">
-    <p>© 2026 MEI DRIVE AFRICA. A division of MEI PRESS GROUP.</p>
-    <p>✅ Pass your test | ✅ Certify your fleet | ✅ Value your vehicle | ✅ Manage road safety</p>
+    <p>© 2026 MEI DRIVE AFRICA. A division of MEI PRESS GROUP. All rights reserved.</p>
+    <p style="margin-top: 8px;">✅ Pass your test | ✅ Certify your fleet | ✅ Value your vehicle | ✅ Manage road safety</p>
+    <p style="margin-top: 8px;">🌍 Trusted Across Africa | 📚 NTSA Compliant | 🚀 Fleet Ready</p>
 </footer>
+
 </body>
 </html>
