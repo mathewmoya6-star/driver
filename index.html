@@ -1,126 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>DriverPrep Kenya</title>
 
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
 <style>
-body{margin:0;font-family:Arial;background:#08111f;color:#fff}
-header{background:#0f1a30;padding:15px;text-align:center}
-h1{color:#f9c80e;margin:0}
-.container{max-width:900px;margin:auto;padding:20px}
-.card{background:#13213d;padding:20px;border-radius:10px;margin-top:20px}
-input,select{width:100%;padding:10px;margin:5px 0;border:none;border-radius:5px}
-button{background:#f9c80e;border:none;padding:10px 15px;border-radius:5px;cursor:pointer;font-weight:bold}
-h2{color:#f9c80e}
-.result{margin-top:10px;color:#f9c80e;font-weight:bold}
-nav{display:flex;justify-content:center;gap:20px;background:#0f1a30;padding:10px}
-nav a{color:white;text-decoration:none;font-size:14px}
-section{margin-top:30px}
+/* =========================
+   DRIVERPREP DARK GOLD UI
+========================= */
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #0a0a0a;
+  color: #d4af37;
+}
+
+header {
+  background: #0f0f0f;
+  padding: 18px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #222;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.gold {
+  color: #d4af37;
+}
+
+.container {
+  padding: 25px;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #111, #1a1a1a);
+  padding: 30px;
+  border-radius: 15px;
+  border: 1px solid #333;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.hero p {
+  color: #aaa;
+}
+
+/* MODULE GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.card {
+  background: #111;
+  border: 1px solid #222;
+  padding: 18px;
+  border-radius: 14px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: #d4af37;
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 20px;
+  background: #d4af37;
+  color: #000;
+}
+
+/* BUTTON */
+.btn {
+  margin-top: 10px;
+  display: inline-block;
+  padding: 10px 14px;
+  background: #d4af37;
+  color: #000;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* LOGIN BOX */
+.login {
+  background: #111;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 350px;
+  margin: auto;
+  margin-top: 30px;
+  border: 1px solid #333;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: #000;
+  border: 1px solid #333;
+  color: #fff;
+  border-radius: 6px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 40px;
+  color: #555;
+  font-size: 12px;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>DriverPrep Kenya</h1>
+  <div class="logo">🚗 DriverPrep <span class="gold">Kenya</span></div>
+  <div>
+    <i class="fa fa-user"></i> Student Portal
+  </div>
 </header>
-
-<nav>
-<a href="#login">Login</a>
-<a href="#valuation">Valuation</a>
-<a href="#exam">Exam</a>
-</nav>
 
 <div class="container">
 
-<!-- LOGIN -->
-<section id="login" class="card">
-<h2>Login (Demo)</h2>
-<input id="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
-<button onclick="login()">Login</button>
-<p id="loginMsg"></p>
-</section>
+  <!-- HERO -->
+  <div class="hero">
+    <h1>NTSA Driver Training & Exam Platform</h1>
+    <p>300+ Questions • PSV Training • School Bus Safety • Vehicle Valuation</p>
+  </div>
 
-<!-- VALUATION -->
-<section id="valuation" class="card">
-<h2>Vehicle Value Estimator</h2>
+  <!-- LOGIN -->
+  <div class="login">
+    <h3>Login</h3>
+    <input type="text" placeholder="Phone / Email"/>
+    <input type="password" placeholder="Password"/>
+    <a class="btn" href="#">Login</a>
+  </div>
 
-<input id="year" placeholder="Year">
-<select id="condition">
-<option value="1">Excellent</option>
-<option value="0.8">Good</option>
-<option value="0.6">Average</option>
-<option value="0.4">Poor</option>
-</select>
-<input id="mileage" placeholder="Mileage KM">
+  <!-- MODULES -->
+  <h2 style="margin-top:40px;">Learning Modules</h2>
 
-<button onclick="estimate()">Calculate</button>
+  <div class="grid">
 
-<div class="result" id="valueResult"></div>
-</section>
+    <div class="card">
+      <h3>NTSA Test Prep</h3>
+      <span class="badge">300+ Questions</span>
+      <p>Practice real exam questions, timed mock tests and scoring.</p>
+      <a class="btn" href="#">Start Exam</a>
+    </div>
 
-<!-- EXAM -->
-<section id="exam" class="card">
-<h2>Mini NTSA Exam (Demo)</h2>
+    <div class="card">
+      <h3>Driver Academy</h3>
+      <span class="badge">Refresher</span>
+      <p>PSV training, defensive driving and customer care skills.</p>
+      <a class="btn" href="#">Enter</a>
+    </div>
 
-<p>1. What does a red traffic light mean?</p>
-<button onclick="answer(true)">Stop</button>
-<button onclick="answer(false)">Go</button>
+    <div class="card">
+      <h3>School Bus Safety</h3>
+      <span class="badge">Certification</span>
+      <p>Child safety, route control, emergency response training.</p>
+      <a class="btn" href="#">Enroll</a>
+    </div>
 
-<p class="result" id="examResult"></p>
-</section>
+    <div class="card">
+      <h3>Vehicle Valuation</h3>
+      <span class="badge">AI Estimate</span>
+      <p>Instant market, insurance and loan value estimation.</p>
+      <a class="btn" href="#">Check Value</a>
+    </div>
+
+    <div class="card">
+      <h3>Digital Safety Library</h3>
+      <span class="badge">Offline</span>
+      <p>Download Highway Code, manuals and safety guides.</p>
+      <a class="btn" href="#">Download</a>
+    </div>
+
+    <div class="card">
+      <h3>PSV Course</h3>
+      <span class="badge">Professional</span>
+      <p>Public service vehicle licensing and compliance training.</p>
+      <a class="btn" href="#">Start</a>
+    </div>
+
+  </div>
+
+  <!-- CTA -->
+  <div class="hero" style="margin-top:30px;">
+    <h2>Ready for NTSA Exam?</h2>
+    <p>Take a full mock test with real scoring system.</p>
+    <a class="btn" href="#">Start Mock Exam</a>
+  </div>
+
+  <footer>
+    © 2026 DriverPrep Kenya | Built for NTSA Compliance Training System
+  </footer>
 
 </div>
 
-<script>
-// SIMPLE FAKE BACKEND (IN MEMORY)
-let loggedIn = false;
-
-// LOGIN
-function login(){
-  let email = document.getElementById("email").value;
-  let pass = document.getElementById("password").value;
-
-  if(email && pass){
-    loggedIn = true;
-    document.getElementById("loginMsg").innerText = "Login successful ✔";
-  } else {
-    document.getElementById("loginMsg").innerText = "Enter credentials";
-  }
-}
-
-// VEHICLE VALUE
-function estimate(){
-  let year = document.getElementById("year").value;
-  let condition = document.getElementById("condition").value;
-  let mileage = document.getElementById("mileage").value;
-
-  let age = new Date().getFullYear() - year;
-  let value = 2000000 * (1 - age * 0.08);
-  value *= condition;
-
-  if(mileage > 100000) value *= 0.8;
-  else if(mileage > 60000) value *= 0.9;
-
-  if(value < 200000) value = 200000;
-
-  document.getElementById("valueResult").innerText =
-    "Estimated Value: KES " + Math.round(value);
-}
-
-// MINI EXAM
-function answer(correct){
-  if(correct){
-    document.getElementById("examResult").innerText = "Correct ✔";
-  } else {
-    document.getElementById("examResult").innerText = "Wrong ✖ Try again";
-  }
-}
-</script>
-
 </body>
-</html>
 </html>
