@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Learner Hub | 8 Modules | Mei Drive Africa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; line-height: 1.5; }
+        :root { --gold: #d4af37; --gold-light: #f5e6a3; --bg-card: #111111; --border: #222222; --muted: #888888; }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+        /* Navigation */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 48px; max-width: 1400px; margin: 0 auto; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+        .logo { font-size: 24px; font-weight: 800; }
+        .logo .mei { color: var(--gold); }
+        .logo .drive { color: #fff; }
+        .logo .africa { color: var(--gold-light); }
+        .nav-links { display: flex; gap: 30px; align-items: center; flex-wrap: wrap; }
+        .nav-links a { color: #fff; text-decoration: none; transition: color 0.3s; font-size: 14px; }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+        .btn-outline { border: 1px solid rgba(255,255,255,0.2); padding: 8px 24px; border-radius: 40px; }
+        .btn-gold { background: var(--gold); color: #000; padding: 8px 28px; border-radius: 40px; font-weight: 700; text-decoration: none; }
+
+        /* Hero Section */
+        .hero { text-align: center; padding: 60px 0; background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); border-bottom: 1px solid var(--border); }
+        .hero h1 { font-size: 48px; font-weight: 800; background: linear-gradient(135deg, #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 16px; }
+        .hero p { color: var(--muted); max-width: 700px; margin: 0 auto; font-size: 18px; }
+        .hero-stats { display: flex; justify-content: center; gap: 30px; margin: 40px 0 0; flex-wrap: wrap; }
+        .hero-stats span { background: var(--bg-card); padding: 10px 24px; border-radius: 40px; border: 1px solid var(--border); font-size: 14px; }
+
+        /* Modules Grid */
+        .modules { padding: 60px 0; }
+        .section-title { font-size: 32px; color: var(--gold); margin-bottom: 16px; text-align: center; }
+        .section-subtitle { text-align: center; color: var(--muted); margin-bottom: 48px; font-size: 16px; }
+        .modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+        .module-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; transition: all 0.3s; }
+        .module-card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .module-header { background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); padding: 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+        .module-number { font-size: 28px; font-weight: 800; color: var(--gold); opacity: 0.5; min-width: 45px; }
+        .module-title { font-size: 20px; font-weight: 700; color: var(--gold); }
+        .topic-list { padding: 20px; }
+        .topic-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--muted); }
+        .topic-item:last-child { border-bottom: none; }
+        .topic-bullet { color: var(--gold); margin-right: 12px; font-weight: bold; }
+        .topic-name { flex: 1; }
+        .topic-status { font-size: 11px; color: var(--gold); opacity: 0.6; }
+
+        /* Footer */
+        .footer { background: #050505; padding: 40px; text-align: center; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 60px; }
+        .gold-divider { height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); width: 100%; }
+
+        @media (max-width: 768px) { .navbar { flex-direction: column; gap: 15px; padding: 20px; } .hero h1 { font-size: 32px; } .modules-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="gold-divider"></div>
+<div class="navbar">
+    <div class="logo"><span class="mei">MEI</span> <span class="drive">DRIVE</span> <span class="africa">AFRICA</span></div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#" class="active">Learner Hub</a>
+        <a href="driver-academy.html">Driver Academy</a>
+        <a href="school-safety.html">School Safety</a>
+        <a href="valuation.html">Valuation</a>
+        <a href="safety-library.html">Safety Library</a>
+        <a href="psv-course.html">PSV Course</a>
+        <a href="#" class="btn-outline">Login</a>
+        <a href="#" class="btn-gold">Sign Up</a>
+    </div>
+</div>
+
+<section class="hero">
+    <div class="container">
+        <h1>📚 Learner Hub</h1>
+        <p>Master your NTSA driving test with 8 comprehensive modules covering everything from road rules to mock exams.</p>
+        <div class="hero-stats">
+            <span>📖 8 Modules</span>
+            <span>📝 100+ Topics</span>
+            <span>✅ 98% Pass Rate</span>
+            <span>🎯 NTSA Aligned</span>
+        </div>
+    </div>
+</section>
+
+<section class="modules">
+    <div class="container">
+        <h2 class="section-title">📘 Curriculum Modules</h2>
+        <p class="section-subtitle">Complete NTSA theory preparation broken down into easy-to-learn topics</p>
+
+        <div class="modules-grid">
+            <!-- Module 1: Road Rules Fundamentals -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">01</div>
+                    <div class="module-title">Road Rules Fundamentals</div>
+                </div>
+                <div class="topic-list">
+                    <div class="topic-item"><span class="topic-bullet">🚗</span><span class="topic-name">Keeping Left / Lane Discipline</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🚗</span><span class="topic-name">Right of Way</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🚗</span><span class="topic-name">Safe Following Distance</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🚗</span><span class="topic-name">Speed Limits</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🚗</span><span class="topic-name">Overtaking Rules</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🚗</span><span class="topic-name">Junction Rules</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🔄</span><span class="topic-name">Roundabout Rules</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🚶</span><span class="topic-name">Pedestrian Crossings</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🏫</span><span class="topic-name">School Zones</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🚂</span><span class="topic-name">Railway Crossings</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🅿️</span><span class="topic-name">Parking Rules</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">💡</span><span class="topic-name">Use of Indicators</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🪞</span><span class="topic-name">Mirrors Before Manoeuvre</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🪑</span><span class="topic-name">Seat Belt Rules</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">📱</span><span class="topic-name">Mobile Phone Restrictions</span><span class="topic-status">Practice</span></div>
+                </div>
+            </div>
+
+            <!-- Module 2: Vehicle Controls Basics -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">02</div>
+                    <div class="module-title">Vehicle Controls Basics</div>
+                </div>
+                <div class="topic-list">
+                    <div class="topic-item"><span class="topic-bullet">🎮</span><span class="topic-name">Steering Control</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🔑</span><span class="topic-name">Starting the Engine</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🚦</span><span class="topic-name">Moving Off Safely</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🦶</span><span class="topic-name">Clutch Control</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">⚙️</span><span class="topic-name">Gear Changing</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🛑</span><span class="topic-name">Braking Techniques</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🔒</span><span class="topic-name">Handbrake Use</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">⛽</span><span class="topic-name">Accelerator Control</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">↩️</span><span class="topic-name">Reversing Basics</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🛑</span><span class="topic-name">Smooth Stopping</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">⛰️</span><span class="topic-name">Hill Starts</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">⚠️</span><span class="topic-name">Dashboard Warning Lights</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🪞</span><span class="topic-name">Use of Mirrors</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">💧</span><span class="topic-name">Wipers & Washers</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">📢</span><span class="topic-name">Horn Use</span><span class="topic-status">Practice</span></div>
+                </div>
+            </div>
+
+            <!-- Module 3: Traffic Signs & Signals -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">03</div>
+                    <div class="module-title">Traffic Signs & Signals</div>
+                </div>
+                <div class="topic-list">
+                    <div class="topic-item"><span class="topic-bullet">⚠️</span><span class="topic-name">Warning Signs</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🔵</span><span class="topic-name">Regulatory Signs</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">✅</span><span class="topic-name">Mandatory Signs</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🚫</span><span class="topic-name">Prohibitory Signs</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">ℹ️</span><span class="topic-name">Information Signs</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🚧</span><span class="topic-name">Temporary Roadwork Signs</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">➡️</span><span class="topic-name">Direction Signs</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🏁</span><span class="topic-name">Speed Limit Signs</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🚷</span><span class="topic-name">No Entry Signs</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🛑</span><span class="topic-name">Stop Signs</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">⬇️</span><span class="topic-name">Give Way Signs</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🚦</span><span class="topic-name">Traffic Lights</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">✨</span><span class="topic-name">Flashing Signals</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">👮</span><span class="topic-name">Police Hand Signals</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">📏</span><span class="topic-name">Road Markings</span><span class="topic-status">Practice</span></div>
+                </div>
+            </div>
+
+            <!-- Module 4: Safe Driving Behaviour -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">04</div>
+                    <div class="module-title">Safe Driving Behaviour</div>
+                </div>
+                <div class="topic-list">
+                    <div class="topic-item"><span class="topic-bullet">🛡️</span><span class="topic-name">Defensive Driving</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">👁️</span><span class="topic-name">Hazard Perception</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">◼️</span><span class="topic-name">Blind Spots</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🏎️</span><span class="topic-name">Safe Overtaking</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🐫</span><span class="topic-name">Tailgating Dangers</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">😊</span><span class="topic-name">Driving Courtesy</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🚴</span><span class="topic-name">Sharing Road with Cyclists</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🚶</span><span class="topic-name">Sharing Road with Pedestrians</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🏫</span><span class="topic-name">School Area Safety</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">😴</span><span class="topic-name">Fatigue Awareness</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🍺</span><span class="topic-name">Alcohol & Drug Risks</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">📱</span><span class="topic-name">Distracted Driving</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">😤</span><span class="topic-name">Anger Management on Road</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🌙</span><span class="topic-name">Night Driving Safety</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🌧️</span><span class="topic-name">Rain Driving Safety</span><span class="topic-status">Practice</span></div>
+                </div>
+            </div>
+
+            <!-- Module 5: Model Town Board Preparation -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">05</div>
+                    <div class="module-title">Model Town Board Prep</div>
+                </div>
+                <div class="topic-list">
+                    <div class="topic-item"><span class="topic-bullet">🛣️</span><span class="topic-name">One-Way Roads</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🔄</span><span class="topic-name">Two-Way Roads</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">⬅️</span><span class="topic-name">Lane Selection</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🅿️</span><span class="topic-name">Parking Bays</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">📐</span><span class="topic-name">Angle Parking</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">〰️</span><span class="topic-name">Parallel Parking</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🛑</span><span class="topic-name">Stop Junctions</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">⬇️</span><span class="topic-name">Give Way Junctions</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🔄</span><span class="topic-name">Roundabouts</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">↩️</span><span class="topic-name">U-Turn Rules</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🚶</span><span class="topic-name">Pedestrian Zones</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">⬅️</span><span class="topic-name">Turning Left Correctly</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">➡️</span><span class="topic-name">Turning Right Correctly</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">📍</span><span class="topic-name">Road Positioning</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">❌</span><span class="topic-name">Common Test Mistakes</span><span class="topic-status">Practice</span></div>
+                </div>
+            </div>
+
+            <!-- Module 6: Vehicle Inspection & Safety Checks -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">06</div>
+                    <div class="module-title">Vehicle Inspection & Safety Checks</div>
+                </div>
+                <div class="topic-list">
+                    <div class="topic-item"><span class="topic-bullet">🛞</span><span class="topic-name">Tyre Condition</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">💨</span><span class="topic-name">Tyre Pressure</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🛑</span><span class="topic-name">Brake Check</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">💡</span><span class="topic-name">Lights Check</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🔄</span><span class="topic-name">Indicators Check</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🪞</span><span class="topic-name">Mirrors Check</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🪟</span><span class="topic-name">Windscreen Condition</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">📢</span><span class="topic-name">Horn Check</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🪑</span><span class="topic-name">Seat Belts Check</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🛢️</span><span class="topic-name">Engine Oil Check</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">💧</span><span class="topic-name">Coolant Check</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🔋</span><span class="topic-name">Battery Check</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">⛽</span><span class="topic-name">Fuel Level Check</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">💧</span><span class="topic-name">Leak Detection</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">✅</span><span class="topic-name">Daily Walkaround Inspection</span><span class="topic-status">Practice</span></div>
+                </div>
+            </div>
+
+            <!-- Module 7: First Aid & Emergencies -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">07</div>
+                    <div class="module-title">First Aid & Emergencies</div>
+                </div>
+                <div class="topic-list">
+                    <div class="topic-item"><span class="topic-bullet">🆘</span><span class="topic-name">Accident Scene Safety</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">📞</span><span class="topic-name">Calling Emergency Help</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🩸</span><span class="topic-name">Bleeding Control</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🔥</span><span class="topic-name">Burns Treatment</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">😤</span><span class="topic-name">Choking Response</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🦴</span><span class="topic-name">Fracture Support</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">😨</span><span class="topic-name">Shock Management</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">❤️</span><span class="topic-name">CPR Basics</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🔄</span><span class="topic-name">Recovery Position</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🧯</span><span class="topic-name">Fire Extinguisher Use</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🔧</span><span class="topic-name">Vehicle Breakdown Safety</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🔺</span><span class="topic-name">Warning Triangle Placement</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">👥</span><span class="topic-name">Passenger Safety</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">📋</span><span class="topic-name">Post-Accident Procedure</span><span class="topic-status">Practice</span></div>
+                    <div class="topic-item"><span class="topic-bullet">📞</span><span class="topic-name">Emergency Contacts</span><span class="topic-status">Practice</span></div>
+                </div>
+            </div>
+
+            <!-- Module 8: Mock Exams & Revision -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-number">08</div>
+                    <div class="module-title">Mock Exams & Revision</div>
+                </div>
+                <div class="topic-list">
+                    <div class="topic-item"><span class="topic-bullet">📝</span><span class="topic-name">Quick 10 Question Test</span><span class="topic-status">Ready</span></div>
+                    <div class="topic-item"><span class="topic-bullet">📝</span><span class="topic-name">25 Question Practice Test</span><span class="topic-status">Ready</span></div>
+                    <div class="topic-item"><span class="topic-bullet">📋</span><span class="topic-name">Full 50 Question Exam</span><span class="topic-status">Ready</span></div>
+                    <div class="topic-item"><span class="topic-bullet">⏱️</span><span class="topic-name">Timed Mock Exam</span><span class="topic-status">Ready</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🚦</span><span class="topic-name">Traffic Signs Quiz</span><span class="topic-status">Ready</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🛣️</span><span class="topic-name">Road Rules Quiz</span><span class="topic-status">Ready</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🏙️</span><span class="topic-name">Model Town Quiz</span><span class="topic-status">Ready</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🎯</span><span class="topic-name">Weak Areas Practice</span><span class="topic-status">Ready</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🎲</span><span class="topic-name">Random Questions</span><span class="topic-status">Ready</span></div>
+                    <div class="topic-item"><span class="topic-bullet">🏁</span><span class="topic-name">Final Revision Test</span><span class="topic-status">Ready</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <p>© 2026 MEI DRIVE AFRICA. A division of MEI PRESS GROUP. All rights reserved.</p>
+    <p style="margin-top: 8px;">📚 8 Modules | 100+ Topics | NTSA Compliant | Pass Your Driving Test</p>
+    <p style="margin-top: 8px;">✅ Pass your test | ✅ Certify your fleet | ✅ Value your vehicle | ✅ Manage road safety</p>
+</footer>
+
+</body>
+</html>
