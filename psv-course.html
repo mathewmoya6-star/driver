@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>PSV Driver Course | NTSA Compliant | B3, D1, D2, D3 | Professional Driver Training | Mei Drive Africa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; line-height: 1.5; }
+        :root { --gold: #d4af37; --gold-light: #f5e6a3; --gold-dark: #997a00; --bg-card: #111111; --border: #222222; --muted: #888888; --success: #00c853; --danger: #ff4444; --warning: #ffcc00; --blue: #2196f3; }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+        /* Navigation */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 48px; max-width: 1400px; margin: 0 auto; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+        .logo { font-size: 24px; font-weight: 800; }
+        .logo .mei { color: var(--gold); }
+        .logo .drive { color: #fff; }
+        .logo .africa { color: var(--gold-light); }
+        .nav-links { display: flex; gap: 30px; align-items: center; flex-wrap: wrap; }
+        .nav-links a { color: #fff; text-decoration: none; transition: color 0.3s; font-size: 14px; }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+        .btn-outline { border: 1px solid rgba(255,255,255,0.2); padding: 8px 24px; border-radius: 40px; }
+        .btn-gold { background: var(--gold); color: #000; padding: 8px 28px; border-radius: 40px; font-weight: 700; text-decoration: none; }
+
+        /* Hero Section */
+        .hero { background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); padding: 60px 0; text-align: center; border-bottom: 1px solid var(--border); }
+        .hero-badge { display: inline-block; background: rgba(212,175,55,0.15); border: 1px solid var(--gold); border-radius: 100px; padding: 6px 16px; font-size: 12px; margin-bottom: 20px; }
+        .hero h1 { font-size: 48px; font-weight: 800; background: linear-gradient(135deg, #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 16px; }
+        .hero p { color: var(--muted); max-width: 800px; margin: 0 auto; font-size: 18px; }
+        .hero-stats { display: flex; justify-content: center; gap: 30px; margin: 40px 0 20px; flex-wrap: wrap; }
+        .hero-stats span { background: var(--bg-card); padding: 10px 24px; border-radius: 40px; border: 1px solid var(--border); font-size: 14px; }
+
+        /* Course Purpose */
+        .purpose { padding: 60px 0; background: var(--bg-card); text-align: center; }
+        .purpose-box { max-width: 800px; margin: 0 auto; }
+        .purpose-box p { color: var(--muted); font-size: 18px; line-height: 1.6; }
+
+        /* Target Audience */
+        .audience { padding: 60px 0; }
+        .audience-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 40px; }
+        .audience-tag { background: var(--bg-card); border: 1px solid var(--border); border-radius: 60px; padding: 12px 28px; font-size: 16px; transition: all 0.3s; }
+        .audience-tag:hover { border-color: var(--gold); color: var(--gold); }
+        .category-badge { background: var(--gold); color: #000; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; margin-left: 8px; }
+
+        /* Section Titles */
+        .section-title { font-size: 32px; color: var(--gold); margin-bottom: 16px; text-align: center; }
+        .section-subtitle { text-align: center; color: var(--muted); margin-bottom: 48px; font-size: 16px; }
+
+        /* Category Info Box */
+        .category-info { background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); border: 1px solid var(--gold); border-radius: 20px; padding: 30px; margin: 40px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center; }
+        .category-info-item h4 { color: var(--gold); font-size: 20px; margin-bottom: 10px; }
+        .category-info-item p { color: var(--muted); font-size: 13px; }
+        .category-info-item .age { font-size: 24px; font-weight: 800; color: #fff; }
+
+        /* Modules Grid */
+        .modules-section { background: var(--bg-card); padding: 60px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; margin-top: 40px; }
+        .module-card { background: #0a0a0a; border: 1px solid var(--border); radius: 20px; overflow: hidden; transition: all 0.3s; }
+        .module-card { background: #0a0a0a; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; transition: all 0.3s; }
+        .module-card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .module-header { background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); padding: 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 15px; }
+        .module-number { font-size: 28px; font-weight: 800; color: var(--gold); opacity: 0.5; min-width: 45px; }
+        .module-title { font-size: 18px; font-weight: 700; color: var(--gold); }
+        .module-content { padding: 20px; }
+        .topic-list { list-style: none; padding-left: 0; }
+        .topic-list li { padding: 8px 0 8px 24px; position: relative; font-size: 13px; color: var(--muted); border-bottom: 1px solid var(--border); }
+        .topic-list li:last-child { border-bottom: none; }
+        .topic-list li::before { content: "▹"; position: absolute; left: 0; color: var(--gold); }
+
+        /* Grooming Highlight */
+        .grooming-highlight { background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); border: 2px solid var(--gold); border-radius: 24px; padding: 30px; margin: 40px 0; text-align: center; }
+        .grooming-highlight h3 { color: var(--gold); font-size: 24px; margin-bottom: 15px; }
+        .grooming-highlight .golden-rule { font-size: 20px; color: var(--gold-light); margin: 20px 0; font-style: italic; }
+
+        /* Exam Section */
+        .exam { padding: 60px 0; text-align: center; }
+        .exam-card { background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); border: 1px solid var(--gold); border-radius: 24px; padding: 40px; max-width: 800px; margin: 0 auto; }
+        .exam h3 { color: var(--gold); font-size: 28px; margin-bottom: 20px; }
+        .exam-details { display: flex; justify-content: center; gap: 40px; margin: 30px 0; flex-wrap: wrap; }
+        .exam-item { background: var(--bg-card); padding: 15px 25px; border-radius: 16px; border: 1px solid var(--border); }
+        .exam-item strong { color: var(--gold); display: block; margin-bottom: 5px; }
+
+        /* Certification */
+        .certification { background: var(--bg-card); padding: 60px 0; text-align: center; border-top: 1px solid var(--border); }
+        .cert-list { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+        .cert-item { background: #0a0a0a; padding: 12px 24px; border-radius: 40px; border: 1px solid var(--gold); font-size: 14px; }
+
+        /* Footer */
+        .footer { background: #050505; padding: 40px; text-align: center; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); }
+        .gold-divider { height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); width: 100%; }
+
+        @media (max-width: 768px) { .navbar { flex-direction: column; gap: 15px; padding: 20px; } .hero h1 { font-size: 32px; } .modules-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="gold-divider"></div>
+<div class="navbar">
+    <div class="logo"><span class="mei">MEI</span> <span class="drive">DRIVE</span> <span class="africa">AFRICA</span></div>
+    <div class="nav-links">
+        <a href="#">Theory Course</a>
+        <a href="#">Driver Academy</a>
+        <a href="#">School Safety</a>
+        <a href="#">Valuation</a>
+        <a href="#">Library</a>
+        <a href="#" class="active">PSV Course</a>
+        <a href="#" class="btn-outline">Login</a>
+        <a href="#" class="btn-gold">Sign Up</a>
+    </div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-badge">✅ NTSA COMPLIANT | PSV PROFESSIONAL DRIVER TRAINING</div>
+        <h1>PSV DRIVER COURSE</h1>
+        <p>Professional driver training for matatu, bus, minibus, taxi, and tour drivers. Equipping PSV drivers with the skills to operate safely, legally, professionally, and with high customer service standards — including personal grooming and public presentation.</p>
+        <div class="hero-stats">
+            <span>🚌 12 Comprehensive Modules</span>
+            <span>📝 50 MCQs + 10 Scenarios</span>
+            <span>🎯 Pass Mark: 80%</span>
+            <span>🏅 PSV Certified</span>
+        </div>
+    </div>
+</section>
+
+<!-- Course Purpose -->
+<section class="purpose">
+    <div class="container">
+        <div class="purpose-box">
+            <h2 class="section-title">🎯 Course Purpose</h2>
+            <p>This course equips PSV drivers with the skills to operate safely, legally, professionally, and with high customer service standards, including personal grooming and public presentation.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Target Audience - Updated with B3, D1, D2, D3 -->
+<section class="audience">
+    <div class="container">
+        <h2 class="section-title">👥 Target Audience</h2>
+        <div class="audience-grid">
+            <span class="audience-tag">🚌 Matatu Drivers</span>
+            <span class="audience-tag">🚌 Bus Drivers</span>
+            <span class="audience-tag">🚐 Minibus Drivers</span>
+            <span class="audience-tag">🚕 Taxi Operators</span>
+            <span class="audience-tag">🌍 Tour Drivers</span>
+            <span class="audience-tag">📚 PSV Learner Candidates <span class="category-badge">B3</span> <span class="category-badge">D1</span> <span class="category-badge">D2</span> <span class="category-badge">D3</span></span>
+        </div>
+    </div>
+</section>
+
+<!-- PSV Category Information Box -->
+<section class="audience">
+    <div class="container">
+        <div class="category-info">
+            <div class="category-info-item"><h4>Category B3</h4><p>Professional Light Vehicle</p><div class="age">Min Age: 21 years</div><p>Light vehicle passenger car up to 3,500kg<br>For chauffeurs and taxi operators<br>4 years driving experience required</p></div>
+            <div class="category-info-item"><h4>Category D1</h4><p>Van</p><div class="age">Min Age: 22 years</div><p>Up to 14 passengers<br>No prior experience required<br>PSV licence mandatory</p></div>
+            <div class="category-info-item"><h4>Category D2</h4><p>Mini Bus</p><div class="age">Min Age: 25 years</div><p>14 - 32 passengers<br>3 years D1 experience required<br>Must pass theory and practical retest</p></div>
+            <div class="category-info-item"><h4>Category D3</h4><p>Large Bus</p><div class="age">Min Age: 30 years</div><p>33+ passengers<br>3 years D2 experience required<br>Advanced passenger safety training</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- 12 Modules -->
+<section class="modules-section">
+    <div class="container">
+        <h2 class="section-title">📘 PSV Driver Modules</h2>
+        <p class="section-subtitle">12 Comprehensive Modules covering all aspects of professional PSV driving for Categories B3, D1, D2, D3</p>
+        
+        <div class="modules-grid">
+            <!-- Module 1 -->
+            <div class="module-card"><div class="module-header"><div class="module-number">01</div><div class="module-title">📘 MODULE 1: PSV INTRODUCTION</div></div>
+                <div class="module-content"><ul class="topic-list"><li>Definition of PSV (Public Service Vehicle)</li><li>PSV categories (B3, D1, D2, D3)</li><li>Role of PSV driver in public service</li><li>Professional driver identity and responsibility</li><li>Difference between private and professional driving</li></ul></div>
+            </div>
+
+            <!-- Module 2 -->
+            <div class="module-card"><div class="module-header"><div class="module-number">02</div><div class="module-title">⚖️ MODULE 2: LEGAL & NTSA FRAMEWORK</div></div>
+                <div class="module-content"><ul class="topic-list"><li>NTSA Act No. 33 of 2012 - Powers and functions</li><li>Traffic Act Cap 403 - Offences and penalties</li><li>Insurance requirements (Third Party Cap 413)</li><li>PSV licensing rules and PSV badge requirements</li><li>Vehicle inspection compliance (NTSA annual inspection)</li><li>Professional Driver's Licence (PDL) requirements</li></ul></div>
+            </div>
+
+            <!-- Module 3: Customer Service -->
+            <div class="module-card"><div class="module-header"><div class="module-number">03</div><div class="module-title">🧑‍🤝‍🧑 MODULE 3: CUSTOMER SERVICE</div></div>
+                <div class="module-content"><ul class="topic-list"><li><strong>Core Principle:</strong> A PSV driver is a public representative of safety and service quality</li><li><strong>Service Standards:</strong> Respect all passengers equally, no abusive language, calm professional communication</li><li><strong>Passenger Care:</strong> Assist elderly, help persons with disabilities, ensure safe boarding/alighting</li><li><strong>Conflict Handling:</strong> Stay calm, avoid physical confrontation, de-escalate professionally, report serious incidents</li><li>Clear route and fare explanation to all passengers</li></ul></div>
+            </div>
+
+            <!-- Module 4: Grooming & Personal Presentation -->
+            <div class="module-card"><div class="module-header"><div class="module-number">04</div><div class="module-title">🧼 MODULE 4: GROOMING & PERSONAL PRESENTATION ⭐</div></div>
+                <div class="module-content"><ul class="topic-list"><li><strong>Personal Hygiene:</strong> Clean body, deodorant, clean hands/nails, brushed teeth/fresh breath</li><li><strong>Uniform & Clothing:</strong> Clean ironed clothing, no torn/dirty clothes, proper shoes (no slippers), smart casual or uniform</li><li><strong>Hair & Beard:</strong> Neat well-kept hair, trimmed clean beard, no extreme hairstyles</li><li><strong>Driver Appearance:</strong> No excessive tattoos showing, no offensive slogans, no messy appearance</li><li><strong>Vehicle Presentation:</strong> Clean driver seat, no litter in cabin, organized dashboard, clean windshield</li></ul></div>
+            </div>
+
+            <!-- Module 5 -->
+            <div class="module-card"><div class="module-header"><div class="module-number">05</div><div class="module-title">🚦 MODULE 5: PASSENGER SAFETY</div></div>
+                <div class="module-content"><ul class="topic-list"><li>Boarding procedures - safe and orderly</li><li>Seat discipline - all passengers seated</li><li>Overcrowding prevention - no standing passengers</li><li>Emergency exit awareness and location</li><li>Seatbelt enforcement for all passengers</li><li>Special seating for elderly, pregnant, and disabled</li></ul></div>
+            </div>
+
+            <!-- Module 6 -->
+            <div class="module-card"><div class="module-header"><div class="module-number">06</div><div class="module-title">🛡️ MODULE 6: DEFENSIVE DRIVING</div></div>
+                <div class="module-content"><ul class="topic-list"><li>3-Second Rule (following distance in normal conditions)</li><li>4-Second Rule (adverse weather)</li><li>Hazard awareness and anticipation</li><li>Speed control - obey posted limits (PSV max 80km/h highway)</li><li>Weather driving techniques (rain, fog, night)</li><li>MSM technique (Mirror, Signal, Manoeuvre)</li></ul></div>
+            </div>
+
+            <!-- Module 7 -->
+            <div class="module-card"><div class="module-header"><div class="module-number">07</div><div class="module-title">⏱️ MODULE 7: FATIGUE MANAGEMENT</div></div>
+                <div class="module-content"><ul class="topic-list"><li>8-hour driving guideline (Traffic Act Section 66A)</li><li>Rest requirements - 30 min break after 4 hours</li><li>No intoxicated driving (0.00% BAC for PSV)</li><li>Fitness declaration before each shift</li><li>Consequences of driving while tired</li><li>Daily driving log requirements</li></ul></div>
+            </div>
+
+            <!-- Module 8 -->
+            <div class="module-card"><div class="module-header"><div class="module-number">08</div><div class="module-title">🔧 MODULE 8: VEHICLE INSPECTION</div></div>
+                <div class="module-content"><ul class="topic-list"><li>Brakes - check for wear and response</li><li>Tyres - pressure, tread depth (1.6mm minimum)</li><li>Lights - headlights, indicators, brake lights</li><li>Mirrors - all present and adjusted</li><li>Horn - functional</li><li>Fuel system - no leaks, sufficient fuel</li><li>Emergency equipment - first aid kit, fire extinguisher, triangles</li></ul></div>
+            </div>
+
+            <!-- Module 9 -->
+            <div class="module-card"><div class="module-header"><div class="module-number">09</div><div class="module-title">🚨 MODULE 9: EMERGENCY RESPONSE</div></div>
+                <div class="module-content"><ul class="topic-list"><li>Accidents - secure scene, call 999</li><li>Fire - evacuate passengers, use extinguisher</li><li>Medical emergencies - Dr. A.B.C, first aid</li><li>Breakdowns - reflector triangles (50m ahead/behind)</li><li>Security threats - anti-carjacking measures</li><li>Passenger evacuation procedures</li></ul></div>
+            </div>
+
+            <!-- Module 10 -->
+            <div class="module-card"><div class="module-header"><div class="module-number">10</div><div class="module-title">🧳 MODULE 10: ROUTE & LUGGAGE CONTROL</div></div>
+                <div class="module-content"><ul class="topic-list"><li>Approved routes only - no short cuts</li><li>No overloading - passenger count within legal limit</li><li>Safe luggage handling - secure storage</li><li>Axle load compliance (EAC Act 2013)</li><li>Cargo securement - prevent load shift</li><li>Luggage weight distribution</li></ul></div>
+            </div>
+
+            <!-- Module 11 -->
+            <div class="module-card"><div class="module-header"><div class="module-number">11</div><div class="module-title">📋 MODULE 11: ACCIDENT REPORTING</div></div>
+                <div class="module-content"><ul class="topic-list"><li>Stop immediately at accident scene</li><li>Assist passengers (evacuate if danger)</li><li>Notify police (999/112)</li><li>Insurance reporting within 24 hours</li><li>Documentation - photos, witness names, number plates</li><li>Report to employer immediately</li></ul></div>
+            </div>
+
+            <!-- Module 12 -->
+            <div class="module-card"><div class="module-header"><div class="module-number">12</div><div class="module-title">⚖️ MODULE 12: NTSA COMPLIANCE</div></div>
+                <div class="module-content"><ul class="topic-list"><li>Valid PSV license (Professional Driver's Licence - PDL)</li><li>Insurance validity - third party minimum</li><li>Vehicle inspection compliance (annual NTSA inspection)</li><li>Zero reckless driving tolerance</li><li>PSV badge displayed at all times</li><li>Medical certificate validity (annually if over 70)</li><li>Police clearance certificate (for PSV operators)</li></ul></div>
+            </div>
+        </div>
+
+        <!-- Golden Rule Highlight -->
+        <div class="grooming-highlight">
+            <h3>⭐ GOLDEN RULE OF GROOMING ⭐</h3>
+            <p class="golden-rule">“Passengers trust what looks professional — appearance builds confidence before driving even begins.”</p>
+            <p>A clean, well-groomed driver signals responsibility, safety, and respect for passengers. First impressions matter. Your appearance is your first customer interaction.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Final Exam -->
+<section class="exam">
+    <div class="container">
+        <div class="exam-card">
+            <h3>🧠 FINAL EXAM</h3>
+            <p>Comprehensive assessment to certify PSV drivers for Categories B3, D1, D2, D3</p>
+            <div class="exam-details">
+                <div class="exam-item"><strong>50 MCQs</strong><br>Multiple choice questions</div>
+                <div class="exam-item"><strong>10 Scenario Questions</strong><br>Real-world driving situations</div>
+                <div class="exam-item"><strong>Pass Mark: 80%</strong><br>Required to pass</div>
+            </div>
+            <button class="btn-gold" style="margin-top: 20px; padding: 12px 40px; cursor: pointer;">Start Final Exam →</button>
+        </div>
+    </div>
+</section>
+
+<!-- Certification Outcome -->
+<section class="certification">
+    <div class="container">
+        <h2 class="section-title">🏅 Certification Outcome</h2>
+        <p class="section-subtitle">Upon completion, drivers are certified in:</p>
+        <div class="cert-list">
+            <div class="cert-item">✔ PSV Professional Driving (B3, D1, D2, D3)</div>
+            <div class="cert-item">✔ Customer Service Excellence</div>
+            <div class="cert-item">✔ Grooming & Public Presentation</div>
+            <div class="cert-item">✔ Safety Compliance</div>
+            <div class="cert-item">✔ Emergency Response</div>
+        </div>
+        <p style="margin-top: 30px; color: var(--gold); font-size: 14px;">🎓 Certified PSV Driver - NTSA Compliant</p>
+    </div>
+</section>
+
+<!-- What You Upgraded -->
+<section class="purpose">
+    <div class="container">
+        <div class="purpose-box">
+            <h2 class="section-title">💡 Complete PSV Professional Transport System</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 30px;">
+                <div style="background: var(--bg-card); padding: 15px; border-radius: 12px;">✔ Driving Skills</div>
+                <div style="background: var(--bg-card); padding: 15px; border-radius: 12px;">✔ Legal Compliance</div>
+                <div style="background: var(--bg-card); padding: 15px; border-radius: 12px;">✔ Customer Service</div>
+                <div style="background: var(--bg-card); padding: 15px; border-radius: 12px;">✔ Grooming & Branding</div>
+                <div style="background: var(--bg-card); padding: 15px; border-radius: 12px;">✔ Emergency Readiness</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <p>© 2026 MEI DRIVE AFRICA. A division of MEI PRESS GROUP. All rights reserved.</p>
+    <p style="margin-top: 8px;">✅ NTSA Compliant PSV Training | ✅ Professional Driver Certification | ✅ Categories B3, D1, D2, D3</p>
+    <p style="margin-top: 8px;">✅ Pass your test | ✅ Certify your fleet | ✅ Value your vehicle | ✅ Manage road safety</p>
+</footer>
+
+</body>
+</html>
