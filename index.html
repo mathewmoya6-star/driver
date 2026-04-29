@@ -1,89 +1,40 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
-import { useQuery } from '@tanstack/react-query';
-import { Button } from '@/components/ui/button';
-import { BookOpen, ClipboardCheck, Trophy, TrendingUp, ChevronRight, Flame } from 'lucide-react';
-import StatCard from '@/components/dashboard/StatCard';
-import ModuleCard from '@/components/dashboard/ModuleCard';
+<!DOCTYPE html>
+<html>
+<head>
+<title>DriverPrep Kenya</title>
+<link rel="stylesheet" href="styles.css">
+</head>
 
-export default function Dashboard() {
-  const { data: modules = [] } = useQuery({
-    queryKey: ['modules'],
-    queryFn: () => base44.entities.LearningModule.list('order'),
-  });
+<body>
 
-  const { data: attempts = [] } = useQuery({
-    queryKey: ['examAttempts'],
-    queryFn: () => base44.entities.ExamAttempt.list('-created_date', 10),
-  });
+<h1>DriverPrep Kenya SaaS</h1>
 
-  const { data: progress = [] } = useQuery({
-    queryKey: ['progress'],
-    queryFn: () => base44.entities.UserProgress.list(),
-  });
+<!-- LOGIN -->
+<div>
+  <h3>Login</h3>
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+</div>
 
-  const totalCompleted = progress.filter(p => p.completed).length;
-  const latestScore = attempts.length > 0 ? attempts[0].score : null;
-  const bestScore = attempts.length > 0 ? Math.max(...attempts.map(a => a.score)) : 0;
-  const passedCount = attempts.filter(a => a.passed).length;
+<hr>
 
-  return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div>
-        <h1 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight">Welcome Back 👋</h1>
-        <p className="text-muted-foreground mt-1">Continue your journey to becoming a certified driver.</p>
-      </div>
+<!-- VALUATION -->
+<h3>Vehicle Valuation</h3>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="Lessons Done" value={totalCompleted} subtitle="Keep going!" icon={BookOpen} />
-        <StatCard title="Exams Taken" value={attempts.length} subtitle={`${passedCount} passed`} icon={ClipboardCheck} />
-        <StatCard title="Best Score" value={bestScore ? `${bestScore}%` : '—'} subtitle="All-time high" icon={Trophy} />
-        <StatCard title="Latest Score" value={latestScore !== null ? `${latestScore}%` : '—'} subtitle={latestScore !== null && latestScore >= 70 ? 'Passed!' : 'Keep practicing'} icon={TrendingUp} />
-      </div>
+<input id="year" placeholder="Year">
+<select id="condition">
+  <option value="1">Excellent</option>
+  <option value="0.8">Good</option>
+  <option value="0.6">Average</option>
+</select>
 
-      {/* Quick Actions */}
-      <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent rounded-2xl border border-primary/20 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-primary flex items-center justify-center">
-            <Flame className="w-7 h-7 text-primary-foreground" />
-          </div>
-          <div>
-            <h3 className="font-heading text-lg font-semibold">Ready for a Mock Exam?</h3>
-            <p className="text-sm text-muted-foreground">40 questions, 30 minutes — just like the real NTSA test.</p>
-          </div>
-        </div>
-        <Link to="/exam">
-          <Button className="bg-primary hover:bg-primary/90 font-medium whitespace-nowrap">
-            Start Exam <ChevronRight className="w-4 h-4 ml-1" />
-          </Button>
-        </Link>
-      </div>
+<input id="mileage" placeholder="Mileage">
 
-      {/* Modules */}
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="font-heading text-xl font-semibold">Learning Modules</h2>
-          <Link to="/modules" className="text-sm text-primary font-medium hover:underline flex items-center gap-1">
-            View All <ChevronRight className="w-4 h-4" />
-          </Link>
-        </div>
-        {modules.length === 0 ? (
-          <div className="bg-card rounded-2xl border border-border/50 p-12 text-center">
-            <BookOpen className="w-12 h-12 text-muted-foreground/30 mx-auto mb-4" />
-            <h3 className="font-heading text-lg font-semibold mb-2">No Modules Yet</h3>
-            <p className="text-sm text-muted-foreground">Learning modules will appear here once they are added.</p>
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-2 gap-4">
-            {modules.slice(0, 4).map((mod) => (
-              <ModuleCard key={mod.id} module={mod} progress={0} />
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
+<button onclick="estimate()">Calculate</button>
+
+<p id="result"></p>
+
+<script src="app.js"></script>
+</body>
+</html>
