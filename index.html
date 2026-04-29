@@ -1,36 +1,126 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DriverPrep Kenya</title>
+
+<style>
+body{margin:0;font-family:Arial;background:#08111f;color:#fff}
+header{background:#0f1a30;padding:15px;text-align:center}
+h1{color:#f9c80e;margin:0}
+.container{max-width:900px;margin:auto;padding:20px}
+.card{background:#13213d;padding:20px;border-radius:10px;margin-top:20px}
+input,select{width:100%;padding:10px;margin:5px 0;border:none;border-radius:5px}
+button{background:#f9c80e;border:none;padding:10px 15px;border-radius:5px;cursor:pointer;font-weight:bold}
+h2{color:#f9c80e}
+.result{margin-top:10px;color:#f9c80e;font-weight:bold}
+nav{display:flex;justify-content:center;gap:20px;background:#0f1a30;padding:10px}
+nav a{color:white;text-decoration:none;font-size:14px}
+section{margin-top:30px}
+</style>
 </head>
 
 <body>
 
-<h1>DriverPrep Kenya System</h1>
+<header>
+<h1>DriverPrep Kenya</h1>
+</header>
 
-<h3>Login</h3>
+<nav>
+<a href="#login">Login</a>
+<a href="#valuation">Valuation</a>
+<a href="#exam">Exam</a>
+</nav>
+
+<div class="container">
+
+<!-- LOGIN -->
+<section id="login" class="card">
+<h2>Login (Demo)</h2>
 <input id="email" placeholder="Email">
 <input id="password" type="password" placeholder="Password">
 <button onclick="login()">Login</button>
+<p id="loginMsg"></p>
+</section>
 
-<hr>
-
-<h3>Vehicle Valuation</h3>
+<!-- VALUATION -->
+<section id="valuation" class="card">
+<h2>Vehicle Value Estimator</h2>
 
 <input id="year" placeholder="Year">
-
 <select id="condition">
-  <option value="1">Excellent</option>
-  <option value="0.8">Good</option>
-  <option value="0.6">Average</option>
+<option value="1">Excellent</option>
+<option value="0.8">Good</option>
+<option value="0.6">Average</option>
+<option value="0.4">Poor</option>
 </select>
-
-<input id="mileage" placeholder="Mileage">
+<input id="mileage" placeholder="Mileage KM">
 
 <button onclick="estimate()">Calculate</button>
 
-<p id="result"></p>
+<div class="result" id="valueResult"></div>
+</section>
 
-<script src="app.js"></script>
+<!-- EXAM -->
+<section id="exam" class="card">
+<h2>Mini NTSA Exam (Demo)</h2>
+
+<p>1. What does a red traffic light mean?</p>
+<button onclick="answer(true)">Stop</button>
+<button onclick="answer(false)">Go</button>
+
+<p class="result" id="examResult"></p>
+</section>
+
+</div>
+
+<script>
+// SIMPLE FAKE BACKEND (IN MEMORY)
+let loggedIn = false;
+
+// LOGIN
+function login(){
+  let email = document.getElementById("email").value;
+  let pass = document.getElementById("password").value;
+
+  if(email && pass){
+    loggedIn = true;
+    document.getElementById("loginMsg").innerText = "Login successful ✔";
+  } else {
+    document.getElementById("loginMsg").innerText = "Enter credentials";
+  }
+}
+
+// VEHICLE VALUE
+function estimate(){
+  let year = document.getElementById("year").value;
+  let condition = document.getElementById("condition").value;
+  let mileage = document.getElementById("mileage").value;
+
+  let age = new Date().getFullYear() - year;
+  let value = 2000000 * (1 - age * 0.08);
+  value *= condition;
+
+  if(mileage > 100000) value *= 0.8;
+  else if(mileage > 60000) value *= 0.9;
+
+  if(value < 200000) value = 200000;
+
+  document.getElementById("valueResult").innerText =
+    "Estimated Value: KES " + Math.round(value);
+}
+
+// MINI EXAM
+function answer(correct){
+  if(correct){
+    document.getElementById("examResult").innerText = "Correct ✔";
+  } else {
+    document.getElementById("examResult").innerText = "Wrong ✖ Try again";
+  }
+}
+</script>
+
 </body>
+</html>
 </html>
