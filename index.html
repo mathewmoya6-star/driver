@@ -3,169 +3,98 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>DriverPrep Kenya</title>
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<!-- Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<title>Driving Platform Dashboard</title>
 
 <style>
-/* =========================
-   DRIVERPREP DARK GOLD UI
-========================= */
-
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: #0a0a0a;
-  color: #d4af37;
+  font-family: Arial, sans-serif;
+  background: #0b0b0b;
+  color: #f5d06f;
 }
 
+/* HEADER */
 header {
-  background: #0f0f0f;
-  padding: 18px 25px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #222;
+  background: linear-gradient(90deg, #000, #1a1a1a);
+  padding: 20px;
+  text-align: center;
+  border-bottom: 2px solid gold;
 }
 
-.logo {
-  font-weight: 700;
-  font-size: 20px;
-}
-
-.gold {
-  color: #d4af37;
-}
-
-.container {
-  padding: 25px;
-}
-
-/* HERO */
-.hero {
-  background: linear-gradient(135deg, #111, #1a1a1a);
-  padding: 30px;
-  border-radius: 15px;
-  border: 1px solid #333;
-}
-
-.hero h1 {
+header h1 {
   margin: 0;
-  font-size: 28px;
+  font-size: 26px;
+  color: gold;
 }
 
-.hero p {
-  color: #aaa;
+header p {
+  margin: 5px;
+  color: #ccc;
 }
 
-/* MODULE GRID */
-<div class="modules">
+/* GRID */
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 30px;
+}
 
-  <div class="card">
-    <h3>🚗 NTSA Test Prep</h3>
-    <p>300+ Questions, timed mock tests and scoring.</p>
-    <button onclick="openModule('exam')">Start Exam</button>
-  </div>
-
-  <div class="card">
-    <h3>🎓 Driver Academy</h3>
-    <p>Refresher training, PSV and defensive driving.</p>
-    <button onclick="openModule('academy')">Enter</button>
-  </div>
-
-  <div class="card">
-    <h3>🚌 School Bus Safety</h3>
-    <p>Child safety and emergency response training.</p>
-    <button onclick="openModule('school')">Enroll</button>
-  </div>
-
-  <div class="card">
-    <h3>💰 Vehicle Valuation</h3>
-    <p>Instant AI market and insurance value estimate.</p>
-    <button onclick="openModule('valuation')">Check Value</button>
-  </div>
-
-  <div class="card">
-    <h3>📚 Digital Safety Library</h3>
-    <p>Download Highway Code and safety manuals.</p>
-    <button onclick="openModule('library')">Download</button>
-  </div>
-
-  <div class="card">
-    <h3>🚐 PSV Course</h3>
-    <p>Professional driver licensing and compliance.</p>
-    <button onclick="openModule('psv')">Start</button>
-  </div>
-
-</div>
+/* CARD */
 .card {
-  background: #111;
-  border: 1px solid #222;
-  padding: 18px;
-  border-radius: 14px;
+  background: #141414;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
   transition: 0.3s;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  border-color: #d4af37;
+  border-color: gold;
+  box-shadow: 0 0 15px gold;
 }
 
 .card h3 {
-  margin-top: 0;
+  margin: 0;
+  color: gold;
 }
 
-.badge {
-  display: inline-block;
-  padding: 4px 10px;
-  font-size: 12px;
-  border-radius: 20px;
-  background: #d4af37;
-  color: #000;
+.card p {
+  color: #bbb;
+  font-size: 14px;
+  margin-top: 10px;
 }
 
 /* BUTTON */
-.btn {
-  margin-top: 10px;
-  display: inline-block;
-  padding: 10px 14px;
-  background: #d4af37;
-  color: #000;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-/* LOGIN BOX */
-.login {
-  background: #111;
-  padding: 20px;
-  border-radius: 12px;
-  max-width: 350px;
-  margin: auto;
-  margin-top: 30px;
-  border: 1px solid #333;
-}
-
-input {
-  width: 100%;
+button {
+  margin-top: 15px;
   padding: 10px;
-  margin-top: 10px;
-  background: #000;
-  border: 1px solid #333;
-  color: #fff;
-  border-radius: 6px;
+  width: 100%;
+  background: gold;
+  border: none;
+  color: black;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-footer {
-  text-align: center;
-  margin-top: 40px;
-  color: #555;
-  font-size: 12px;
+button:hover {
+  background: #ffcc00;
+}
+
+/* TOP NAV */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: #111;
+  border-bottom: 1px solid #333;
+}
+
+.nav span {
+  color: gold;
 }
 </style>
 </head>
@@ -173,89 +102,182 @@ footer {
 <body>
 
 <header>
-  <div class="logo">🚗 DriverPrep <span class="gold">Kenya</span></div>
-  <div>
-    <i class="fa fa-user"></i> Student Portal
-  </div>
+  <h1>🚗 Driver Training & Exam Platform</h1>
+  <p>NTSA Prep • Academy • Valuation • Safety • PSV Training</p>
 </header>
+
+<div class="nav">
+  <span>Dashboard</span>
+  <span id="user">Welcome User</span>
+</div>
 
 <div class="container">
 
-  <!-- HERO -->
-  <div class="hero">
-    <h1>NTSA Driver Training & Exam Platform</h1>
-    <p>300+ Questions • PSV Training • School Bus Safety • Vehicle Valuation</p>
+  <!-- NTSA EXAM -->
+  <div class="card">
+    <h3>🚗 NTSA Test Prep</h3>
+    <p>300+ exam questions, timed mock tests and scoring system.</p>
+    <button onclick="openModule('exam')">Start Exam</button>
   </div>
 
-  <!-- LOGIN -->
-  <div class="login">
-    <h3>Login</h3>
-    <input type="text" placeholder="Phone / Email"/>
-    <input type="password" placeholder="Password"/>
-    <a class="btn" href="#">Login</a>
+  <!-- DRIVER ACADEMY -->
+  <div class="card">
+    <h3>🎓 Driver Academy</h3>
+    <p>Defensive driving, refresher training & customer service.</p>
+    <button onclick="openModule('academy')">Enter</button>
   </div>
 
-  <!-- MODULES -->
-  <h2 style="margin-top:40px;">Learning Modules</h2>
-
-  <div class="grid">
-
-    <div class="card">
-      <h3>NTSA Test Prep</h3>
-      <span class="badge">300+ Questions</span>
-      <p>Practice real exam questions, timed mock tests and scoring.</p>
-      <a class="btn" href="#">Start Exam</a>
-    </div>
-
-    <div class="card">
-      <h3>Driver Academy</h3>
-      <span class="badge">Refresher</span>
-      <p>PSV training, defensive driving and customer care skills.</p>
-      <a class="btn" href="#">Enter</a>
-    </div>
-
-    <div class="card">
-      <h3>School Bus Safety</h3>
-      <span class="badge">Certification</span>
-      <p>Child safety, route control, emergency response training.</p>
-      <a class="btn" href="#">Enroll</a>
-    </div>
-
-    <div class="card">
-      <h3>Vehicle Valuation</h3>
-      <span class="badge">AI Estimate</span>
-      <p>Instant market, insurance and loan value estimation.</p>
-      <a class="btn" href="#">Check Value</a>
-    </div>
-
-    <div class="card">
-      <h3>Digital Safety Library</h3>
-      <span class="badge">Offline</span>
-      <p>Download Highway Code, manuals and safety guides.</p>
-      <a class="btn" href="#">Download</a>
-    </div>
-
-    <div class="card">
-      <h3>PSV Course</h3>
-      <span class="badge">Professional</span>
-      <p>Public service vehicle licensing and compliance training.</p>
-      <a class="btn" href="#">Start</a>
-    </div>
-
+  <!-- SCHOOL BUS -->
+  <div class="card">
+    <h3>🚌 School Bus Safety</h3>
+    <p>Child safety, route planning & emergency response training.</p>
+    <button onclick="openModule('school')">Enroll</button>
   </div>
 
-  <!-- CTA -->
-  <div class="hero" style="margin-top:30px;">
-    <h2>Ready for NTSA Exam?</h2>
-    <p>Take a full mock test with real scoring system.</p>
-    <a class="btn" href="#">Start Mock Exam</a>
+  <!-- VALUATION -->
+  <div class="card">
+    <h3>💰 Vehicle Valuation</h3>
+    <p>Instant AI market value, insurance & loan estimation.</p>
+    <button onclick="openModule('valuation')">Check Value</button>
   </div>
 
-  <footer>
-    © 2026 DriverPrep Kenya | Built for NTSA Compliance Training System
-  </footer>
+  <!-- LIBRARY -->
+  <div class="card">
+    <h3>📚 Digital Safety Library</h3>
+    <p>Download Highway Code, manuals & offline guides.</p>
+    <button onclick="openModule('library')">Download</button>
+  </div>
+
+  <!-- PSV -->
+  <div class="card">
+    <h3>🚐 PSV Course</h3>
+    <p>Public service vehicle training & compliance course.</p>
+    <button onclick="openModule('psv')">Start</button>
+  </div>
 
 </div>
+
+<!-- EXAM PANEL -->
+<div id="panel" style="display:none; padding:20px;">
+  <h2 id="panelTitle"></h2>
+  <div id="panelContent"></div>
+</div>
+
+<script>
+const API = "http://localhost:5000/api";
+
+/* MODULE ROUTING */
+function openModule(module) {
+  document.getElementById("panel").style.display = "block";
+
+  const title = document.getElementById("panelTitle");
+  const content = document.getElementById("panelContent");
+
+  if (module === "exam") {
+    title.innerText = "NTSA Exam System";
+    loadQuestions();
+  }
+
+  if (module === "valuation") {
+    title.innerText = "Vehicle Valuation";
+
+    content.innerHTML = `
+      <input id="year" placeholder="Year" /><br><br>
+      <input id="mileage" placeholder="Mileage" /><br><br>
+      <input id="condition" placeholder="Condition (1-10)" /><br><br>
+      <button onclick="calculateValue()">Calculate</button>
+      <div id="result"></div>
+    `;
+  }
+
+  if (module === "academy") {
+    title.innerText = "Driver Academy";
+    content.innerHTML = "<p>Loading courses...</p>";
+
+    fetch(API + "/courses")
+      .then(res => res.json())
+      .then(data => {
+        content.innerHTML = data.map(c => `
+          <div style='padding:10px;border-bottom:1px solid #333'>
+            ${c.name}
+          </div>
+        `).join("");
+      });
+  }
+
+  if (module === "school") {
+    title.innerText = "School Bus Safety";
+    content.innerHTML = "<p>Child safety training modules coming soon.</p>";
+  }
+
+  if (module === "library") {
+    title.innerText = "Digital Library";
+    content.innerHTML = "<p>Download Highway Code & NTSA materials.</p>";
+  }
+
+  if (module === "psv") {
+    title.innerText = "PSV Course";
+    content.innerHTML = "<p>Professional driver training system.</p>";
+  }
+}
+
+/* LOAD EXAM QUESTIONS */
+function loadQuestions() {
+  fetch(API + "/exam/questions", {
+    headers: {
+      "Authorization": "Bearer " + localStorage.getItem("token")
+    }
+  })
+  .then(res => res.json())
+  .then(data => {
+    let html = "";
+
+    data.forEach((q, index) => {
+      html += `
+        <div style="margin-bottom:20px">
+          <p><b>${index+1}. ${q.question}</b></p>
+          ${q.options.map(opt => `
+            <label>
+              <input type="radio" name="q${index}" value="${opt}">
+              ${opt}
+            </label><br>
+          `).join("")}
+        </div>
+      `;
+    });
+
+    html += `<button onclick="submitExam()">Submit Exam</button>`;
+    document.getElementById("panelContent").innerHTML = html;
+  });
+}
+
+/* SUBMIT EXAM */
+function submitExam() {
+  alert("Submitting exam... (connects to backend)");
+
+  // later connect to /api/exam/submit
+}
+
+/* VALUATION */
+function calculateValue() {
+  const year = document.getElementById("year").value;
+  const mileage = document.getElementById("mileage").value;
+  const condition = document.getElementById("condition").value;
+
+  fetch(API + "/valuation", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ year, mileage, condition })
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("result").innerHTML = `
+      <h3>Market Value: ${data.marketValue}</h3>
+      <h3>FSV: ${data.forcedSaleValue}</h3>
+    `;
+  });
+}
+</script>
 
 </body>
 </html>
