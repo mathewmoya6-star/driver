@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mei Drive Africa | Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; }
+        :root { --gold: #d4af37; --gold-light: #f5e6a3; --bg-card: #111111; --border: #222222; --muted: #888888; }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+        /* Navigation - SAME ON ALL PAGES */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 48px; max-width: 1400px; margin: 0 auto; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+        .logo { font-size: 24px; font-weight: 800; }
+        .logo .mei { color: var(--gold); }
+        .logo .drive { color: #fff; }
+        .logo .africa { color: var(--gold-light); }
+        .nav-links { display: flex; gap: 25px; align-items: center; flex-wrap: wrap; }
+        .nav-links a { color: #fff; text-decoration: none; transition: color 0.3s; font-size: 14px; }
+        .nav-links a:hover { color: var(--gold); }
+        .btn-outline { border: 1px solid rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 40px; }
+        .btn-gold { background: var(--gold); color: #000; padding: 8px 24px; border-radius: 40px; font-weight: 700; text-decoration: none; }
+
+        /* Hero Section */
+        .hero { text-align: center; padding: 80px 0; background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); }
+        .hero h1 { font-size: 52px; font-weight: 800; background: linear-gradient(135deg, #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
+        .hero p { color: var(--muted); max-width: 700px; margin: 0 auto 30px; font-size: 18px; }
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn-primary { background: var(--gold); color: #000; padding: 14px 36px; border-radius: 50px; text-decoration: none; font-weight: 700; display: inline-block; }
+        .btn-secondary { background: transparent; border: 1.5px solid var(--gold); color: var(--gold); padding: 14px 36px; border-radius: 50px; text-decoration: none; font-weight: 600; }
+
+        /* Modules Grid */
+        .modules { padding: 60px 0; }
+        .section-title { font-size: 32px; color: var(--gold); text-align: center; margin-bottom: 48px; }
+        .modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .module-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 30px; text-decoration: none; display: block; transition: all 0.3s; }
+        .module-card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .module-icon { font-size: 48px; margin-bottom: 15px; }
+        .module-card h3 { color: var(--gold); font-size: 22px; margin-bottom: 10px; }
+        .module-card p { color: var(--muted); font-size: 14px; }
+        .module-link { color: var(--gold); margin-top: 15px; display: inline-block; font-weight: 600; }
+
+        .footer { background: #050505; padding: 40px; text-align: center; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 60px; }
+        .gold-divider { height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); width: 100%; }
+
+        @media (max-width: 768px) { .navbar { flex-direction: column; gap: 15px; padding: 20px; } .hero h1 { font-size: 32px; } }
+    </style>
+</head>
+<body>
+
+<div class="gold-divider"></div>
+<div class="navbar">
+    <div class="logo"><span class="mei">MEI</span> <span class="drive">DRIVE</span> <span class="africa">AFRICA</span></div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="learner-hub.html">Learner Hub</a>
+        <a href="driver-academy.html">Driver Academy</a>
+        <a href="school-safety.html">School Safety</a>
+        <a href="valuation.html">Valuation</a>
+        <a href="safety-library.html">Safety Library</a>
+        <a href="psv-course.html">PSV Course</a>
+        <a href="#" class="btn-outline">Login</a>
+        <a href="#" class="btn-gold">Sign Up</a>
+    </div>
+</div>
+
+<section class="hero">
+    <div class="container">
+        <h1>Africa's Smartest Driver Learning & Mobility Platform</h1>
+        <p>Pass your driving test, certify your fleet, value your vehicle, and manage road safety — all from one intelligent platform.</p>
+        <div class="hero-buttons">
+            <a href="learner-hub.html" class="btn-primary">Start Learning</a>
+            <a href="valuation.html" class="btn-secondary">Value Your Vehicle</a>
+        </div>
+    </div>
+</section>
+
+<section class="modules">
+    <div class="container">
+        <h2 class="section-title">Six Complete Modules</h2>
+        <div class="modules-grid">
+            <a href="learner-hub.html" class="module-card"><div class="module-icon">📚</div><h3>Learner Hub</h3><p>320 practice questions, model town simulator, mock exams</p><div class="module-link">Start Learning →</div></a>
+            <a href="driver-academy.html" class="module-card"><div class="module-icon">🎓</div><h3>Driver Academy</h3><p>Professional certification for all vehicle categories A-G</p><div class="module-link">View Courses →</div></a>
+            <a href="school-safety.html" class="module-card"><div class="module-icon">🚸</div><h3>School Transport Safety</h3><p>Child safety checklists, evacuation drills, NTSA compliant</p><div class="module-link">Manage Safety →</div></a>
+            <a href="valuation.html" class="module-card"><div class="module-icon">💰</div><h3>Vehicle Value Estimator</h3><p>10 legally defensible value bases for banks and insurance</p><div class="module-link">Value Vehicle →</div></a>
+            <a href="safety-library.html" class="module-card"><div class="module-icon">📁</div><h3>Digital Safety Library</h3><p>44 professional documents for fleet management</p><div class="module-link">Browse Library →</div></a>
+            <a href="psv-course.html" class="module-card"><div class="module-icon">🚌</div><h3>PSV Driver Course</h3><p>NTSA-compliant training for B3, D1, D2, D3 categories</p><div class="module-link">Enroll Now →</div></a>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <p>© 2026 MEI DRIVE AFRICA. A division of MEI PRESS GROUP.</p>
+    <p>✅ Pass your test | ✅ Certify your fleet | ✅ Value your vehicle | ✅ Manage road safety</p>
+</footer>
+</body>
+</html>
