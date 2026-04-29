@@ -63,13 +63,45 @@ header {
 }
 
 /* MODULE GRID */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-  margin-top: 25px;
-}
+<div class="modules">
 
+  <div class="card">
+    <h3>🚗 NTSA Test Prep</h3>
+    <p>300+ Questions, timed mock tests and scoring.</p>
+    <button onclick="openModule('exam')">Start Exam</button>
+  </div>
+
+  <div class="card">
+    <h3>🎓 Driver Academy</h3>
+    <p>Refresher training, PSV and defensive driving.</p>
+    <button onclick="openModule('academy')">Enter</button>
+  </div>
+
+  <div class="card">
+    <h3>🚌 School Bus Safety</h3>
+    <p>Child safety and emergency response training.</p>
+    <button onclick="openModule('school')">Enroll</button>
+  </div>
+
+  <div class="card">
+    <h3>💰 Vehicle Valuation</h3>
+    <p>Instant AI market and insurance value estimate.</p>
+    <button onclick="openModule('valuation')">Check Value</button>
+  </div>
+
+  <div class="card">
+    <h3>📚 Digital Safety Library</h3>
+    <p>Download Highway Code and safety manuals.</p>
+    <button onclick="openModule('library')">Download</button>
+  </div>
+
+  <div class="card">
+    <h3>🚐 PSV Course</h3>
+    <p>Professional driver licensing and compliance.</p>
+    <button onclick="openModule('psv')">Start</button>
+  </div>
+
+</div>
 .card {
   background: #111;
   border: 1px solid #222;
