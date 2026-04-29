@@ -1,283 +1,826 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Driving Platform Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Mei Drive Africa | Africa's Smartest Driver Learning & Mobility Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b0b0b;
-  color: #f5d06f;
-}
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.5;
+        }
 
-/* HEADER */
-header {
-  background: linear-gradient(90deg, #000, #1a1a1a);
-  padding: 20px;
-  text-align: center;
-  border-bottom: 2px solid gold;
-}
+        /* Dark & Gold Theme Variables */
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #111111;
+            --bg-hover: #1a1a1a;
+            --gold-primary: #d4af37;
+            --gold-light: #f5e6a3;
+            --gold-dark: #997a00;
+            --gold-glow: rgba(212, 175, 55, 0.3);
+            --text-muted: #888888;
+            --border-subtle: #222222;
+        }
 
-header h1 {
-  margin: 0;
-  font-size: 26px;
-  color: gold;
-}
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 48px;
+            max-width: 1400px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border-subtle);
+        }
 
-header p {
-  margin: 5px;
-  color: #ccc;
-}
+        .logo {
+            display: flex;
+            flex-direction: column;
+        }
 
-/* GRID */
-.container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 30px;
-}
+        .logo-main {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
 
-/* CARD */
-.card {
-  background: #141414;
-  border: 1px solid #333;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
-  transition: 0.3s;
-}
+        .logo-main .mei {
+            color: var(--gold-primary);
+        }
 
-.card:hover {
-  transform: translateY(-5px);
-  border-color: gold;
-  box-shadow: 0 0 15px gold;
-}
+        .logo-main .drive {
+            color: #ffffff;
+        }
 
-.card h3 {
-  margin: 0;
-  color: gold;
-}
+        .logo-main .africa {
+            color: var(--gold-light);
+        }
 
-.card p {
-  color: #bbb;
-  font-size: 14px;
-  margin-top: 10px;
-}
+        .logo-sub {
+            font-size: 10px;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
 
-/* BUTTON */
-button {
-  margin-top: 15px;
-  padding: 10px;
-  width: 100%;
-  background: gold;
-  border: none;
-  color: black;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
-}
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
-button:hover {
-  background: #ffcc00;
-}
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
 
-/* TOP NAV */
-.nav {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 20px;
-  background: #111;
-  border-bottom: 1px solid #333;
-}
+        .nav-links a:hover {
+            color: var(--gold-primary);
+        }
 
-.nav span {
-  color: gold;
-}
-</style>
+        .nav-links .login {
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px 24px;
+            border-radius: 40px;
+        }
+
+        .nav-links .login:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--gold-primary);
+            color: var(--gold-primary);
+        }
+
+        .nav-links .signup {
+            background: var(--gold-primary);
+            color: #000000;
+            padding: 8px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+
+        .nav-links .signup:hover {
+            background: var(--gold-light);
+            color: #000000;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 24px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .powered-by {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 100px;
+            padding: 6px 16px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            letter-spacing: 1px;
+            color: var(--gold-light);
+        }
+
+        .powered-by span {
+            color: var(--gold-primary);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 100px;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+
+        .hero-badge span {
+            color: var(--gold-primary);
+        }
+
+        /* NEW TAGLINE - Africa's Smartest Driver Learning & Mobility Platform */
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #ffffff 0%, var(--gold-primary) 50%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* CTA Buttons */
+        .cta-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 48px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--gold-primary);
+            color: #000000;
+            padding: 14px 36px;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--gold-glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--gold-primary);
+            padding: 14px 36px;
+            font-size: 16px;
+            font-weight: 600;
+            border: 1.5px solid var(--gold-primary);
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--gold-glow);
+        }
+
+        /* Hero Dashboard Preview */
+        .hero-preview {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 24px;
+            margin: 20px auto 0;
+            max-width: 1000px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .preview-card {
+            background: rgba(0,0,0,0.5);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--border-subtle);
+            transition: all 0.3s ease;
+        }
+
+        .preview-card:hover {
+            border-color: var(--gold-primary);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .preview-card .icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .preview-card .title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gold-primary);
+        }
+
+        .preview-card .desc {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .preview-footer {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            padding-top: 16px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        /* Trust Bar */
+        .trust-bar {
+            background: var(--bg-card);
+            padding: 24px;
+            text-align: center;
+            margin-top: 20px;
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .trust-bar p {
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .trust-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            font-weight: 500;
+        }
+
+        .trust-stats span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gold-light);
+        }
+
+        /* Modules Section */
+        .modules {
+            max-width: 1400px;
+            margin: 70px auto;
+            padding: 0 24px;
+        }
+
+        .modules h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 16px;
+            color: #ffffff;
+        }
+
+        .modules-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 48px;
+            font-size: 18px;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 28px;
+        }
+
+        .module {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 32px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .module:hover {
+            transform: translateY(-6px);
+            border-color: var(--gold-primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .module-icon {
+            font-size: 44px;
+            margin-bottom: 20px;
+        }
+
+        .module h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: var(--gold-primary);
+        }
+
+        .module p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .module ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .module li {
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+            font-size: 14px;
+            color: #cccccc;
+        }
+
+        .module li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--gold-primary);
+            font-weight: bold;
+        }
+
+        .module-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold-primary);
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 100px;
+            margin-top: 16px;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: var(--bg-card);
+            padding: 70px 24px;
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 48px;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .testimonial {
+            background: rgba(0,0,0,0.4);
+            border-radius: 20px;
+            padding: 28px;
+            border: 1px solid var(--border-subtle);
+            transition: all 0.3s ease;
+        }
+
+        .testimonial:hover {
+            border-color: var(--gold-primary);
+        }
+
+        .stars {
+            color: var(--gold-primary);
+            font-size: 18px;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .testimonial-text {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #cccccc;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--gold-primary);
+        }
+
+        .testimonial-title {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Stats Section */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            padding: 50px 24px;
+            text-align: center;
+        }
+
+        .stat h4 {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--gold-primary);
+        }
+
+        .stat p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Final CTA */
+        .final-cta {
+            text-align: center;
+            padding: 80px 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .final-cta h2 {
+            font-size: 38px;
+            margin-bottom: 20px;
+        }
+
+        .final-cta p {
+            font-size: 18px;
+            margin-bottom: 32px;
+            color: var(--text-muted);
+        }
+
+        .trial-note {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 12px;
+        }
+
+        .contact-info {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-subtle);
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .contact-info a {
+            color: var(--gold-primary);
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            color: var(--gold-light);
+        }
+
+        /* Footer */
+        .footer {
+            background: #050505;
+            padding: 30px 24px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer a {
+            color: var(--gold-primary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: var(--gold-light);
+        }
+
+        /* Gold Divider */
+        .gold-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .cta-group {
+                width: 100%;
+            }
+            
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .preview-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                gap: 30px;
+            }
+            
+            .stat h4 {
+                font-size: 28px;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
-  <h1>🚗 Driver Training & Exam Platform</h1>
-  <p>NTSA Prep • Academy • Valuation • Safety • PSV Training</p>
-</header>
+    <!-- Gold Divider Top -->
+    <div class="gold-divider"></div>
 
-<div class="nav">
-  <span>Dashboard</span>
-  <span id="user">Welcome User</span>
-</div>
-
-<div class="container">
-
-  <!-- NTSA EXAM -->
-  <div class="card">
-    <h3>🚗 NTSA Test Prep</h3>
-    <p>300+ exam questions, timed mock tests and scoring system.</p>
-    <button onclick="openModule('exam')">Start Exam</button>
-  </div>
-
-  <!-- DRIVER ACADEMY -->
-  <div class="card">
-    <h3>🎓 Driver Academy</h3>
-    <p>Defensive driving, refresher training & customer service.</p>
-    <button onclick="openModule('academy')">Enter</button>
-  </div>
-
-  <!-- SCHOOL BUS -->
-  <div class="card">
-    <h3>🚌 School Bus Safety</h3>
-    <p>Child safety, route planning & emergency response training.</p>
-    <button onclick="openModule('school')">Enroll</button>
-  </div>
-
-  <!-- VALUATION -->
-  <div class="card">
-    <h3>💰 Vehicle Valuation</h3>
-    <p>Instant AI market value, insurance & loan estimation.</p>
-    <button onclick="openModule('valuation')">Check Value</button>
-  </div>
-
-  <!-- LIBRARY -->
-  <div class="card">
-    <h3>📚 Digital Safety Library</h3>
-    <p>Download Highway Code, manuals & offline guides.</p>
-    <button onclick="openModule('library')">Download</button>
-  </div>
-
-  <!-- PSV -->
-  <div class="card">
-    <h3>🚐 PSV Course</h3>
-    <p>Public service vehicle training & compliance course.</p>
-    <button onclick="openModule('psv')">Start</button>
-  </div>
-
-</div>
-
-<!-- EXAM PANEL -->
-<div id="panel" style="display:none; padding:20px;">
-  <h2 id="panelTitle"></h2>
-  <div id="panelContent"></div>
-</div>
-
-<script>
-const API = "http://localhost:5000/api";
-
-/* MODULE ROUTING */
-function openModule(module) {
-  document.getElementById("panel").style.display = "block";
-
-  const title = document.getElementById("panelTitle");
-  const content = document.getElementById("panelContent");
-
-  if (module === "exam") {
-    title.innerText = "NTSA Exam System";
-    loadQuestions();
-  }
-
-  if (module === "valuation") {
-    title.innerText = "Vehicle Valuation";
-
-    content.innerHTML = `
-      <input id="year" placeholder="Year" /><br><br>
-      <input id="mileage" placeholder="Mileage" /><br><br>
-      <input id="condition" placeholder="Condition (1-10)" /><br><br>
-      <button onclick="calculateValue()">Calculate</button>
-      <div id="result"></div>
-    `;
-  }
-
-  if (module === "academy") {
-    title.innerText = "Driver Academy";
-    content.innerHTML = "<p>Loading courses...</p>";
-
-    fetch(API + "/courses")
-      .then(res => res.json())
-      .then(data => {
-        content.innerHTML = data.map(c => `
-          <div style='padding:10px;border-bottom:1px solid #333'>
-            ${c.name}
-          </div>
-        `).join("");
-      });
-  }
-
-  if (module === "school") {
-    title.innerText = "School Bus Safety";
-    content.innerHTML = "<p>Child safety training modules coming soon.</p>";
-  }
-
-  if (module === "library") {
-    title.innerText = "Digital Library";
-    content.innerHTML = "<p>Download Highway Code & NTSA materials.</p>";
-  }
-
-  if (module === "psv") {
-    title.innerText = "PSV Course";
-    content.innerHTML = "<p>Professional driver training system.</p>";
-  }
-}
-
-/* LOAD EXAM QUESTIONS */
-function loadQuestions() {
-  fetch(API + "/exam/questions", {
-    headers: {
-      "Authorization": "Bearer " + localStorage.getItem("token")
-    }
-  })
-  .then(res => res.json())
-  .then(data => {
-    let html = "";
-
-    data.forEach((q, index) => {
-      html += `
-        <div style="margin-bottom:20px">
-          <p><b>${index+1}. ${q.question}</b></p>
-          ${q.options.map(opt => `
-            <label>
-              <input type="radio" name="q${index}" value="${opt}">
-              ${opt}
-            </label><br>
-          `).join("")}
+    <!-- Navigation -->
+    <div class="navbar">
+        <div class="logo">
+            <div class="logo-main">
+                <span class="mei">MEI</span> <span class="drive">DRIVE</span> <span class="africa">AFRICA</span>
+            </div>
+            <div class="logo-sub">Powered by MEI PRESS GROUP</div>
         </div>
-      `;
-    });
+        <div class="nav-links">
+            <a href="#">Features</a>
+            <a href="#">Modules</a>
+            <a href="#">Pricing</a>
+            <a href="#" class="support">Support</a>
+            <a href="#" class="login">Login</a>
+            <a href="#" class="signup">Sign Up</a>
+        </div>
+    </div>
 
-    html += `<button onclick="submitExam()">Submit Exam</button>`;
-    document.getElementById("panelContent").innerHTML = html;
-  });
-}
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="powered-by">
+            📚 POWERED BY <span>MEI PRESS GROUP</span>
+        </div>
+        <div class="hero-badge">
+            🌍 <span>TRUSTED ACROSS AFRICA</span> | Kenya • Uganda • Tanzania • Rwanda • Nigeria • Ghana
+        </div>
+        
+        <!-- NEW TAGLINE -->
+        <h1>
+            Africa's Smartest<br>Driver Learning & Mobility Platform
+        </h1>
 
-/* SUBMIT EXAM */
-function submitExam() {
-  alert("Submitting exam... (connects to backend)");
+        <p>
+            Pass your driving test, certify your fleet, value your vehicle, and manage road safety — all from one intelligent platform. Trusted across Africa.
+        </p>
+        
+        <div class="cta-group">
+            <a href="#" class="btn-primary">🚀 GET STARTED FREE</a>
+            <a href="#" class="btn-secondary">🎯 EXPLORE MODULES</a>
+        </div>
 
-  // later connect to /api/exam/submit
-}
+        <!-- Dashboard Preview -->
+        <div class="hero-preview">
+            <div class="preview-grid">
+                <div class="preview-card"><div class="icon">📚</div><div class="title">Learner Hub</div><div class="desc">500+ Questions</div></div>
+                <div class="preview-card"><div class="icon">🎓</div><div class="title">Driver Academy</div><div class="desc">NTSA Approved</div></div>
+                <div class="preview-card"><div class="icon">🚸</div><div class="title">School Transport</div><div class="desc">Child Safety</div></div>
+                <div class="preview-card"><div class="icon">💰</div><div class="title">Vehicle Value</div><div class="desc">10 Value Bases</div></div>
+                <div class="preview-card"><div class="icon">📁</div><div class="title">Safety Library</div><div class="desc">44 Documents</div></div>
+                <div class="preview-card"><div class="icon">🚌</div><div class="title">PSV Course</div><div class="desc">NTSA Compliant</div></div>
+            </div>
+            <div class="preview-footer">Six integrated modules. One dashboard. Any device.</div>
+        </div>
+    </div>
 
-/* VALUATION */
-function calculateValue() {
-  const year = document.getElementById("year").value;
-  const mileage = document.getElementById("mileage").value;
-  const condition = document.getElementById("condition").value;
+    <!-- Trust Bar -->
+    <div class="trust-bar">
+        <p>TRUSTED BY</p>
+        <div class="trust-stats">
+            <span>🏦 50+ Banks</span>
+            <span>🚗 800+ Fleets</span>
+            <span>📚 100+ Driving Schools</span>
+        </div>
+    </div>
 
-  fetch(API + "/valuation", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ year, mileage, condition })
-  })
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById("result").innerHTML = `
-      <h3>Market Value: ${data.marketValue}</h3>
-      <h3>FSV: ${data.forcedSaleValue}</h3>
-    `;
-  });
-}
-</script>
+    <!-- Six Modules Section -->
+    <div class="modules">
+        <h2>Everything You Need. Six Complete Modules.</h2>
+        <div class="modules-subtitle">From first-time learner to professional fleet manager — we've got you covered.</div>
+        
+        <div class="modules-grid">
+            <!-- Module 1 -->
+            <div class="module">
+                <div class="module-icon">📚</div>
+                <h3>LEARNER HUB</h3>
+                <p>Pass your driving test on the first try with Africa's most comprehensive test prep.</p>
+                <ul>
+                    <li>500+ practice questions</li>
+                    <li>14 categories (signs, rules, first aid, PSV)</li>
+                    <li>Full-length mock exams</li>
+                    <li>Model town board simulator</li>
+                    <li>Pass guarantee</li>
+                </ul>
+                <div class="module-badge">⭐ 98% pass rate</div>
+            </div>
+
+            <!-- Module 2 -->
+            <div class="module">
+                <div class="module-icon">🎓</div>
+                <h3>DRIVER ACADEMY</h3>
+                <p>Complete driver certification for PSV, HGV, taxi, and private hire drivers.</p>
+                <ul>
+                    <li>NTSA-approved curriculum</li>
+                    <li>20 instructor-ready training documents</li>
+                    <li>22 hours core theory</li>
+                    <li>Practical driving guides</li>
+                </ul>
+                <div class="module-badge">📜 Certificate ready</div>
+            </div>
+
+            <!-- Module 3 -->
+            <div class="module">
+                <div class="module-icon">🚸</div>
+                <h3>SCHOOL TRANSPORT SAFETY</h3>
+                <p>School transport and corporate fleet safety management systems.</p>
+                <ul>
+                    <li>Pre-trip & post-trip child safety checks</li>
+                    <li>Emergency evacuation drill logs</li>
+                    <li>Route and stop audit forms</li>
+                    <li>No child left behind system</li>
+                </ul>
+                <div class="module-badge">🛡️ NTSA compliant</div>
+            </div>
+
+            <!-- Module 4 -->
+            <div class="module">
+                <div class="module-icon">💰</div>
+                <h3>VEHICLE VALUE ESTIMATOR</h3>
+                <p>Legally defensible valuations for banks, insurance companies, and asset finance.</p>
+                <ul>
+                    <li>10 legally recognized value bases</li>
+                    <li>Bank accepted (CBK guidelines)</li>
+                    <li>ISK & IVS compliant</li>
+                    <li>Forced Sale & Replacement values</li>
+                </ul>
+                <div class="module-badge">⚖️ Legally defensible</div>
+            </div>
+
+            <!-- Module 5 -->
+            <div class="module">
+                <div class="module-icon">📁</div>
+                <h3>DIGITAL SAFETY LIBRARY</h3>
+                <p>44 professional documents for daily fleet operations and compliance.</p>
+                <ul>
+                    <li>Pre-trip checklists</li>
+                    <li>Accident audit forms</li>
+                    <li>Maintenance logs</li>
+                    <li>Printable & fillable PDFs</li>
+                </ul>
+                <div class="module-badge">📄 44 documents</div>
+            </div>
+
+            <!-- Module 6 -->
+            <div class="module">
+                <div class="module-icon">🚌</div>
+                <h3>PSV OPERATOR COURSE</h3>
+                <p>Complete public service vehicle driver certification program.</p>
+                <ul>
+                    <li>57.5 hours theory training</li>
+                    <li>52 hours practical training</li>
+                    <li>Certificate of completion</li>
+                    <li>Category D1, D2, D3 compliant</li>
+                </ul>
+                <div class="module-badge">🎫 NTSA compliant</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="stats">
+        <div class="stat"><h4>25,000+</h4><p>Active Drivers</p></div>
+        <div class="stat"><h4>800+</h4><p>Corporate Fleets</p></div>
+        <div class="stat"><h4>100+</h4><p>Driving Schools</p></div>
+        <div class="stat"><h4>98%</h4><p>First-Time Pass Rate</p></div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="testimonials">
+        <h2>What Our Users Say</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial">
+                <div class="stars">★★★★★</div>
+                <div class="testimonial-text">"Passed my NTSA test on the first try. The practice questions were exactly what appeared on the exam. The model town simulator saved me."</div>
+                <div class="testimonial-author">— James Mwangi</div>
+                <div class="testimonial-title">Learner Driver, Nairobi</div>
+            </div>
+            <div class="testimonial">
+                <div class="stars">★★★★★</div>
+                <div class="testimonial-text">"The PSV course transformed my drivers. They are now fully compliant with NTSA regulations. The 44 safety documents are invaluable."</div>
+                <div class="testimonial-author">— Peter Kipchoge</div>
+                <div class="testimonial-title">Fleet Manager, 200+ Drivers</div>
+            </div>
+            <div class="testimonial">
+                <div class="stars">★★★★★</div>
+                <div class="testimonial-text">"The child safety checklists give me peace of mind every school day. The evacuation drill logs helped us get certified."</div>
+                <div class="testimonial-author">— Grace Nduta</div>
+                <div class="testimonial-title">School Transport Operator</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Final CTA -->
+    <div class="final-cta">
+        <h2>Ready to Get Started?</h2>
+        <p>Join over 25,000 drivers, 800+ fleets, and 100+ driving schools using Mei Drive Africa across the continent.</p>
+        <a href="#" class="btn-primary" style="background: var(--gold-primary); color: #000000; font-size: 18px; padding: 16px 48px;">✨ START YOUR FREE TRIAL</a>
+        <div class="trial-note">No credit card required. Free for 1 day.</div>
+        
+        <div class="contact-info">
+            📧 <a href="mailto:hello@meipressgroup.com">hello@meipressgroup.com</a> &nbsp;|&nbsp;
+            📞 <a href="tel:+254703738707">+254 703 738 707</a> &nbsp;|&nbsp;
+            🌐 <a href="#">www.meipressgroup.com</a>
+        </div>
+    </div>
+
+    <!-- Gold Divider -->
+    <div class="gold-divider"></div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2026 MEI DRIVE AFRICA. A division of MEI PRESS GROUP. All rights reserved.</p>
+        <p style="margin-top: 8px;"><a href="#">Terms of Service</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact Us</a></p>
+    </div>
 
 </body>
 </html>
