@@ -1,0 +1,150 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import {
+  BookOpen,
+  ClipboardCheck,
+  Trophy,
+  TrendingUp,
+  ChevronRight,
+  Flame
+} from 'lucide-react';
+import StatCard from '@/components/dashboard/StatCard';
+import ModuleCard from '@/components/dashboard/ModuleCard';
+
+export default function Dashboard() {
+
+  // ✅ LOCAL MOCK DATA (replaces base44 + react-query)
+  const [modules] = useState([
+    { id: 1, title: 'NTSA Test Prep', progress: 70 },
+    { id: 2, title: 'Road Signs', progress: 45 },
+    { id: 3, title: 'Defensive Driving', progress: 85 },
+    { id: 4, title: 'PSV Training', progress: 60 },
+  ]);
+
+  const [attempts] = useState([
+    { score: 72, passed: true },
+    { score: 65, passed: false },
+    { score: 88, passed: true },
+  ]);
+
+  const [progress] = useState([
+    { completed: true },
+    { completed: false },
+    { completed: true },
+    { completed: true },
+  ]);
+
+  // ✅ CALCULATIONS
+  const totalCompleted = progress.filter(p => p.completed).length;
+  const latestScore = attempts.length > 0 ? attempts[0].score : null;
+  const bestScore = attempts.length > 0 ? Math.max(...attempts.map(a => a.score)) : 0;
+  const passedCount = attempts.filter(a => a.passed).length;
+
+  return (
+    <div className="space-y-8">
+
+      {/* HEADER */}
+      <div>
+        <h1 className="text-2xl font-bold">Welcome Back 👋</h1>
+        <p className="text-muted-foreground mt-1">
+          Continue your journey to becoming a certified driver.
+        </p>
+      </div>
+
+      {/* STATS */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+
+        <StatCard
+          title="Lessons Done"
+          value={totalCompleted}
+          subtitle="Keep going!"
+          icon={BookOpen}
+        />
+
+        <StatCard
+          title="Exams Taken"
+          value={attempts.length}
+          subtitle={`${passedCount} passed`}
+          icon={ClipboardCheck}
+        />
+
+        <StatCard
+          title="Best Score"
+          value={bestScore ? `${bestScore}%` : '—'}
+          subtitle="All-time high"
+          icon={Trophy}
+        />
+
+        <StatCard
+          title="Latest Score"
+          value={latestScore !== null ? `${latestScore}%` : '—'}
+          subtitle={
+            latestScore !== null && latestScore >= 70
+              ? 'Passed!'
+              : 'Keep practicing'
+          }
+          icon={TrendingUp}
+        />
+
+      </div>
+
+      {/* QUICK ACTION */}
+      <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent rounded-2xl border border-primary/20 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center">
+            <Flame className="w-6 h-6 text-white" />
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-lg">Ready for a Mock Exam?</h3>
+            <p className="text-sm text-muted-foreground">
+              40 questions, 30 minutes — NTSA style test
+            </p>
+          </div>
+        </div>
+
+        <Link to="/exam">
+          <Button>
+            Start Exam <ChevronRight className="w-4 h-4 ml-1" />
+          </Button>
+        </Link>
+
+      </div>
+
+      {/* MODULES */}
+      <div>
+
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold">Learning Modules</h2>
+
+          <Link to="/modules" className="text-sm text-primary flex items-center gap-1">
+            View All <ChevronRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        {modules.length === 0 ? (
+          <div className="border rounded-xl p-10 text-center text-muted-foreground">
+            <BookOpen className="mx-auto mb-3 w-10 h-10 opacity-30" />
+            No modules available yet
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-4">
+
+            {modules.slice(0, 4).map((mod) => (
+              <ModuleCard
+                key={mod.id}
+                module={mod}
+                progress={mod.progress}
+              />
+            ))}
+
+          </div>
+        )}
+
+      </div>
+
+    </div>
+  );
+}
