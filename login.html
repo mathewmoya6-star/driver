@@ -1,0 +1,30 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEI DRIVE AFRICA | Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #d4af37; --dark: #0a0a0a; --card: #111; --border: #222; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--dark); color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .login-box { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 40px; width: 100%; max-width: 400px; margin: 20px; }
+        .login-box h1 { color: var(--gold); margin-bottom: 30px; text-align: center; }
+        input { width: 100%; padding: 14px; margin-bottom: 20px; background: #1a1a1a; border: 1px solid var(--border); border-radius: 12px; color: white; }
+        button { width: 100%; padding: 14px; background: var(--gold); border: none; border-radius: 30px; font-weight: 700; cursor: pointer; }
+        .link { text-align: center; margin-top: 20px; color: #888; }
+        .link a { color: var(--gold); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h1>Welcome Back</h1>
+        <input type="email" placeholder="Email address" id="email">
+        <input type="password" placeholder="Password" id="password">
+        <button onclick="alert('Demo login — full auth coming soon. Use any email/password for now.')">Login</button>
+        <div class="link">Don't have an account? <a href="signup.html">Sign up</a></div>
+    </div>
+</body>
+</html>
