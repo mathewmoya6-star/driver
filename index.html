@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>MEI DRIVE AFRICA | Home | Driver Training & Fleet Management Platform</title>
+    <title>MEI DRIVE AFRICA | Driver Training & Fleet Management Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -12,7 +12,7 @@
 
         .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
 
-        /* Navigation - SINGLE unified bar (fixed to remove duplicate style) */
+        /* SINGLE Navigation Bar - ONLY ONE! */
         .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 48px; max-width: 1400px; margin: 0 auto; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 16px; }
         .logo { font-size: 24px; font-weight: 800; white-space: nowrap; }
         .logo .mei { color: var(--gold); }
@@ -20,11 +20,11 @@
         .logo .africa { color: var(--gold-light); }
         .nav-links { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; row-gap: 12px; }
         .nav-links a { color: #fff; text-decoration: none; transition: color 0.3s; font-size: 14px; font-weight: 500; }
-        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
         .btn-outline { border: 1px solid rgba(255,255,255,0.25); padding: 8px 20px; border-radius: 40px; background: transparent; transition: all 0.2s; }
         .btn-outline:hover { border-color: var(--gold); background: rgba(212,175,55,0.08); color: var(--gold) !important; }
         .btn-gold { background: var(--gold); color: #000 !important; padding: 8px 24px; border-radius: 40px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
-        .btn-gold:hover { background: #c4a22c; transform: translateY(-1px); color: #000 !important; }
+        .btn-gold:hover { background: #c4a22c; transform: translateY(-1px); }
 
         /* Hero Section */
         .hero { text-align: center; padding: 80px 0; background: linear-gradient(135deg, #121212 0%, #0a0a0a 100%); border-bottom: 1px solid var(--border); }
@@ -36,7 +36,7 @@
         .btn-secondary { background: transparent; border: 1.5px solid var(--gold); color: var(--gold); padding: 14px 36px; border-radius: 50px; text-decoration: none; font-weight: 600; display: inline-block; transition: all 0.3s; }
         .btn-secondary:hover { background: rgba(212,175,55,0.1); transform: translateY(-2px); }
 
-        /* Stats Section - Clean stat cards, no navigation elements */
+        /* Stats Section - Pure metrics, NOT navigation */
         .stats { display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; padding: 50px 0; background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
         .stat { text-align: center; transition: transform 0.2s; }
         .stat:hover { transform: translateY(-3px); }
@@ -58,42 +58,32 @@
 
         /* Footer */
         .footer { background: #050505; padding: 40px 24px; text-align: center; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 60px; }
-        .footer p { margin-top: 8px; }
         .gold-divider { height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); width: 100%; }
 
-        /* Mobile responsive fixes - no double nav */
-        @media (max-width: 1024px) {
-            .navbar { padding: 20px 24px; }
-            .nav-links { gap: 14px; }
-        }
-        @media (max-width: 860px) {
-            .navbar { flex-direction: column; align-items: center; text-align: center; padding: 18px 20px; }
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; padding: 20px; align-items: center; }
             .nav-links { justify-content: center; gap: 12px; }
-            .hero h1 { font-size: 34px; }
+            .hero h1 { font-size: 32px; }
             .hero { padding: 50px 0; }
-            .stats { gap: 40px; padding: 40px 20px; }
+            .stats { gap: 30px; padding: 40px 20px; }
             .stat h3 { font-size: 28px; }
             .modules-grid { grid-template-columns: 1fr; gap: 20px; }
             .section-title { font-size: 28px; }
         }
-        @media (max-width: 580px) {
+        @media (max-width: 480px) {
             .nav-links a { font-size: 12px; }
             .btn-outline, .btn-gold { padding: 6px 14px; }
             .hero-buttons .btn-primary, .hero-buttons .btn-secondary { padding: 10px 24px; font-size: 14px; }
         }
-        
-        /* Additional polish for consistency */
-        .module-card:active { transform: translateY(-2px); }
-        a { cursor: pointer; }
     </style>
 </head>
 <body>
 
-<!-- Single gold accent line (not a navigation element) -->
+<!-- SINGLE GOLD ACCENT LINE -->
 <div class="gold-divider"></div>
 
 <!-- ============================================= -->
-<!-- ONE NAVIGATION BAR (fixed, no duplicate bar)  -->
+<!-- ONLY ONE NAVIGATION BAR - NO DUPLICATES      -->
 <!-- ============================================= -->
 <div class="navbar">
     <div class="logo">
@@ -102,11 +92,11 @@
         <span class="africa">AFRICA</span>
     </div>
     <div class="nav-links">
-        <a href="index.html">Home</a>
+        <a href="index.html" class="active">Home</a>
         <a href="learner-hub.html">Learner Hub</a>
         <a href="driver-academy.html">Driver Academy</a>
-        <a href="school-transport-safety.html">School Transport Safety</a>
-        <a href="vehicle-value.html">Vehicle Value Estimator</a>
+        <a href="school-safety.html">School Safety</a>
+        <a href="valuation.html">Valuation</a>
         <a href="safety-library.html">Safety Library</a>
         <a href="psv-course.html">PSV Course</a>
         <a href="#" class="btn-outline">Login</a>
@@ -114,19 +104,19 @@
     </div>
 </div>
 
-<!-- Hero section (no extra nav) -->
+<!-- Hero Section -->
 <section class="hero">
     <div class="container">
         <h1>Africa's Smartest Driver Learning & Mobility Platform</h1>
         <p>Pass your driving test, certify your fleet, value your vehicle, and manage road safety — all from one intelligent platform. Trusted across Africa.</p>
         <div class="hero-buttons">
             <a href="learner-hub.html" class="btn-primary">🚀 Start Learning</a>
-            <a href="vehicle-value.html" class="btn-secondary">💰 Value Your Vehicle</a>
+            <a href="valuation.html" class="btn-secondary">💰 Value Your Vehicle</a>
         </div>
     </div>
 </section>
 
-<!-- Stats section: purely visual metrics, no navigation links -->
+<!-- Stats Section - Pure metrics (NOT a navigation bar) -->
 <section class="stats">
     <div class="stat"><h3>25,000+</h3><p>Active Drivers</p></div>
     <div class="stat"><h3>800+</h3><p>Corporate Fleets</p></div>
@@ -134,7 +124,7 @@
     <div class="stat"><h3>98%</h3><p>Pass Rate</p></div>
 </section>
 
-<!-- Main content modules section -->
+<!-- Main Modules Section -->
 <section class="modules" id="modules">
     <div class="container">
         <h2 class="section-title">📚 Six Complete Modules</h2>
@@ -145,7 +135,7 @@
             <a href="learner-hub.html" class="module-card">
                 <div class="module-icon">📚</div>
                 <h3>Learner Hub</h3>
-                <p>Pass your NTSA driving test with 320 practice questions, model town simulator, and full-length mock exams. 98% pass rate.</p>
+                <p>Pass your NTSA driving test with 400+ practice questions, model town simulator, and full-length mock exams. 98% pass rate.</p>
                 <div class="module-link">Start Learning →</div>
             </a>
 
@@ -158,7 +148,7 @@
             </a>
 
             <!-- Module 3: School Transport Safety -->
-            <a href="school-transport-safety.html" class="module-card">
+            <a href="school-safety.html" class="module-card">
                 <div class="module-icon">🚸</div>
                 <h3>School Transport Safety</h3>
                 <p>Protect children on every trip with pre-trip/post-trip checklists, evacuation drills, and NTSA-compliant safety management.</p>
@@ -166,7 +156,7 @@
             </a>
 
             <!-- Module 4: Vehicle Value Estimator -->
-            <a href="vehicle-value.html" class="module-card">
+            <a href="valuation.html" class="module-card">
                 <div class="module-icon">💰</div>
                 <h3>Vehicle Value Estimator</h3>
                 <p>Legally defensible valuations for banks, insurance, and courts. 10 value bases including Open Market, Forced Sale, and Replacement.</p>
