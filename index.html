@@ -3,107 +3,307 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEI DRIVE AFRICA | Home</title>
+    <title>MEI DRIVE AFRICA | Smart Mobility Platform</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
+        :root {
+            --gold: #d4af37;
+            --dark: #0a0a0a;
+            --card: #111;
+            --border: #222;
+            --muted: #888;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; line-height: 1.5; }
-        :root { --gold: #d4af37; --bg-card: #111111; --border: #222222; --muted: #888888; }
 
-        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 48px; max-width: 1400px; margin: 0 auto; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 16px; }
-        .logo { font-size: 24px; font-weight: 800; }
-        .logo .mei { color: var(--gold); }
-        .logo .drive { color: #fff; }
-        .logo .africa { color: #f5e6a3; }
-        .nav-links { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-        .nav-links a { color: #fff; text-decoration: none; font-size: 14px; font-weight: 500; }
-        .nav-links a:hover { color: var(--gold); }
-        .btn-outline { border: 1px solid rgba(255,255,255,0.25); padding: 8px 20px; border-radius: 40px; }
-        .btn-gold { background: var(--gold); color: #000 !important; padding: 8px 24px; border-radius: 40px; font-weight: 700; text-decoration: none; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark);
+            color: #fff;
+        }
 
-        .hero { text-align: center; padding: 80px 0; background: linear-gradient(135deg, #121212 0%, #0a0a0a 100%); border-bottom: 1px solid var(--border); }
-        .hero h1 { font-size: 52px; font-weight: 800; background: linear-gradient(135deg, #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
-        .hero p { color: var(--muted); max-width: 700px; margin: 0 auto 30px; font-size: 18px; }
-        .btn-primary { background: var(--gold); color: #000; padding: 14px 36px; border-radius: 50px; text-decoration: none; font-weight: 700; display: inline-block; }
-        .btn-secondary { background: transparent; border: 1.5px solid var(--gold); color: var(--gold); padding: 14px 36px; border-radius: 50px; text-decoration: none; font-weight: 600; }
+        .container {
+            max-width: 1400px;
+            margin: auto;
+            padding: 0 20px;
+        }
 
-        .stats { display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; padding: 50px 0; background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        .stat { text-align: center; }
-        .stat h3 { font-size: 36px; color: var(--gold); }
-        .stat p { font-size: 14px; color: var(--muted); }
+        /* NAVBAR */
+        header {
+            border-bottom: 1px solid var(--border);
+        }
 
-        .modules { padding: 70px 0; }
-        .section-title { font-size: 32px; color: var(--gold); text-align: center; margin-bottom: 16px; }
-        .modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; max-width: 1400px; margin: 40px auto; padding: 0 24px; }
-        .module-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; padding: 32px; text-decoration: none; display: block; transition: all 0.3s; }
-        .module-card:hover { border-color: var(--gold); transform: translateY(-5px); }
-        .module-icon { font-size: 48px; margin-bottom: 18px; }
-        .module-card h3 { color: var(--gold); font-size: 22px; margin-bottom: 12px; }
-        .module-card p { color: #aaa; font-size: 14px; margin-bottom: 20px; }
-        .module-link { color: var(--gold); font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            flex-wrap: wrap;
+        }
 
-        .footer { background: #050505; padding: 40px; text-align: center; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 40px; }
-        .gold-divider { height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); width: 100%; }
+        .logo {
+            font-weight: 800;
+            font-size: 22px;
+        }
 
-        @media (max-width: 768px) {
-            .navbar { flex-direction: column; padding: 20px; }
-            .hero h1 { font-size: 32px; }
-            .stats { gap: 30px; }
+        .logo span { color: var(--gold); }
+
+        .links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .links a:hover {
+            color: var(--gold);
+        }
+
+        .btn {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .outline {
+            border: 1px solid #444;
+        }
+
+        .gold {
+            background: var(--gold);
+            color: #000 !important;
+            font-weight: 600;
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .hero h1 {
+            font-size: 44px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            color: var(--muted);
+            max-width: 650px;
+            margin: auto;
+            font-size: 16px;
+        }
+
+        .cta {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .cta a {
+            text-decoration: none;
+            padding: 12px 28px;
+            border-radius: 30px;
+        }
+
+        .primary {
+            background: var(--gold);
+            color: #000;
+            font-weight: 700;
+        }
+
+        .secondary {
+            border: 1px solid var(--gold);
+            color: var(--gold);
+        }
+
+        /* STATS */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            text-align: center;
+            padding: 40px 0;
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stats h3 {
+            color: var(--gold);
+            font-size: 28px;
+        }
+
+        .stats p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* MODULES */
+        .modules {
+            padding: 60px 0;
+        }
+
+        .modules h2 {
+            text-align: center;
+            color: var(--gold);
+            margin-bottom: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 22px;
+            border-radius: 16px;
+            transition: 0.3s;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: var(--gold);
+            margin: 10px 0;
+        }
+
+        .card p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .arrow {
+            margin-top: 12px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 30px 10px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 13px;
         }
     </style>
 </head>
+
 <body>
 
-<div class="gold-divider"></div>
+<header>
+    <div class="container">
+        <nav>
+            <div class="logo">MEI <span>DRIVE AFRICA</span></div>
 
-<div class="navbar">
-    <div class="logo"><span class="mei">MEI</span> <span class="drive">DRIVE</span> <span class="africa">AFRICA</span></div>
-    <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="learner-hub.html">Learner Hub</a>
-        <a href="driver-academy.html">Driver Academy</a>
-        <a href="school-safety.html">School Safety</a>
-        <a href="valuation.html">Valuation</a>
-        <a href="safety-library.html">Safety Library</a>
-        <a href="psv-course.html">PSV Course</a>
-        <a href="#" class="btn-outline">Login</a>
-        <a href="#" class="btn-gold">Sign Up</a>
+            <div class="links">
+                <a href="index.html">Home</a>
+                <a href="learner-hub.html">Learner Hub</a>
+                <a href="driver-academy.html">Driver Academy</a>
+                <a href="safety-library.html">Safety Library</a>
+                <a href="#" class="btn outline">Login</a>
+                <a href="#" class="btn gold">Sign Up</a>
+            </div>
+        </nav>
     </div>
-</div>
+</header>
+
+<main>
 
 <section class="hero">
-    <div style="max-width:1400px;margin:0 auto;padding:0 24px;">
-        <h1>Africa's Smartest Driver Learning & Mobility Platform</h1>
-        <p>Pass your driving test, certify your fleet, value your vehicle, and manage road safety — all from one intelligent platform.</p>
-        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-            <a href="learner-hub.html" class="btn-primary">🚀 Start Learning</a>
-            <a href="valuation.html" class="btn-secondary">💰 Value Your Vehicle</a>
-        </div>
+    <h1>Africa’s Smart Driving & Mobility Platform</h1>
+    <p>Learn, certify, value, and manage vehicles and road safety systems from one unified platform.</p>
+
+    <div class="cta">
+        <a href="learner-hub.html" class="primary">Start Learning</a>
+        <a href="valuation.html" class="secondary">Value Vehicle</a>
     </div>
 </section>
 
 <section class="stats">
-    <div class="stat"><h3>25,000+</h3><p>Active Drivers</p></div>
-    <div class="stat"><h3>800+</h3><p>Corporate Fleets</p></div>
-    <div class="stat"><h3>100+</h3><p>Driving Schools</p></div>
-    <div class="stat"><h3>98%</h3><p>Pass Rate</p></div>
-</section>
-
-<section class="modules">
-    <h2 class="section-title">📚 Six Complete Modules</h2>
-    <div class="modules-grid">
-        <a href="learner-hub.html" class="module-card"><div class="module-icon">📚</div><h3>Learner Hub</h3><p>Pass your NTSA driving test with 400+ practice questions and mock exams.</p><div class="module-link">Start Learning →</div></a>
-        <a href="driver-academy.html" class="module-card"><div class="module-icon">🎓</div><h3>Driver Academy</h3><p>Complete driver certification for all vehicle categories (A-G).</p><div class="module-link">Start Academy →</div></a>
-        <a href="school-safety.html" class="module-card"><div class="module-icon">🚸</div><h3>School Transport Safety</h3><p>Protect children with pre-trip checklists and evacuation drills.</p><div class="module-link">Manage Safety →</div></a>
-        <a href="valuation.html" class="module-card"><div class="module-icon">💰</div><h3>Vehicle Value Estimator</h3><p>Legally defensible valuations for banks, insurance, and courts.</p><div class="module-link">Value Vehicle →</div></a>
-        <a href="safety-library.html" class="module-card"><div class="module-icon">📁</div><h3>Digital Safety Library</h3><p>44 documents including checklists, forms, logs, and training records.</p><div class="module-link">Browse Library →</div></a>
-        <a href="psv-course.html" class="module-card"><div class="module-icon">🚌</div><h3>PSV Driver Course</h3><p>NTSA-compliant training for PSV categories B3, D1, D2, D3.</p><div class="module-link">Enroll Now →</div></a>
+    <div>
+        <h3>25K+</h3>
+        <p>Drivers</p>
+    </div>
+    <div>
+        <h3>800+</h3>
+        <p>Fleet Companies</p>
+    </div>
+    <div>
+        <h3>100+</h3>
+        <p>Schools</p>
+    </div>
+    <div>
+        <h3>98%</h3>
+        <p>Pass Rate</p>
     </div>
 </section>
 
-<footer class="footer">
-    <p>© 2026 MEI DRIVE AFRICA. All rights reserved.</p>
-    <p>✅ Pass your test | ✅ Certify your fleet | ✅ Value your vehicle | ✅ Manage road safety</p>
+<section class="modules container">
+    <h2>Platform Modules</h2>
+
+    <div class="grid">
+
+        <a href="learner-hub.html" class="card">
+            <h3>Learner Hub</h3>
+            <p>NTSA practice tests and driving exam preparation.</p>
+            <div class="arrow">→ Open</div>
+        </a>
+
+        <a href="driver-academy.html" class="card">
+            <h3>Driver Academy</h3>
+            <p>Full certification training for professional drivers.</p>
+            <div class="arrow">→ Open</div>
+        </a>
+
+        <a href="school-safety.html" class="card">
+            <h3>School Safety</h3>
+            <p>Transport safety systems for schools and buses.</p>
+            <div class="arrow">→ Open</div>
+        </a>
+
+        <a href="valuation.html" class="card">
+            <h3>Vehicle Valuation</h3>
+            <p>Market-based vehicle valuation system.</p>
+            <div class="arrow">→ Open</div>
+        </a>
+
+        <a href="safety-library.html" class="card">
+            <h3>Safety Library</h3>
+            <p>Forms, logs, and compliance documents.</p>
+            <div class="arrow">→ Open</div>
+        </a>
+
+        <a href="psv-course.html" class="card">
+            <h3>PSV Course</h3>
+            <p>Professional PSV driver training program.</p>
+            <div class="arrow">→ Open</div>
+        </a>
+
+    </div>
+</section>
+
+</main>
+
+<footer>
+    © 2026 MEI DRIVE AFRICA | Smart Mobility Ecosystem
 </footer>
 
 </body>
