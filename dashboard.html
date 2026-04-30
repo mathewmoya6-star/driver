@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEI DRIVE AFRICA | My Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #d4af37; --dark: #0a0a0a; --card: #111; --border: #222; --muted: #888; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--dark); color: #fff; }
+        .container { max-width: 1400px; margin: auto; padding: 0 20px; }
+        header { border-bottom: 1px solid var(--border); background: #0a0a0a; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; flex-wrap: wrap; gap: 16px; }
+        .logo { font-weight: 800; font-size: 22px; }
+        .logo span { color: var(--gold); }
+        .links { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+        .links a { color: #fff; text-decoration: none; font-size: 14px; transition: color 0.2s; }
+        .links a:hover { color: var(--gold); }
+        .btn { padding: 6px 14px; border-radius: 30px; font-size: 13px; font-weight: 600; }
+        .gold { background: var(--gold); color: #000 !important; }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; padding: 40px 0; }
+        .dashboard-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 24px; transition: 0.3s; }
+        .dashboard-card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .welcome { background: linear-gradient(135deg, #1a1a2e, #0a0a0a); padding: 40px; border-radius: 24px; margin: 30px 0; }
+        .logout-btn { background: #ff4444; color: white; border: none; padding: 8px 20px; border-radius: 30px; cursor: pointer; }
+        footer { text-align: center; padding: 30px 10px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; margin-top: 40px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <nav>
+            <div class="logo">MEI <span>DRIVE AFRICA</span></div>
+            <div class="links">
+                <a href="index.html">Home</a>
+                <a href="learner-hub.html">Learner Hub</a>
+                <a href="driver-academy.html">Driver Academy</a>
+                <a href="school-safety.html">School Safety</a>
+                <a href="valuation.html">Auto Value</a>
+                <a href="safety-library.html">Safety Library</a>
+                <a href="psv-course.html">PSV Course</a>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <div class="welcome" id="welcomeSection">
+            <h1>Welcome, <span id="userName">Driver</span>! 👋</h1>
+            <p style="color: var(--muted); margin-top: 10px;">Track your progress, access courses, and manage your driving career.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-card"><h3 style="color: var(--gold);">📚 My Courses</h3><p style="margin: 15px 0;">Learner Hub: In Progress</p><p>Driver Academy: Not Started</p><p>PSV Course: Not Started</p></div>
+            <div class="dashboard-card"><h3 style="color: var(--gold);">🏆 Achievements</h3><p style="margin: 15px 0;">🎯 Practice Tests: 0/10</p><p>⭐ Certificates: 0</p><p>📅 Days Active: 1</p></div>
+            <div class="dashboard-card"><h3 style="color: var(--gold);">🚗 Vehicle Valuations</h3><p style="margin: 15px 0;">Recent searches: 0</p><p>Saved vehicles: 0</p><button onclick="location.href='valuation.html'" style="background: var(--gold); border: none; padding: 8px 16px; border-radius: 20px; margin-top: 10px; cursor: pointer;">Value a Vehicle →</button></div>
+        </div>
+    </div>
+</main>
+
+<footer>© 2026 MEI DRIVE AFRICA | Smart Mobility Ecosystem</footer>
+
+<script>
+    // Check if user is logged in
+    const currentUser = JSON.parse(localStorage.getItem('mei_current_user'));
+    if (!currentUser) {
+        window.location.href = 'login.html';
+    } else {
+        document.getElementById('userName').innerText = currentUser.name.split(' ')[0];
+    }
+
+    function logout() {
+        localStorage.removeItem('mei_current_user');
+        window.location.href = 'index.html';
+    }
+</script>
+</body>
+</html>
