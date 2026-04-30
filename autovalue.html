@@ -2,397 +2,730 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoValue - Vehicle Valuation | Mei Drive Africa</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MEI DRIVE AFRICA | Auto Value · Smart Vehicle Valuation</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --gold: #d4af37;
+            --dark: #0a0a0a;
+            --card: #111;
+            --border: #222;
+            --muted: #888;
+            --input-bg: #1a1a1a;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             font-family: 'Inter', sans-serif;
-            background: #f5f7f5;
-            color: #1a2f1a;
+            background: var(--dark);
+            color: #fff;
+            line-height: 1.5;
         }
-        .navbar {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 16px 0;
+
+        .container {
+            max-width: 1400px;
+            margin: auto;
+            padding: 0 24px;
+        }
+
+        /* NAVBAR */
+        header {
+            border-bottom: 1px solid var(--border);
+            background: #0a0a0a;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 10;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        .nav-flex {
+
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 18px 0;
             flex-wrap: wrap;
             gap: 16px;
         }
+
         .logo {
-            font-size: 1.5rem;
             font-weight: 800;
-            color: #1a5a2a;
-            text-decoration: none;
+            font-size: 22px;
+            letter-spacing: -0.3px;
         }
-        .logo span {
-            background: #f5a623;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            margin-left: 8px;
-        }
-        .nav-links {
+
+        .logo span { color: var(--gold); }
+
+        .links {
             display: flex;
-            gap: 20px;
+            gap: 16px;
             flex-wrap: wrap;
         }
-        .nav-links a {
+
+        .links a {
+            color: #fff;
             text-decoration: none;
-            color: #2c4a2c;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .links a:hover {
+            color: var(--gold);
+        }
+
+        .btn {
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 13px;
             font-weight: 500;
+            transition: all 0.2s;
         }
-        .nav-links a:hover {
-            color: #1a5a2a;
+
+        .outline {
+            border: 1px solid #444;
+            background: transparent;
         }
-        .hero {
-            background: linear-gradient(135deg, #e8f5e5, #f0f8ec);
-            padding: 60px 0;
-            border-radius: 0 0 30px 30px;
+
+        .gold {
+            background: var(--gold);
+            color: #000 !important;
+            font-weight: 600;
         }
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
+
+        /* HERO / VALUATION HERO */
+        .valuation-hero {
+            text-align: center;
+            padding: 50px 20px 30px;
         }
-        h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            line-height: 1.2;
+
+        .valuation-hero h1 {
+            font-size: 42px;
+            background: linear-gradient(135deg, #fff 30%, var(--gold) 80%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+        }
+
+        .auto-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.12);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 40px;
+            padding: 6px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--gold);
             margin-bottom: 20px;
         }
-        .green {
-            color: #1a5a2a;
+
+        .valuation-hero p {
+            color: var(--muted);
+            max-width: 620px;
+            margin: 12px auto 0;
+            font-size: 16px;
         }
-        .btn {
-            display: inline-block;
-            padding: 12px 28px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            margin-top: 16px;
-            cursor: pointer;
-            border: none;
-            font-family: inherit;
+
+        /* VALUATION CARD (AUTO VALUE ENGINE) */
+        .valuation-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            max-width: 880px;
+            margin: 20px auto 50px;
+            padding: 30px 28px;
+            transition: 0.2s;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
         }
-        .btn-primary {
-            background: #1a5a2a;
-            color: white;
-        }
-        .btn-outline {
-            border: 2px solid #1a5a2a;
-            color: #1a5a2a;
-            background: white;
-            margin-left: 12px;
-        }
-        .value-card {
-            background: white;
-            border-radius: 24px;
-            padding: 28px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .price {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #1a5a2a;
-            margin: 16px 0;
-        }
-        .section {
-            padding: 60px 0;
-        }
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 40px;
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        .feature {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        .feature:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-        .feature i {
-            font-size: 2.5rem;
-            color: #1a5a2a;
-            margin-bottom: 16px;
-        }
-        .valuation-box {
-            background: white;
-            border-radius: 24px;
-            padding: 40px;
-            margin: 40px 0;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-        }
+
         .form-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 28px;
         }
-        label {
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-group label {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: var(--gold);
+            text-transform: uppercase;
+        }
+
+        .input-group input, .input-group select {
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 12px 16px;
+            color: white;
+            font-family: 'Inter', monospace;
+            font-size: 15px;
+            transition: 0.2s;
+            outline: none;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+        }
+
+        .range-hint {
+            font-size: 12px;
+            color: #6c6c6c;
+            margin-top: 4px;
+        }
+
+        .auto-value-result {
+            background: linear-gradient(145deg, #0c0c0c, #080808);
+            border-radius: 28px;
+            padding: 20px 24px;
+            margin: 28px 0 24px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            text-align: center;
+        }
+
+        .value-tag {
+            font-size: 14px;
+            letter-spacing: 1px;
+            color: var(--muted);
+        }
+
+        .estimated-value {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--gold);
+            margin: 12px 0 8px;
+            word-break: break-word;
+        }
+
+        .valuation-note {
+            font-size: 13px;
+            color: #aaa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .calc-btn {
+            background: var(--gold);
+            border: none;
+            width: 100%;
+            padding: 14px;
+            font-weight: 700;
+            font-size: 16px;
+            border-radius: 50px;
+            color: #000;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Inter', sans-serif;
+            margin-top: 8px;
+        }
+
+        .calc-btn:hover {
+            background: #c2a42f;
+            transform: scale(0.98);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .market-trend {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px dashed #2a2a2a;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        /* STATS */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            text-align: center;
+            padding: 40px 0;
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-top: 20px;
+        }
+
+        .stats h3 {
+            color: var(--gold);
+            font-size: 28px;
+        }
+
+        .stats p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* MODULES SECTION (same elegance) */
+        .modules {
+            padding: 60px 0;
+        }
+
+        .modules h2 {
+            text-align: center;
+            color: var(--gold);
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 22px;
+            border-radius: 24px;
+            transition: 0.3s;
+            text-decoration: none;
+            color: #fff;
             display: block;
-            margin-bottom: 8px;
+        }
+
+        .card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: var(--gold);
+            margin: 10px 0;
+        }
+
+        .card p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .arrow {
+            margin-top: 12px;
+            color: var(--gold);
             font-weight: 600;
         }
-        select, input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e8e0;
-            border-radius: 12px;
-            font-family: inherit;
-        }
-        .result-box {
-            background: #e8f5e5;
-            border-radius: 20px;
-            padding: 24px;
-            margin-top: 24px;
+
+        footer {
             text-align: center;
+            padding: 30px 10px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 13px;
         }
-        .result-price {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1a5a2a;
-            margin: 16px 0;
-        }
-        .market-table {
-            background: white;
-            border-radius: 20px;
-            overflow-x: auto;
-            margin: 40px 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #e0e8e0;
-        }
-        th {
-            background: #f0f8ec;
-        }
-        .fraud-box {
-            background: white;
-            border-radius: 24px;
-            padding: 40px;
-            margin: 40px 0;
-        }
-        .vin-group {
-            display: flex;
-            gap: 16px;
-            margin: 24px 0;
-            flex-wrap: wrap;
-        }
-        .vin-group input {
-            flex: 1;
-        }
-        .footer {
-            background: #1a2f1a;
-            color: white;
-            padding: 48px 0 24px;
-            margin-top: 60px;
-            text-align: center;
-        }
-        @media (max-width: 768px) {
-            .hero-grid {
-                grid-template-columns: 1fr;
-            }
-            h1 {
-                font-size: 2rem;
-            }
+
+        @media (max-width: 680px) {
+            .estimated-value { font-size: 34px; }
+            .valuation-card { padding: 20px; }
+            .hero h1, .valuation-hero h1 { font-size: 30px; }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container nav-flex">
-            <a href="index.html" class="logo">Mei Drive Africa <span>AutoValue</span></a>
-            <div class="nav-links">
+
+<header>
+    <div class="container">
+        <nav>
+            <div class="logo">MEI <span>DRIVE AFRICA</span></div>
+            <div class="links">
                 <a href="index.html">Home</a>
                 <a href="learner-hub.html">Learner Hub</a>
                 <a href="driver-academy.html">Driver Academy</a>
-                <a href="school-safety.html">School Safety</a>
                 <a href="safety-library.html">Safety Library</a>
-                <a href="psv-course.html">PSV Course</a>
-                <a href="autovalue.html" style="color:#1a5a2a; font-weight:700;">AutoValue</a>
+                <a href="#" class="btn outline">Login</a>
+                <a href="#" class="btn gold">Sign Up</a>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </div>
+</header>
 
-    <section class="hero">
-        <div class="container hero-grid">
-            <div>
-                <h1>Know Your <span class="green">Vehicle's True Value</span> in Africa</h1>
-                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 24px;">AI-powered valuation trusted by 10,000+ dealers across Kenya, Nigeria, Rwanda & Uganda. Real-time market data + fraud protection.</p>
-                <a href="#valuation" class="btn btn-primary">Get Valuation →</a>
-                <a href="#market" class="btn btn-outline">Market Trends</a>
-            </div>
-            <div>
-                <div class="value-card">
-                    <span style="background:#e8f5e5; padding:4px 12px; border-radius:20px;">🔥 Hot in Nairobi</span>
-                    <h3 style="margin-top: 16px;">Toyota Hilux 2021</h3>
-                    <div class="price">KES 2,150,000</div>
-                    <div>↑ +12% this month | Trust Score: 96%</div>
-                    <hr style="margin: 16px 0;">
-                    <div>Range: KES 2.05M - 2.25M</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
+<main>
+    <!-- VALUATION SECTION now fully "auto value" dynamic -->
     <div class="container">
-        <div class="section">
-            <h2 class="section-title">Why Choose AutoValue?</h2>
-            <div class="features-grid">
-                <div class="feature"><i class="fas fa-microchip"></i><h3>AI Valuation</h3><p>Machine learning on African market data</p></div>
-                <div class="feature"><i class="fas fa-chart-line"></i><h3>Market Intel</h3><p>Real-time trends & price analysis</p></div>
-                <div class="feature"><i class="fas fa-shield-alt"></i><h3>Fraud Check</h3><p>VIN verification & alerts</p></div>
-                <div class="feature"><i class="fas fa-file-alt"></i><h3>Reports</h3><p>Bank-grade certificates</p></div>
-            </div>
+        <div class="valuation-hero">
+            <div class="auto-badge">⚡ AI-POWERED AUTO VALUE</div>
+            <h1>Intelligent Vehicle Valuation</h1>
+            <p>Real-time market intelligence · Kenya & East Africa · Instant auto valuation based on live parameters</p>
         </div>
 
-        <div id="valuation">
-            <div class="valuation-box">
-                <h2 style="margin-bottom: 24px;">📊 Vehicle Valuation Tool</h2>
-                <div class="form-row">
-                    <div><label>Model</label><select id="model"><option value="hilux">Toyota Hilux</option><option value="prado">Toyota Prado</option><option value="forester">Subaru Forester</option><option value="dmax">Isuzu D-Max</option></select></div>
-                    <div><label>Year</label><input type="number" id="year" value="2021"></div>
-                    <div><label>Mileage (km)</label><input type="number" id="mileage" value="65000"></div>
-                    <div><label>Condition</label><select id="condition"><option value="excellent">Excellent</option><option value="good" selected>Good</option><option value="fair">Fair</option></select></div>
-                    <div><label>Location</label><select id="location"><option value="nairobi">Nairobi</option><option value="lagos">Lagos</option><option value="kampala">Kampala</option></select></div>
+        <div class="valuation-card" id="valuationEngine">
+            <div class="form-row">
+                <div class="input-group">
+                    <label>🚘 Make & Model</label>
+                    <select id="vehicleMakeModel">
+                        <option value="toyota_fielder">Toyota Fielder (2016-2020)</option>
+                        <option value="toyota_axio">Toyota Axio (2017-2021)</option>
+                        <option value="subaru_forester">Subaru Forester (2018+)</option>
+                        <option value="nissan_note">Nissan Note (e-Power)</option>
+                        <option value="honda_fit">Honda Fit (Hybrid)</option>
+                        <option value="isuzu_dmax">Isuzu D-Max (Double Cab)</option>
+                        <option value="mitsubishi_lancer">Mitsubishi Lancer EX</option>
+                        <option value="volkswagen_polo">Volkswagen Polo Vivo</option>
+                    </select>
                 </div>
-                <button onclick="calculateValue()" class="btn btn-primary" style="width:100%;">Calculate Value</button>
-                <div id="result" class="result-box" style="display:none;">
-                    <div class="result-price" id="priceResult">KES 0</div>
-                    <div id="rangeResult"></div>
-                    <button onclick="downloadReport()" class="btn btn-primary" style="margin-top:16px; background:#4a6a4a;">Download Report</button>
+                <div class="input-group">
+                    <label>📅 Year of Manufacture</label>
+                    <input type="number" id="year" min="2005" max="2026" value="2019" step="1">
+                    <div class="range-hint">2005 – 2026</div>
+                </div>
+                <div class="input-group">
+                    <label>📈 Mileage (km)</label>
+                    <input type="number" id="mileage" min="0" max="450000" value="78000" step="1000">
+                    <div class="range-hint">Average: 15,000 km/year</div>
                 </div>
             </div>
-        </div>
 
-        <div id="market">
-            <div class="market-table">
-                <h3 style="padding: 20px 20px 0;">📈 Top Models in East Africa</h3>
-                <table>
-                    <thead><tr><th>Model</th><th>Avg Price (KES)</th><th>30d Change</th><th>Demand</th></tr></thead>
-                    <tbody>
-                        <tr><td>Toyota Hilux</td><td>2,150,000</td><td style="color:green;">↑ +12%</td><td>96/100</td></tr>
-                        <tr><td>Toyota Prado</td><td>3,850,000</td><td style="color:green;">↑ +5%</td><td>91/100</td></tr>
-                        <tr><td>Subaru Forester</td><td>1,680,000</td><td style="color:green;">↑ +8%</td><td>89/100</td></tr>
-                        <tr><td>Isuzu D-Max</td><td>2,050,000</td><td style="color:green;">↑ +15%</td><td>94/100</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div id="fraud">
-            <div class="fraud-box">
-                <h2><i class="fas fa-shield-alt"></i> Fraud Protection</h2>
-                <p style="margin: 16px 0;">Enter VIN to check for odometer fraud, accident history & stolen alerts</p>
-                <div class="vin-group">
-                    <input type="text" id="vin" placeholder="Enter 17-character VIN">
-                    <button onclick="checkVIN()" class="btn btn-primary">Verify</button>
+            <div class="form-row">
+                <div class="input-group">
+                    <label>🔧 Condition Grade</label>
+                    <select id="condition">
+                        <option value="excellent">Excellent (showroom / low wear)</option>
+                        <option value="verygood" selected>Very Good (minor scratches)</option>
+                        <option value="good">Good (regular usage, well kept)</option>
+                        <option value="fair">Fair (needs minor repairs)</option>
+                    </select>
                 </div>
-                <div id="fraudResult"></div>
+                <div class="input-group">
+                    <label>📍 Region (Local demand)</label>
+                    <select id="region">
+                        <option value="nairobi">Nairobi & Central</option>
+                        <option value="mombasa">Mombasa / Coast</option>
+                        <option value="kisumu">Kisumu / Western</option>
+                        <option value="nakuru">Nakuru / Rift Valley</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>🛞 Service History</label>
+                    <select id="serviceHistory">
+                        <option value="fsh">Full Service History (FSH)</option>
+                        <option value="partial">Partial Service Records</option>
+                        <option value="none">No documented history</option>
+                    </select>
+                </div>
             </div>
+
+            <div class="auto-value-result" id="autoValuePanel">
+                <div class="value-tag">📊 AUTO VALUATION (KES)</div>
+                <div class="estimated-value" id="dynamicValue">KES 1,245,000</div>
+                <div class="valuation-note">
+                    <span>🤖 AI dynamic pricing • market adjusted</span>
+                </div>
+                <!-- market baseline insights -->
+                <div class="market-trend" id="marketInsight">
+                    <span>📉 Market trend: +3.2% Q2</span>
+                    <span>⚡ Resale demand: High</span>
+                </div>
+            </div>
+
+            <button class="calc-btn" id="refreshAutoValue">⟳ UPDATE AUTO VALUE</button>
+            <p style="font-size: 12px; text-align: center; margin-top: 16px; color: #777;">Powered by real-time East African auto market data • AI deprecation curve</p>
         </div>
     </div>
 
-    <footer class="footer">
-        <div class="container">
-            <p>© 2025 Mei Drive Africa - Driving Safety & Intelligence Across Africa</p>
-            <p style="margin-top: 12px;">AutoValue: AI-powered vehicle valuation & fraud protection</p>
+    <!-- STATS (remain consistent) -->
+    <section class="stats">
+        <div>
+            <h3>25K+</h3>
+            <p>Drivers</p>
         </div>
-    </footer>
+        <div>
+            <h3>800+</h3>
+            <p>Fleet Companies</p>
+        </div>
+        <div>
+            <h3>100+</h3>
+            <p>Schools</p>
+        </div>
+        <div>
+            <h3>98%</h3>
+            <p>Pass Rate</p>
+        </div>
+    </section>
 
-    <script>
-        const prices = {
-            hilux: { base: 2150000, dep: -85000, perKm: -14 },
-            prado: { base: 3850000, dep: -150000, perKm: -22 },
-            forester: { base: 1680000, dep: -65000, perKm: -10 },
-            dmax: { base: 2050000, dep: -78000, perKm: -12 }
-        };
-        const conditionMulti = { excellent: 1.05, good: 1.0, fair: 0.88 };
-        const locationMulti = { nairobi: 1.0, lagos: 0.95, kampala: 0.96 };
+    <!-- MODULES (reference links, includes valuation as auto now) -->
+    <section class="modules container">
+        <h2>Platform Modules</h2>
+        <div class="grid">
+            <a href="learner-hub.html" class="card">
+                <h3>Learner Hub</h3>
+                <p>NTSA practice tests and driving exam preparation.</p>
+                <div class="arrow">→ Open</div>
+            </a>
+            <a href="driver-academy.html" class="card">
+                <h3>Driver Academy</h3>
+                <p>Full certification training for professional drivers.</p>
+                <div class="arrow">→ Open</div>
+            </a>
+            <a href="school-safety.html" class="card">
+                <h3>School Safety</h3>
+                <p>Transport safety systems for schools and buses.</p>
+                <div class="arrow">→ Open</div>
+            </a>
+            <a href="valuation.html" class="card" style="border-color: var(--gold);">
+                <h3>⚡ Auto Vehicle Valuation</h3>
+                <p>Smart AI-based instant vehicle value (auto-update).</p>
+                <div class="arrow">→ Value Now</div>
+            </a>
+            <a href="safety-library.html" class="card">
+                <h3>Safety Library</h3>
+                <p>Forms, logs, and compliance documents.</p>
+                <div class="arrow">→ Open</div>
+            </a>
+            <a href="psv-course.html" class="card">
+                <h3>PSV Course</h3>
+                <p>Professional PSV driver training program.</p>
+                <div class="arrow">→ Open</div>
+            </a>
+        </div>
+    </section>
+</main>
 
-        function calculateValue() {
-            const model = document.getElementById('model').value;
-            const year = parseInt(document.getElementById('year').value);
-            const mileage = parseInt(document.getElementById('mileage').value);
-            const condition = document.getElementById('condition').value;
-            const location = document.getElementById('location').value;
-            
-            const data = prices[model];
-            const age = 2025 - year;
-            let value = data.base + (age * data.dep) + (mileage * data.perKm);
-            value = value * conditionMulti[condition] * locationMulti[location];
-            value = Math.max(value, 250000);
-            value = Math.round(value / 1000) * 1000;
-            
-            const low = Math.round(value * 0.92 / 1000) * 1000;
-            const high = Math.round(value * 1.08 / 1000) * 1000;
-            
-            document.getElementById('priceResult').innerHTML = `KES ${value.toLocaleString()}`;
-            document.getElementById('rangeResult').innerHTML = `Range: KES ${low.toLocaleString()} - ${high.toLocaleString()}`;
-            document.getElementById('result').style.display = 'block';
-            window.lastValue = value;
-        }
+<footer>
+    © 2026 MEI DRIVE AFRICA | Smart Mobility Ecosystem · AI Auto Valuation Engine
+</footer>
 
-        function downloadReport() {
-            alert(`✅ Valuation Report\n\nVehicle: ${document.getElementById('model').options[document.getElementById('model').selectedIndex].text}\nEstimated Value: ${document.getElementById('priceResult').innerText}\nDate: ${new Date().toLocaleDateString()}\n\nReport saved to your downloads.`);
-        }
+<script>
+    // ============================================================
+    // AUTO VALUE LOGIC: Smart valuation based on make/year/mileage/condition/region/service history
+    // ============================================================
+    const vehicleData = {
+        toyota_fielder: { baseValue: 1350000, depreciationFactor: 0.88, demandPremium: 1.05 },
+        toyota_axio: { baseValue: 1280000, depreciationFactor: 0.86, demandPremium: 1.04 },
+        subaru_forester: { baseValue: 1890000, depreciationFactor: 0.82, demandPremium: 1.02 },
+        nissan_note: { baseValue: 1120000, depreciationFactor: 0.84, demandPremium: 1.00 },
+        honda_fit: { baseValue: 1090000, depreciationFactor: 0.85, demandPremium: 1.01 },
+        isuzu_dmax: { baseValue: 2450000, depreciationFactor: 0.90, demandPremium: 1.08 },
+        mitsubishi_lancer: { baseValue: 980000, depreciationFactor: 0.83, demandPremium: 0.98 },
+        volkswagen_polo: { baseValue: 1190000, depreciationFactor: 0.87, demandPremium: 1.03 }
+    };
 
-        function checkVIN() {
-            const vin = document.getElementById('vin').value.trim();
-            if (!vin || vin.length < 10) {
-                alert('Please enter a valid VIN (10-17 characters)');
-                return;
+    // condition multipliers
+    const conditionMulti = {
+        excellent: 1.18,
+        verygood: 1.08,
+        good: 1.00,
+        fair: 0.87
+    };
+    // regional adjust (demand hotness)
+    const regionMulti = {
+        nairobi: 1.04,
+        mombasa: 0.96,
+        kisumu: 0.94,
+        nakuru: 0.98
+    };
+    // service history impact
+    const serviceMulti = {
+        fsh: 1.07,
+        partial: 1.00,
+        none: 0.92
+    };
+
+    // Helper: get depreciation curve based on age: new car loses value rapidly first 3 years then stabilizes
+    function ageBasedFactor(year) {
+        const currentYear = 2026;
+        let age = currentYear - year;
+        if (age < 0) age = 0;
+        if (age <= 1) return 0.98;
+        if (age === 2) return 0.91;
+        if (age === 3) return 0.84;
+        if (age === 4) return 0.79;
+        if (age === 5) return 0.74;
+        if (age === 6) return 0.69;
+        if (age === 7) return 0.64;
+        if (age === 8) return 0.60;
+        if (age === 9) return 0.56;
+        return Math.max(0.42, 0.58 - (age - 10) * 0.02);
+    }
+
+    // mileage effect: standard 15k km/year baseline, any excess reduces value
+    function mileageFactor(mileage, year) {
+        const currentYear = 2026;
+        let age = Math.max(1, currentYear - year);
+        const expectedKm = age * 15000;
+        if (mileage <= expectedKm * 0.9) return 1.05;
+        if (mileage <= expectedKm) return 1.00;
+        const excessRatio = (mileage - expectedKm) / expectedKm;
+        let penalty = 1 - Math.min(0.28, excessRatio * 0.22);
+        return Math.max(0.82, penalty);
+    }
+
+    // compute final auto valuation
+    function computeAutoValue() {
+        // get DOM elements
+        const makeSelect = document.getElementById('vehicleMakeModel');
+        const selectedMake = makeSelect.value;
+        const carSpec = vehicleData[selectedMake];
+        if (!carSpec) return 950000; // fallback
+
+        const yearRaw = document.getElementById('year').value;
+        let year = parseInt(yearRaw, 10);
+        if (isNaN(year)) year = 2019;
+        if (year < 2005) year = 2005;
+        if (year > 2026) year = 2026;
+
+        let mileage = parseInt(document.getElementById('mileage').value, 10);
+        if (isNaN(mileage)) mileage = 75000;
+        mileage = Math.min(450000, Math.max(0, mileage));
+
+        const condition = document.getElementById('condition').value;
+        const region = document.getElementById('region').value;
+        const service = document.getElementById('serviceHistory').value;
+
+        // base value from db
+        let base = carSpec.baseValue;
+        // apply model-specific depreciation factor
+        let modelDeprec = carSpec.depreciationFactor; 
+        let demandPremium = carSpec.demandPremium;
+
+        // age factor
+        let ageAdj = ageBasedFactor(year);
+        // mileage factor
+        let mileAdj = mileageFactor(mileage, year);
+        // condition multiplier
+        let condAdj = conditionMulti[condition] || 1.0;
+        // region adjust
+        let regionAdj = regionMulti[region] || 1.0;
+        // service history
+        let serviceAdj = serviceMulti[service] || 1.0;
+
+        // first compute intermediate value
+        let rawValue = base * modelDeprec * ageAdj * mileAdj * condAdj * regionAdj * serviceAdj * demandPremium;
+
+        // ensure realistic bounds (minimum 200k KES, max 3.8M depending)
+        rawValue = Math.min(3800000, Math.max(210000, Math.floor(rawValue / 1000) * 1000));
+
+        // apply currency formatting
+        return rawValue;
+    }
+
+    function getMarketInsight(value, year, mileage, selectedMake) {
+        // dynamic insight for some context
+        let trendDesc = "";
+        let advice = "";
+        if (value > 1700000) trendDesc = "Premium valuation";
+        else if (value > 950000) trendDesc = "Stable mid-range";
+        else trendDesc = "Entry / budget segment";
+
+        const currentYear = 2026;
+        let age = currentYear - year;
+        if (mileage < (age * 12000)) advice = "Low mileage premium applies ✅";
+        else if (mileage > (age * 19000)) advice = "High mileage adjustment active";
+        else advice = "Average use pattern";
+
+        let demandNote = "";
+        if (selectedMake.includes("toyota") || selectedMake.includes("isuzu")) demandNote = "🔥 High demand in East Africa";
+        else if (selectedMake.includes("subaru")) demandNote = "💪 Strong resale for AWD";
+        else demandNote = "📊 Steady demand across counties";
+
+        return { trendDesc, advice, demandNote };
+    }
+
+    function updateValuationUI() {
+        const estimatedSpan = document.getElementById('dynamicValue');
+        const insightDiv = document.getElementById('marketInsight');
+        const makeSelect = document.getElementById('vehicleMakeModel');
+        const selectedMakeText = makeSelect.options[makeSelect.selectedIndex]?.text || "vehicle";
+        const year = parseInt(document.getElementById('year').value, 10);
+        const mileage = parseInt(document.getElementById('mileage').value, 10);
+
+        let autoValue = computeAutoValue();
+        // format KES
+        const formatter = new Intl.NumberFormat('en-KE', { style: 'currency', currency: 'KES', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        estimatedSpan.innerText = formatter.format(autoValue);
+        
+        // dynamic market insight based on current valuation
+        const selectedMakeId = document.getElementById('vehicleMakeModel').value;
+        const insight = getMarketInsight(autoValue, year, mileage, selectedMakeId);
+        let demandMood = "";
+        if (autoValue > 1400000) demandMood = "📈 Appreciating asset";
+        else if (autoValue > 700000) demandMood = "⚖️ Fair market trend";
+        else demandMood = "🔄 Buyer's leverage";
+
+        insightDiv.innerHTML = `
+            <span>📊 ${insight.trendDesc} · ${demandMood}</span>
+            <span>🔍 ${insight.advice}</span>
+            <span style="flex-basis:100%; margin-top:6px;">✨ ${insight.demandNote}</span>
+        `;
+
+        // additional micro-animation border flash
+        const panel = document.getElementById('autoValuePanel');
+        panel.style.transition = "0.2s";
+        panel.style.borderColor = "#d4af37";
+        setTimeout(() => { panel.style.borderColor = "rgba(212, 175, 55, 0.3)"; }, 400);
+    }
+
+    // attach events to all inputs + button
+    function bindAutoEvents() {
+        const inputs = ['vehicleMakeModel', 'year', 'mileage', 'condition', 'region', 'serviceHistory'];
+        inputs.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('change', () => updateValuationUI());
+                if (el.tagName === 'INPUT') {
+                    el.addEventListener('input', () => updateValuationUI());
+                }
             }
-            const score = Math.floor(Math.random() * 30) + 70;
-            const isClean = score > 82;
-            document.getElementById('fraudResult').innerHTML = `
-                <div style="background:#e8f5e5; border-radius:20px; padding:24px; margin-top:20px;">
-                    <h3>VIN: ${vin.toUpperCase()}</h3>
-                    <div style="font-size:2rem; font-weight:800; margin:16px 0;">${score}%</div>
-                    <div>Fraud Risk Score</div>
-                    ${isClean ? '<p style="color:#1a5a2a;">✅ Clean record - No issues found</p>' : '<p style="color:#f5a623;">⚠️ Warning - Further inspection recommended</p>'}
-                    <hr style="margin:16px 0;">
-                    <div>Odometer: ${score > 80 ? '✓ Consistent' : '⚠️ Suspicious'}</div>
-                    <div>Accident history: ${score > 85 ? 'None' : 'Reported'}</div>
-                    <div>Stolen database: ${score > 90 ? 'Clean' : 'Alert'}</div>
-                </div>
-            `;
+        });
+        const refreshBtn = document.getElementById('refreshAutoValue');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                updateValuationUI();
+            });
         }
-    </script>
+        // manual initial call
+        updateValuationUI();
+    }
+
+    // also handle any page load and manual year/mileage validations
+    function enforceMinMax() {
+        const yearInput = document.getElementById('year');
+        const mileageInput = document.getElementById('mileage');
+        if (yearInput) {
+            yearInput.addEventListener('change', () => {
+                let y = parseInt(yearInput.value, 10);
+                if (isNaN(y)) y = 2015;
+                if (y < 2005) yearInput.value = 2005;
+                if (y > 2026) yearInput.value = 2026;
+                updateValuationUI();
+            });
+        }
+        if (mileageInput) {
+            mileageInput.addEventListener('input', () => {
+                let km = parseInt(mileageInput.value, 10);
+                if (!isNaN(km)) {
+                    if (km > 450000) mileageInput.value = 450000;
+                    if (km < 0) mileageInput.value = 0;
+                }
+                updateValuationUI();
+            });
+        }
+    }
+
+    // initialize all
+    window.addEventListener('DOMContentLoaded', () => {
+        bindAutoEvents();
+        enforceMinMax();
+        // set default year 2019 etc
+        const yearBox = document.getElementById('year');
+        if (yearBox && !yearBox.value) yearBox.value = 2019;
+        updateValuationUI();
+    });
+</script>
 </body>
 </html>
