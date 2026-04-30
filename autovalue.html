@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>AutoValue | Smart Vehicle Valuation - Mei Drive Africa</title>
+  <!-- Google Fonts & basic styling reset -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      line-height: 1.5;
+    }
+
+    /* container utility */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* navigation (global style consistent with main mei-drive) */
+    .navbar {
+      background: #ffffff;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(2px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 16px 0;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .logo-main {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #1e3c2c, #2b6e3c);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-badge {
+      background: #eab308;
+      color: #1e293b;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 30px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #1e293b;
+      transition: color 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: #2b6e3c;
+    }
+
+    .btn-outline-sm {
+      border: 1.5px solid #2b6e3c;
+      background: transparent;
+      padding: 6px 16px;
+      border-radius: 40px;
+      font-weight: 600;
+      color: #2b6e3c;
+      transition: all 0.2s;
+    }
+
+    .btn-outline-sm:hover {
+      background: #2b6e3c10;
+    }
+
+    /* Hero Section */
+    .hero-autovalue {
+      background: linear-gradient(112deg, #eef5ec 0%, #ffffff 100%);
+      padding: 64px 0 56px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .hero-grid {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .hero-text {
+      flex: 1;
+    }
+
+    .hero-text h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .highlight {
+      color: #2b6e3c;
+      border-bottom: 3px solid #eab308;
+    }
+
+    .hero-text p {
+      font-size: 1.1rem;
+      color: #334155;
+      margin-bottom: 32px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: #2b6e3c;
+      color: white;
+      padding: 12px 28px;
+      border-radius: 48px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .btn-primary:hover {
+      background: #1f5630;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: white;
+      border: 1px solid #cbd5e1;
+      padding: 12px 28px;
+      border-radius: 48px;
+      font-weight: 600;
+      text-decoration: none;
+      color: #1f2937;
+      transition: all 0.2s;
+    }
+
+    .hero-visual {
+      flex: 1;
+      background: #ffffffcc;
+      border-radius: 48px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .value-card {
+      background: white;
+      padding: 24px;
+      border-radius: 32px;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+    }
+
+    .value-badge {
+      font-size: 0.8rem;
+      background: #eef2ff;
+      width: fit-content;
+      padding: 4px 12px;
+      border-radius: 30px;
+    }
+
+    .mock-price {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 12px 0;
+    }
+
+    /* features grid */
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px;
+      margin: 56px 0;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 28px;
+      padding: 28px 22px;
+      transition: all 0.25s;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.02);
+      border: 1px solid #e9f0e6;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      border-color: #cbdcaa;
+      box-shadow: 0 20px 30px -12px rgba(0,0,0,0.08);
+    }
+
+    .icon-circle {
+      background: #eaf6e6;
+      width: 56px;
+      height: 56px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .feature-card i {
+      font-size: 2rem;
+      color: #2b6e3c;
+    }
+
+    .feature-card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 12px;
+    }
+
+    /* CTA banner */
+    .cta-banner {
+      background: #1e2a27;
+      color: white;
+      border-radius: 48px;
+      padding: 48px 40px;
+      margin: 48px 0 64px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .cta-text h3 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .btn-light {
+      background: #facc15;
+      color: #1e293b;
+      padding: 12px 28px;
+      border-radius: 40px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid #e2e8f0;
+      padding: 32px 0;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #475569;
+    }
+
+    /* quick links to other autovalue pages (mock navigation) */
+    .sub-module-nav {
+      background: white;
+      border-radius: 60px;
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      padding: 8px 16px;
+      border: 1px solid #e2edda;
+    }
+
+    .sub-module-nav a {
+      background: transparent;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-weight: 500;
+      text-decoration: none;
+      color: #2c3e2f;
+      transition: 0.2s;
+    }
+
+    .sub-module-nav a:hover {
+      background: #eef3ea;
+    }
+
+    @media (max-width: 768px) {
+      .hero-text h1 { font-size: 2.2rem; }
+      .nav-links { gap: 16px; }
+      .nav-inner { flex-direction: column; gap: 12px; }
+      .container { padding: 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation mimicking main platform -->
+<div class="navbar">
+  <div class="container nav-inner">
+    <div class="logo-area">
+      <span class="logo-main">Mei Drive Africa</span>
+      <span class="logo-badge">AutoValue</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Learner Hub</a></li>
+      <li><a href="#">Driver Academy</a></li>
+      <li><a href="#" class="active">AutoValue</a></li>
+      <li><a href="#">Safety Library</a></li>
+      <li><a href="#" class="btn-outline-sm"><i class="fas fa-user"></i> Sign In</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- AutoValue Hero Landing -->
+<section class="hero-autovalue">
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <span style="background:#e9f5e3; padding:4px 12px; border-radius:30px; font-size:0.8rem; font-weight:600;">🚗 AI-Powered Vehicle Valuation</span>
+      <h1>Know your car’s <span class="highlight">true worth</span> in African markets</h1>
+      <p>Real-time valuations, market trends, fraud protection & certified reports — tailored for Kenya, Nigeria, Rwanda & beyond.</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn-primary" id="getValuationBtn"><i class="fas fa-calculator"></i> Get instant valuation</a>
+        <a href="#" class="btn-secondary"><i class="fas fa-chart-line"></i> Explore market insights</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="value-card">
+        <div class="value-badge"><i class="fas fa-map-marker-alt"></i> Nairobi market</div>
+        <div class="mock-price">KES 1,850,000</div>
+        <div style="display:flex; justify-content:space-between; margin-top:16px;">
+          <span><i class="fas fa-arrow-up" style="color:#2b6e3c;"></i> +3.2%</span>
+          <span>2021 Toyota Hilux</span>
+        </div>
+        <hr style="margin:16px 0; border-color:#eef2f0;">
+        <div style="font-size:0.85rem;">⬤ high demand | ⬤ low risk fraud score: 96%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <!-- submodule quick navigation (all autovalue related pages) -->
+  <div style="display:flex; justify-content: center; margin-top: 32px;">
+    <div class="sub-module-nav">
+      <a href="#"><i class="fas fa-chart-simple"></i> Valuation</a>
+      <a href="#"><i class="fas fa-chart-line"></i> Market</a>
+      <a href="#"><i class="fas fa-shield-alt"></i> Fraud Check</a>
+      <a href="#"><i class="fas fa-file-alt"></i> Reports</a>
+      <a href="#"><i class="fas fa-chart-pie"></i> Dashboard</a>
+      <a href="#"><i class="fas fa-key"></i> Auth</a>
+    </div>
+  </div>
+
+  <!-- core features representing AutoValue module -->
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="icon-circle"><i class="fas fa-microchip"></i></div>
+      <h3>Smart Valuation Engine</h3>
+      <p>Instant AI estimates based on mileage, year, condition & local auction data. Tailored for African used-car market dynamics.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon-circle"><i class="fas fa-chart-simple"></i></div>
+      <h3>Live Market Trends</h3>
+      <p>Regional demand heatmaps, historical price curves, and import parity insights. Make data-backed decisions.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon-circle"><i class="fas fa-shield-virus"></i></div>
+      <h3>Fraud Protection Suite</h3>
+      <p>Cross-check VIN history, odometer rollback detection, stolen vehicle alerts. Secure your transaction.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon-circle"><i class="fas fa-file-certificate"></i></div>
+      <h3>Certified Reports</h3>
+      <p>Get lender-grade valuation certificates, accepted by banks, SACCOS, and insurance partners across East Africa.</p>
+    </div>
+  </div>
+
+  <!-- interactive valuation demo: quick calculator (client-side demo) -->
+  <div style="background: #ffffff; border-radius: 36px; padding: 32px 28px; margin: 20px 0 32px; box-shadow: 0 12px 18px -12px rgba(0,0,0,0.05); border: 1px solid #e2f0dc;">
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+      <div style="flex:2">
+        <h3 style="font-size: 1.6rem; margin-bottom: 8px;"><i class="fas fa-car"></i> Try AutoValue Estimator</h3>
+        <p style="margin-bottom: 20px;">Select a vehicle model popular in Africa & get an indicative price range.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+          <select id="carModelSelect" style="padding: 12px 18px; border-radius: 48px; border:1px solid #cbd5e1; flex:1; font-family:inherit;">
+            <option value="toyota_hilux">Toyota Hilux 2020 (Double Cab)</option>
+            <option value="subaru_forester">Subaru Forester 2019</option>
+            <option value="isuzu_dmax">Isuzu D-Max 2021</option>
+            <option value="toyota_prado">Toyota Prado TX 2018</option>
+            <option value="nissan_note">Nissan Note 2017</option>
+          </select>
+          <input type="number" id="vehicleYear" placeholder="Year (2015-2024)" value="2020" style="padding: 12px 18px; border-radius: 48px; border:1px solid #cbd5e1; width:130px;">
+          <button id="calcEstimateBtn" class="btn-primary" style="padding: 12px 24px;"><i class="fas fa-sync-alt"></i> Estimate Value</button>
+        </div>
+        <div id="valuationResult" style="margin-top: 28px; background: #f1f9ef; border-radius: 28px; padding: 18px 24px;">
+          <div style="font-weight: 600;"><i class="fas fa-chart-line"></i> Estimated market value:</div>
+          <div style="font-size: 2rem; font-weight: 800; color:#1e4620;" id="priceDisplay">KES 1,920,000</div>
+          <div style="font-size: 0.8rem;" id="rangeNote">Range: KES 1.82M - 2.05M  •  Confidence: High</div>
+        </div>
+      </div>
+      <div style="flex:1; background: #fefce8; border-radius: 28px; padding: 20px;">
+        <i class="fas fa-chart-line" style="font-size: 1.8rem; color:#ca8a04;"></i>
+        <p style="font-weight: 600; margin: 12px 0;">📊 Market pulse</p>
+        <div><span>📈 Used SUV demand +12% (Q2)</span></div>
+        <div><span>⛽ Fuel efficient models premium +7%</span></div>
+        <div><span>🚛 Pickups: high liquidity index</span></div>
+        <hr style="margin:12px 0;">
+        <div><i class="fas fa-shield"></i> Fraud alert: Low risk for verified VINs</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonials / Trust Section + fraud, report links -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 28px; margin: 48px 0;">
+    <div style="background:white; border-radius: 28px; padding: 24px;">
+      <div><i class="fas fa-file-invoice-dollar" style="font-size: 2rem; color:#2b6e3c;"></i></div>
+      <h3 style="margin: 16px 0 8px;">Comprehensive vehicle reports</h3>
+      <p>Download full valuation history, previous ownership patterns and regional comparisons.</p>
+      <a href="#" style="color:#2b6e3c; font-weight:600;">Access reports →</a>
+    </div>
+    <div style="background:white; border-radius: 28px; padding: 24px;">
+      <div><i class="fas fa-chart-pie" style="font-size: 2rem; color:#2b6e3c;"></i></div>
+      <h3 style="margin: 16px 0 8px;">My Dashboard</h3>
+      <p>Track your portfolio, saved valuations, and monitor price changes for shortlisted cars.</p>
+      <a href="#" style="color:#2b6e3c; font-weight:600;">Go to dashboard →</a>
+    </div>
+    <div style="background:white; border-radius: 28px; padding: 24px;">
+      <div><i class="fas fa-user-check" style="font-size: 2rem; color:#2b6e3c;"></i></div>
+      <h3 style="margin: 16px 0 8px;">Dealer & PSV integration</h3>
+      <p>Fleet owners get bulk valuation tools and real-time market intelligence for resale planning.</p>
+      <a href="#" style="color:#2b6e3c; font-weight:600;">Learn more →</a>
+    </div>
+  </div>
+
+  <!-- CTA for full autovalue experience linking to other pages (market, fraud, reports) -->
+  <div class="cta-banner">
+    <div class="cta-text">
+      <h3>Unlock advanced <i class="fas fa-chart-line"></i> market analytics</h3>
+      <p>Compare regional prices, detect odometer fraud, and generate bank-ready valuation certificates.</p>
+    </div>
+    <a href="#" class="btn-light"><i class="fas fa-arrow-right"></i> Explore AutoValue suite</a>
+  </div>
+</div>
+
+<!-- Global footer -->
+<div class="footer">
+  <div class="container">
+    <p>© 2025 Mei Drive Africa — Driving safety & mobility intelligence. AutoValue: Transforming vehicle valuation across Africa.</p>
+    <p style="margin-top: 12px;"><a href="#" style="color:#3b7a4b;">Privacy</a> • <a href="#" style="color:#3b7a4b;">Terms</a> • <a href="#" style="color:#3b7a4b;">Support</a> | <i class="fas fa-map-marker-alt"></i> Nairobi | Kigali | Lagos</p>
+  </div>
+</div>
+
+<script>
+  // Client-side interactive valuation demonstration accordingly with African market approximation logic.
+  // Represents the "valuation" simulation for the autovalue module.
+
+  const carPricesBase = {
+    toyota_hilux: { base: 1820000, rangeLow: 1700000, rangeHigh: 2100000, currency: "KES", label: "Toyota Hilux" },
+    subaru_forester: { base: 1550000, rangeLow: 1400000, rangeHigh: 1720000, currency: "KES", label: "Subaru Forester" },
+    isuzu_dmax: { base: 1950000, rangeLow: 1850000, rangeHigh: 2180000, currency: "KES", label: "Isuzu D-Max" },
+    toyota_prado: { base: 3650000, rangeLow: 3400000, rangeHigh: 3950000, currency: "KES", label: "Toyota Prado" },
+    nissan_note: { base: 780000, rangeLow: 680000, rangeHigh: 850000, currency: "KES", label: "Nissan Note" }
+  };
+
+  // depreciation or appreciation based on year (simple factor)
+  function getYearFactor(year) {
+    let currentYear = new Date().getFullYear();
+    let age = currentYear - year;
+    if (age < 0) age = 0;
+    // standard depreciation: 8% first year, then 5% per year up to 10yrs
+    let factor = 1;
+    if (age === 0) factor = 1.02; // brand new slight premium
+    else if (age === 1) factor = 0.94;
+    else if (age === 2) factor = 0.89;
+    else if (age === 3) factor = 0.85;
+    else if (age === 4) factor = 0.81;
+    else if (age === 5) factor = 0.77;
+    else if (age === 6) factor = 0.73;
+    else if (age === 7) factor = 0.69;
+    else if (age >= 8) factor = 0.64;
+    return factor;
+  }
+
+  function calculateValuation(carKey, yearInput) {
+    let year = parseInt(yearInput);
+    if (isNaN(year)) year = 2020;
+    if (year < 2008) year = 2008;
+    if (year > 2025) year = 2025;
+    const carData = carPricesBase[carKey];
+    if (!carData) return { value: 1500000, low: 1300000, high: 1650000, label: "Vehicle" };
+    let baseValue = carData.base;
+    const yearFactor = getYearFactor(year);
+    let adjustedValue = baseValue * yearFactor;
+    // additional randomness for region: slight factor to simulate market variation
+    adjustedValue = adjustedValue * (0.97 + (Math.random() * 0.07));
+    adjustedValue = Math.round(adjustedValue / 1000) * 1000;
+    let lowBound = carData.rangeLow * yearFactor * 0.96;
+    let highBound = carData.rangeHigh * yearFactor * 1.02;
+    lowBound = Math.round(lowBound / 1000) * 1000;
+    highBound = Math.round(highBound / 1000) * 1000;
+    return {
+      value: adjustedValue,
+      low: lowBound,
+      high: highBound,
+      label: carData.label,
+      year: year,
+      currency: carData.currency
+    };
+  }
+
+  function updateValuationUI() {
+    const carSelect = document.getElementById('carModelSelect').value;
+    const yearInput = document.getElementById('vehicleYear').value;
+    let year = parseInt(yearInput);
+    if (year < 2005) year = 2005;
+    if (year > 2025) year = 2025;
+    const result = calculateValuation(carSelect, year);
+    const priceElem = document.getElementById('priceDisplay');
+    const rangeElem = document.getElementById('rangeNote');
+    if (priceElem) {
+      priceElem.innerText = `${result.currency || 'KES'} ${result.value.toLocaleString()}`;
+    }
+    if (rangeElem) {
+      rangeElem.innerHTML = `Range: ${result.currency || 'KES'} ${result.low.toLocaleString()} - ${result.high.toLocaleString()}  •  Confidence: High (based on recent auction data)`;
+    }
+    // Add a little tooltip effect
+    const resultDiv = document.getElementById('valuationResult');
+    if (resultDiv) {
+      resultDiv.style.transition = '0.1s';
+      resultDiv.style.backgroundColor = '#eef6ea';
+      setTimeout(() => { if(resultDiv) resultDiv.style.backgroundColor = '#f1f9ef'; }, 200);
+    }
+  }
+
+  // initial load and event listeners
+  document.addEventListener('DOMContentLoaded', () => {
+    updateValuationUI();
+    const calcBtn = document.getElementById('calcEstimateBtn');
+    if (calcBtn) {
+      calcBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        updateValuationUI();
+      });
+    }
+    const getValBtn = document.getElementById('getValuationBtn');
+    if (getValBtn) {
+      getValBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('calcEstimateBtn')?.click();
+        // scroll to demo
+        document.querySelector('.hero-autovalue')?.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+    // Optional: for real pages we'd navigate, but this demo remains interactive.
+    // For submodule nav demo, we redirect to hash or show alert for demonstration purpose.
+    const allSubLinks = document.querySelectorAll('.sub-module-nav a, .feature-card a, .hero-buttons .btn-secondary, .cta-banner .btn-light');
+    allSubLinks.forEach(link => {
+      if(link.getAttribute('href') === '#') {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          let moduleName = link.innerText.trim() || link.querySelector('i')?.nextSibling?.nodeValue?.trim() || 'AutoValue module';
+          alert(`✨ AutoValue module: "${moduleName}" is ready in full version. \nExplore valuation, fraud detection, market analytics, and detailed reports.`);
+        });
+      }
+    });
+  });
+</script>
+</body>
+</html>
