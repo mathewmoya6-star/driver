@@ -1,4 +1,3 @@
-<!-- signup.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,26 +6,127 @@
     <title>MEI DRIVE AFRICA | Sign Up</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --dark: #0a0a0a; --card: #111; --border: #222; }
+        :root { --gold: #d4af37; --dark: #0a0a0a; --card: #111; --border: #222; --muted: #888; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--dark); color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .signup-box { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 40px; width: 100%; max-width: 450px; margin: 20px; }
+        body { font-family: 'Inter', sans-serif; background: var(--dark); color: #fff; min-height: 100vh; }
+        .container { max-width: 1400px; margin: auto; padding: 0 20px; }
+        header { border-bottom: 1px solid var(--border); background: #0a0a0a; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; flex-wrap: wrap; gap: 16px; }
+        .logo { font-weight: 800; font-size: 22px; }
+        .logo span { color: var(--gold); }
+        .links { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+        .links a { color: #fff; text-decoration: none; font-size: 14px; transition: color 0.2s; }
+        .links a:hover { color: var(--gold); }
+        .btn { padding: 6px 14px; border-radius: 30px; font-size: 13px; font-weight: 600; }
+        .outline { border: 1px solid #444; background: transparent; }
+        .gold { background: var(--gold); color: #000 !important; }
+        .signup-box { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 40px; max-width: 450px; margin: 60px auto; }
         .signup-box h1 { color: var(--gold); margin-bottom: 30px; text-align: center; }
-        input { width: 100%; padding: 14px; margin-bottom: 20px; background: #1a1a1a; border: 1px solid var(--border); border-radius: 12px; color: white; }
-        button { width: 100%; padding: 14px; background: var(--gold); border: none; border-radius: 30px; font-weight: 700; cursor: pointer; }
+        .input-group { margin-bottom: 20px; }
+        .input-group input { width: 100%; padding: 14px; background: #1a1a1a; border: 1px solid var(--border); border-radius: 12px; color: white; font-size: 16px; }
+        .input-group input:focus { outline: none; border-color: var(--gold); }
+        button { width: 100%; padding: 14px; background: var(--gold); border: none; border-radius: 30px; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.2s; }
+        button:hover { background: #c2a42f; }
         .link { text-align: center; margin-top: 20px; color: #888; }
         .link a { color: var(--gold); text-decoration: none; }
+        .error { color: #ff4444; text-align: center; margin-top: 15px; font-size: 14px; }
+        .success { color: #00c851; text-align: center; margin-top: 15px; font-size: 14px; }
+        footer { text-align: center; padding: 30px 10px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; margin-top: 60px; }
+        @media (max-width: 768px) { .signup-box { margin: 30px 20px; } }
     </style>
 </head>
 <body>
+
+<header>
+    <div class="container">
+        <nav>
+            <div class="logo">MEI <span>DRIVE AFRICA</span></div>
+            <div class="links">
+                <a href="index.html">Home</a>
+                <a href="learner-hub.html">Learner Hub</a>
+                <a href="driver-academy.html">Driver Academy</a>
+                <a href="school-safety.html">School Safety</a>
+                <a href="valuation.html">Auto Value</a>
+                <a href="safety-library.html">Safety Library</a>
+                <a href="psv-course.html">PSV Course</a>
+                <a href="login.html" class="btn outline">Login</a>
+                <a href="signup.html" class="btn gold" style="color: #000 !important;">Sign Up</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main>
     <div class="signup-box">
         <h1>Create Account</h1>
-        <input type="text" placeholder="Full name">
-        <input type="email" placeholder="Email address">
-        <input type="password" placeholder="Password">
-        <input type="password" placeholder="Confirm password">
-        <button onclick="alert('Sign up demo — account creation coming soon.')">Sign Up</button>
+        <div class="input-group">
+            <input type="text" id="fullName" placeholder="Full name">
+        </div>
+        <div class="input-group">
+            <input type="email" id="signupEmail" placeholder="Email address">
+        </div>
+        <div class="input-group">
+            <input type="tel" id="phone" placeholder="Phone number (optional)">
+        </div>
+        <div class="input-group">
+            <input type="password" id="signupPassword" placeholder="Password (min 6 characters)">
+        </div>
+        <div class="input-group">
+            <input type="password" id="confirmPassword" placeholder="Confirm password">
+        </div>
+        <button onclick="signupUser()">Sign Up</button>
         <div class="link">Already have an account? <a href="login.html">Login</a></div>
+        <div id="signupMessage"></div>
     </div>
+</main>
+
+<footer>© 2026 MEI DRIVE AFRICA | Smart Mobility Ecosystem</footer>
+
+<script>
+    function signupUser() {
+        const name = document.getElementById('fullName').value;
+        const email = document.getElementById('signupEmail').value;
+        const phone = document.getElementById('phone').value;
+        const password = document.getElementById('signupPassword').value;
+        const confirm = document.getElementById('confirmPassword').value;
+        const messageDiv = document.getElementById('signupMessage');
+
+        if (!name || !email || !password) {
+            messageDiv.innerHTML = '<div class="error">Please fill all required fields</div>';
+            return;
+        }
+        if (password !== confirm) {
+            messageDiv.innerHTML = '<div class="error">Passwords do not match</div>';
+            return;
+        }
+        if (password.length < 6) {
+            messageDiv.innerHTML = '<div class="error">Password must be at least 6 characters</div>';
+            return;
+        }
+
+        // Get existing users
+        const users = JSON.parse(localStorage.getItem('mei_users') || '[]');
+        
+        // Check if email already exists
+        if (users.find(u => u.email === email)) {
+            messageDiv.innerHTML = '<div class="error">Email already registered. <a href="login.html">Login instead?</a></div>';
+            return;
+        }
+
+        // Add new user
+        users.push({
+            name: name,
+            email: email,
+            phone: phone,
+            password: password,
+            joinedDate: new Date().toISOString()
+        });
+        
+        localStorage.setItem('mei_users', JSON.stringify(users));
+        messageDiv.innerHTML = '<div class="success">Account created! Redirecting to login...</div>';
+        
+        setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+    }
+</script>
 </body>
 </html>
