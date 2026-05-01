@@ -1,261 +1,969 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MEI DRIVE AFRICA</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEI DRIVE AFRICA | Smart Mobility Platform</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<style>
-body {
-    font-family: Inter;
-    background:#0a0a0a;
-    color:#fff;
-    margin:0;
-}
+    <style>
+        :root {
+            --gold: #d4af37;
+            --dark: #0a0a0a;
+            --card: #111;
+            --border: #222;
+            --muted: #888;
+        }
 
-nav {
-    display:flex;
-    justify-content:space-between;
-    padding:15px;
-    border-bottom:1px solid #222;
-    flex-wrap:wrap;
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-nav button {
-    padding:6px 12px;
-    margin:5px;
-    cursor:pointer;
-    background:transparent;
-    border:1px solid #333;
-    color:#fff;
-    border-radius:6px;
-}
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark);
+            color: #fff;
+            overflow-x: hidden;
+        }
 
-nav button:hover {
-    border-color:#d4af37;
-    color:#d4af37;
-}
+        .container {
+            max-width: 1400px;
+            margin: auto;
+            padding: 0 20px;
+        }
 
-.gold {
-    background:#d4af37;
-    color:#000;
-    font-weight:600;
-    border:none;
-}
+        /* NAVBAR */
+        header {
+            border-bottom: 1px solid var(--border);
+            background: var(--dark);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-.container {
-    padding:20px;
-}
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
 
-.card {
-    background:#111;
-    padding:15px;
-    margin:10px 0;
-    border:1px solid #222;
-    border-radius:10px;
-}
+        .logo {
+            font-weight: 800;
+            font-size: 22px;
+            cursor: pointer;
+        }
 
-h2 {
-    color:#d4af37;
-}
+        .logo span { color: var(--gold); }
 
-input {
-    padding:8px;
-    margin:5px 0;
-    width:220px;
-    background:#000;
-    border:1px solid #333;
-    color:#fff;
-    border-radius:5px;
-}
-</style>
+        .links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .links button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 6px 0;
+            transition: color 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .links button:hover {
+            color: var(--gold);
+        }
+
+        .btn {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .outline {
+            border: 1px solid #444;
+            background: transparent;
+            color: #fff;
+        }
+
+        .gold {
+            background: var(--gold);
+            color: #000 !important;
+            font-weight: 600;
+        }
+
+        .user-email {
+            font-size: 13px;
+            color: var(--gold);
+            padding: 0 10px;
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+
+        .hero p {
+            color: var(--muted);
+            max-width: 650px;
+            margin: auto;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .cta {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .cta button {
+            text-decoration: none;
+            padding: 12px 32px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .primary {
+            background: var(--gold);
+            color: #000;
+            border: none;
+        }
+
+        .primary:hover {
+            background: #c4a32e;
+            transform: translateY(-2px);
+        }
+
+        .secondary {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+        }
+
+        .secondary:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* STATS */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            text-align: center;
+            padding: 50px 20px;
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stats h3 {
+            color: var(--gold);
+            font-size: 32px;
+        }
+
+        .stats p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* MODULES */
+        .modules {
+            padding: 60px 20px;
+        }
+
+        .modules h2 {
+            text-align: center;
+            color: var(--gold);
+            margin-bottom: 40px;
+            font-size: 32px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 25px;
+            border-radius: 16px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: var(--gold);
+            margin: 10px 0;
+        }
+
+        .card p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .arrow {
+            margin-top: 15px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal {
+            background: var(--card);
+            border: 1px solid var(--gold);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .modal h2 {
+            color: var(--gold);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .auth-form input {
+            padding: 12px;
+            font-size: 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #1a1a1a;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .modal-btn {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .modal-btn:hover {
+            background: #c4a32e;
+        }
+
+        .switch-auth {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .switch-auth button {
+            background: none;
+            border: none;
+            color: var(--gold);
+            cursor: pointer;
+            text-decoration: underline;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .error-msg {
+            background: rgba(255,68,68,0.1);
+            color: #ff4444;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* DASHBOARD */
+        .dashboard-container {
+            max-width: 1400px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 32px;
+        }
+
+        .add-btn {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .add-btn:hover {
+            background: #c4a32e;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 28px;
+            color: var(--gold);
+        }
+
+        .stat-card p {
+            color: var(--muted);
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .vehicle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .vehicle-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .vehicle-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .vehicle-details {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .vehicle-value {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+            font-size: 16px;
+            color: var(--gold);
+        }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 5px;
+            color: #ff4444;
+        }
+
+        .valuation-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .valuation-form input {
+            padding: 12px;
+            font-size: 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #1a1a1a;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .preview-card {
+            background: rgba(212,175,55,0.1);
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--muted);
+        }
+
+        .module-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .training-module {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .training-module h3 {
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .module-btn {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .module-btn:hover {
+            background: #c4a32e;
+        }
+
+        .coming-soon {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        button {
+            transition: all 0.3s ease;
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- NAV -->
-<nav>
-<div style="font-weight:700;">
-MEI DRIVE <span style="color:#d4af37;">AFRICA</span>
-</div>
+<div id="root"></div>
 
-<div>
-<button onclick="setPage('home')">Home</button>
-<button onclick="setPage('auto')">Auto Value</button>
-<button onclick="setPage('learn')">Learner Hub</button>
-<button onclick="setPage('academy')">Driver Academy</button>
-<button onclick="setPage('safety')">Safety Library</button>
-<button onclick="setPage('psv')">PSV Course</button>
-
-<button onclick="login()">Login</button>
-<button onclick="signup()">Sign Up</button>
-<button onclick="logout()">Logout</button>
-</div>
-</nav>
-
-<!-- CONTENT -->
-<div class="container">
-
-<!-- HOME -->
-<div id="home">
-<h2>🚗 Smart Mobility Platform</h2>
-<p>Learn, certify, value vehicles, and manage road safety systems.</p>
-</div>
-
-<!-- AUTO VALUE -->
-<div id="auto" style="display:none">
-<h2>🚗 Auto Vehicle Valuation</h2>
-
-<input id="make" placeholder="Make"><br>
-<input id="model" placeholder="Model"><br>
-<input id="year" placeholder="Year"><br>
-<input id="mileage" placeholder="Mileage"><br>
-<input id="condition" placeholder="Condition (1-10)"><br>
-
-<button class="gold" onclick="addVehicle()">Add Vehicle</button>
-
-<div id="vehicleList"></div>
-</div>
-
-<!-- LEARNER HUB -->
-<div id="learn" style="display:none">
-<h2>📘 Learner Hub</h2>
-<div id="courses"></div>
-</div>
-
-<!-- ACADEMY -->
-<div id="academy" style="display:none">
-<h2>🎓 Driver Academy</h2>
-<p>Professional driver training modules.</p>
-</div>
-
-<!-- SAFETY -->
-<div id="safety" style="display:none">
-<h2>🛡 Safety Library</h2>
-<div id="docs"></div>
-</div>
-
-<!-- PSV -->
-<div id="psv" style="display:none">
-<h2>🚌 PSV Course</h2>
-<p>Professional PSV training program.</p>
-</div>
-
-</div>
-
-<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
 
 <script>
-/* ================= SUPABASE FIX ================= */
-const client = supabase.createClient(
-  "https://awbpzvuxvavzktjtjuvr.supabase.co",
-  "sb_publishable_LZU947tUe8TWUx0g6sKJ-A_PiYWi2JF"
-);
+    // ✅ SUPABASE CONNECTION
+    const SUPABASE_URL = 'https://awbpzvuxvavzktjtjuvr.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF3YnB6dnV4dmF2emt0anRqdXZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2MzAyNDUsImV4cCI6MjA5MzIwNjI0NX0.9lBuSm80dT8s9lx81W6R8N_4JPSwuRhAkwoanPpG9Ds';
+    
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-/* ================= NAV ================= */
-function setPage(p){
-    document.querySelectorAll(".container > div").forEach(d=>{
-        d.style.display="none";
-    });
-    document.getElementById(p).style.display="block";
-
-    if(p==="auto") loadVehicles();
-    if(p==="learn") loadCourses();
-    if(p==="safety") loadDocs();
-}
-
-/* ================= AUTH ================= */
-async function signup(){
-    const email = prompt("Email:");
-    const password = prompt("Password:");
-
-    const { error } = await client.auth.signUp({ email, password });
-
-    if(error) alert(error.message);
-    else alert("Check your email!");
-}
-
-async function login(){
-    const email = prompt("Email:");
-    const password = prompt("Password:");
-
-    const { error } = await client.auth.signInWithPassword({ email, password });
-
-    if(error) alert(error.message);
-    else location.reload();
-}
-
-async function logout(){
-    await client.auth.signOut();
-    location.reload();
-}
-
-/* ================= AUTO VALUE ================= */
-function estimate(year, mileage, condition){
-    let base = 2000000;
-    let age = (2026 - year) * 80000;
-    let km = mileage * 2;
-    let bonus = condition * 50000;
-    return Math.max(300000, base - age - km + bonus);
-}
-
-async function addVehicle(){
-    const user = (await client.auth.getUser()).data.user;
-
-    const v = {
-        make: make.value,
-        model: model.value,
-        year: parseInt(year.value),
-        mileage: parseInt(mileage.value),
-        condition_rating: parseInt(condition.value),
-        estimated_value: estimate(year.value, mileage.value, condition.value),
-        owner_id: user.id
+    // 💰 VALUATION FUNCTION
+    const calculateVehicleValue = (year, mileage, condition) => {
+        const CURRENT_YEAR = new Date().getFullYear();
+        const BASE_VALUE = 2000000;
+        const YEAR_DEPRECIATION = 80000;
+        const MILEAGE_RATE = 2;
+        const CONDITION_BOOST = 50000;
+        const MIN_VALUE = 300000;
+        
+        const agePenalty = (CURRENT_YEAR - year) * YEAR_DEPRECIATION;
+        const mileagePenalty = mileage * MILEAGE_RATE;
+        const conditionBoost = condition * CONDITION_BOOST;
+        
+        let value = BASE_VALUE - agePenalty - mileagePenalty + conditionBoost;
+        return Math.max(MIN_VALUE, Math.floor(value));
     };
 
-    await client.from("vehicles").insert([v]);
-    loadVehicles();
-}
+    // React App Component
+    const { useState, useEffect } = React;
 
-async function loadVehicles(){
-    const { data } = await client.from("vehicles").select("*");
+    const App = () => {
+        const [session, setSession] = useState(null);
+        const [showAuthModal, setShowAuthModal] = useState(false);
+        const [isLogin, setIsLogin] = useState(true);
+        const [email, setEmail] = useState("");
+        const [password, setPassword] = useState("");
+        const [fullName, setFullName] = useState("");
+        const [authLoading, setAuthLoading] = useState(false);
+        const [authError, setAuthError] = useState("");
+        const [vehicles, setVehicles] = useState([]);
+        const [loading, setLoading] = useState(false);
+        const [error, setError] = useState("");
+        const [showValuationModal, setShowValuationModal] = useState(false);
+        const [activeSection, setActiveSection] = useState("home");
+        const [form, setForm] = useState({ make: "", model: "", year: "", mileage: "", condition_rating: "" });
+        const [previewValue, setPreviewValue] = useState(null);
+        const [showPreview, setShowPreview] = useState(false);
 
-    vehicleList.innerHTML = (data || []).map(v=>`
-        <div class="card">
-            ${v.make} ${v.model} (${v.year})<br>
-            💰 KES ${v.estimated_value}
-        </div>
-    `).join("");
-}
+        useEffect(() => {
+            supabase.auth.getSession().then(({ data: { session } }) => {
+                setSession(session);
+                if (session) fetchVehicles();
+            });
 
-/* ================= COURSES ================= */
-async function loadCourses(){
-    const { data } = await client.from("courses").select("*");
+            const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+                setSession(session);
+                if (session) fetchVehicles();
+            });
 
-    courses.innerHTML = (data || []).map(c=>`
-        <div class="card">
-            📘 ${c.title || "Course"}<br>
-            ${c.category || ""}
-        </div>
-    `).join("");
-}
+            return () => subscription.unsubscribe();
+        }, []);
 
-/* ================= SAFETY ================= */
-async function loadDocs(){
-    const { data } = await client.from("safety_documents").select("*");
+        const fetchVehicles = async () => {
+            setLoading(true);
+            try {
+                const { data, error } = await supabase
+                    .from("vehicles")
+                    .select("*")
+                    .order("created_at", { ascending: false });
+                if (error) throw error;
+                setVehicles(data || []);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    docs.innerHTML = (data || []).map(d=>`
-        <div class="card">
-            🛡 ${d.title}<br>
-            ${d.document_type}
-        </div>
-    `).join("");
-}
+        const handleAuth = async (e) => {
+            e.preventDefault();
+            setAuthError("");
+            setAuthLoading(true);
+            
+            try {
+                if (isLogin) {
+                    const { error } = await supabase.auth.signInWithPassword({ email, password });
+                    if (error) throw error;
+                    setShowAuthModal(false);
+                    setEmail("");
+                    setPassword("");
+                } else {
+                    const { error } = await supabase.auth.signUp({ 
+                        email, password,
+                        options: { data: { full_name: fullName } }
+                    });
+                    if (error) throw error;
+                    alert("Check your email for confirmation!");
+                    setIsLogin(true);
+                    setFullName("");
+                }
+            } catch (err) {
+                setAuthError(err.message);
+            } finally {
+                setAuthLoading(false);
+            }
+        };
 
-/* START */
-setPage("home");
+        const signOut = async () => {
+            await supabase.auth.signOut();
+            setVehicles([]);
+        };
+
+        const handleChange = (e) => {
+            const newForm = { ...form, [e.target.name]: e.target.value };
+            setForm(newForm);
+            
+            if (newForm.year && newForm.mileage && newForm.condition_rating) {
+                const yearNum = parseInt(newForm.year);
+                const mileageNum = parseInt(newForm.mileage);
+                const conditionNum = parseInt(newForm.condition_rating);
+                
+                if (!isNaN(yearNum) && !isNaN(mileageNum) && !isNaN(conditionNum)) {
+                    const value = calculateVehicleValue(yearNum, mileageNum, conditionNum);
+                    setPreviewValue(value);
+                    setShowPreview(true);
+                } else {
+                    setShowPreview(false);
+                }
+            } else {
+                setShowPreview(false);
+            }
+        };
+
+        const addVehicle = async (e) => {
+            e.preventDefault();
+            setError("");
+            
+            if (!form.make || !form.model || !form.year || !form.mileage || !form.condition_rating) {
+                setError("All fields are required");
+                return;
+            }
+
+            const yearNum = parseInt(form.year);
+            const mileageNum = parseInt(form.mileage);
+            const conditionNum = parseInt(form.condition_rating);
+
+            if (isNaN(yearNum) || yearNum < 1900 || yearNum > new Date().getFullYear()) {
+                setError(`Please enter a valid year (1900-${new Date().getFullYear()})`);
+                return;
+            }
+
+            setLoading(true);
+            try {
+                const user = (await supabase.auth.getUser()).data.user;
+                const value = calculateVehicleValue(yearNum, mileageNum, conditionNum);
+
+                const { error } = await supabase.from("vehicles").insert([{
+                    make: form.make, model: form.model, year: yearNum,
+                    mileage: mileageNum, condition_rating: conditionNum,
+                    owner_id: user.id, estimated_value: value
+                }]);
+
+                if (error) throw error;
+                
+                setForm({ make: "", model: "", year: "", mileage: "", condition_rating: "" });
+                setShowValuationModal(false);
+                setShowPreview(false);
+                fetchVehicles();
+                alert("Vehicle added successfully!");
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        const deleteVehicle = async (id) => {
+            if (!confirm("Are you sure you want to delete this vehicle?")) return;
+            setLoading(true);
+            try {
+                const { error } = await supabase.from("vehicles").delete().eq("id", id);
+                if (error) throw error;
+                fetchVehicles();
+            } catch (err) {
+                alert(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        const stats = {
+            totalVehicles: vehicles.length,
+            averageValue: vehicles.length ? vehicles.reduce((sum, v) => sum + (v.estimated_value || 0), 0) / vehicles.length : 0,
+            totalMileage: vehicles.reduce((sum, v) => sum + (v.mileage || 0), 0)
+        };
+
+        // Auth Modal Component
+        const AuthModal = () => (
+            React.createElement("div", { className: "modal-overlay", onClick: () => setShowAuthModal(false) },
+                React.createElement("div", { className: "modal", onClick: (e) => e.stopPropagation() },
+                    React.createElement("button", { className: "modal-close", onClick: () => setShowAuthModal(false) }, "✕"),
+                    React.createElement("h2", null, isLogin ? "Welcome Back" : "Create Account"),
+                    authError && React.createElement("div", { className: "error-msg" }, authError),
+                    React.createElement("form", { onSubmit: handleAuth, className: "auth-form" },
+                        !isLogin && React.createElement("input", { type: "text", placeholder: "Full Name", value: fullName, onChange: (e) => setFullName(e.target.value), required: true }),
+                        React.createElement("input", { type: "email", placeholder: "Email", value: email, onChange: (e) => setEmail(e.target.value), required: true }),
+                        React.createElement("input", { type: "password", placeholder: "Password", value: password, onChange: (e) => setPassword(e.target.value), required: true }),
+                        React.createElement("button", { type: "submit", className: "modal-btn", disabled: authLoading }, authLoading ? "Processing..." : (isLogin ? "Login" : "Sign Up"))
+                    ),
+                    React.createElement("p", { className: "switch-auth" },
+                        isLogin ? "Don't have an account? " : "Already have an account? ",
+                        React.createElement("button", { onClick: () => { setIsLogin(!isLogin); setAuthError(""); } }, isLogin ? "Sign Up" : "Login")
+                    )
+                )
+            )
+        );
+
+        // Valuation Modal Component
+        const ValuationModal = () => (
+            React.createElement("div", { className: "modal-overlay", onClick: () => setShowValuationModal(false) },
+                React.createElement("div", { className: "modal", style: { maxWidth: 600 }, onClick: (e) => e.stopPropagation() },
+                    React.createElement("button", { className: "modal-close", onClick: () => setShowValuationModal(false) }, "✕"),
+                    React.createElement("h2", null, "Vehicle Valuation"),
+                    error && React.createElement("div", { className: "error-msg" }, error),
+                    React.createElement("form", { onSubmit: addVehicle, className: "valuation-form" },
+                        React.createElement("input", { name: "make", placeholder: "Make (e.g., Toyota)", onChange: handleChange, value: form.make, required: true }),
+                        React.createElement("input", { name: "model", placeholder: "Model (e.g., Camry)", onChange: handleChange, value: form.model, required: true }),
+                        React.createElement("input", { name: "year", placeholder: "Year", onChange: handleChange, value: form.year, type: "number", required: true }),
+                        React.createElement("input", { name: "mileage", placeholder: "Mileage (km)", onChange: handleChange, value: form.mileage, type: "number", required: true }),
+                        React.createElement("input", { name: "condition_rating", placeholder: "Condition (1-10)", onChange: handleChange, value: form.condition_rating, type: "number", min: "1", max: "10", required: true }),
+                        showPreview && previewValue && React.createElement("div", { className: "preview-card" },
+                            React.createElement("h4", { style: { color: '#d4af37', marginBottom: 15 } }, "📊 Live Valuation Preview"),
+                            React.createElement("div", { style: { fontSize: 24, fontWeight: 'bold', color: '#d4af37' } }, "💰 KES ", previewValue.toLocaleString())
+                        ),
+                        React.createElement("button", { type: "submit", className: "modal-btn", disabled: loading }, loading ? "Adding..." : "Add Vehicle")
+                    )
+                )
+            )
+        );
+
+        // Content renderer
+        const renderContent = () => {
+            if (activeSection === "auto-value") {
+                return React.createElement("div", { className: "dashboard-container" },
+                    React.createElement("div", { className: "dashboard-header" },
+                        React.createElement("h1", null, "🚗 Auto Vehicle Valuation"),
+                        session && React.createElement("button", { className: "add-btn", onClick: () => setShowValuationModal(true) }, "+ New Valuation")
+                    ),
+                    !session ? React.createElement("div", { className: "card", style: { padding: 30, textAlign: 'center' } },
+                        React.createElement("p", null, "Please login to access vehicle valuation."),
+                        React.createElement("button", { className: "primary", style: { marginTop: 15 }, onClick: () => setShowAuthModal(true) }, "Login / Sign Up")
+                    ) : React.createElement(React.Fragment, null,
+                        React.createElement("div", { className: "stats-grid" },
+                            React.createElement("div", { className: "stat-card" }, 
+                                React.createElement("h3", null, stats.totalVehicles), 
+                                React.createElement("p", null, "Total Vehicles")
+                            ),
+                            React.createElement("div", { className: "stat-card" }, 
+                                React.createElement("h3", null, "KES ", stats.averageValue.toLocaleString()), 
+                                React.createElement("p", null, "Average Value")
+                            ),
+                            React.createElement("div", { className: "stat-card" }, 
+                                React.createElement("h3", null, (stats.totalMileage / 1000).toFixed(1), "k"), 
+                                React.createElement("p", null, "Total Mileage (km)")
+                            )
+                        ),
+                        React.createElement("div", { className: "card", style: { padding: 25 } },
+                            React.createElement("h3", null, "Your Vehicles"),
+                            loading ? React.createElement("div", { className: "loading" }, "Loading...") :
+                            vehicles.length === 0 ? React.createElement("p", null, "No vehicles yet. Click 'New Valuation' to add your first vehicle!") :
+                            React.createElement("div", { className: "vehicle-grid" }, 
+                                vehicles.map(v => 
+                                    React.createElement("div", { key: v.id, className: "vehicle-card" },
+                                        React.createElement("div", { className: "vehicle-header" },
+                                            React.createElement("strong", null, v.make, " ", v.model),
+                                            React.createElement("button", { className: "delete-btn", onClick: () => deleteVehicle(v.id) }, "🗑️")
+                                        ),
+                                        React.createElement("div", { className: "vehicle-details" },
+                                            React.createElement("div", null, "📅 Year: ", v.year),
+                                            React.createElement("div", null, "📊 Mileage: ", v.mileage.toLocaleString(), " km"),
+                                            React.createElement("div", null, "⭐ Condition: ", v.condition_rating, "/10"),
+                                            React.createElement("div", { className: "vehicle-value" }, "💰 Value: KES ", v.estimated_value?.toLocaleString())
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                );
+            }
+            
+            if (activeSection === "driver-academy") {
+                return React.createElement("div", { className: "dashboard-container" },
+                    React.createElement("div", { className: "card", style: { padding: 30 } },
+                        React.createElement("h1", { style: { marginBottom: 20 } }, "🎓 Driver Academy"),
+                        React.createElement("p", { style: { color: '#888', marginBottom: 30 } }, "Professional driver training modules."),
+                        React.createElement("div", { className: "module-content" },
+                            React.createElement("div", { className: "training-module" },
+                                React.createElement("h3", null, "📚 Theory Training"),
+                                React.createElement("p", null, "Complete road theory and regulations"),
+                                React.createElement("button", { className: "module-btn", onClick: () => alert("Coming Soon!") }, "Start Learning")
+                            ),
+                            React.createElement("div", { className: "training-module" },
+                                React.createElement("h3", null, "🚗 Practical Driving"),
+                                React.createElement("p", null, "Hands-on driving experience"),
+                                React.createElement("button", { className: "module-btn", onClick: () => alert("Coming Soon!") }, "Enroll Now")
+                            ),
+                            React.createElement("div", { className: "training-module" },
+                                React.createElement("h3", null, "📝 Certification"),
+                                React.createElement("p", null, "Get your professional license"),
+                                React.createElement("button", { className: "module-btn", onClick: () => alert("Coming Soon!") }, "Get Certified")
+                            )
+                        )
+                    )
+                );
+            }
+            
+            if (activeSection === "learner-hub") {
+                return React.createElement("div", { className: "dashboard-container" },
+                    React.createElement("div", { className: "card", style: { padding: 30 } },
+                        React.createElement("h1", { style: { marginBottom: 20 } }, "📚 Learner Hub"),
+                        React.createElement("p", { style: { color: '#888', marginBottom: 30 } }, "NTSA practice tests and driving exam preparation."),
+                        React.createElement("div", { className: "module-content" },
+                            React.createElement("div", { className: "training-module" },
+                                React.createElement("h3", null, "Practice Tests"),
+                                React.createElement("p", null, "Highway code practice exams"),
+                                React.createElement("button", { className: "module-btn", onClick: () => alert("Coming Soon!") }, "Take Test")
+                            ),
+                            React.createElement("div", { className: "training-module" },
+                                React.createElement("h3", null, "Study Materials"),
+                                React.createElement("p", null, "Interactive learning resources"),
+                                React.createElement("button", { className: "module-btn", onClick: () => alert("Coming Soon!") }, "Study Now")
+                            )
+                        )
+                    )
+                );
+            }
+            
+            // Home page
+            return React.createElement(React.Fragment, null,
+                React.createElement("section", { className: "hero" },
+                    React.createElement("h1", null, "Africa's Smart Driving & Mobility Platform"),
+                    React.createElement("p", null, "Learn, certify, value, and manage vehicles and road safety systems from one unified platform."),
+                    React.createElement("div", { className: "cta" },
+                        React.createElement("button", { className: "primary", onClick: () => setActiveSection("learner-hub") }, "Start Learning"),
+                        React.createElement("button", { className: "secondary", onClick: () => setActiveSection("auto-value") }, "Auto Value")
+                    )
+                ),
+                React.createElement("section", { className: "stats" },
+                    React.createElement("div", null, React.createElement("h3", null, "25K+"), React.createElement("p", null, "Drivers")),
+                    React.createElement("div", null, React.createElement("h3", null, "800+"), React.createElement("p", null, "Fleet Companies")),
+                    React.createElement("div", null, React.createElement("h3", null, "100+"), React.createElement("p", null, "Schools")),
+                    React.createElement("div", null, React.createElement("h3", null, "98%"), React.createElement("p", null, "Pass Rate"))
+                ),
+                React.createElement("section", { className: "modules" },
+                    React.createElement("h2", null, "Platform Modules"),
+                    React.createElement("div", { className: "grid" },
+                        React.createElement("div", { className: "card", onClick: () => setActiveSection("learner-hub") },
+                            React.createElement("h3", null, "📚 Learner Hub"),
+                            React.createElement("p", null, "NTSA practice tests and driving exam preparation."),
+                            React.createElement("div", { className: "arrow" }, "→ Open")
+                        ),
+                        React.createElement("div", { className: "card", onClick: () => setActiveSection("driver-academy") },
+                            React.createElement("h3", null, "🎓 Driver Academy"),
+                            React.createElement("p", null, "Full certification training for professional drivers."),
+                            React.createElement("div", { className: "arrow" }, "→ Open")
+                        ),
+                        React.createElement("div", { className: "card coming-soon", onClick: () => alert("Coming Soon!") },
+                            React.createElement("h3", null, "🏫 School Safety"),
+                            React.createElement("p", null, "Transport safety systems for schools and buses."),
+                            React.createElement("div", { className: "arrow" }, "→ Coming Soon")
+                        ),
+                        React.createElement("div", { className: "card", onClick: () => setActiveSection("auto-value") },
+                            React.createElement("h3", null, "💰 Auto Vehicle Valuation"),
+                            React.createElement("p", null, "Smart AI-based instant vehicle value."),
+                            React.createElement("div", { className: "arrow" }, "→ Value Now")
+                        ),
+                        React.createElement("div", { className: "card coming-soon", onClick: () => alert("Coming Soon!") },
+                            React.createElement("h3", null, "📋 Safety Library"),
+                            React.createElement("p", null, "Forms, logs, and compliance documents."),
+                            React.createElement("div", { className: "arrow" }, "→ Coming Soon")
+                        ),
+                        React.createElement("div", { className: "card coming-soon", onClick: () => alert("Coming Soon!") },
+                            React.createElement("h3", null, "🚌 PSV Course"),
+                            React.createElement("p", null, "Professional PSV driver training program."),
+                            React.createElement("div", { className: "arrow" }, "→ Coming Soon")
+                        )
+                    )
+                )
+            );
+        };
+
+        // Main App Render
+        return React.createElement("div", null,
+            React.createElement("header", null,
+                React.createElement("div", { className: "container" },
+                    React.createElement("nav", null,
+                        React.createElement("div", { className: "logo", onClick: () => setActiveSection("home") }, "MEI ", React.createElement("span", null, "DRIVE AFRICA")),
+                        React.createElement("div", { className: "links" },
+                            React.createElement("button", { onClick: () => setActiveSection("home") }, "Home"),
+                            React.createElement("button", { onClick: () => setActiveSection("auto-value") }, "Auto Value"),
+                            React.createElement("button", { onClick: () => setActiveSection("learner-hub") }, "Learner Hub"),
+                            React.createElement("button", { onClick: () => setActiveSection("driver-academy") }, "Driver Academy"),
+                            React.createElement("button", { onClick: () => alert("Coming Soon!") }, "Safety Library"),
+                            React.createElement("button", { onClick: () => alert("Coming Soon!") }, "PSV Course"),
+                            session ? 
+                                React.createElement(React.Fragment, null,
+                                    React.createElement("span", { className: "user-email" }, session.user.email),
+                                    React.createElement("button", { className: "btn gold", onClick: signOut }, "Logout")
+                                ) : 
+                                React.createElement(React.Fragment, null,
+                                    React.createElement("button", { className: "btn outline", onClick: () => { setShowAuthModal(true); setIsLogin(true); } }, "Login"),
+                                    React.createElement("button", { className: "btn gold", onClick: () => { setShowAuthModal(true); setIsLogin(false); } }, "Sign Up")
+                                )
+                        )
+                    )
+                )
+            ),
+            React.createElement("main", null, renderContent()),
+            React.createElement("footer", null, "© 2026 MEI DRIVE AFRICA | Smart Mobility Ecosystem"),
+            showAuthModal && React.createElement(AuthModal, null),
+            showValuationModal && session && React.createElement(ValuationModal, null)
+        );
+    };
+
+    // Render the app
+    ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App, null));
 </script>
 
 </body>
