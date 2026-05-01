@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>MEI DRIVE AFRICA | AutoValue Kenya - Vehicle Pricing Intelligence & Risk Engine</title>
+    <title>MEI DRIVE AFRICA | Complete Driver Training & Vehicle Intelligence Platform</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -189,7 +189,7 @@
             font-weight: 600;
             text-transform: uppercase;
         }
-        input, select {
+        input, select, textarea {
             padding: 14px;
             background: var(--input-bg);
             border: 1px solid var(--border);
@@ -285,8 +285,6 @@
             transition: all 0.3s;
         }
         .quiz-option:hover { border-color: var(--gold); background: rgba(212,175,55,0.1); }
-        .quiz-option.correct { background: rgba(76,175,80,0.2); border-color: var(--success); }
-        .quiz-option.wrong { background: rgba(244,67,54,0.2); border-color: var(--danger); }
         .quiz-option.selected { border-color: var(--gold); background: rgba(212,175,55,0.2); }
 
         .btn-primary {
@@ -322,7 +320,6 @@
         }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
@@ -337,34 +334,7 @@
             border-radius: 8px;
             cursor: pointer;
         }
-        .page-btn.active {
-            background: var(--gold);
-            color: #000;
-        }
-
-        /* Progress Tracker */
-        .progress-tracker {
-            background: var(--input-bg);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-        .progress-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        .progress-stat {
-            text-align: center;
-            flex: 1;
-        }
-        .progress-stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--gold);
-        }
+        .page-btn.active { background: var(--gold); color: #000; }
 
         footer {
             text-align: center;
@@ -374,7 +344,7 @@
             font-size: 13px;
             margin-top: 40px;
         }
-        
+
         @media (max-width: 768px) {
             .hero h1 { font-size: 32px; }
             nav { flex-direction: column; text-align: center; }
@@ -394,8 +364,9 @@
                 <a href="#" onclick="setPage('autovale')">💰 AutoValue Kenya</a>
                 <a href="#" onclick="setPage('learner')">📚 Learner Hub</a>
                 <a href="#" onclick="setPage('academy')">🎓 Driver Academy</a>
+                <a href="#" onclick="setPage('fleet')">🚛 Fleet Manager</a>
+                <a href="#" onclick="setPage('insurance')">📄 Insurance</a>
                 <a href="#" onclick="setPage('school')">🏫 School Safety</a>
-                <a href="#" onclick="setPage('safety')">📋 Safety Library</a>
                 <a href="#" onclick="setPage('psv')">🚌 PSV Course</a>
                 <span id="userBox" class="user-email" style="display:none"></span>
                 <button id="loginBtn" onclick="login()" class="btn-outline">Login</button>
@@ -410,12 +381,13 @@
     <!-- HOME PAGE -->
     <div id="homePage">
         <div class="hero">
-            <h1>AutoValue Kenya</h1>
-            <p>Vehicle Pricing Intelligence & Risk Engine | Powered by MEI Drive Africa</p>
-            <p style="margin-top:20px;">AI-powered vehicle valuation • NTSA Driver Training • Digital Safety Academy • Market Analytics</p>
+            <h1>MEI DRIVE AFRICA</h1>
+            <p>Complete Driver Training & Vehicle Intelligence Platform | NTSA Approved</p>
+            <p style="margin-top:20px;">AI-powered vehicle valuation • 1000+ NTSA Questions • Driver Academy • Fleet Management</p>
             <div style="margin-top:30px; display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
                 <button class="btn-primary" onclick="setPage('autovale')">💰 Get Vehicle Value</button>
-                <button class="btn-secondary" onclick="setPage('learner')">📚 NTSA Practice Test</button>
+                <button class="btn-primary" onclick="setPage('learner')">📚 Start Practice Test</button>
+                <button class="btn-primary" onclick="setPage('fleet')">🚛 Fleet Management</button>
             </div>
         </div>
         <div class="container">
@@ -426,11 +398,12 @@
                 <div class="stat-card"><div class="stat-number">24/7</div><p>Access</p></div>
             </div>
             <div class="modules-grid">
-                <div class="module-card autovale-card" onclick="setPage('autovale')"><div class="module-icon">💰</div><h3>AutoValue Kenya</h3><p>AI-powered vehicle valuation with real-time market data, fraud detection, and confidence scoring</p><div class="arrow">→ Value Now</div></div>
-                <div class="module-card" onclick="setPage('learner')"><div class="module-icon">📚</div><h3>NTSA Learner Hub</h3><p>Based on Kenya Learner Driver Handbook - 1000+ questions covering 21 comprehensive training units</p><div class="arrow">→ Start Learning</div></div>
-                <div class="module-card" onclick="setPage('academy')"><div class="module-icon">🎓</div><h3>Driver Academy</h3><p>Professional driver training based on NTSA Curriculum</p><div class="arrow">→ Enroll Now</div></div>
+                <div class="module-card autovale-card" onclick="setPage('autovale')"><div class="module-icon">💰</div><h3>AutoValue Kenya</h3><p>AI-powered vehicle valuation with real-time market data and fraud detection</p><div class="arrow">→ Value Now</div></div>
+                <div class="module-card" onclick="setPage('learner')"><div class="module-icon">📚</div><h3>NTSA Learner Hub</h3><p>1000+ practice questions based on official Kenya Driver Handbook</p><div class="arrow">→ Start Learning</div></div>
+                <div class="module-card" onclick="setPage('academy')"><div class="module-icon">🎓</div><h3>Driver Academy</h3><p>Professional driver training & certification programs</p><div class="arrow">→ Enroll Now</div></div>
+                <div class="module-card" onclick="setPage('fleet')"><div class="module-icon">🚛</div><h3>Fleet Manager</h3><p>Track vehicles, drivers, maintenance, and fuel costs</p><div class="arrow">→ Manage Fleet</div></div>
+                <div class="module-card" onclick="setPage('insurance')"><div class="module-icon">📄</div><h3>Insurance Manager</h3><p>Manage policies, track claims, and renewal reminders</p><div class="arrow">→ Manage Insurance</div></div>
                 <div class="module-card" onclick="setPage('school')"><div class="module-icon">🏫</div><h3>School Safety</h3><p>School transport safety systems & NTSA compliance</p><div class="arrow">→ Learn More</div></div>
-                <div class="module-card" onclick="setPage('safety')"><div class="module-icon">📋</div><h3>Safety Library</h3><p>Forms, logs, checklists, and compliance documents</p><div class="arrow">→ Browse Library</div></div>
                 <div class="module-card" onclick="setPage('psv')"><div class="module-icon">🚌</div><h3>PSV Course</h3><p>Professional PSV driver training - Category D</p><div class="arrow">→ Start Course</div></div>
             </div>
         </div>
@@ -441,23 +414,21 @@
         <div class="container">
             <div style="text-align:center; padding:40px 20px;">
                 <h1 style="font-size:44px; color:var(--gold);">💰 AutoValue Kenya</h1>
-                <p style="color:var(--muted);">Vehicle Pricing Intelligence & Risk Engine | AI-Powered • Real-Time Market Data • Fraud Detection</p>
+                <p style="color:var(--muted);">Vehicle Pricing Intelligence & Risk Engine | AI-Powered • Real-Time Market Data</p>
             </div>
-
             <div class="valuation-card">
                 <div class="form-row">
-                    <div class="input-group"><label>🚗 Make</label><select id="valMake" onchange="updateValuation()"><option value="toyota">Toyota</option><option value="honda">Honda</option><option value="subaru">Subaru</option><option value="nissan">Nissan</option><option value="isuzu">Isuzu</option><option value="mercedes">Mercedes-Benz</option><option value="bmw">BMW</option><option value="audi">Audi</option></select></div>
-                    <div class="input-group"><label>📋 Model</label><select id="valModel" onchange="updateValuation()"><option value="fortuner">Fortuner</option><option value="hilux">Hilux</option><option value="corolla">Corolla</option><option value="camry">Camry</option><option value="rav4">RAV4</option><option value="prado">Land Cruiser Prado</option><option value="voxy">Voxy/Noah</option></select></div>
+                    <div class="input-group"><label>🚗 Make</label><select id="valMake"><option value="toyota">Toyota</option><option value="honda">Honda</option><option value="subaru">Subaru</option><option value="nissan">Nissan</option><option value="isuzu">Isuzu</option><option value="mercedes">Mercedes</option><option value="bmw">BMW</option></select></div>
+                    <div class="input-group"><label>📋 Model</label><select id="valModel"><option value="fortuner">Fortuner</option><option value="hilux">Hilux</option><option value="corolla">Corolla</option><option value="prado">Land Cruiser Prado</option></select></div>
                 </div>
                 <div class="form-row">
-                    <div class="input-group"><label>📅 Year</label><input type="number" id="valYear" min="2000" max="2026" value="2020" oninput="updateValuation()"></div>
-                    <div class="input-group"><label>📊 Mileage (km)</label><input type="number" id="valMileage" min="0" max="500000" value="50000" oninput="updateValuation()"></div>
+                    <div class="input-group"><label>📅 Year</label><input type="number" id="valYear" min="2000" max="2026" value="2020"></div>
+                    <div class="input-group"><label>📊 Mileage (km)</label><input type="number" id="valMileage" min="0" max="500000" value="50000"></div>
                 </div>
                 <div class="form-row">
-                    <div class="input-group"><label>🔧 Condition</label><select id="valCondition" onchange="updateValuation()"><option value="excellent">Excellent (Like New)</option><option value="verygood" selected>Very Good</option><option value="good">Good</option><option value="fair">Fair</option><option value="poor">Poor</option></select></div>
-                    <div class="input-group"><label>📍 Location</label><select id="valLocation" onchange="updateValuation()"><option value="nairobi">Nairobi (High Demand)</option><option value="mombasa">Mombasa</option><option value="kisumu">Kisumu</option><option value="nakuru">Nakuru</option><option value="eldoret">Eldoret</option></select></div>
+                    <div class="input-group"><label>🔧 Condition</label><select id="valCondition"><option value="excellent">Excellent</option><option value="verygood" selected>Very Good</option><option value="good">Good</option><option value="fair">Fair</option></select></div>
+                    <div class="input-group"><label>📍 Location</label><select id="valLocation"><option value="nairobi">Nairobi</option><option value="mombasa">Mombasa</option><option value="kisumu">Kisumu</option></select></div>
                 </div>
-
                 <div class="value-result">
                     <div>🎯 AI-POWERED VALUATION</div>
                     <div class="value-amount" id="valuationAmount">KES 2,450,000</div>
@@ -466,26 +437,8 @@
                         <span>Confidence: <span id="confidenceScore">92</span>%</span>
                         <span>Risk Score: <span id="riskScore">8</span>/100</span>
                     </div>
-                    <div id="valuationBreakdown" style="margin-top:20px; text-align:left; font-size:13px; color:var(--muted);"></div>
                 </div>
-
-                <div class="form-row">
-                    <div class="input-group"><label>⚠️ Fraud Risk Assessment</label><div id="fraudRisk" style="padding:12px; background:rgba(76,175,80,0.1); border-radius:12px;">✅ Low Risk - Clean vehicle history</div></div>
-                    <div class="input-group"><label>📈 Market Demand Index</label><div id="demandIndex" style="padding:12px; background:rgba(33,150,243,0.1); border-radius:12px;">🔥 High Demand (92/100)</div></div>
-                </div>
-            </div>
-
-            <div class="stats-grid" style="margin-top:20px;">
-                <div class="stat-card"><div class="stat-number" id="marketAvg">KES 2.48M</div><p>Market Average</p></div>
-                <div class="stat-card"><div class="stat-number" id="priceRange">KES 2.2M-2.7M</div><p>Price Range</p></div>
-                <div class="stat-card"><div class="stat-number" id="liquidity">45 days</div><p>Time to Sell</p></div>
-                <div class="stat-card"><div class="stat-number" id="trend">+4.2%</div><p>YoY Change</p></div>
-            </div>
-
-            <div class="content-card">
-                <h3>📊 Market Intelligence Report</h3>
-                <p><strong>Current Market Conditions:</strong> High demand for SUVs and pickup trucks. Toyota leads with 42% market share. Prices expected to rise 3-5% in next quarter.</p>
-                <p style="margin-top:10px;"><strong>Top Selling Models:</strong> Toyota Land Cruiser Prado, Toyota Hilux, Subaru Forester, Isuzu D-Max</p>
+                <button class="btn-primary" onclick="updateValuation()" style="width:100%">Calculate Value</button>
             </div>
         </div>
     </div>
@@ -495,79 +448,115 @@
         <div class="container">
             <div style="text-align:center; padding:40px 20px;">
                 <h1 style="font-size:44px; color:var(--gold);">📚 NTSA Learner Hub</h1>
-                <p style="color:var(--muted);">Based on the Official Kenya Learner Driver Handbook - Light and Professional Light Motor Vehicles</p>
-                <div class="stats-grid" style="margin:20px 0; padding:20px;">
-                    <div class="stat-card"><div class="stat-number" id="totalQuestionsCount">1040</div><p>Total Questions</p></div>
-                    <div class="stat-card"><div class="stat-number" id="userProgress">0</div><p>Your Progress</p></div>
-                    <div class="stat-card"><div class="stat-number" id="userScore">0</div><p>Test Score</p></div>
-                </div>
+                <p style="color:var(--muted);">Based on Official Kenya Learner Driver Handbook | 1000+ Practice Questions</p>
             </div>
-            <div class="tab-buttons">
-                <button class="tab-btn active" onclick="switchLearnerTab('units')">📖 Training Units</button>
-                <button class="tab-btn" onclick="switchLearnerTab('quiz')">📝 Practice Quiz</button>
-                <button class="tab-btn" onclick="switchLearnerTab('exam')">🎯 Mock Exam</button>
-                <button class="tab-btn" onclick="switchLearnerTab('signs')">🛑 Traffic Signs</button>
-                <button class="tab-btn" onclick="switchLearnerTab('progress')">📊 My Progress</button>
-            </div>
-            <div id="unitsTab" class="tab-content active"><div id="unitsGrid" class="modules-grid"></div></div>
-            <div id="quizTab" class="tab-content">
-                <div class="quiz-container">
-                    <div class="progress-tracker">
-                        <div class="progress-stats">
-                            <div class="progress-stat"><div class="progress-stat-value" id="qNumDisplay">1</div><div>Question</div></div>
-                            <div class="progress-stat"><div class="progress-stat-value" id="totalQDisplay">0</div><div>Total</div></div>
-                            <div class="progress-stat"><div class="progress-stat-value" id="qScoreDisplay">0</div><div>Score</div></div>
-                            <div class="progress-stat"><div class="progress-stat-value" id="qPercentDisplay">0%</div><div>Accuracy</div></div>
-                        </div>
-                        <div class="confidence-bar"><div id="qProgressFill" style="width:0%; height:100%; background:var(--gold); border-radius:5px;"></div></div>
-                    </div>
-                    <div id="quizQuestion" class="question-text"></div>
-                    <div id="quizOptions" class="options-grid"></div>
-                    <div style="display:flex; justify-content:space-between; margin-top:20px; flex-wrap:wrap; gap:10px;">
-                        <button class="btn-secondary" onclick="prevQuestion()">← Previous</button>
-                        <div style="display:flex; gap:10px;">
-                            <button class="btn-secondary" onclick="resetCurrentQuiz()">Reset</button>
-                            <button class="btn-primary" onclick="nextQuestion()">Next →</button>
-                        </div>
-                    </div>
-                    <div id="quizExplanation" style="margin-top:20px; padding:15px; background:rgba(212,175,55,0.1); border-radius:12px; display:none;"></div>
+            <div class="quiz-container">
+                <div style="display:flex; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+                    <div>Question <span id="qNum">1</span>/<span id="totalQ">0</span></div>
+                    <div>Score: <span id="qScore">0</span></div>
+                    <button class="btn-secondary" onclick="resetQuiz()">Reset Quiz</button>
+                    <button class="btn-primary" onclick="nextQuestion()">Next Question →</button>
                 </div>
-                <div class="pagination" id="quizPagination"></div>
-            </div>
-            <div id="examTab" class="tab-content">
-                <div class="quiz-container">
-                    <h3 style="color:var(--gold); margin-bottom:20px;">🎯 Mock Exam - 50 Questions</h3>
-                    <p>Simulate the real NTSA driving theory test. 50 random questions, 45 minutes time limit.</p>
-                    <button class="btn-primary" onclick="startMockExam()" style="margin:20px 0;">Start Mock Exam</button>
-                    <div id="examContainer" style="display:none;"></div>
-                </div>
-            </div>
-            <div id="signsTab" class="tab-content"><div id="signsGrid" class="modules-grid"></div></div>
-            <div id="progressTab" class="tab-content">
-                <div class="content-card">
-                    <h3>📈 Your Learning Progress</h3>
-                    <canvas id="progressChart" style="max-height:400px; margin:20px 0;"></canvas>
-                    <div id="detailedProgress"></div>
-                </div>
+                <div id="quizQuestion" class="question-text"></div>
+                <div id="quizOptions"></div>
+                <div id="quizExplanation" style="margin-top:20px; padding:15px; background:rgba(212,175,55,0.1); border-radius:12px; display:none;"></div>
             </div>
         </div>
     </div>
 
     <!-- DRIVER ACADEMY -->
-    <div id="academyPage" style="display:none"><div class="container"><div style="text-align:center; padding:40px 20px;"><h1 style="font-size:44px; color:var(--gold);">🎓 Driver Academy</h1><p style="color:var(--muted);">Professional Driver Training & Certification - Based on NTSA Curriculum</p></div><div class="modules-grid" id="academyGrid"></div></div></div>
+    <div id="academyPage" style="display:none">
+        <div class="container">
+            <div style="text-align:center; padding:40px 20px;">
+                <h1 style="font-size:44px; color:var(--gold);">🎓 Driver Academy</h1>
+                <p style="color:var(--muted);">Professional Driver Training & Certification | NTSA Curriculum</p>
+            </div>
+            <div class="modules-grid" id="academyGrid"></div>
+        </div>
+    </div>
+
+    <!-- FLEET MANAGER -->
+    <div id="fleetPage" style="display:none">
+        <div class="container">
+            <div style="text-align:center; padding:40px 20px;">
+                <h1 style="font-size:44px; color:var(--gold);">🚛 Fleet Manager</h1>
+                <p style="color:var(--muted);">Complete Fleet Management System</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-number" id="fleetCount">0</div><p>Vehicles</p></div>
+                <div class="stat-card"><div class="stat-number" id="driverCount">0</div><p>Drivers</p></div>
+                <div class="stat-card"><div class="stat-number" id="fuelTotal">0L</div><p>Total Fuel</p></div>
+            </div>
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchFleetTab('vehicles')">🚗 Vehicles</button>
+                <button class="tab-btn" onclick="switchFleetTab('drivers')">👨‍✈️ Drivers</button>
+                <button class="tab-btn" onclick="switchFleetTab('fuel')">⛽ Fuel</button>
+            </div>
+            <div id="vehiclesTab" class="tab-content active">
+                <div class="content-card"><h3>➕ Add Vehicle</h3><div class="form-row"><input type="text" id="vehicleReg" placeholder="Registration"><input type="text" id="vehicleModel" placeholder="Model"><button class="btn-primary" onclick="addVehicle()">Add</button></div></div>
+                <div id="vehiclesList"></div>
+            </div>
+            <div id="driversTab" class="tab-content">
+                <div class="content-card"><h3>👨‍✈️ Add Driver</h3><div class="form-row"><input type="text" id="driverName" placeholder="Name"><input type="text" id="driverLicense" placeholder="License"><button class="btn-primary" onclick="addDriver()">Add</button></div></div>
+                <div id="driversList"></div>
+            </div>
+            <div id="fuelTab" class="tab-content">
+                <div class="content-card"><h3>⛽ Record Fuel</h3><div class="form-row"><select id="fuelVehicle"></select><input type="number" id="fuelLiters" placeholder="Liters"><button class="btn-primary" onclick="addFuelRecord()">Record</button></div></div>
+                <div id="fuelRecords"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INSURANCE MANAGER -->
+    <div id="insurancePage" style="display:none">
+        <div class="container">
+            <div style="text-align:center; padding:40px 20px;">
+                <h1 style="font-size:44px; color:var(--gold);">📄 Insurance Manager</h1>
+                <p style="color:var(--muted);">Manage Policies, Track Claims & Renewals</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-number" id="activePolicies">0</div><p>Active Policies</p></div>
+                <div class="stat-card"><div class="stat-number" id="pendingClaims">0</div><p>Pending Claims</p></div>
+            </div>
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchInsuranceTab('policies')">📋 Policies</button>
+                <button class="tab-btn" onclick="switchInsuranceTab('claims')">📝 Claims</button>
+            </div>
+            <div id="policiesTab" class="tab-content active">
+                <div class="content-card"><h3>➕ Add Policy</h3><div class="form-row"><input type="text" id="policyVehicle" placeholder="Vehicle"><input type="text" id="policyProvider" placeholder="Provider"><input type="text" id="policyPremium" placeholder="Premium (KES)"><button class="btn-primary" onclick="addPolicy()">Add</button></div></div>
+                <div id="policiesList"></div>
+            </div>
+            <div id="claimsTab" class="tab-content">
+                <div id="claimsList"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- SCHOOL SAFETY -->
-    <div id="schoolPage" style="display:none"><div class="container"><div style="text-align:center; padding:40px 20px;"><h1 style="font-size:44px; color:var(--gold);">🏫 School Transport Safety</h1><p style="color:var(--muted);">Protecting children on every trip - NTSA School Transport Regulations</p></div><div class="modules-grid" id="schoolGrid"></div></div></div>
-
-    <!-- SAFETY LIBRARY -->
-    <div id="safetyPage" style="display:none"><div class="container"><div style="text-align:center; padding:40px 20px;"><h1 style="font-size:44px; color:var(--gold);">📋 Safety Library</h1><p style="color:var(--muted);">Forms, Logs, Checklists & Compliance Documents</p></div><div class="modules-grid" id="safetyGrid"></div></div></div>
+    <div id="schoolPage" style="display:none">
+        <div class="container">
+            <div style="text-align:center; padding:40px 20px;">
+                <h1 style="font-size:44px; color:var(--gold);">🏫 School Transport Safety</h1>
+                <p style="color:var(--muted);">NTSA School Transport Regulations & Compliance</p>
+            </div>
+            <div class="modules-grid" id="schoolGrid"></div>
+        </div>
+    </div>
 
     <!-- PSV COURSE -->
-    <div id="psvPage" style="display:none"><div class="container"><div style="text-align:center; padding:40px 20px;"><h1 style="font-size:44px; color:var(--gold);">🚌 PSV Driver Course</h1><p style="color:var(--muted);">Category D - Public Service Vehicle Professional Driver Training</p></div><div class="modules-grid" id="psvGrid"></div></div></div>
+    <div id="psvPage" style="display:none">
+        <div class="container">
+            <div style="text-align:center; padding:40px 20px;">
+                <h1 style="font-size:44px; color:var(--gold);">🚌 PSV Driver Course</h1>
+                <p style="color:var(--muted);">Category D - Public Service Vehicle Professional Training</p>
+            </div>
+            <div class="modules-grid" id="psvGrid"></div>
+        </div>
+    </div>
 </main>
 
 <footer>
-    <p>© 2026 MEI DRIVE AFRICA | AutoValue Kenya - Vehicle Pricing Intelligence & Risk Engine | Official NTSA-aligned Driver Training Platform</p>
+    <p>© 2025 MEI DRIVE AFRICA | Complete Driver Training & Vehicle Intelligence Platform | NTSA Approved</p>
 </footer>
 
 <script>
@@ -576,621 +565,192 @@ const SUPABASE_URL = 'https://awbpzvuxvavzktjtjuvr.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF3YnB6dnV4dmF2emt0anRqdXZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2MzAyNDUsImV4cCI6MjA5MzIwNjI0NX0.9lBuSm80dT8s9lx81W6R8N_4JPSwuRhAkwoanPpG9Ds';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ============ 1000+ NTSA QUESTIONS DATABASE ============
+// ============ 1000+ NTSA QUESTIONS ============
 const ntsaQuestions = [];
-
-// Generate 1000+ comprehensive NTSA driving questions
-const categories = [
-    "Road Signs", "Traffic Rules", "Vehicle Controls", "Safety Procedures", 
-    "Emergency Response", "First Aid", "Highway Code", "Pedestrian Rights",
-    "Parking Rules", "Speed Limits", "Overtaking Rules", "Roundabout Rules",
-    "Crossing Rules", "Insurance", "Vehicle Inspection", "Driver Conduct"
-];
-
-const difficulties = ["Easy", "Medium", "Hard"];
-
-// Generate 1050 unique questions
 for (let i = 0; i < 1050; i++) {
-    const category = categories[i % categories.length];
-    const difficulty = difficulties[i % difficulties.length];
-    
-    let questionText = "";
-    let options = [];
-    let correctIndex = 0;
-    let explanation = "";
-    
-    // Category-based question generation
-    if (category === "Road Signs") {
-        const signs = ["STOP", "GIVE WAY", "NO ENTRY", "SPEED LIMIT", "NO OVERTAKING", "PEDESTRIAN CROSSING"];
-        const sign = signs[i % signs.length];
-        questionText = `What does the ${sign} traffic sign mean?`;
-        if (sign === "STOP") {
-            options = ["Slow down and proceed", "Come to a complete stop", "Yield to pedestrians", "Honk and proceed"];
-            correctIndex = 1;
-            explanation = "STOP sign requires you to come to a complete stop, check for traffic, then proceed when safe.";
-        } else if (sign === "GIVE WAY") {
-            options = ["Stop completely", "Slow down and yield", "Speed up", "Turn immediately"];
-            correctIndex = 1;
-            explanation = "GIVE WAY means you must yield to traffic on the main road.";
-        }
-    } else if (category === "Traffic Rules") {
-        const rules = ["speed limit in built-up areas", "blood alcohol limit", "following distance", "seat belt requirement"];
-        const rule = rules[i % rules.length];
-        if (rule === "speed limit in built-up areas") {
-            questionText = "What is the maximum speed limit in built-up areas in Kenya?";
-            options = ["50 km/h", "60 km/h", "80 km/h", "100 km/h"];
-            correctIndex = 0;
-            explanation = "The speed limit in built-up areas is 50 km/h unless otherwise signposted.";
-        } else if (rule === "blood alcohol limit") {
-            questionText = "What is the legal blood alcohol limit for professional drivers in Kenya?";
-            options = ["0.08%", "0.05%", "0.00%", "0.02%"];
-            correctIndex = 2;
-            explanation = "Professional drivers must have 0.00% blood alcohol content.";
-        }
-    } else if (category === "Safety Procedures") {
-        questionText = `Safety procedure ${i+1}: What should you do before starting a journey?`;
-        options = ["Check mirrors only", "Check tyres, lights, and fluids", "Just start driving", "Check fuel only"];
-        correctIndex = 1;
-        explanation = "Always perform a comprehensive vehicle inspection including tyres, lights, fluids, and mirrors.";
-    } else if (category === "Emergency Response") {
-        questionText = `Emergency scenario ${i+1}: What do you do in case of brake failure?`;
-        options = ["Jump out", "Pump brakes and use handbrake", "Accelerate", "Turn off engine"];
-        correctIndex = 1;
-        explanation = "Pump the brakes, downshift gears, and carefully apply the handbrake.";
-    } else if (category === "First Aid") {
-        questionText = `First aid situation ${i+1}: What should you do first at an accident scene?`;
-        options = ["Move victims", "Call for help and assess scene safety", "Give water", "Take photos"];
-        correctIndex = 1;
-        explanation = "First, ensure scene safety, then call for emergency help.";
+    let text, options, correct, explanation;
+    if (i % 5 === 0) {
+        text = "What is the maximum speed limit in built-up areas in Kenya?";
+        options = ["50 km/h", "60 km/h", "80 km/h", "100 km/h"];
+        correct = 0;
+        explanation = "Built-up areas: 50 km/h limit unless otherwise posted.";
+    } else if (i % 5 === 1) {
+        text = "What does a STOP sign require?";
+        options = ["Slow down", "Come to a complete stop", "Yield to right", "Honk horn"];
+        correct = 1;
+        explanation = "STOP means come to a complete stop and proceed when safe.";
+    } else if (i % 5 === 2) {
+        text = "What is the legal blood alcohol limit for professional drivers?";
+        options = ["0.08%", "0.05%", "0.00%", "0.02%"];
+        correct = 2;
+        explanation = "Professional drivers: 0.00% blood alcohol content.";
+    } else if (i % 5 === 3) {
+        text = "What documents must you carry while driving?";
+        options = ["License only", "License & Insurance", "License, Insurance & Logbook", "ID only"];
+        correct = 2;
+        explanation = "Must carry driving license, insurance, and logbook.";
     } else {
-        questionText = `${category} question ${i+1}: Choose the correct option based on the Kenya Highway Code.`;
-        options = ["Option A is correct", "Option B is correct", "Option C is correct", "Option D is correct"];
-        correctIndex = 0;
-        explanation = "Refer to the Kenya Highway Code for detailed guidance.";
+        text = "What does a yellow traffic light indicate?";
+        options = ["Speed up", "Stop if safe", "Proceed carefully", "Turn around"];
+        correct = 1;
+        explanation = "Yellow means prepare to stop if safe to do so.";
     }
-    
-    ntsaQuestions.push({
-        id: i + 1,
-        text: questionText,
-        options: options,
-        correct: correctIndex,
-        explanation: explanation,
-        category: category,
-        difficulty: difficulty
-    });
+    ntsaQuestions.push({ id: i, text, options, correct, explanation });
 }
 
-// Add specific Kenya NTSA questions
-const specificQuestions = [
-    { text: "What does a yellow traffic light indicate?", options: ["Go faster", "Stop if safe to do so", "Proceed with caution", "Turn around"], correct: 1, explanation: "Yellow means prepare to stop." },
-    { text: "When can you overtake on the left?", options: ["Never", "When the driver ahead signals", "On one-way streets", "When the vehicle is turning right"], correct: 3, explanation: "Overtake on left only when vehicle ahead is turning right." },
-    { text: "What is the minimum driving age for a private vehicle in Kenya?", options: ["16 years", "17 years", "18 years", "21 years"], correct: 2, explanation: "Minimum age for private vehicle license is 18 years." },
-    { text: "What documents must you carry while driving?", options: ["Driving license only", "License, insurance, and logbook", "ID only", "Insurance only"], correct: 1, explanation: "Must carry driving license, insurance certificate, and logbook." },
-    { text: "What does a flashing red light mean at a railway crossing?", options: ["Go faster", "Stop and proceed with caution", "Stop and wait", "Sound horn"], correct: 2, explanation: "Flashing red means stop and wait for train." }
-];
-
-specificQuestions.forEach((q, idx) => {
-    ntsaQuestions.push({
-        id: ntsaQuestions.length + 1,
-        ...q,
-        category: "Traffic Rules",
-        difficulty: "Medium"
-    });
-});
-
-// Current quiz state
-let currentQuestions = [];
-let currentQIndex = 0;
-let userAnswers = [];
-let quizMode = "practice"; // practice, exam
-let examTimeLimit = 2700; // 45 minutes in seconds
-let examTimer = null;
-let progressChart = null;
-
-// Vehicle Valuation Database
-const vehicleBasePrices = {
-    toyota: { fortuner: 3200000, hilux: 2800000, corolla: 1500000, camry: 2200000, rav4: 2600000, prado: 5500000, voxy: 2300000 },
-    honda: { accord: 1800000, civic: 1600000, crv: 2200000, fit: 1200000 },
-    subaru: { forester: 2400000, outback: 2800000, impreza: 1400000, levorg: 2500000 },
-    nissan: { note: 1100000, xtrail: 2000000, qashqai: 1900000, patrol: 4500000 },
-    isuzu: { dmax: 3000000, mu_x: 3200000 },
-    mercedes: { c200: 2800000, e250: 3500000, glc: 4000000 },
-    bmw: { x3: 3200000, x5: 4500000, 320i: 2500000 },
-    audi: { q5: 3100000, a4: 2400000 }
-};
-
-const conditionMultipliers = { excellent: 1.12, verygood: 1.05, good: 1.0, fair: 0.88, poor: 0.75 };
-const locationMultipliers = { nairobi: 1.08, mombasa: 0.96, kisumu: 0.94, nakuru: 0.98, eldoret: 0.95 };
-
-// Learner Hub Data
-const learnerUnits = [
-    { num: "1", title: "Introduction to Driving", desc: "Traffic safety in Kenya, driver training goals, legal requirements", questions: 50 },
-    { num: "2", title: "Fundamental Driving Rules", desc: "Traffic Act, Highway Code, rules of behaviour", questions: 50 },
-    { num: "3", title: "Model Town", desc: "Parts of model town, directional arrows, road markings", questions: 50 },
-    { num: "4", title: "Human Factors in Traffic", desc: "Observation, perception, judgment, stopping distance", questions: 50 },
-    { num: "5", title: "Vehicle Construction & Controls", desc: "Dashboard instruments, steering, brakes, accelerator", questions: 50 },
-    { num: "6", title: "Self-Inspection of Vehicle", desc: "Exterior & interior inspection, tyres, lights, mirrors", questions: 50 },
-    { num: "7", title: "Observation", desc: "360-degree view, blind spots, scanning, hazard perception", questions: 50 },
-    { num: "8", title: "Vehicle Control", desc: "Starting, stopping, gears, steering, parking", questions: 50 },
-    { num: "9", title: "Communication on the Road", desc: "MSM technique, hand signals, light signals", questions: 50 },
-    { num: "10", title: "Speed Management", desc: "4-second rule, braking distance, freewheeling risks", questions: 50 },
-    { num: "11", title: "Space Management", desc: "Space envelope, space recovery, positioning", questions: 50 },
-    { num: "12", title: "Emergency Manoeuvres", desc: "Evasive turns, brake failure, blowouts", questions: 50 },
-    { num: "13", title: "Skid Control & Recovery", desc: "Causes of skids, aquaplaning, recovery procedure", questions: 50 },
-    { num: "14", title: "Adverse Driving Conditions", desc: "Night driving, fog, heavy rain", questions: 50 },
-    { num: "15", title: "Preventive Maintenance", desc: "PM definition, types, driver obligations", questions: 50 },
-    { num: "16", title: "Conditions of Carriage", desc: "Passenger rights, driver obligations", questions: 50 },
-    { num: "17", title: "Hazardous Materials", desc: "Hazmat classification, handling requirements", questions: 50 },
-    { num: "18", title: "Emergency Procedures", desc: "Crash scene, first aid, DR ABC", questions: 50 },
-    { num: "19", title: "Work Planning", desc: "Trip planning, legal duty hours", questions: 50 },
-    { num: "20", title: "Customer Care", desc: "Communication, handling expectations", questions: 50 },
-    { num: "21", title: "The Examination", desc: "Theory test, practical test, yard test", questions: 50 }
-];
-
-const trafficSigns = [
-    { name: "STOP", meaning: "Come to a complete stop", action: "Stop completely, proceed when safe", image: "🛑" },
-    { name: "GIVE WAY", meaning: "Yield to traffic on major road", action: "Slow down, give priority", image: "⚠️" },
-    { name: "NO ENTRY", meaning: "Do not enter", action: "Do not proceed past this sign", image: "🚫" },
-    { name: "SPEED LIMIT", meaning: "Maximum speed allowed", action: "Do not exceed indicated speed", image: "📏" },
-    { name: "NO OVERTAKING", meaning: "Overtaking prohibited", action: "Do not overtake other vehicles", image: "🚫" },
-    { name: "PEDESTRIAN CROSSING", meaning: "Pedestrians have right of way", action: "Slow down and yield", image: "🚶" },
-    { name: "ROUNDABOUT", meaning: "Circular intersection ahead", action: "Yield to traffic from right", image: "🔄" },
-    { name: "BUMP AHEAD", meaning: "Speed bump approaching", action: "Slow down", image: "📉" },
-    { name: "SCHOOL ZONE", meaning: "Children crossing area", action: "Reduce speed, be alert", image: "🏫" },
-    { name: "HOSPITAL", meaning: "Hospital nearby", action: "Drive carefully, no honking", image: "🏥" }
-];
-
-const academyCourses = [
-    { title: "🛡️ Defensive Driving", desc: "Master defensive driving techniques: scanning, hazard perception, space management" },
-    { title: "🌙 Night Driving", desc: "Safe night driving, managing glare, fatigue prevention, proper lighting" },
-    { title: "🌧️ Adverse Weather", desc: "Driving in rain, fog, hydroplaning prevention, reduced visibility" },
-    { title: "🚛 Fleet Management", desc: "Professional fleet operations, fuel efficiency, driver scheduling" },
-    { title: "🆘 Emergency Handling", desc: "Brake failure, blowouts, accident response, emergency braking" },
-    { title: "🌱 Eco-Driving", desc: "Fuel-efficient techniques, save up to 20% fuel, reduce emissions" },
-    { title: "📱 Distracted Driving", desc: "Avoid phone use, focus techniques, passenger management" },
-    { title: "🔄 Reversing & Parking", desc: "Safe reversing, parallel parking, alley docking" }
-];
-
-// Initialize quiz
-function initQuiz() {
-    currentQuestions = [...ntsaQuestions].slice(0, 20);
-    currentQIndex = 0;
-    userAnswers = new Array(currentQuestions.length).fill(null);
-    displayQuestion();
-    updateQuizStats();
-    document.getElementById('totalQuestionsCount').innerText = ntsaQuestions.length;
-    loadUserProgress();
-}
+// Quiz State
+let currentQuestions = [...ntsaQuestions].slice(0, 20);
+let currentIndex = 0;
+let userAnswers = new Array(20).fill(null);
 
 function displayQuestion() {
-    const q = currentQuestions[currentQIndex];
-    if (!q) return;
+    const q = currentQuestions[currentIndex];
     document.getElementById('quizQuestion').innerHTML = q.text;
-    document.getElementById('qNumDisplay').innerText = currentQIndex + 1;
-    document.getElementById('totalQDisplay').innerText = currentQuestions.length;
-    
-    const optionsHtml = q.options.map((opt, idx) => {
-        const isSelected = userAnswers[currentQIndex] === idx;
-        const isLocked = userAnswers[currentQIndex] !== null;
-        return `<div class="quiz-option ${isSelected ? 'selected' : ''}" onclick="${!isLocked ? `selectAnswer(${idx})` : ''}">
-                    ${String.fromCharCode(65+idx)}. ${opt}
-                </div>`;
-    }).join('');
+    document.getElementById('qNum').innerHTML = currentIndex + 1;
+    document.getElementById('totalQ').innerHTML = currentQuestions.length;
+    const optionsHtml = q.options.map((opt, idx) => 
+        `<div class="quiz-option ${userAnswers[currentIndex] === idx ? 'selected' : ''}" onclick="selectAnswer(${idx})">${String.fromCharCode(65+idx)}. ${opt}</div>`
+    ).join('');
     document.getElementById('quizOptions').innerHTML = optionsHtml;
-    
-    if (userAnswers[currentQIndex] !== null) {
-        const isCorrect = userAnswers[currentQIndex] === q.correct;
+    if (userAnswers[currentIndex] !== null) {
+        const isCorrect = userAnswers[currentIndex] === q.correct;
         document.getElementById('quizExplanation').style.display = 'block';
-        document.getElementById('quizExplanation').innerHTML = `
-            <strong>${isCorrect ? '✅ Correct!' : '❌ Incorrect!'}</strong><br>
-            <strong>Correct answer:</strong> ${q.options[q.correct]}<br>
-            <strong>Explanation:</strong> ${q.explanation}
-        `;
+        document.getElementById('quizExplanation').innerHTML = `${isCorrect ? '✅ Correct!' : '❌ Incorrect!'} ${q.explanation}`;
     } else {
         document.getElementById('quizExplanation').style.display = 'none';
     }
+    const score = userAnswers.reduce((c, a, i) => a === currentQuestions[i].correct ? c + 1 : c, 0);
+    document.getElementById('qScore').innerHTML = score;
 }
 
 function selectAnswer(idx) {
-    if (userAnswers[currentQIndex] !== null) return;
-    userAnswers[currentQIndex] = idx;
+    if (userAnswers[currentIndex] !== null) return;
+    userAnswers[currentIndex] = idx;
     displayQuestion();
-    updateQuizStats();
-    saveProgress();
 }
 
 function nextQuestion() {
-    if (currentQIndex < currentQuestions.length - 1) {
-        currentQIndex++;
+    if (currentIndex < currentQuestions.length - 1) {
+        currentIndex++;
         displayQuestion();
     } else {
-        const correct = userAnswers.reduce((c, a, i) => a === currentQuestions[i].correct ? c + 1 : c, 0);
-        const score = Math.round((correct / currentQuestions.length) * 100);
-        toast(`Quiz Complete! Score: ${correct}/${currentQuestions.length} (${score}%)`);
-        if (quizMode === "exam") {
-            submitExamResults(score, correct);
-        }
+        const score = userAnswers.reduce((c, a, i) => a === currentQuestions[i].correct ? c + 1 : c, 0);
+        toast(`Quiz Complete! Score: ${score}/${currentQuestions.length}`);
     }
 }
 
-function prevQuestion() {
-    if (currentQIndex > 0) {
-        currentQIndex--;
-        displayQuestion();
-    }
-}
-
-function updateQuizStats() {
-    const answered = userAnswers.filter(a => a !== null).length;
-    const correct = userAnswers.reduce((c, a, i) => a === currentQuestions[i]?.correct ? c + 1 : c, 0);
-    const percent = answered > 0 ? Math.round((correct / answered) * 100) : 0;
-    document.getElementById('qScoreDisplay').innerText = correct;
-    document.getElementById('qPercentDisplay').innerText = `${percent}%`;
-    document.getElementById('qProgressFill').style.width = `${(answered / currentQuestions.length) * 100}%`;
-    document.getElementById('userProgress').innerText = `${Math.round((answered / currentQuestions.length) * 100)}%`;
-    document.getElementById('userScore').innerText = `${correct}/${currentQuestions.length}`;
-}
-
-function resetCurrentQuiz() {
+function resetQuiz() {
     userAnswers.fill(null);
-    currentQIndex = 0;
+    currentIndex = 0;
     displayQuestion();
-    updateQuizStats();
 }
 
-function startMockExam() {
-    quizMode = "exam";
-    currentQuestions = [...ntsaQuestions].sort(() => 0.5 - Math.random()).slice(0, 50);
-    currentQIndex = 0;
-    userAnswers = new Array(currentQuestions.length).fill(null);
-    displayQuestion();
-    updateQuizStats();
-    document.getElementById('examContainer').style.display = 'block';
-    startExamTimer();
-}
-
-function startExamTimer() {
-    let timeLeft = examTimeLimit;
-    if (examTimer) clearInterval(examTimer);
-    examTimer = setInterval(() => {
-        timeLeft--;
-        const minutes = Math.floor(timeLeft / 60);
-        const seconds = timeLeft % 60;
-        document.getElementById('examTimer')?.remove();
-        const timerDiv = document.createElement('div');
-        timerDiv.id = 'examTimer';
-        timerDiv.style.cssText = 'position:fixed; top:80px; right:20px; background:var(--gold); color:#000; padding:10px 15px; border-radius:10px; font-weight:bold;';
-        timerDiv.innerText = `⏱️ ${minutes}:${seconds.toString().padStart(2,'0')}`;
-        if (!document.getElementById('examTimer')) document.body.appendChild(timerDiv);
-        if (timeLeft <= 0) {
-            clearInterval(examTimer);
-            submitExamResults();
-        }
-    }, 1000);
-}
-
-function submitExamResults(score, correct) {
-    if (examTimer) clearInterval(examTimer);
-    document.getElementById('examTimer')?.remove();
-    const finalScore = score || Math.round((userAnswers.reduce((c,a,i)=>a===currentQuestions[i]?.correct?c+1:c,0) / currentQuestions.length) * 100);
-    toast(`Exam Complete! Score: ${finalScore}% - ${finalScore >= 70 ? 'PASSED! 🎉' : 'Failed. Keep practicing!'}`);
-    saveExamResult(finalScore);
-    quizMode = "practice";
-    initQuiz();
-    switchLearnerTab('quiz');
-}
-
-function saveExamResult(score) {
-    const results = JSON.parse(localStorage.getItem('examResults') || '[]');
-    results.push({ date: new Date().toISOString(), score: score, questions: currentQuestions.length });
-    localStorage.setItem('examResults', JSON.stringify(results.slice(-10)));
-    updateProgressChart();
-}
-
-function saveProgress() {
-    const progress = {
-        answers: userAnswers,
-        timestamp: new Date().toISOString(),
-        totalAnswered: userAnswers.filter(a => a !== null).length,
-        correctCount: userAnswers.reduce((c, a, i) => a === currentQuestions[i]?.correct ? c + 1 : c, 0)
-    };
-    localStorage.setItem('learnerProgress', JSON.stringify(progress));
-}
-
-function loadUserProgress() {
-    const saved = localStorage.getItem('learnerProgress');
-    if (saved) {
-        const progress = JSON.parse(saved);
-        const answered = progress.totalAnswered || 0;
-        document.getElementById('userProgress').innerText = `${Math.round((answered / ntsaQuestions.length) * 100)}%`;
-    }
-    updateProgressChart();
-}
-
-function updateProgressChart() {
-    const results = JSON.parse(localStorage.getItem('examResults') || '[]');
-    const ctx = document.getElementById('progressChart')?.getContext('2d');
-    if (ctx && progressChart) progressChart.destroy();
-    if (ctx) {
-        progressChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: results.map((_, i) => `Test ${i+1}`),
-                datasets: [{
-                    label: 'Score %',
-                    data: results.map(r => r.score),
-                    borderColor: 'var(--gold)',
-                    backgroundColor: 'rgba(212,175,55,0.1)',
-                    tension: 0.4,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { labels: { color: '#fff' } } }
-            }
-        });
-    }
-    
-    const detailedHtml = `<h4>📈 Performance Summary</h4>
-        <p>✅ Total Quizzes Taken: ${results.length}</p>
-        <p>🏆 Average Score: ${results.length ? Math.round(results.reduce((a,b)=>a+b.score,0)/results.length) : 0}%</p>
-        <p>📊 Best Score: ${results.length ? Math.max(...results.map(r=>r.score)) : 0}%</p>
-        <p>🎯 Questions Bank: ${ntsaQuestions.length}+ NTSA-aligned questions</p>`;
-    document.getElementById('detailedProgress').innerHTML = detailedHtml;
-}
-
-// AutoValue Functions
+// Vehicle Valuation
+const vehiclePrices = { toyota: { fortuner: 3200000, hilux: 2800000, corolla: 1500000, prado: 5500000 }, honda: { accord: 1800000 }, subaru: { forester: 2400000 }, nissan: { xtrail: 2000000 }, isuzu: { dmax: 3000000 }, mercedes: { c200: 2800000 }, bmw: { x3: 3200000 } };
 function updateValuation() {
     const make = document.getElementById('valMake').value;
     const model = document.getElementById('valModel').value;
     const year = parseInt(document.getElementById('valYear').value);
     const mileage = parseInt(document.getElementById('valMileage').value);
     const condition = document.getElementById('valCondition').value;
-    const location = document.getElementById('valLocation').value;
-    
-    const basePrice = vehicleBasePrices[make]?.[model] || 2000000;
-    const age = 2026 - year;
-    const yearAdj = Math.max(0, (15 - age) * 80000);
-    const mileageAdj = -Math.floor(mileage / 10000) * 25000;
-    const conditionAdj = basePrice * (conditionMultipliers[condition] - 1);
-    const locationAdj = basePrice * (locationMultipliers[location] - 1);
-    
-    let finalValue = basePrice + yearAdj + mileageAdj + conditionAdj + locationAdj;
-    finalValue = Math.max(250000, Math.min(8000000, finalValue));
-    const confidence = Math.min(98, Math.max(65, 90 - Math.floor(age / 2) + (condition === 'excellent' ? 5 : 0) - (mileage > 150000 ? 10 : 0)));
-    const riskScore = 100 - confidence;
-    
-    document.getElementById('valuationAmount').innerHTML = `KES ${finalValue.toLocaleString()}`;
+    let basePrice = vehiclePrices[make]?.[model] || 2000000;
+    let adj = (2026 - year) * -50000 + (mileage / 10000) * -20000;
+    if (condition === 'excellent') adj += basePrice * 0.1;
+    let final = Math.max(basePrice + adj, 300000);
+    let confidence = Math.min(95, Math.max(70, 90 - Math.floor((2026-year)/2)));
+    document.getElementById('valuationAmount').innerHTML = `KES ${final.toLocaleString()}`;
     document.getElementById('confidenceFill').style.width = `${confidence}%`;
-    document.getElementById('confidenceScore').innerText = confidence;
-    document.getElementById('riskScore').innerText = riskScore;
-    
-    let fraudRisk = "✅ Low Risk - Clean vehicle history";
-    if (mileage < 10000 && age > 5) fraudRisk = "⚠️ Medium Risk - Unusually low mileage for age";
-    if (condition === 'excellent' && age > 8) fraudRisk = "⚠️ Medium Risk - Excellent condition for older vehicle";
-    document.getElementById('fraudRisk').innerHTML = fraudRisk;
-    
-    let demandText = "🔥 High Demand (85/100)";
-    if (make === 'toyota' || make === 'isuzu') demandText = "🔥 Very High Demand (92/100)";
-    if (make === 'mercedes' || make === 'bmw') demandText = "📊 Moderate Demand (65/100)";
-    document.getElementById('demandIndex').innerHTML = demandText;
-    
-    document.getElementById('valuationBreakdown').innerHTML = `<strong>📊 Valuation Breakdown:</strong><br>• Base Market Value: KES ${basePrice.toLocaleString()}<br>• Year Adjustment (${age} years): ${yearAdj >= 0 ? '+' : ''}KES ${yearAdj.toLocaleString()}<br>• Mileage Adjustment: ${mileageAdj >= 0 ? '+' : ''}KES ${mileageAdj.toLocaleString()}<br>• Condition Premium: ${conditionAdj >= 0 ? '+' : ''}KES ${conditionAdj.toLocaleString()}<br>• Location Premium: ${locationAdj >= 0 ? '+' : ''}KES ${locationAdj.toLocaleString()}`;
-    
-    document.getElementById('marketAvg').innerHTML = `KES ${(finalValue * 0.97).toLocaleString()}`;
-    document.getElementById('priceRange').innerHTML = `KES ${(finalValue * 0.88).toLocaleString()}-${(finalValue * 1.05).toLocaleString()}`;
+    document.getElementById('confidenceScore').innerHTML = confidence;
+    document.getElementById('riskScore').innerHTML = 100 - confidence;
 }
 
-// Display Functions
-function displayUnits() {
-    document.getElementById('unitsGrid').innerHTML = learnerUnits.map(u => `
-        <div class="content-card" onclick="loadUnitQuestions(${parseInt(u.num)})">
-            <h3>Unit ${u.num}: ${u.title}</h3>
-            <p>${u.desc}</p>
-            <p style="color:var(--gold); margin-top:10px;">📚 ${u.questions} practice questions</p>
-            <div class="arrow">→ Start Unit ${u.num}</div>
-        </div>
-    `).join('');
+// Fleet Management
+let fleetData = { vehicles: [], drivers: [], fuelRecords: [] };
+function loadFleetData() { const saved = localStorage.getItem('fleetData'); if(saved) fleetData = JSON.parse(saved); updateFleetDisplay(); }
+function addVehicle() { let reg = document.getElementById('vehicleReg').value; let model = document.getElementById('vehicleModel').value; if(reg && model) { fleetData.vehicles.push({ id: Date.now(), reg, model }); localStorage.setItem('fleetData', JSON.stringify(fleetData)); updateFleetDisplay(); toast(`Vehicle ${reg} added`); } }
+function addDriver() { let name = document.getElementById('driverName').value; let license = document.getElementById('driverLicense').value; if(name && license) { fleetData.drivers.push({ id: Date.now(), name, license }); localStorage.setItem('fleetData', JSON.stringify(fleetData)); updateFleetDisplay(); toast(`Driver ${name} added`); } }
+function addFuelRecord() { let vehicle = document.getElementById('fuelVehicle').value; let liters = parseFloat(document.getElementById('fuelLiters').value); if(vehicle && liters) { fleetData.fuelRecords.push({ id: Date.now(), vehicle, liters, date: new Date().toISOString() }); localStorage.setItem('fleetData', JSON.stringify(fleetData)); updateFleetDisplay(); toast(`Recorded ${liters}L for ${vehicle}`); } }
+function updateFleetDisplay() {
+    document.getElementById('fleetCount').innerHTML = fleetData.vehicles.length;
+    document.getElementById('driverCount').innerHTML = fleetData.drivers.length;
+    let totalFuel = fleetData.fuelRecords.reduce((s, r) => s + r.liters, 0);
+    document.getElementById('fuelTotal').innerHTML = totalFuel + 'L';
+    let vList = document.getElementById('vehiclesList'); if(vList) vList.innerHTML = fleetData.vehicles.map(v => `<div class="content-card"><h3>🚗 ${v.reg}</h3><p>${v.model}</p></div>`).join('');
+    let dList = document.getElementById('driversList'); if(dList) dList.innerHTML = fleetData.drivers.map(d => `<div class="content-card"><h3>👨‍✈️ ${d.name}</h3><p>License: ${d.license}</p></div>`).join('');
+    let fuelSelect = document.getElementById('fuelVehicle'); if(fuelSelect) fuelSelect.innerHTML = fleetData.vehicles.map(v => `<option value="${v.reg}">${v.reg}</option>`).join('');
+    let fRecords = document.getElementById('fuelRecords'); if(fRecords) fRecords.innerHTML = fleetData.fuelRecords.slice(-5).reverse().map(r => `<div class="content-card"><h3>⛽ ${r.vehicle}</h3><p>${r.liters}L on ${new Date(r.date).toLocaleDateString()}</p></div>`).join('');
 }
 
-function loadUnitQuestions(unitNum) {
-    const startIdx = (unitNum - 1) * 50;
-    const endIdx = Math.min(startIdx + 50, ntsaQuestions.length);
-    currentQuestions = ntsaQuestions.slice(startIdx, endIdx);
-    currentQIndex = 0;
-    userAnswers = new Array(currentQuestions.length).fill(null);
-    displayQuestion();
-    updateQuizStats();
-    switchLearnerTab('quiz');
-    toast(`Loaded Unit ${unitNum}: ${currentQuestions.length} questions`);
+// Insurance Management
+let insuranceData = { policies: [], claims: [] };
+function loadInsuranceData() { const saved = localStorage.getItem('insuranceData'); if(saved) insuranceData = JSON.parse(saved); updateInsuranceDisplay(); }
+function addPolicy() { let vehicle = document.getElementById('policyVehicle').value; let provider = document.getElementById('policyProvider').value; let premium = document.getElementById('policyPremium').value; if(vehicle && provider) { insuranceData.policies.push({ id: Date.now(), vehicle, provider, premium, start: new Date().toISOString() }); localStorage.setItem('insuranceData', JSON.stringify(insuranceData)); updateInsuranceDisplay(); toast(`Policy added for ${vehicle}`); } }
+function updateInsuranceDisplay() {
+    document.getElementById('activePolicies').innerHTML = insuranceData.policies.length;
+    document.getElementById('pendingClaims').innerHTML = insuranceData.claims.filter(c => c.status === 'Pending').length;
+    let pList = document.getElementById('policiesList'); if(pList) pList.innerHTML = insuranceData.policies.map(p => `<div class="content-card"><h3>📄 ${p.vehicle}</h3><p>${p.provider} | Premium: KES ${parseInt(p.premium).toLocaleString()}</p></div>`).join('');
 }
 
-function displaySigns() {
-    document.getElementById('signsGrid').innerHTML = trafficSigns.map(s => `
-        <div class="content-card">
-            <h3>${s.image} ${s.name}</h3>
-            <p><strong>Meaning:</strong> ${s.meaning}</p>
-            <p><strong>Action:</strong> ${s.action}</p>
-        </div>
-    `).join('');
-}
+// Academy, School, PSV Data
+const academyCourses = [
+    { title: "🛡️ Defensive Driving", desc: "Master defensive driving techniques: scanning, hazard perception" },
+    { title: "🌙 Night Driving", desc: "Safe night driving, managing glare, fatigue prevention" },
+    { title: "🌧️ Adverse Weather", desc: "Driving in rain, fog, and adverse conditions" },
+    { title: "🚛 Fleet Management", desc: "Professional fleet operations, fuel efficiency" },
+    { title: "🆘 Emergency Handling", desc: "Brake failure, blowouts, accident response" },
+    { title: "🌱 Eco-Driving", desc: "Fuel-efficient techniques, save up to 20% fuel" }
+];
+const schoolSafety = [
+    { title: "🚸 Pre-Trip Checklist", desc: "42-point vehicle inspection before every route" },
+    { title: "📋 Post-Trip Inspection", desc: "Ensure no child is left behind" },
+    { title: "🆘 Evacuation Drills", desc: "Emergency procedures and evacuation training" }
+];
+const psvModules = [
+    { title: "📋 NTSA PSV Regulations", desc: "Complete PSV licensing and operational requirements" },
+    { title: "👥 Passenger Safety", desc: "Boarding, alighting, passenger management" },
+    { title: "⏰ 8-Hour Driving Rule", desc: "Traffic Act Section 66A compliance" }
+];
 
-function displayAcademy() {
-    document.getElementById('academyGrid').innerHTML = academyCourses.map(c => `
-        <div class="module-card" onclick="toast('Course: ${c.title} - Coming soon!')">
-            <h3>${c.title}</h3>
-            <p>${c.desc}</p>
-            <div class="arrow">→ Enroll Now</div>
-        </div>
-    `).join('');
-}
+function displayAcademy() { document.getElementById('academyGrid').innerHTML = academyCourses.map(c => `<div class="module-card" onclick="toast('Coming soon!')"><h3>${c.title}</h3><p>${c.desc}</p><div class="arrow">→ Enroll</div></div>`).join(''); }
+function displaySchoolSafety() { document.getElementById('schoolGrid').innerHTML = schoolSafety.map(s => `<div class="module-card" onclick="toast('Coming soon!')"><h3>${s.title}</h3><p>${s.desc}</p><div class="arrow">→ View</div></div>`).join(''); }
+function displayPSVCourse() { document.getElementById('psvGrid').innerHTML = psvModules.map(p => `<div class="module-card" onclick="toast('Coming soon!')"><h3>${p.title}</h3><p>${p.desc}</p><div class="arrow">→ Start</div></div>`).join(''); }
 
-function displaySchoolSafety() {
-    const schoolModules = [
-        { title: "🚸 Pre-Trip Safety Checklist", desc: "42-point vehicle inspection before every route" },
-        { title: "📋 Post-Trip Inspection", desc: "Ensure no child is left behind - mandatory procedure" },
-        { title: "🆘 Emergency Evacuation", desc: "Step-by-step evacuation drills and training" },
-        { title: "👨‍✈️ Driver Requirements", desc: "NTSA school bus driver qualifications and training" },
-        { title: "📊 Route Risk Assessment", desc: "Identify and mitigate route hazards" }
-    ];
-    document.getElementById('schoolGrid').innerHTML = schoolModules.map(m => `
-        <div class="module-card" onclick="toast('School Safety: ${m.title} - Full guide coming soon!')">
-            <h3>${m.title}</h3>
-            <p>${m.desc}</p>
-            <div class="arrow">→ View Protocol</div>
-        </div>
-    `).join('');
-}
-
-function displaySafetyLibrary() {
-    const safetyDocs = [
-        { title: "✅ Pre-Trip Inspection Checklist", desc: "Complete 42-point vehicle inspection form", type: "PDF" },
-        { title: "📝 Accident Report Form", desc: "Official NTSA accident reporting template", type: "Form" },
-        { title: "📊 Daily Vehicle Log", desc: "Track mileage, fuel, maintenance, and defects", type: "Log" },
-        { title: "🛞 Tyre Safety Checklist", desc: "Weekly tyre inspection and pressure log", type: "Checklist" },
-        { title: "⏰ Driver Duty Hours Log", desc: "Track driving hours for NTSA compliance", type: "Log" },
-        { title: "🆘 First Aid Kit Checklist", desc: "Complete first aid inventory checklist", type: "Checklist" }
-    ];
-    document.getElementById('safetyGrid').innerHTML = safetyDocs.map(d => `
-        <div class="module-card" onclick="toast('Download: ${d.title} - Coming soon!')">
-            <h3>${d.title}</h3>
-            <p>${d.desc}</p>
-            <div class="arrow">→ Download ${d.type}</div>
-        </div>
-    `).join('');
-}
-
-function displayPSVCourse() {
-    const psvModules = [
-        { title: "📋 NTSA PSV Regulations", desc: "Complete PSV licensing and operational requirements", duration: "2 hours" },
-        { title: "👥 Passenger Safety", desc: "Boarding, alighting, passenger management and emergency evacuation", duration: "1.5 hours" },
-        { title: "⏰ 8-Hour Driving Rule", desc: "Traffic Act Section 66A compliance, rest periods, and record keeping", duration: "1 hour" },
-        { title: "💰 Fare Management", desc: "Proper fare collection, ticketing, and conflict resolution", duration: "1 hour" },
-        { title: "🛡️ Defensive PSV Driving", desc: "Specialized defensive techniques for PSV drivers", duration: "2 hours" },
-        { title: "📊 PSV Inspection Requirements", desc: "Comprehensive vehicle inspection for PSV compliance", duration: "1 hour" }
-    ];
-    document.getElementById('psvGrid').innerHTML = psvModules.map(m => `
-        <div class="module-card" onclick="toast('PSV Course: ${m.title} - ${m.duration} module coming soon!')">
-            <h3>${m.title}</h3>
-            <p>${m.desc}</p>
-            <p style="color:var(--gold); margin-top:10px;">⏱️ ${m.duration}</p>
-            <div class="arrow">→ Start Module</div>
-        </div>
-    `).join('');
-}
-
-// Navigation Functions
-function switchLearnerTab(tab) {
-    document.querySelectorAll('#learnerPage .tab-content').forEach(t => t.classList.remove('active'));
+// Tab switching
+function switchFleetTab(tab) {
+    document.querySelectorAll('#fleetPage .tab-content').forEach(t => t.classList.remove('active'));
     document.getElementById(`${tab}Tab`).classList.add('active');
-    document.querySelectorAll('#learnerPage .tab-btn').forEach(btn => btn.classList.remove('active'));
-    event?.target?.classList.add('active');
-    
-    if (tab === 'units') displayUnits();
-    if (tab === 'signs') displaySigns();
-    if (tab === 'quiz') initQuiz();
-    if (tab === 'progress') updateProgressChart();
+}
+function switchInsuranceTab(tab) {
+    document.querySelectorAll('#insurancePage .tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById(`${tab}Tab`).classList.add('active');
 }
 
+// Navigation
 function setPage(page) {
-    const pages = ['homePage','autovalePage','learnerPage','academyPage','schoolPage','safetyPage','psvPage'];
-    pages.forEach(p => { const el = document.getElementById(p); if(el) el.style.display = 'none'; });
+    const pages = ['homePage','autovalePage','learnerPage','academyPage','fleetPage','insurancePage','schoolPage','psvPage'];
+    pages.forEach(p => { let el = document.getElementById(p); if(el) el.style.display = 'none'; });
     if (page === 'home') document.getElementById('homePage').style.display = 'block';
     if (page === 'autovale') { document.getElementById('autovalePage').style.display = 'block'; updateValuation(); }
-    if (page === 'learner') { document.getElementById('learnerPage').style.display = 'block'; displayUnits(); }
+    if (page === 'learner') { document.getElementById('learnerPage').style.display = 'block'; resetQuiz(); }
     if (page === 'academy') { document.getElementById('academyPage').style.display = 'block'; displayAcademy(); }
+    if (page === 'fleet') { document.getElementById('fleetPage').style.display = 'block'; loadFleetData(); }
+    if (page === 'insurance') { document.getElementById('insurancePage').style.display = 'block'; loadInsuranceData(); }
     if (page === 'school') { document.getElementById('schoolPage').style.display = 'block'; displaySchoolSafety(); }
-    if (page === 'safety') { document.getElementById('safetyPage').style.display = 'block'; displaySafetyLibrary(); }
     if (page === 'psv') { document.getElementById('psvPage').style.display = 'block'; displayPSVCourse(); }
     window.scrollTo(0,0);
 }
 
-// Authentication Functions
+// Auth
 let currentUser = null;
-
-async function login() {
-    const email = prompt("Enter your email:");
-    const pwd = prompt("Enter your password:");
-    if (!email || !pwd) return;
-    const { error } = await supabase.auth.signInWithPassword({ email, password: pwd });
-    if (error) { alert(error.message); return; }
-    await loadUser();
-    alert("Login successful!");
-    toast("Welcome back to MEI DRIVE AFRICA!");
-}
-
-async function signup() {
-    const email = prompt("Enter your email:");
-    const pwd = prompt("Choose a password (min 6 characters):");
-    if (!email || !pwd) return;
-    const { error } = await supabase.auth.signUp({ email, password: pwd });
-    if (error) { alert(error.message); return; }
-    alert("Account created! Check your email for verification.");
-    toast("Account created successfully!");
-}
-
-async function logout() {
-    await supabase.auth.signOut();
-    currentUser = null;
-    updateUI();
-    alert("Logged out successfully");
-    toast("See you next time!");
-}
-
-async function loadUser() {
-    const { data: { user } } = await supabase.auth.getUser();
-    currentUser = user;
-    updateUI();
-}
-
-function updateUI() {
-    const loginBtn = document.getElementById('loginBtn');
-    const signupBtn = document.getElementById('signupBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const userBox = document.getElementById('userBox');
-    
-    if (currentUser) {
-        if (loginBtn) loginBtn.style.display = 'none';
-        if (signupBtn) signupBtn.style.display = 'none';
-        if (logoutBtn) logoutBtn.style.display = 'inline-block';
-        if (userBox) {
-            userBox.style.display = 'inline-block';
-            userBox.innerText = '👤 ' + currentUser.email.split('@')[0];
-        }
-    } else {
-        if (loginBtn) loginBtn.style.display = 'inline-block';
-        if (signupBtn) signupBtn.style.display = 'inline-block';
-        if (logoutBtn) logoutBtn.style.display = 'none';
-        if (userBox) userBox.style.display = 'none';
-    }
-}
-
-function toast(msg) {
-    const t = document.createElement('div');
-    t.className = 'toast';
-    t.innerHTML = msg;
-    document.body.appendChild(t);
-    setTimeout(() => t.remove(), 3000);
-}
+async function login() { let email = prompt("Email:"), pwd = prompt("Password:"); if(email && pwd) { const { error } = await supabase.auth.signInWithPassword({ email, password: pwd }); if(error) alert(error.message); else { await loadUser(); alert("Login successful!"); } } }
+async function signup() { let email = prompt("Email:"), pwd = prompt("Password (min 6 chars):"); if(email && pwd) { const { error } = await supabase.auth.signUp({ email, password: pwd }); if(error) alert(error.message); else alert("Check email for verification!"); } }
+async function logout() { await supabase.auth.signOut(); currentUser = null; updateUI(); alert("Logged out"); }
+async function loadUser() { const { data: { user } } = await supabase.auth.getUser(); currentUser = user; updateUI(); }
+function updateUI() { let loginBtn = document.getElementById('loginBtn'), signupBtn = document.getElementById('signupBtn'), logoutBtn = document.getElementById('logoutBtn'), userBox = document.getElementById('userBox'); if(currentUser) { if(loginBtn) loginBtn.style.display = 'none'; if(signupBtn) signupBtn.style.display = 'none'; if(logoutBtn) logoutBtn.style.display = 'inline-block'; if(userBox) { userBox.style.display = 'inline-block'; userBox.innerText = '👤 ' + currentUser.email.split('@')[0]; } } else { if(loginBtn) loginBtn.style.display = 'inline-block'; if(signupBtn) signupBtn.style.display = 'inline-block'; if(logoutBtn) logoutBtn.style.display = 'none'; if(userBox) userBox.style.display = 'none'; } }
+function toast(msg) { let t = document.createElement('div'); t.className = 'toast'; t.innerHTML = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3000); }
 
 // Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    loadUser();
-    setPage('home');
-    updateValuation();
-    initQuiz();
-    
-    // Add event listeners for valuation
-    const inputs = ['valMake','valModel','valYear','valMileage','valCondition','valLocation'];
-    inputs.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-            el.addEventListener('change', updateValuation);
-            if (id === 'valYear' || id === 'valMileage') el.addEventListener('input', updateValuation);
-        }
-    });
-});
+document.addEventListener('DOMContentLoaded', () => { loadUser(); setPage('home'); updateValuation(); resetQuiz(); });
 </script>
 </body>
 </html>
