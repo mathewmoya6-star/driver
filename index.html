@@ -1,313 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEI DRIVE AFRICA | Smart Mobility Platform</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEI DRIVE AFRICA</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --gold: #d4af37;
-            --dark: #0a0a0a;
-            --card: #111;
-            --border: #222;
-            --muted: #888;
-        }
+<style>
+body {
+    font-family: Inter;
+    background:#0a0a0a;
+    color:#fff;
+    margin:0;
+}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+nav {
+    display:flex;
+    justify-content:space-between;
+    padding:15px;
+    border-bottom:1px solid #222;
+    flex-wrap:wrap;
+}
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--dark);
-            color: #fff;
-        }
+nav button {
+    padding:6px 12px;
+    margin:5px;
+    cursor:pointer;
+    background:transparent;
+    border:1px solid #333;
+    color:#fff;
+    border-radius:6px;
+}
 
-        .container {
-            max-width: 1400px;
-            margin: auto;
-            padding: 0 20px;
-        }
+nav button:hover {
+    border-color:#d4af37;
+    color:#d4af37;
+}
 
-        /* NAVBAR */
-        header {
-            border-bottom: 1px solid var(--border);
-        }
+.gold {
+    background:#d4af37;
+    color:#000;
+    font-weight:600;
+    border:none;
+}
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 0;
-            flex-wrap: wrap;
-        }
+.container {
+    padding:20px;
+}
 
-        .logo {
-            font-weight: 800;
-            font-size: 22px;
-        }
+.card {
+    background:#111;
+    padding:15px;
+    margin:10px 0;
+    border:1px solid #222;
+    border-radius:10px;
+}
 
-        .logo span { color: var(--gold); }
+h2 {
+    color:#d4af37;
+}
 
-        .links {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .links a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .links a:hover {
-            color: var(--gold);
-        }
-
-        .btn {
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-        }
-
-        .outline {
-            border: 1px solid #444;
-        }
-
-        .gold {
-            background: var(--gold);
-            color: #000 !important;
-            font-weight: 600;
-        }
-
-        /* HERO */
-        .hero {
-            text-align: center;
-            padding: 70px 20px;
-        }
-
-        .hero h1 {
-            font-size: 44px;
-            margin-bottom: 15px;
-        }
-
-        .hero p {
-            color: var(--muted);
-            max-width: 650px;
-            margin: auto;
-            font-size: 16px;
-        }
-
-        .cta {
-            margin-top: 25px;
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .cta a {
-            text-decoration: none;
-            padding: 12px 28px;
-            border-radius: 30px;
-        }
-
-        .primary {
-            background: var(--gold);
-            color: #000;
-            font-weight: 700;
-        }
-
-        .secondary {
-            border: 1px solid var(--gold);
-            color: var(--gold);
-        }
-
-        /* STATS */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            text-align: center;
-            padding: 40px 0;
-            background: var(--card);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .stats h3 {
-            color: var(--gold);
-            font-size: 28px;
-        }
-
-        .stats p {
-            color: var(--muted);
-            font-size: 13px;
-        }
-
-        /* MODULES */
-        .modules {
-            padding: 60px 0;
-        }
-
-        .modules h2 {
-            text-align: center;
-            color: var(--gold);
-            margin-bottom: 30px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            padding: 22px;
-            border-radius: 16px;
-            transition: 0.3s;
-            text-decoration: none;
-            color: #fff;
-        }
-
-        .card:hover {
-            border-color: var(--gold);
-            transform: translateY(-5px);
-        }
-
-        .card h3 {
-            color: var(--gold);
-            margin: 10px 0;
-        }
-
-        .card p {
-            color: var(--muted);
-            font-size: 14px;
-        }
-
-        .arrow {
-            margin-top: 12px;
-            color: var(--gold);
-            font-weight: 600;
-        }
-
-        /* FOOTER */
-        footer {
-            text-align: center;
-            padding: 30px 10px;
-            border-top: 1px solid var(--border);
-            color: var(--muted);
-            font-size: 13px;
-        }
-    </style>
+input {
+    padding:8px;
+    margin:5px 0;
+    width:220px;
+    background:#000;
+    border:1px solid #333;
+    color:#fff;
+    border-radius:5px;
+}
+</style>
 </head>
 
 <body>
 
-<header>
-    <div class="container">
-        <nav>
-            <div class="logo">MEI <span>DRIVE AFRICA</span></div>
+<!-- NAV -->
+<nav>
+<div style="font-weight:700;">
+MEI DRIVE <span style="color:#d4af37;">AFRICA</span>
+</div>
 
-            <div class="links">
-                <a href="index.html">Home</a>
-                <a href="learner-hub.html">Learner Hub</a>
-                <a href="driver-academy.html">Driver Academy</a>
-                <a href="school-safety.html">School Safety</a>
-                <a href="valuation.html">Auto Value</a>
-                <a href="safety-library.html">Safety Library</a>
-                <a href="psv-course.html">PSV Course</a>
-                <a href="#" class="btn outline">Login</a>
-                <a href="#" class="btn gold">Sign Up</a>
-            </div>
-        </nav>
-    </div>
-</header>
+<div>
+<button onclick="setPage('home')">Home</button>
+<button onclick="setPage('auto')">Auto Value</button>
+<button onclick="setPage('learn')">Learner Hub</button>
+<button onclick="setPage('academy')">Driver Academy</button>
+<button onclick="setPage('safety')">Safety Library</button>
+<button onclick="setPage('psv')">PSV Course</button>
 
-<main>
+<button onclick="login()">Login</button>
+<button onclick="signup()">Sign Up</button>
+<button onclick="logout()">Logout</button>
+</div>
+</nav>
 
-<section class="hero">
-    <h1>Africa’s Smart Driving & Mobility Platform</h1>
-    <p>Learn, certify, value, and manage vehicles and road safety systems from one unified platform.</p>
+<!-- CONTENT -->
+<div class="container">
 
-    <div class="cta">
-        <a href="learner-hub.html" class="primary">Start Learning</a>
-        <a href="valuation.html" class="secondary">Auto Value</a>
-    </div>
-</section>
+<!-- HOME -->
+<div id="home">
+<h2>🚗 Smart Mobility Platform</h2>
+<p>Learn, certify, value vehicles, and manage road safety systems.</p>
+</div>
 
-<section class="stats">
-    <div>
-        <h3>25K+</h3>
-        <p>Drivers</p>
-    </div>
-    <div>
-        <h3>800+</h3>
-        <p>Fleet Companies</p>
-    </div>
-    <div>
-        <h3>100+</h3>
-        <p>Schools</p>
-    </div>
-    <div>
-        <h3>98%</h3>
-        <p>Pass Rate</p>
-    </div>
-</section>
+<!-- AUTO VALUE -->
+<div id="auto" style="display:none">
+<h2>🚗 Auto Vehicle Valuation</h2>
 
-<section class="modules container">
-    <h2>Platform Modules</h2>
+<input id="make" placeholder="Make"><br>
+<input id="model" placeholder="Model"><br>
+<input id="year" placeholder="Year"><br>
+<input id="mileage" placeholder="Mileage"><br>
+<input id="condition" placeholder="Condition (1-10)"><br>
 
-    <div class="grid">
+<button class="gold" onclick="addVehicle()">Add Vehicle</button>
 
-        <a href="learner-hub.html" class="card">
-            <h3>Learner Hub</h3>
-            <p>NTSA practice tests and driving exam preparation.</p>
-            <div class="arrow">→ Open</div>
-        </a>
+<div id="vehicleList"></div>
+</div>
 
-        <a href="driver-academy.html" class="card">
-            <h3>Driver Academy</h3>
-            <p>Full certification training for professional drivers.</p>
-            <div class="arrow">→ Open</div>
-        </a>
+<!-- LEARNER HUB -->
+<div id="learn" style="display:none">
+<h2>📘 Learner Hub</h2>
+<div id="courses"></div>
+</div>
 
-        <a href="school-safety.html" class="card">
-            <h3>School Safety</h3>
-            <p>Transport safety systems for schools and buses.</p>
-            <div class="arrow">→ Open</div>
-        </a>
+<!-- ACADEMY -->
+<div id="academy" style="display:none">
+<h2>🎓 Driver Academy</h2>
+<p>Professional driver training modules.</p>
+</div>
 
-        <a href="valuation.html" class="card">
-            <h3>Auto Vehicle Valuation</h3>
-            <p>Smart AI-based instant vehicle value (auto-update).</p>
-            <div class="arrow">→ Value Now</div>
-        </a>
+<!-- SAFETY -->
+<div id="safety" style="display:none">
+<h2>🛡 Safety Library</h2>
+<div id="docs"></div>
+</div>
 
-        <a href="safety-library.html" class="card">
-            <h3>Safety Library</h3>
-            <p>Forms, logs, and compliance documents.</p>
-            <div class="arrow">→ Open</div>
-        </a>
+<!-- PSV -->
+<div id="psv" style="display:none">
+<h2>🚌 PSV Course</h2>
+<p>Professional PSV training program.</p>
+</div>
 
-        <a href="psv-course.html" class="card">
-            <h3>PSV Course</h3>
-            <p>Professional PSV driver training program.</p>
-            <div class="arrow">→ Open</div>
-        </a>
+</div>
 
-    </div>
-</section>
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-</main>
+<script>
+/* ================= SUPABASE FIX ================= */
+const client = supabase.createClient(
+  "https://awbpzvuxvavzktjtjuvr.supabase.co",
+  "sb_publishable_LZU947tUe8TWUx0g6sKJ-A_PiYWi2JF"
+);
 
-<footer>
-    © 2026 MEI DRIVE AFRICA | Smart Mobility Ecosystem
-</footer>
+/* ================= NAV ================= */
+function setPage(p){
+    document.querySelectorAll(".container > div").forEach(d=>{
+        d.style.display="none";
+    });
+    document.getElementById(p).style.display="block";
+
+    if(p==="auto") loadVehicles();
+    if(p==="learn") loadCourses();
+    if(p==="safety") loadDocs();
+}
+
+/* ================= AUTH ================= */
+async function signup(){
+    const email = prompt("Email:");
+    const password = prompt("Password:");
+
+    const { error } = await client.auth.signUp({ email, password });
+
+    if(error) alert(error.message);
+    else alert("Check your email!");
+}
+
+async function login(){
+    const email = prompt("Email:");
+    const password = prompt("Password:");
+
+    const { error } = await client.auth.signInWithPassword({ email, password });
+
+    if(error) alert(error.message);
+    else location.reload();
+}
+
+async function logout(){
+    await client.auth.signOut();
+    location.reload();
+}
+
+/* ================= AUTO VALUE ================= */
+function estimate(year, mileage, condition){
+    let base = 2000000;
+    let age = (2026 - year) * 80000;
+    let km = mileage * 2;
+    let bonus = condition * 50000;
+    return Math.max(300000, base - age - km + bonus);
+}
+
+async function addVehicle(){
+    const user = (await client.auth.getUser()).data.user;
+
+    const v = {
+        make: make.value,
+        model: model.value,
+        year: parseInt(year.value),
+        mileage: parseInt(mileage.value),
+        condition_rating: parseInt(condition.value),
+        estimated_value: estimate(year.value, mileage.value, condition.value),
+        owner_id: user.id
+    };
+
+    await client.from("vehicles").insert([v]);
+    loadVehicles();
+}
+
+async function loadVehicles(){
+    const { data } = await client.from("vehicles").select("*");
+
+    vehicleList.innerHTML = (data || []).map(v=>`
+        <div class="card">
+            ${v.make} ${v.model} (${v.year})<br>
+            💰 KES ${v.estimated_value}
+        </div>
+    `).join("");
+}
+
+/* ================= COURSES ================= */
+async function loadCourses(){
+    const { data } = await client.from("courses").select("*");
+
+    courses.innerHTML = (data || []).map(c=>`
+        <div class="card">
+            📘 ${c.title || "Course"}<br>
+            ${c.category || ""}
+        </div>
+    `).join("");
+}
+
+/* ================= SAFETY ================= */
+async function loadDocs(){
+    const { data } = await client.from("safety_documents").select("*");
+
+    docs.innerHTML = (data || []).map(d=>`
+        <div class="card">
+            🛡 ${d.title}<br>
+            ${d.document_type}
+        </div>
+    `).join("");
+}
+
+/* START */
+setPage("home");
+</script>
 
 </body>
 </html>
