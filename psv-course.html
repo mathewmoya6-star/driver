@@ -1,52 +1,447 @@
-<div id="psv" style="display:none">
-<h2>🚌 PSV Professional Training</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEI DRIVE AFRICA | PSV Professional Course</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff}
+.container{max-width:1300px;margin:auto;padding:20px}
+
+/* NAV */
+.navbar{border-bottom:1px solid #d4af37;padding:15px;position:sticky;top:0;background:#0a0a0a;z-index:100}
+.logo{color:#d4af37;font-weight:800;cursor:pointer}
+.nav{display:flex;justify-content:space-between;flex-wrap:wrap;align-items:center}
+.nav button{background:none;border:none;color:#fff;margin:5px;cursor:pointer;font-size:14px}
+.nav button:hover{color:#d4af37}
+
+/* HERO */
+.hero{text-align:center;padding:60px 20px;background:linear-gradient(135deg,#0a0a0a,#111);border-radius:30px;margin-bottom:30px}
+.hero h1{font-size:48px}
+.highlight{color:#d4af37}
+.hero-badge{background:#d4af3720;color:#d4af37;display:inline-block;padding:5px 15px;border-radius:30px;font-size:14px;margin-bottom:15px}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:25px}
+.card{background:#111;padding:25px;border-radius:20px;border:1px solid #222;transition:all 0.3s}
+.card:hover{border-color:#d4af37;transform:translateY(-5px)}
+.card h3{color:#d4af37;margin-bottom:15px;font-size:22px}
+.card p{color:#aaa;line-height:1.6;margin-bottom:15px}
+.card ul{padding-left:20px;margin:15px 0}
+.card li{color:#ccc;margin:8px 0;list-style-type:disc}
+.card .badge{display:inline-block;background:#d4af3720;color:#d4af37;padding:4px 12px;border-radius:20px;font-size:11px;margin-bottom:10px}
+.card .price{font-size:28px;font-weight:800;color:#d4af37;margin:15px 0}
+
+/* BUTTON */
+.btn{background:#d4af37;color:#000;padding:12px 25px;border:none;border-radius:30px;cursor:pointer;font-weight:600;transition:0.2s}
+.btn:hover{background:#c4a027;transform:scale(0.98)}
+.btn-outline{background:transparent;border:2px solid #d4af37;color:#d4af37}
+.btn-small{background:#d4af37;color:#000;padding:8px 20px;border-radius:25px;font-size:13px;font-weight:600;border:none;cursor:pointer}
+
+/* MODULES SECTION */
+.section-title{font-size:28px;margin:40px 0 20px;border-left:4px solid #d4af37;padding-left:15px}
+.modules-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:15px;margin:25px 0}
+.module-card{background:#111;padding:20px;border-radius:15px;border-left:4px solid #d4af37;cursor:pointer;transition:0.2s}
+.module-card:hover{background:#161616;transform:translateX(5px)}
+.module-card h4{color:#d4af37;margin-bottom:8px;font-size:18px}
+.module-card p{font-size:13px;color:#888;margin-bottom:10px}
+.module-card .duration{font-size:11px;color:#d4af37;display:inline-block;background:#d4af3710;padding:3px 10px;border-radius:20px}
+.progress-bar{background:#222;border-radius:10px;height:6px;margin-top:12px}
+.progress-fill{background:#d4af37;height:6px;border-radius:10px;width:0%}
+.completed-badge{color:#4caf50;font-size:11px;margin-left:10px}
+
+/* CERTIFICATION */
+.cert-card{background:linear-gradient(135deg,#111,#1a1a1a);border:2px solid #d4af37;text-align:center;padding:35px;border-radius:20px}
+.cert-card .icon{font-size:48px;margin-bottom:15px}
+
+/* REGULATIONS TABLE */
+.regs-table{background:#111;border-radius:20px;overflow:hidden;margin:20px 0}
+.regs-table table{width:100%;border-collapse:collapse}
+.regs-table th,.regs-table td{padding:15px;text-align:left;border-bottom:1px solid #222}
+.regs-table th{background:#1a1a1a;color:#d4af37}
+.regs-table tr:hover{background:#1a1a1a}
+
+/* MODAL */
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:1000;justify-content:center;align-items:center}
+.modal-content{background:#111;border:1px solid #d4af37;border-radius:20px;padding:30px;max-width:550px;width:90%;max-height:80vh;overflow-y:auto}
+.modal-content h3{color:#d4af37;margin-bottom:15px}
+.modal-content .lesson-content{color:#ccc;line-height:1.6;margin:15px 0;padding:15px;background:#0a0a0a;border-radius:15px}
+.modal-content input,.modal-content select{width:100%;padding:12px;margin:10px 0;background:#1a1a1a;border:1px solid #333;color:#fff;border-radius:10px}
+.close-modal{float:right;font-size:28px;cursor:pointer;color:#d4af37}
+.quiz-question{margin:20px 0;padding:15px;background:#0a0a0a;border-radius:15px}
+.quiz-option{display:flex;align-items:center;gap:10px;margin:10px 0;padding:10px;background:#1a1a1a;border-radius:10px;cursor:pointer}
+.quiz-option:hover{background:#252525}
+
+/* PAGE HIDE */
+.page{display:none}
+.active{display:block}
+
+footer{text-align:center;padding:30px;color:#777;margin-top:40px}
+hr{border-color:#222;margin:20px 0}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="navbar">
+<div class="container nav">
+<div class="logo" onclick="go('home')">🚗 MEI DRIVE AFRICA</div>
+<div>
+<button onclick="go('home')">Home</button>
+<button onclick="go('learner')">📚 Learner Hub</button>
+<button onclick="go('academy')">🏫 Drivers Academy</button>
+<button onclick="go('psv')">🚌 PSV Course</button>
+<button onclick="go('boda')">🏍️ Boda Course</button>
+<button onclick="go('school')">👧 School Safety</button>
+<button onclick="go('library')">📖 Library</button>
+<button onclick="go('valuation')">💰 Valuation AI</button>
+<button onclick="go('plans')">⭐ Plans</button>
+<span id="userBox" style="color:#d4af37;margin:0 10px"></span>
+<button onclick="login()">Login</button>
+<button onclick="logout()">Logout</button>
+</div>
+</div>
+</div>
+
+<div class="container">
+
+<!-- HOME -->
+<div id="home" class="page active">
+<div class="hero">
+<h1>Drive Smarter with <span class="highlight">MEI DRIVE AFRICA</span></h1>
+<p>Powered by MEI Press Group — Africa's First AI Driver Training & Vehicle Intelligence Platform</p>
+<button class="btn" onclick="go('psv')">🚌 Start PSV Training</button>
+<button class="btn btn-outline" onclick="go('valuation')" style="margin-left:15px">🔮 AI Valuation</button>
+</div>
+<h2>Why Choose Us</h2>
 <div class="grid">
+<div class="card">✔ NTSA-Aligned Training<br><small>Professional certification</small></div>
+<div class="card">✔ AI Vehicle Valuation<br><small>Market intelligence</small></div>
+<div class="card">✔ 1000+ Practice Qs<br><small>Mock exams included</small></div>
+<div class="card">✔ Real Driver Certification<br><small>Track progress</small></div>
+</div>
+</div>
 
+<!-- ==================== PSV PROFESSIONAL COURSE ==================== -->
+<div id="psv" class="page">
+<div class="hero" style="padding:40px 20px">
+<div class="hero-badge">🚌 NTSA Approved Curriculum</div>
+<h1><span class="highlight">Public Service Vehicle</span><br>Professional Course</h1>
+<p>Complete training for PSV drivers • Matatu • Bus • Taxi • Shuttle Operators</p>
+</div>
+
+<!-- Course Overview -->
+<div class="grid" style="margin-bottom:40px">
 <div class="card">
-<h3>👥 Customer Service</h3>
+<div class="badge">📋 Core Module</div>
+<h3>📜 NTSA PSV Regulations</h3>
+<p>Comprehensive coverage of Traffic Act provisions for Public Service Vehicles, licensing requirements, and compliance standards.</p>
 <ul>
-<li>Respectful communication</li>
-<li>Handling complaints</li>
-<li>Professional conduct</li>
+<li>PSV licensing & classification</li>
+<li>Speed governor regulations</li>
+<li>Route compliance & PSV stickers</li>
+<li>Annual inspection requirements</li>
 </ul>
 </div>
-
 <div class="card">
-<h3>👔 Grooming & Image</h3>
+<div class="badge">👥 Core Module</div>
+<h3>👥 Passenger Safety & Rights</h3>
+<p>Learn legal passenger limits, disability inclusion, child safety, and passenger conduct management.</p>
 <ul>
-<li>Clean uniform</li>
-<li>Personal hygiene</li>
-<li>Public image</li>
+<li>Legal passenger capacity per class</li>
+<li>Disabled access & assistance</li>
+<li>Child restraint requirements</li>
+<li>Passenger conflict resolution</li>
 </ul>
 </div>
-
 <div class="card">
-<h3>🚪 Passenger Safety</h3>
+<div class="badge">⏰ Core Module</div>
+<h3>⏰ Work Hours & Records</h3>
+<p>Traffic Act Section 66A: Maximum driving hours, logbook requirements, and trip documentation.</p>
 <ul>
-<li>Boarding procedures</li>
-<li>Overloading rules</li>
-<li>Emergency exits</li>
+<li>Max 8 hours driving per 24hr period</li>
+<li>Mandatory rest breaks</li>
+<li>Daily logbook/trip card completion</li>
+<li>Employer record-keeping obligations</li>
 </ul>
 </div>
-
-<div class="card">
-<h3>⚖️ NTSA Compliance</h3>
-<ul>
-<li>Licensing</li>
-<li>Speed governors</li>
-<li>PSV regulations</li>
-</ul>
 </div>
 
-<div class="card">
-<h3>💥 Conflict Management</h3>
-<ul>
-<li>Handling disputes</li>
-<li>Avoiding violence</li>
-<li>De-escalation</li>
-</ul>
+<!-- PSV Regulations Table -->
+<h2 class="section-title">📋 Key NTSA PSV Regulations</h2>
+<div class="regs-table">
+<table>
+<thead><tr><th>Regulation</th><th>Requirement</th><th>Penalty for Non-Compliance</th></tr></thead>
+<tbody>
+<tr><td>Speed Governor</td><td>All PSVs must have functional speed limiter set at 80km/h</td><td>Fine up to KES 20,000 or imprisonment</td></tr>
+<tr><td>PSV Badge/Sticker</td><td>Display valid PSV sticker on windscreen</td><td>Fine KES 10,000</td></tr>
+<tr><td>Driver Working Hours</td><td>Maximum 8 hours driving in any 24-hour period</td><td>Fine for employer and driver</td></tr>
+<tr><td>Passenger Capacity</td><td>Do not exceed registered seating capacity</td><td>Fine per excess passenger + demerit points</td></tr>
+<tr><td>Seatbelts</td><td>All passengers must wear seatbelts</td><td>Fine KES 500 per passenger</td></tr>
+<tr><td>PSV License Class</td><td>Driver must hold appropriate PSV endorsement</td><td>Impoundment + fine</td></tr>
+</tbody>
+</table>
 </div>
 
+<!-- Learning Modules -->
+<h2 class="section-title">📚 PSV Course Modules</h2>
+<p style="margin-bottom:15px;color:#aaa">Complete all 8 modules to earn your PSV Professional Certificate</p>
+<div class="modules-grid" id="psvModulesGrid"></div>
+
+<!-- Certification Section -->
+<h2 class="section-title">🎓 PSV Professional Certification</h2>
+<div class="grid" style="margin-top:20px">
+<div class="cert-card">
+<div class="icon">🏅</div>
+<h3 style="color:#d4af37">NTSA-Aligned PSV Certificate</h3>
+<p>Complete all 8 modules and pass the final exam to receive a verified PSV Professional Certificate recognized by employers and NTSA.</p>
+<button class="btn" style="margin-top:15px" onclick="startFinalExam()">📝 Take Final Exam</button>
+</div>
+<div class="cert-card">
+<div class="icon">📊</div>
+<h3 style="color:#d4af37">Progress Tracking</h3>
+<p>Login to save your module progress, track completion, and access your certificate.</p>
+<button class="btn" style="margin-top:15px" onclick="login()">Login to Track →</button>
 </div>
 </div>
+
+<!-- Fare Structure Info -->
+<h2 class="section-title">💰 PSV Fare Structure Guidelines</h2>
+<div class="grid" style="margin-bottom:30px">
+<div class="card"><h3>📌 Sacco Guidelines</h3><p>Member of registered Sacco, fare collection procedures, route pricing standards</p></div>
+<div class="card"><h3>📌 Receipts & Ticketing</h3><p>Provide receipts upon request, display fare chart, no overcharging</p></div>
+<div class="card"><h3>📌 Lost Property</h3><p>Procedure for handling lost items, reporting to Sacco/NTSA</p></div>
+</div>
+</div>
+
+<!-- Other Pages Placeholders -->
+<div id="academy" class="page"><h2>🏫 Drivers Academy</h2><div class="grid"><div class="card">Professional driving courses</div></div></div>
+<div id="boda" class="page"><h2>🏍️ Boda Boda Safety Course</h2><div class="grid"><div class="card">Helmet safety, urban riding, passenger protocols</div></div></div>
+<div id="school" class="page"><h2>👧 School Transport Safety</h2><div class="grid"><div class="card">Child safety, booster seats, emergency evacuation</div></div></div>
+<div id="library" class="page"><h2>📖 Digital Road Safety Library</h2><div class="grid"><div class="card">NTSA Highway Code, Traffic signs guide</div></div></div>
+<div id="valuation" class="page"><h2>💰 AI Vehicle Valuation</h2><div class="grid" style="grid-template-columns:1fr 1fr"><div class="card"><input id="valYear" placeholder="Year" type="number" value="2020"><input id="valMileage" placeholder="Mileage" type="number" value="55000"><select id="valCondition"><option value="1.15">Mint</option><option value="1.0" selected>Good</option><option value="0.7">Poor</option></select><button class="btn" onclick="valuateCar()">Calculate</button></div><div class="card"><h3 id="valResult">KES —</h3></div></div></div>
+<div id="plans" class="page"><h2>⭐ Subscription Plans</h2><div class="grid"><div class="card">Free • Premium • Pro Fleet</div></div></div>
+
+</div>
+
+<footer>
+© 2026 MEI DRIVE AFRICA — Powered by MEI Press Group | NTSA-Aligned PSV Professional Training
+</footer>
+
+<!-- Lesson Modal -->
+<div id="lessonModal" class="modal">
+<div class="modal-content">
+<span class="close-modal" onclick="closeLessonModal()">&times;</span>
+<h3 id="lessonTitle">Lesson Title</h3>
+<div id="lessonContent" class="lesson-content"></div>
+<div id="quizContainer"></div>
+<button id="completeLessonBtn" class="btn" style="width:100%;margin-top:15px" onclick="markLessonComplete()">✅ Mark Complete</button>
+</div>
+</div>
+
+<script>
+// ==================== NAVIGATION ====================
+function go(id){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+
+// ==================== AUTH & PROGRESS ====================
+let user=null;
+const userBox = document.getElementById('userBox');
+function login(){
+    user={email:"psv_driver@mei.africa"};
+    userBox.innerText = "👤 "+user.email;
+    loadPSVProgress();
+}
+function logout(){
+    user=null;
+    userBox.innerText = "";
+    savePSVProgress();
+}
+
+// PSV Module Progress
+let psvProgress = {
+    module1:0, module2:0, module3:0, module4:0, module5:0, module6:0, module7:0, module8:0
+};
+
+function loadPSVProgress(){
+    let saved = localStorage.getItem('mei_psv_progress');
+    if(saved){
+        psvProgress = JSON.parse(saved);
+        updateProgressBars();
+    }
+}
+function savePSVProgress(){
+    localStorage.setItem('mei_psv_progress', JSON.stringify(psvProgress));
+}
+function updateProgressBars(){
+    for(let i=1; i<=8; i++){
+        let progElem = document.getElementById('progress'+i);
+        if(progElem) progElem.style.width = psvProgress['module'+i] + '%';
+        let badgeElem = document.getElementById('completeBadge'+i);
+        if(badgeElem && psvProgress['module'+i] === 100) badgeElem.innerHTML = ' ✓ Complete';
+        else if(badgeElem) badgeElem.innerHTML = '';
+    }
+}
+
+// ==================== PSV MODULES DATA ====================
+const psvModules = [
+    { id:1, title:"📜 Module 1: NTSA PSV Regulations & Licensing", content:"<strong>PSV Licensing Requirements:</strong><br><br>• All PSVs must be registered with NTSA and display a valid PSV sticker<br>• Speed governors mandatory - set at maximum 80km/h<br>• Annual roadworthiness inspection required<br>• PSV driver must have PSV endorsement on driving license<br>• Sacco membership for matatus operating on固定 routes<br><br><strong>Penalties:</strong><br>• Operating without PSV license: Fine up to KES 50,000 or imprisonment<br>• Tampering with speed governor: Fine KES 20,000", quiz:{q:"What is the mandatory speed governor limit for PSVs in Kenya?", options:["80 km/h","100 km/h","60 km/h","110 km/h"], correct:0}},
+    { id:2, title:"👥 Module 2: Passenger Safety & Rights", content:"<strong>Legal Passenger Capacity:</strong><br><br>• Never exceed registered seating capacity<br>• Standing passengers only allowed on specifically designed vehicles<br>• Each passenger entitled to a seatbelt<br><br><strong>Disabled Passengers:</strong><br>• Priority seating for elderly, pregnant, and disabled persons<br>• Assist with boarding/alighting when requested<br>• Do not discriminate based on disability<br><br><strong>Child Safety:</strong><br>• Children under 12 require booster seats or appropriate restraints", quiz:{q:"What is the requirement for children under 12 in PSVs?", options:["Booster seat or appropriate restraint","Can sit on adult lap","No special requirement","Stand only"], correct:0}},
+    { id:3, title:"⏰ Module 3: Driver Work Hours (Traffic Act Section 66A)", content:"<strong>Legal Driving Hours:</strong><br><br>• Maximum 8 hours driving in any 24-hour period<br>• Mandatory rest breaks after every 4 hours<br>• Employers cannot force drivers to exceed legal limits<br><br><strong>Record Keeping:</strong><br>• Daily logbook/trip card must be completed<br>• Records must include: start/end time, routes, rest breaks<br>• Employer must retain records for 12 months<br><br><strong>Penalties:</strong><br>• Employer and driver liable for violations", quiz:{q:"What is the maximum driving hours for a PSV driver in a 24-hour period?", options:["8 hours","10 hours","12 hours","6 hours"], correct:0}},
+    { id:4, title:"📋 Module 4: Pre-Trip Vehicle Inspection", content:"<strong>Daily PSV Inspection Checklist:</strong><br><br>✓ Tyres: Pressure, tread depth (>1.6mm), no bulges<br>✓ Brakes: Test for responsiveness<br>✓ Lights: Headlights, indicators, brake lights, hazard lights<br>✓ Mirrors: Clean and properly adjusted<br>✓ Seatbelts: All functional, no fraying<br>✓ Emergency equipment: Reflector triangles, fire extinguisher, first aid kit<br>✓ Speed governor: Verify seal intact<br>✓ PSV sticker: Visible and valid", quiz:{q:"What is the minimum legal tyre tread depth in Kenya?", options:["1.6 mm","2.0 mm","1.0 mm","2.5 mm"], correct:0}},
+    { id:5, title:"🚦 Module 5: Defensive Driving for PSV", content:"<strong>Professional Defensive Techniques:</strong><br><br>• Maintain 4-second following distance (increase in rain)<br>• Scan 20-30 seconds ahead<br>• Anticipate passenger actions (sudden stops, doors opening)<br>• Be extra cautious around pedestrians and matatus pulling over<br>• Use MSM routine: Mirror → Signal → Manoeuvre<br><br><strong>Space Management:</strong><br>• Keep space envelope around vehicle<br>• Avoid blind spots of large trucks<br>• Position to 'see and be seen'", quiz:{q:"What is the recommended following distance under normal conditions?", options:["4 seconds","2 seconds","6 seconds","10 seconds"], correct:0}},
+    { id:6, title:"📄 Module 6: Documentation & Records", content:"<strong>Required Documents Onboard:</strong><br><br>• Logbook (original)<br>• Insurance certificate (valid)<br>• PSV license/sticker<br>• Speed governor certificate<br>• Roadworthy certificate<br>• Driver's license with PSV endorsement<br><br><strong>Trip Records:</strong><br>• Daily trip card with passenger count<br>• Fare collection records<br>• Incident reports (if any)<br><br><strong>Lost Property Procedure:</strong><br>• Log found items with details<br>• Report to Sacco/NTSA<br>• Hold for 30 days before disposal", quiz:{q:"Which document must always be carried in the vehicle?", options:["Original logbook","Copy of logbook","Driver's ID only","Sacco card"], correct:0}},
+    { id:7, title:"🆘 Module 7: Emergency Procedures for PSV", content:"<strong>Crash Response Protocol:</strong><br><br>1. Stop immediately at crash scene<br>2. Set reflector triangles 50m ahead and behind<br>3. Call emergency services: Police (999), Ambulance<br>4. Provide first aid if trained<br>5. Do not move injured persons unless immediate danger<br>6. Report to employer and NTSA within 24 hours<br><br><strong>Fire Emergency:</strong><br>• Use fire extinguisher (PASS: Pull, Aim, Squeeze, Sweep)<br>• Evacuate passengers immediately<br>• Do not open bonnet if fire suspected in engine", quiz:{q:"How far should reflector triangles be placed from a disabled PSV?", options:["50 metres","10 metres","100 metres","20 metres"], correct:0}},
+    { id:8, title:"💰 Module 8: Customer Care & Professional Conduct", content:"<strong>Professional PSV Driver Standards:</strong><br><br>• Always courteous to passengers<br>• No sexual harassment or discrimination<br>• Assist elderly, disabled, and pregnant passengers<br>• Provide fare receipts when requested<br>• Display fare chart visibly<br>• Keep vehicle and uniform clean<br><br><strong>Conflict Resolution:</strong><br>• Remain calm and professional<br>• Do not engage in road rage<br>• Report serious incidents to Sacco/police<br><br>• Maximum of 2 motorcycles riding abreast<br>• No competitive racing", quiz:{q:"What is the professional approach to passenger conflict?", options:["Remain calm, de-escalate, report if serious","Yell and argue","Kick passenger out","Ignore completely"], correct:0}}
+];
+
+function renderPSVModules(){
+    const grid = document.getElementById('psvModulesGrid');
+    if(!grid) return;
+    grid.innerHTML = psvModules.map(m => `
+        <div class="module-card" onclick="openLesson(${m.id})">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <h4>${m.title}</h4>
+                <span id="completeBadge${m.id}" class="completed-badge">${psvProgress['module'+m.id] === 100 ? ' ✓ Complete' : ''}</span>
+            </div>
+            <p>${m.content.substring(0,80)}...</p>
+            <div class="duration">📖 15 min</div>
+            <div class="progress-bar"><div class="progress-fill" id="progress${m.id}" style="width:${psvProgress['module'+m.id]}%"></div></div>
+        </div>
+    `).join('');
+    updateProgressBars();
+}
+
+let currentLessonId = null;
+let quizCompletedForLesson = false;
+
+function openLesson(moduleId){
+    currentLessonId = moduleId;
+    const module = psvModules.find(m => m.id === moduleId);
+    if(!module) return;
+    
+    quizCompletedForLesson = (psvProgress['module'+moduleId] === 100);
+    document.getElementById('lessonTitle').innerHTML = module.title;
+    
+    let quizHtml = '';
+    if(module.quiz && !quizCompletedForLesson){
+        quizHtml = `<div class="quiz-question"><strong>📝 Check Your Understanding:</strong><br>${module.quiz.q}</div>
+                    <div id="quizOptions">${module.quiz.options.map((opt,idx)=>`<div class="quiz-option" onclick="selectQuizAnswer(${idx})">○ ${opt}</div>`).join('')}</div>
+                    <input type="hidden" id="selectedAnswer" value="-1">
+                    <div id="quizFeedback" style="margin-top:10px"></div>`;
+    } else if(quizCompletedForLesson){
+        quizHtml = '<p style="color:#4caf50">✓ Module already completed!</p>';
+    } else {
+        quizHtml = '<p>No quiz for this module. Press complete to mark as done.</p>';
+    }
+    
+    document.getElementById('lessonContent').innerHTML = module.content;
+    document.getElementById('quizContainer').innerHTML = quizHtml;
+    document.getElementById('lessonModal').style.display = 'flex';
+    
+    // Update complete button text
+    const btn = document.getElementById('completeLessonBtn');
+    if(psvProgress['module'+moduleId] === 100){
+        btn.innerHTML = '✓ Already Completed';
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+    } else {
+        btn.innerHTML = '✅ Mark Complete';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+    }
+}
+
+function selectQuizAnswer(selectedIdx){
+    const module = psvModules.find(m => m.id === currentLessonId);
+    if(!module || !module.quiz) return;
+    const isCorrect = (selectedIdx === module.quiz.correct);
+    const optionsDiv = document.getElementById('quizOptions');
+    const feedbackDiv = document.getElementById('quizFeedback');
+    
+    if(isCorrect){
+        feedbackDiv.innerHTML = '<span style="color:#4caf50">✓ Correct! You can now complete this module.</span>';
+        document.getElementById('selectedAnswer').value = selectedIdx;
+        document.getElementById('completeLessonBtn').disabled = false;
+        document.getElementById('completeLessonBtn').style.opacity = '1';
+        // Highlight correct
+        if(optionsDiv){
+            const opts = optionsDiv.querySelectorAll('.quiz-option');
+            opts.forEach((opt,idx)=>{
+                if(idx === selectedIdx) opt.style.background = '#1e5320';
+                opt.style.cursor = 'default';
+            });
+        }
+    } else {
+        feedbackDiv.innerHTML = '<span style="color:#f44336">✗ Incorrect. Try again!</span>';
+    }
+}
+
+function markLessonComplete(){
+    if(!currentLessonId) return;
+    const module = psvModules.find(m => m.id === currentLessonId);
+    if(module && module.quiz){
+        const selected = document.getElementById('selectedAnswer').value;
+        if(selected == -1 || parseInt(selected) !== module.quiz.correct){
+            alert("Please answer the quiz question correctly first.");
+            return;
+        }
+    }
+    psvProgress['module'+currentLessonId] = 100;
+    savePSVProgress();
+    updateProgressBars();
+    renderPSVModules();
+    closeLessonModal();
+    alert("✅ Module completed! Progress saved.");
+}
+
+function closeLessonModal(){
+    document.getElementById('lessonModal').style.display = 'none';
+    currentLessonId = null;
+}
+
+function startFinalExam(){
+    let completedCount = Object.values(psvProgress).filter(v => v === 100).length;
+    if(completedCount < 8){
+        alert(`Please complete all 8 modules first. (${completedCount}/8 completed)`);
+        return;
+    }
+    alert("🎓 Final Exam coming soon! All modules completed. Certificate will be generated.");
+}
+
+// Valuation
+function valuateCar(){
+    let year = parseInt(document.getElementById('valYear').value) || 2020;
+    let mileage = parseInt(document.getElementById('valMileage').value) || 50000;
+    let condition = parseFloat(document.getElementById('valCondition').value);
+    let age = 2026 - year;
+    let depreciation = Math.pow(0.89, Math.max(0, age));
+    let mileageImpact = Math.max(0.55, 1 - (mileage/210000));
+    let finalValue = 1580000 * depreciation * mileageImpact * condition;
+    document.getElementById('valResult').innerHTML = 'KES ' + Math.round(finalValue).toLocaleString();
+}
+
+// Initialize
+loadPSVProgress();
+renderPSVModules();
+
+// Expose globals
+window.go = go; window.login = login; window.logout = logout;
+window.valuateCar = valuateCar;
+window.openLesson = openLesson;
+window.closeLessonModal = closeLessonModal;
+window.markLessonComplete = markLessonComplete;
+window.selectQuizAnswer = selectQuizAnswer;
+window.startFinalExam = startFinalExam;
+
+// Close modal on outside click
+window.onclick = function(event){ if(event.target.classList.contains('modal')) closeLessonModal(); }
+</script>
+</body>
+</html>
