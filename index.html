@@ -13,38 +13,34 @@ body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff}
 .container{max-width:1300px;margin:auto;padding:20px}
 
 /* NAV */
-.navbar{border-bottom:1px solid #d4af37;padding:15px 0;position:sticky;top:0;background:#0a0a0a}
-.nav{display:flex;justify-content:space-between;flex-wrap:wrap;align-items:center}
+.navbar{border-bottom:1px solid #d4af37;padding:15px;background:#0a0a0a;position:sticky;top:0}
+.nav{display:flex;justify-content:space-between;flex-wrap:wrap}
 .logo{color:#d4af37;font-weight:800;cursor:pointer}
 .nav button{background:none;border:none;color:#fff;margin:5px;cursor:pointer}
-.nav button:hover{color:#d4af37}
-
-/* HERO */
-.hero{text-align:center;padding:60px}
-.hero h1{font-size:42px}
-.highlight{color:#d4af37}
+.nav button.active{color:#d4af37;border-bottom:2px solid #d4af37}
 
 /* GRID */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
-.card{background:#111;padding:20px;border-radius:15px;border:1px solid #222;cursor:pointer}
+
+/* CARD */
+.card{background:#111;padding:20px;border-radius:15px;border:1px solid #222}
 .card:hover{border-color:#d4af37}
+
+/* BUTTON */
+.btn{background:#d4af37;color:#000;padding:10px 20px;border:none;border-radius:20px;cursor:pointer;margin:5px}
+
+/* FORM */
+input,select{width:100%;padding:10px;margin:8px 0;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:8px}
 
 /* QUIZ */
 .quiz{background:#111;padding:20px;border-radius:15px;margin-top:15px}
-.quiz-option{padding:10px;background:#1a1a1a;margin:8px 0;cursor:pointer;border-radius:8px}
-.quiz-option:hover{border:1px solid #d4af37}
 
-/* FORM */
-input,select{width:100%;padding:10px;margin:10px 0;background:#1a1a1a;border:1px solid #333;color:#fff;border-radius:8px}
-
-/* BUTTON */
-.btn{background:#d4af37;color:#000;padding:10px 20px;border:none;border-radius:20px;cursor:pointer;margin:10px 5px}
-
-/* MODAL */
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000a;justify-content:center;align-items:center}
+/* RESULT */
+.result-box{background:#111;padding:20px;border-radius:15px;margin-top:20px;border:1px solid #d4af37}
+.big-price{font-size:40px;color:#d4af37;font-weight:800}
 
 /* FOOTER */
-footer{text-align:center;padding:30px;color:#777}
+footer{text-align:center;padding:30px;color:#777;margin-top:40px}
 </style>
 </head>
 
@@ -57,21 +53,19 @@ footer{text-align:center;padding:30px;color:#777}
 <div class="logo" onclick="go('home')">MEI DRIVE AFRICA</div>
 
 <div>
+<button onclick="go('home')">🏠 Home</button>
 <button onclick="go('learner')">Learner</button>
 <button onclick="go('academy')">Academy</button>
 <button onclick="go('psv')">PSV</button>
 <button onclick="go('boda')">Boda</button>
 <button onclick="go('school')">School</button>
 <button onclick="go('library')">Library</button>
-<button onclick="go('valuation')">Valuation</button>
+<button onclick="go('valuation')">💰 Valuation</button>
 <button onclick="go('subscription')">Plans</button>
 
 <span id="userBox"></span>
-
-<button id="loginBtn" onclick="openLogin()">Login</button>
-<button id="signupBtn" class="btn" onclick="openSignup()">Sign Up</button>
+<button id="loginBtn" onclick="login()">Login</button>
 <button id="logoutBtn" onclick="logout()" style="display:none">Logout</button>
-
 </div>
 
 </div>
@@ -81,115 +75,127 @@ footer{text-align:center;padding:30px;color:#777}
 
 <!-- HOME -->
 <div id="home">
-<div class="hero">
-<h1>Pass Your Driving Test with <span class="highlight">Confidence</span></h1>
-<p>Study → Practice → Pass → Drive Safely</p>
-<button class="btn" onclick="go('learner')">Start Learning</button>
-</div>
+<h1>🚗 MEI DRIVE AFRICA</h1>
+<p>Learn • Practice • Get Certified • Drive Safely</p>
 </div>
 
 <!-- LEARNER -->
 <div id="learner" style="display:none">
 <h2>📚 Learner Hub</h2>
 
-<button class="btn" onclick="mode('study')">Study</button>
-<button class="btn" onclick="mode('practice')">Practice</button>
-<button class="btn" onclick="mode('exam')">Exam</button>
-
-<div id="study">
 <div class="grid">
-<div class="card">Traffic Rules</div>
-<div class="card">Road Signs</div>
-<div class="card">Vehicle Knowledge</div>
+<div class="card"><h3>Traffic Rules</h3></div>
+<div class="card"><h3>Road Signs</h3></div>
+<div class="card"><h3>Vehicle Basics</h3></div>
+<div class="card"><h3>Human Factors</h3></div>
+</div>
+
+<button class="btn" onclick="startPractice()">Practice</button>
+<button class="btn" onclick="startExam()">Mock Test</button>
+
+<div id="quizBox" class="quiz"></div>
+</div>
+
+<!-- ACADEMY -->
+<div id="academy" style="display:none">
+<h2>🎓 Driver Academy</h2>
+<div class="grid">
+<div class="card">Defensive Driving</div>
+<div class="card">Hazard Perception</div>
+<div class="card">Night Driving</div>
+<div class="card">Weather Driving</div>
+<div class="card">Accident Response</div>
 </div>
 </div>
 
-<div id="practice" style="display:none">
-<select id="topic">
-<option value="all">All</option>
-<option value="signs">Signs</option>
-<option value="rules">Rules</option>
-</select>
-<button class="btn" onclick="startPractice()">Start</button>
-<div id="practiceBox" class="quiz"></div>
-</div>
-
-<div id="exam" style="display:none">
-<p id="timer"></p>
-<button class="btn" onclick="startExam()">Start Exam</button>
-<div id="examBox" class="quiz"></div>
+<!-- PSV -->
+<div id="psv" style="display:none">
+<h2>🚌 PSV</h2>
+<div class="grid">
+<div class="card">Customer Service</div>
+<div class="card">Grooming</div>
+<div class="card">Passenger Safety</div>
+<div class="card">NTSA Compliance</div>
+<div class="card">Conflict Management</div>
 </div>
 </div>
 
-<!-- OTHER MODULES -->
-<div id="academy" style="display:none"><h2>🎓 Driver Academy</h2></div>
-<div id="psv" style="display:none"><h2>🚌 PSV Training</h2></div>
-<div id="boda" style="display:none"><h2>🏍️ Boda Training</h2></div>
-<div id="school" style="display:none"><h2>🏫 School Safety</h2></div>
+<!-- BODA -->
+<div id="boda" style="display:none">
+<h2>🏍️ Boda Training</h2>
+<div class="grid">
+<div class="card">Rider Safety</div>
+<div class="card">Passenger Handling</div>
+<div class="card">Urban Riding</div>
+</div>
+</div>
+
+<!-- SCHOOL -->
+<div id="school" style="display:none">
+<h2>🏫 School Transport</h2>
+<div class="grid">
+<div class="card">Child Safety</div>
+<div class="card">Boarding</div>
+<div class="card">Inspection</div>
+<div class="card">Emergency</div>
+</div>
+</div>
 
 <!-- LIBRARY -->
 <div id="library" style="display:none">
-<h2>📂 Digital Safety Library</h2>
-
+<h2>📂 Safety Library</h2>
 <div class="grid">
-<div class="card" onclick="openDoc('pretrip')">Pre-Trip</div>
-<div class="card" onclick="openDoc('accident')">Accident</div>
+<div class="card" onclick="openDoc('pretrip')">Pre Trip</div>
 <div class="card" onclick="openDoc('maintenance')">Maintenance</div>
+<div class="card" onclick="openDoc('accident')">Accident</div>
+<div class="card" onclick="openDoc('loading')">Loading</div>
 </div>
-
 <div id="docViewer"></div>
 </div>
 
 <!-- VALUATION -->
 <div id="valuation" style="display:none">
 <h2>💰 Vehicle Valuation</h2>
-<input id="year" placeholder="Year">
-<input id="mileage" placeholder="Mileage">
+
+<select id="make">
+<option>Toyota</option>
+<option>Nissan</option>
+</select>
+
+<select id="model">
+<option>Corolla</option>
+<option>Hilux</option>
+</select>
+
+<input id="year" type="number" value="2018">
+<input id="mileage" type="number" value="80000">
+
 <select id="condition">
 <option value="1">Excellent</option>
 <option value="0.8">Good</option>
 <option value="0.6">Fair</option>
 </select>
-<button class="btn" onclick="calc()">Estimate</button>
-<h3 id="result"></h3>
+
+<button class="btn" onclick="valuate()">Estimate</button>
+
+<div id="valuationOutput"></div>
 </div>
 
 <!-- SUBSCRIPTION -->
 <div id="subscription" style="display:none">
-<h2>💳 Subscription Plans</h2>
-
+<h2>💳 Subscription</h2>
 <div class="grid">
-
+<div class="card">Free</div>
 <div class="card">
-<h3>Free</h3>
-<ul><li>Basic access</li></ul>
-<button class="btn">Current</button>
+Premium
+<button class="btn" onclick="upgrade()">Upgrade</button>
 </div>
-
-<div class="card">
-<h3>Premium</h3>
-<ul><li>Full access</li></ul>
-<button class="btn" onclick="selectPlan('premium')">Upgrade</button>
-</div>
-
 </div>
 </div>
 
 </div>
 
-<footer>© 2026 MEI DRIVE AFRICA</footer>
-
-<!-- AUTH MODAL -->
-<div id="authModal" class="modal">
-<div style="background:#111;padding:20px;border-radius:10px">
-<h3 id="authTitle">Login</h3>
-<input id="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
-<button class="btn" onclick="submitAuth()">Continue</button>
-<p onclick="toggleAuth()" style="cursor:pointer">Switch</p>
-<button onclick="closeAuth()">Close</button>
-</div>
-</div>
+<footer>© MEI DRIVE AFRICA</footer>
 
 <script>
 
@@ -200,149 +206,66 @@ function go(id){
 document.getElementById(id).style.display="block"
 }
 
-/* MODE */
-function mode(m){
-["study","practice","exam"].forEach(x=>{
-document.getElementById(x).style.display="none"
-})
-document.getElementById(m).style.display="block"
-}
-
-/* QUIZ */
-const Q=[
-{q:"STOP sign means?",o:["Stop","Go"],a:0,cat:"signs"},
-{q:"Right of way?",o:["Left","Right"],a:1,cat:"rules"}
-]
-
-let i=0,score=0,active=[]
-
-function render(box){
-let q=active[i]
-let html=`<h3>${q.q}</h3>`
-q.o.forEach((opt,x)=>{
-html+=`<div class='quiz-option' onclick="ans(${x},'${box}')">${opt}</div>`
-})
-document.getElementById(box).innerHTML=html
-}
-
-function ans(x,box){
-if(x===active[i].a) score++
-i++
-if(i<active.length) render(box)
-else finish(box)
-}
-
-function finish(box){
-document.getElementById(box).innerHTML=`Score: ${score}/${active.length}`
-}
-
-function startPractice(){
-let t=document.getElementById("topic").value
-active=Q.filter(q=>t==="all"||q.cat===t)
-i=0;score=0
-render("practiceBox")
-}
-
-function startExam(){
-if(!requirePremium()) return
-
-active=[...Q]
-i=0;score=0
-
-let time=60
-let timer=setInterval(()=>{
-time--
-document.getElementById("timer").innerText="Time: "+time
-if(time<=0){clearInterval(timer);finish("examBox")}
-},1000)
-
-render("examBox")
-}
-
-/* LIBRARY */
-function openDoc(type){
-if(!requirePremium()) return
-
-let data={
-pretrip:"Check tyres, brakes",
-accident:"Stop & assist",
-maintenance:"Service regularly"
-}
-
-document.getElementById("docViewer").innerHTML=
-`<div class="quiz">${data[type]}<br><button class="btn">Download</button></div>`
-}
-
-/* VALUATION */
-function calc(){
-let y=parseInt(year.value)
-let m=parseInt(mileage.value)
-let c=parseFloat(condition.value)
-
-let val=(1200000-(2026-y)*60000-(m*3))*c
-if(val<100000) val=100000
-
-result.innerText="KES "+Math.round(val)
-}
-
 /* AUTH */
-let currentUser=JSON.parse(localStorage.getItem("user"))||null
-let authMode="login"
-
+let user=null
+function login(){user={name:"User",plan:"free"};updateUI()}
+function logout(){user=null;updateUI()}
 function updateUI(){
-if(currentUser){
-userBox.innerText="👤 "+currentUser.email
+if(user){
+userBox.innerText="👤 "+user.name
 loginBtn.style.display="none"
-signupBtn.style.display="none"
 logoutBtn.style.display="inline"
 }else{
 userBox.innerText=""
 loginBtn.style.display="inline"
-signupBtn.style.display="inline"
 logoutBtn.style.display="none"
 }
 }
 
-function openLogin(){authMode="login";authModal.style.display="flex"}
-function openSignup(){authMode="signup";authModal.style.display="flex"}
-function closeAuth(){authModal.style.display="none"}
-
-function toggleAuth(){
-authMode=authMode==="login"?"signup":"login"
-}
-
-function submitAuth(){
-let email=document.getElementById("email").value
-currentUser={email,plan:"free"}
-localStorage.setItem("user",JSON.stringify(currentUser))
-closeAuth()
-updateUI()
-}
-
-function logout(){
-localStorage.removeItem("user")
-currentUser=null
-updateUI()
-}
-
-function selectPlan(plan){
-if(!currentUser){alert("Login first");return}
-currentUser.plan=plan
-localStorage.setItem("user",JSON.stringify(currentUser))
+/* SUB */
+function upgrade(){
+if(!user){alert("Login first");return}
+user.plan="premium"
 alert("Upgraded")
 }
 
-function requirePremium(){
-if(!currentUser){alert("Login required");return false}
-if(currentUser.plan!=="premium"){
-alert("Upgrade to premium")
-go("subscription")
-return false
+/* QUIZ */
+const Q=[{q:"Stop sign?",o:["Stop","Go"],a:0}]
+let i=0,score=0
+function startPractice(){i=0;score=0;render()}
+function startExam(){if(!requirePremium())return;startPractice()}
+function render(){
+let q=Q[i]
+quizBox.innerHTML=`<h3>${q.q}</h3>${q.o.map((x,j)=>`<div onclick="ans(${j})">${x}</div>`).join("")}`
 }
+function ans(x){
+if(x===Q[i].a)score++
+i++
+if(i<Q.length)render()
+else quizBox.innerHTML="Score: "+score
+}
+
+/* LIBRARY */
+function openDoc(x){
+docViewer.innerHTML="<div class='quiz'>"+x+" content</div>"
+}
+
+/* ACCESS */
+function requirePremium(){
+if(!user){alert("Login first");return false}
+if(user.plan!=="premium"){go("subscription");return false}
 return true
 }
 
-updateUI()
+/* VALUATION */
+function valuate(){
+let base=1500000
+let age=2026-year.value
+let value=base*Math.pow(0.92,age)*condition.value
+valuationOutput.innerHTML=`<div class="result-box">
+<div class="big-price">KES ${Math.round(value)}</div>
+</div>`
+}
 
 </script>
 
