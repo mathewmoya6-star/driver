@@ -1,59 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEI DRIVE AFRICA | Driver Academy</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; line-height: 1.5; }
-        :root { --gold: #d4af37; --bg-card: #111111; --border: #222222; --muted: #888888; }
-        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 48px; max-width: 1400px; margin: 0 auto; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 16px; }
-        .logo { font-size: 24px; font-weight: 800; }
-        .logo .mei { color: var(--gold); }
-        .logo .drive { color: #fff; }
-        .logo .africa { color: #f5e6a3; }
-        .nav-links { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-        .nav-links a { color: #fff; text-decoration: none; font-size: 14px; font-weight: 500; }
-        .nav-links a:hover { color: var(--gold); }
-        .btn-outline { border: 1px solid rgba(255,255,255,0.25); padding: 8px 20px; border-radius: 40px; }
-        .btn-gold { background: var(--gold); color: #000 !important; padding: 8px 24px; border-radius: 40px; font-weight: 700; }
-        .hero { text-align: center; padding: 60px 0; background: linear-gradient(135deg, #121212 0%, #0a0a0a 100%); }
-        .hero h1 { font-size: 48px; color: var(--gold); margin-bottom: 16px; }
-        .modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; max-width: 1400px; margin: 40px auto; padding: 0 24px; }
-        .module-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 25px; }
-        .module-card h3 { color: var(--gold); margin-bottom: 10px; }
-        .footer { background: #050505; padding: 40px; text-align: center; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 40px; }
-        .gold-divider { height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); width: 100%; }
-        @media (max-width: 768px) { .navbar { flex-direction: column; } .hero h1 { font-size: 32px; } }
-    </style>
-</head>
-<body>
-<div class="gold-divider"></div>
-<div class="navbar">
-    <div class="logo"><span class="mei">MEI</span> <span class="drive">DRIVE</span> <span class="africa">AFRICA</span></div>
-    <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="learner-hub.html">Learner Hub</a>
-        <a href="driver-academy.html">Driver Academy</a>
-        <a href="school-safety.html">School Safety</a>
-        <a href="valuation.html">Valuation</a>
-        <a href="safety-library.html">Safety Library</a>
-        <a href="psv-course.html">PSV Course</a>
-        <a href="#" class="btn-outline">Login</a>
-        <a href="#" class="btn-gold">Sign Up</a>
-    </div>
+<div id="academy" style="display:none">
+<h2>🎓 Driver Academy</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>🛡️ Defensive Driving</h3>
+<ul>
+<li>3-second rule</li>
+<li>Hazard anticipation</li>
+<li>Safe following distance</li>
+</ul>
 </div>
-<section class="hero"><h1>Driver Academy</h1><p style="color:var(--muted)">NTSA-approved curriculum for all vehicle categories (A-G)</p></section>
-<div class="modules-grid">
-    <div class="module-card"><h3>🛡️ Safe Drivers</h3><p>Develop responsible and safety-conscious drivers</p></div>
-    <div class="module-card"><h3>⚖️ Law-Abiding Road Users</h3><p>Full compliance with Traffic Act Cap 403</p></div>
-    <div class="module-card"><h3>🎯 Defensive Driving</h3><p>Anticipate, observe, and react safely</p></div>
-    <div class="module-card"><h3>🚌 PSV-Compliant Operators</h3><p>Meet all public service vehicle requirements</p></div>
-    <div class="module-card"><h3>🛵 Boda Boda Riders</h3><p>Specialized motorcycle safety training</p></div>
-    <div class="module-card"><h3>🚛 Fleet & Commercial Drivers</h3><p>Professional fleet operations training</p></div>
+
+<div class="card">
+<h3>👀 Hazard Perception</h3>
+<ul>
+<li>Blind spots</li>
+<li>Urban hazards</li>
+<li>Pedestrian risks</li>
+</ul>
 </div>
-<footer class="footer"><p>© 2026 MEI DRIVE AFRICA. All rights reserved.</p></footer>
-</body>
-</html>
+
+<div class="card">
+<h3>🌙 Night Driving</h3>
+<ul>
+<li>Headlight usage</li>
+<li>Glare management</li>
+<li>Fatigue control</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>🌧️ Weather Driving</h3>
+<ul>
+<li>Rain handling</li>
+<li>Slippery roads</li>
+<li>Fog driving</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>🚨 Accident Response</h3>
+<ul>
+<li>First response</li>
+<li>Emergency calls</li>
+<li>Scene safety</li>
+</ul>
+</div>
+
+</div>
+</div>
