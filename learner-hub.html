@@ -1,59 +1,54 @@
 <div id="learner" style="display:none">
 
-<h2>📚 Learner Driver Hub</h2>
-
-<!-- MODE SWITCH -->
-<div style="margin:20px 0">
-<button class="btn" onclick="setMode('study')">📖 Study</button>
-<button class="btn" onclick="setMode('practice')">🧪 Practice</button>
-<button class="btn" onclick="setMode('exam')">🎯 Exam</button>
-</div>
-
-<!-- STUDY MODE -->
-<div id="studyMode">
+<h2>📚 NTSA Learner Hub</h2>
 
 <div class="grid">
 
-<div class="card"><h3>🚦 Traffic Rules</h3><p>Right of way, junctions</p></div>
-<div class="card"><h3>🛑 Road Signs</h3><p>All NTSA signs explained</p></div>
-<div class="card"><h3>🚗 Vehicle Knowledge</h3><p>Engine, brakes, tyres</p></div>
-<div class="card"><h3>🧠 Human Factors</h3><p>Fatigue, alcohol</p></div>
+<div class="card">
+<h3>🚦 Traffic Rules</h3>
+<ul>
+<li>Right of way</li>
+<li>Roundabouts</li>
+<li>Lane discipline</li>
+<li>Speed limits</li>
+</ul>
+</div>
 
+<div class="card">
+<h3>🛑 Road Signs Mastery</h3>
+<ul>
+<li>Warning signs</li>
+<li>Regulatory signs</li>
+<li>Informational signs</li>
+<li>Hand signals</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>🚗 Vehicle Knowledge</h3>
+<ul>
+<li>Braking system</li>
+<li>Tyres & grip</li>
+<li>Dashboard symbols</li>
+<li>Basic mechanics</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>🧠 Human Factors</h3>
+<ul>
+<li>Fatigue</li>
+<li>Alcohol & drugs</li>
+<li>Reaction time</li>
+<li>Distractions</li>
+</ul>
 </div>
 
 </div>
 
-<!-- PRACTICE MODE -->
-<div id="practiceMode" style="display:none">
+<button class="btn" onclick="startPractice()">Practice</button>
+<button class="btn" onclick="startExam()">Mock Test</button>
 
-<h3>🧪 Practice by Topic</h3>
-
-<select id="topic">
-<option value="all">All</option>
-<option value="signs">Road Signs</option>
-<option value="rules">Traffic Rules</option>
-<option value="safety">Safety</option>
-</select>
-
-<button class="btn" onclick="startPractice()">Start Practice</button>
-
-<div id="practiceBox" class="quiz"></div>
-
-</div>
-
-<!-- EXAM MODE -->
-<div id="examMode" style="display:none">
-
-<h3>🎯 NTSA Exam Simulation</h3>
-
-<p>50 Questions • 40 Minutes • Pass: 80%</p>
-
-<div id="timer"></div>
-
-<button class="btn" onclick="startExam()">Start Exam</button>
-
-<div id="examBox" class="quiz"></div>
-
-</div>
+<div id="quizBox" class="quiz"></div>
 
 </div>
