@@ -14,7 +14,7 @@ body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff}
 
 /* NAV */
 .navbar{border-bottom:1px solid #d4af37;padding:15px 0;position:sticky;top:0;background:#0a0a0a}
-.nav{display:flex;justify-content:space-between;flex-wrap:wrap}
+.nav{display:flex;justify-content:space-between;flex-wrap:wrap;align-items:center}
 .logo{color:#d4af37;font-weight:800;cursor:pointer}
 .nav button{background:none;border:none;color:#fff;margin:5px;cursor:pointer}
 .nav button:hover{color:#d4af37}
@@ -40,6 +40,9 @@ input,select{width:100%;padding:10px;margin:10px 0;background:#1a1a1a;border:1px
 /* BUTTON */
 .btn{background:#d4af37;color:#000;padding:10px 20px;border:none;border-radius:20px;cursor:pointer;margin:10px 5px}
 
+/* MODAL */
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000a;justify-content:center;align-items:center}
+
 /* FOOTER */
 footer{text-align:center;padding:30px;color:#777}
 </style>
@@ -50,7 +53,9 @@ footer{text-align:center;padding:30px;color:#777}
 <!-- NAV -->
 <div class="navbar">
 <div class="container nav">
+
 <div class="logo" onclick="go('home')">MEI DRIVE AFRICA</div>
+
 <div>
 <button onclick="go('learner')">Learner</button>
 <button onclick="go('academy')">Academy</button>
@@ -59,7 +64,16 @@ footer{text-align:center;padding:30px;color:#777}
 <button onclick="go('school')">School</button>
 <button onclick="go('library')">Library</button>
 <button onclick="go('valuation')">Valuation</button>
+<button onclick="go('subscription')">Plans</button>
+
+<span id="userBox"></span>
+
+<button id="loginBtn" onclick="openLogin()">Login</button>
+<button id="signupBtn" class="btn" onclick="openSignup()">Sign Up</button>
+<button id="logoutBtn" onclick="logout()" style="display:none">Logout</button>
+
 </div>
+
 </div>
 </div>
 
@@ -72,20 +86,10 @@ footer{text-align:center;padding:30px;color:#777}
 <p>Study → Practice → Pass → Drive Safely</p>
 <button class="btn" onclick="go('learner')">Start Learning</button>
 </div>
-
-<div class="grid">
-<div class="card" onclick="go('learner')">📚 Learner Hub</div>
-<div class="card" onclick="go('academy')">🎓 Driver Academy</div>
-<div class="card" onclick="go('psv')">🚌 PSV Training</div>
-<div class="card" onclick="go('boda')">🏍️ Boda Training</div>
-<div class="card" onclick="go('school')">🏫 School Safety</div>
-<div class="card" onclick="go('valuation')">💰 Vehicle Valuation</div>
-</div>
 </div>
 
 <!-- LEARNER -->
 <div id="learner" style="display:none">
-
 <h2>📚 Learner Hub</h2>
 
 <button class="btn" onclick="mode('study')">Study</button>
@@ -115,57 +119,22 @@ footer{text-align:center;padding:30px;color:#777}
 <button class="btn" onclick="startExam()">Start Exam</button>
 <div id="examBox" class="quiz"></div>
 </div>
-
 </div>
 
-<!-- ACADEMY -->
-<div id="academy" style="display:none">
-<h2>🎓 Driver Academy</h2>
-<div class="grid">
-<div class="card">Defensive Driving</div>
-<div class="card">Accident Prevention</div>
-<div class="card">Eco Driving</div>
-</div>
-</div>
-
-<!-- PSV -->
-<div id="psv" style="display:none">
-<h2>🚌 PSV Training</h2>
-<ul>
-<li>Customer Service</li>
-<li>Passenger Safety</li>
-<li>NTSA Compliance</li>
-</ul>
-</div>
-
-<!-- BODA -->
-<div id="boda" style="display:none">
-<h2>🏍️ Boda Training</h2>
-<ul>
-<li>Helmet Safety</li>
-<li>Passenger Handling</li>
-<li>Riding Skills</li>
-</ul>
-</div>
-
-<!-- SCHOOL -->
-<div id="school" style="display:none">
-<h2>🏫 School Transport Safety</h2>
-<ul>
-<li>Child Safety</li>
-<li>Driver Duties</li>
-<li>Emergency Handling</li>
-</ul>
-</div>
+<!-- OTHER MODULES -->
+<div id="academy" style="display:none"><h2>🎓 Driver Academy</h2></div>
+<div id="psv" style="display:none"><h2>🚌 PSV Training</h2></div>
+<div id="boda" style="display:none"><h2>🏍️ Boda Training</h2></div>
+<div id="school" style="display:none"><h2>🏫 School Safety</h2></div>
 
 <!-- LIBRARY -->
 <div id="library" style="display:none">
 <h2>📂 Digital Safety Library</h2>
 
 <div class="grid">
-<div class="card" onclick="openDoc('pretrip')">Pre-Trip Checklist</div>
-<div class="card" onclick="openDoc('accident')">Accident Procedure</div>
-<div class="card" onclick="openDoc('maintenance')">Maintenance Guide</div>
+<div class="card" onclick="openDoc('pretrip')">Pre-Trip</div>
+<div class="card" onclick="openDoc('accident')">Accident</div>
+<div class="card" onclick="openDoc('maintenance')">Maintenance</div>
 </div>
 
 <div id="docViewer"></div>
@@ -174,35 +143,64 @@ footer{text-align:center;padding:30px;color:#777}
 <!-- VALUATION -->
 <div id="valuation" style="display:none">
 <h2>💰 Vehicle Valuation</h2>
-
 <input id="year" placeholder="Year">
 <input id="mileage" placeholder="Mileage">
-
 <select id="condition">
 <option value="1">Excellent</option>
 <option value="0.8">Good</option>
 <option value="0.6">Fair</option>
 </select>
-
 <button class="btn" onclick="calc()">Estimate</button>
-
 <h3 id="result"></h3>
+</div>
+
+<!-- SUBSCRIPTION -->
+<div id="subscription" style="display:none">
+<h2>💳 Subscription Plans</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Free</h3>
+<ul><li>Basic access</li></ul>
+<button class="btn">Current</button>
+</div>
+
+<div class="card">
+<h3>Premium</h3>
+<ul><li>Full access</li></ul>
+<button class="btn" onclick="selectPlan('premium')">Upgrade</button>
+</div>
+
+</div>
 </div>
 
 </div>
 
 <footer>© 2026 MEI DRIVE AFRICA</footer>
 
+<!-- AUTH MODAL -->
+<div id="authModal" class="modal">
+<div style="background:#111;padding:20px;border-radius:10px">
+<h3 id="authTitle">Login</h3>
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<button class="btn" onclick="submitAuth()">Continue</button>
+<p onclick="toggleAuth()" style="cursor:pointer">Switch</p>
+<button onclick="closeAuth()">Close</button>
+</div>
+</div>
+
 <script>
 
-/* NAVIGATION */
+/* NAV */
 function go(id){
-["home","learner","academy","psv","boda","school","library","valuation"]
+["home","learner","academy","psv","boda","school","library","valuation","subscription"]
 .forEach(p=>document.getElementById(p).style.display="none")
 document.getElementById(id).style.display="block"
 }
 
-/* MODE SWITCH */
+/* MODE */
 function mode(m){
 ["study","practice","exam"].forEach(x=>{
 document.getElementById(x).style.display="none"
@@ -210,10 +208,10 @@ document.getElementById(x).style.display="none"
 document.getElementById(m).style.display="block"
 }
 
-/* QUESTIONS */
+/* QUIZ */
 const Q=[
-{q:"STOP sign means?",o:["Stop","Go","Slow"],a:0,cat:"signs"},
-{q:"Right of way?",o:["Left","Right","None"],a:1,cat:"rules"}
+{q:"STOP sign means?",o:["Stop","Go"],a:0,cat:"signs"},
+{q:"Right of way?",o:["Left","Right"],a:1,cat:"rules"}
 ]
 
 let i=0,score=0,active=[]
@@ -246,6 +244,8 @@ render("practiceBox")
 }
 
 function startExam(){
+if(!requirePremium()) return
+
 active=[...Q]
 i=0;score=0
 
@@ -261,26 +261,88 @@ render("examBox")
 
 /* LIBRARY */
 function openDoc(type){
-let content={
-pretrip:"Check tyres, brakes, fuel",
-accident:"Stop, assist, call police",
-maintenance:"Regular service required"
+if(!requirePremium()) return
+
+let data={
+pretrip:"Check tyres, brakes",
+accident:"Stop & assist",
+maintenance:"Service regularly"
 }
+
 document.getElementById("docViewer").innerHTML=
-`<div class="quiz">${content[type]}<br><button class="btn" onclick="alert('Download coming')">Download</button></div>`
+`<div class="quiz">${data[type]}<br><button class="btn">Download</button></div>`
 }
 
 /* VALUATION */
 function calc(){
-let y=parseInt(document.getElementById("year").value)
-let m=parseInt(document.getElementById("mileage").value)
-let c=parseFloat(document.getElementById("condition").value)
+let y=parseInt(year.value)
+let m=parseInt(mileage.value)
+let c=parseFloat(condition.value)
 
-let value=(1200000-(2026-y)*60000-(m*3))*c
-if(value<100000)value=100000
+let val=(1200000-(2026-y)*60000-(m*3))*c
+if(val<100000) val=100000
 
-document.getElementById("result").innerText="KES "+Math.round(value)
+result.innerText="KES "+Math.round(val)
 }
+
+/* AUTH */
+let currentUser=JSON.parse(localStorage.getItem("user"))||null
+let authMode="login"
+
+function updateUI(){
+if(currentUser){
+userBox.innerText="👤 "+currentUser.email
+loginBtn.style.display="none"
+signupBtn.style.display="none"
+logoutBtn.style.display="inline"
+}else{
+userBox.innerText=""
+loginBtn.style.display="inline"
+signupBtn.style.display="inline"
+logoutBtn.style.display="none"
+}
+}
+
+function openLogin(){authMode="login";authModal.style.display="flex"}
+function openSignup(){authMode="signup";authModal.style.display="flex"}
+function closeAuth(){authModal.style.display="none"}
+
+function toggleAuth(){
+authMode=authMode==="login"?"signup":"login"
+}
+
+function submitAuth(){
+let email=document.getElementById("email").value
+currentUser={email,plan:"free"}
+localStorage.setItem("user",JSON.stringify(currentUser))
+closeAuth()
+updateUI()
+}
+
+function logout(){
+localStorage.removeItem("user")
+currentUser=null
+updateUI()
+}
+
+function selectPlan(plan){
+if(!currentUser){alert("Login first");return}
+currentUser.plan=plan
+localStorage.setItem("user",JSON.stringify(currentUser))
+alert("Upgraded")
+}
+
+function requirePremium(){
+if(!currentUser){alert("Login required");return false}
+if(currentUser.plan!=="premium"){
+alert("Upgrade to premium")
+go("subscription")
+return false
+}
+return true
+}
+
+updateUI()
 
 </script>
 
