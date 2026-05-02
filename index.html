@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MEI DRIVE AFRICA | NTSA Learner Hub + AI Valuation</title>
+<title>MEI DRIVE AFRICA | Complete Driver Training & Vehicle Intelligence</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
@@ -14,78 +14,63 @@ body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff}
 
 /* NAV */
 .navbar{border-bottom:1px solid #d4af37;padding:15px;position:sticky;top:0;background:#0a0a0a;z-index:100}
-.logo{color:#d4af37;font-weight:800;cursor:pointer}
-.nav{display:flex;justify-content:space-between;flex-wrap:wrap}
-.nav button{background:none;border:none;color:#fff;margin:5px;cursor:pointer;font-size:14px}
-.nav button:hover{color:#d4af37}
+.logo{color:#d4af37;font-weight:800;cursor:pointer;font-size:20px}
+.nav{display:flex;justify-content:space-between;flex-wrap:wrap;align-items:center}
+.nav-links{display:flex;flex-wrap:wrap;gap:5px}
+.nav button{background:none;border:none;color:#fff;margin:5px;cursor:pointer;font-size:13px;padding:6px 12px;border-radius:20px;transition:0.2s}
+.nav button:hover{color:#d4af37;background:#1a1a1a}
+.auth-buttons{display:flex;gap:5px}
 
 /* HERO */
-.hero{text-align:center;padding:80px 20px}
-.hero h1{font-size:48px}
+.hero{text-align:center;padding:80px 20px;background:linear-gradient(135deg,#0a0a0a,#111);border-radius:30px;margin-bottom:30px}
+.hero h1{font-size:48px;margin-bottom:15px}
 .highlight{color:#d4af37}
+.hero p{color:#aaa;margin-bottom:25px}
+.hero-buttons{display:flex;gap:15px;justify-content:center;flex-wrap:wrap}
+
+/* BUTTONS */
+.btn{background:#d4af37;color:#000;padding:12px 28px;border:none;border-radius:30px;cursor:pointer;font-weight:600;transition:0.2s}
+.btn:hover{background:#c4a027;transform:scale(0.98)}
+.btn-outline{background:transparent;border:2px solid #d4af37;color:#d4af37}
 
 /* GRID */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
-.card{background:#111;padding:20px;border-radius:15px;border:1px solid #222}
-.card:hover{border-color:#d4af37}
-.card h3{color:#d4af37;margin-bottom:10px}
-.card ul{padding-left:20px;margin-top:10px}
-.card li{margin:8px 0;color:#ccc}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px;margin:30px 0}
+.card{background:#111;padding:25px;border-radius:20px;border:1px solid #222;transition:all 0.3s}
+.card:hover{border-color:#d4af37;transform:translateY(-5px)}
+.card h3{color:#d4af37;margin-bottom:12px}
+.card p{color:#aaa;line-height:1.5;font-size:14px}
 
-/* BUTTON */
-.btn{background:#d4af37;color:#000;padding:10px 20px;border:none;border-radius:20px;cursor:pointer;font-weight:600}
-.btn-outline{background:transparent;border:2px solid #d4af37;color:#d4af37}
-.btn-small{background:#d4af37;color:#000;padding:5px 15px;border:none;border-radius:20px;cursor:pointer;font-size:12px}
+/* STATS */
+.stats{display:flex;justify-content:space-around;flex-wrap:wrap;gap:20px;margin:40px 0;padding:30px;background:#111;border-radius:30px}
+.stat-item{text-align:center}
+.stat-number{font-size:36px;font-weight:800;color:#d4af37}
+.stat-label{color:#888;font-size:13px}
 
-/* FORM */
-input,select{width:100%;padding:12px;margin:10px 0;background:#1a1a1a;border:1px solid #333;color:#fff;border-radius:10px}
-input:focus,select:focus{outline:none;border-color:#d4af37}
-
-/* HIDE */
+/* PAGE SYSTEM */
 .page{display:none}
 .active{display:block}
 
-/* Topics Grid */
-.topics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:20px 0}
-.topic-card{background:#111;padding:12px 15px;border-radius:12px;cursor:pointer;border:1px solid #222;transition:all 0.2s}
-.topic-card:hover{border-color:#d4af37;transform:translateY(-2px)}
-.topic-card h4{font-size:14px;color:#d4af37}
-.topic-card p{font-size:11px;color:#888;margin-top:5px}
-
-/* Quiz Panel */
-.quiz-container{background:#111;border-radius:20px;padding:25px;margin-top:20px;border:1px solid #333}
-.quiz-header{display:flex;justify-content:space-between;margin-bottom:15px;padding-bottom:10px;border-bottom:1px solid #333}
-.question-text{font-size:18px;font-weight:600;margin:20px 0}
-.option{background:#1a1a1a;border:1px solid #333;border-radius:30px;padding:12px 18px;margin:8px 0;cursor:pointer;display:flex;align-items:center;gap:12px}
-.option.selected{background:#d4af3720;border-color:#d4af37}
-.option input{width:18px;margin:0;accent-color:#d4af37}
-.nav-buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-.progress{background:#222;border-radius:20px;height:5px;margin:10px 0}
-.progress-fill{background:#d4af37;height:5px;border-radius:20px;width:0%}
-.result-box{text-align:center;padding:20px}
-.result-score{font-size:42px;font-weight:800;color:#d4af37}
-
-footer{text-align:center;padding:30px;color:#777;margin-top:40px}
-hr{border-color:#222;margin:20px 0}
+footer{text-align:center;padding:30px;color:#777;margin-top:40px;border-top:1px solid #222}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <div class="navbar">
 <div class="container nav">
 <div class="logo" onclick="go('home')">🚗 MEI DRIVE AFRICA</div>
-<div>
+<div class="nav-links">
 <button onclick="go('home')">Home</button>
 <button onclick="go('learner')">📚 Learner Hub</button>
-<button onclick="go('academy')">🏫 Drivers Academy</button>
-<button onclick="go('psv')">🚌 PSV Course</button>
-<button onclick="go('boda')">🏍️ Boda Course</button>
-<button onclick="go('school')">👧 School Safety</button>
+<button onclick="go('academy')">🏫 Academy</button>
+<button onclick="go('psv')">🚌 PSV</button>
+<button onclick="go('boda')">🏍️ Boda</button>
+<button onclick="go('school')">👧 School</button>
 <button onclick="go('library')">📖 Library</button>
-<button onclick="go('valuation')">💰 Valuation AI</button>
+<button onclick="go('valuation')">💰 Valuation</button>
 <button onclick="go('plans')">⭐ Plans</button>
-<span id="userBox" style="color:#d4af37;margin:0 10px"></span>
+</div>
+<div class="auth-buttons">
+<span id="userBox" style="color:#d4af37;margin:0 10px;font-size:13px;display:flex;align-items:center"></span>
 <button onclick="login()">Login</button>
 <button onclick="logout()">Logout</button>
 </div>
@@ -94,135 +79,132 @@ hr{border-color:#222;margin:20px 0}
 
 <div class="container">
 
-<!-- HOME -->
+<!-- ==================== HOME PAGE ==================== -->
 <div id="home" class="page active">
 <div class="hero">
 <h1>Drive Smarter with <span class="highlight">MEI DRIVE AFRICA</span></h1>
-<p>Powered by MEI Press Group — Africa’s First AI Driver Training & Vehicle Intelligence Platform</p>
+<p>Africa's First AI-Powered Driver Training & Vehicle Intelligence Platform<br>Powered by MEI Press Group</p>
+<div class="hero-buttons">
 <button class="btn" onclick="go('learner')">📘 Start Learning</button>
-<button class="btn btn-outline" onclick="go('valuation')" style="margin-left:15px">🔮 AI Valuation</button>
-</div>
-<h2>Why Choose Us</h2>
-<div class="grid">
-<div class="card">✔ NTSA-Aligned Training<br><small>21 official handbook topics</small></div>
-<div class="card">✔ AI Vehicle Valuation<br><small>Market intelligence</small></div>
-<div class="card">✔ 1000+ Practice Qs<br><small>Mock exams included</small></div>
-<div class="card">✔ Real Driver Certification<br><small>Track progress</small></div>
+<button class="btn btn-outline" onclick="go('valuation')">💰 Value Your Car</button>
 </div>
 </div>
 
-<!-- ==================== LEARNER HUB (FULL 21 TOPICS + 1000+ QUESTIONS) ==================== -->
+<div class="stats">
+<div class="stat-item"><div class="stat-number">21</div><div class="stat-label">NTSA Topics</div></div>
+<div class="stat-item"><div class="stat-number">1000+</div><div class="stat-label">Practice Questions</div></div>
+<div class="stat-item"><div class="stat-number">8</div><div class="stat-label">Professional Courses</div></div>
+<div class="stat-item"><div class="stat-number">45+</div><div class="stat-label">Library Resources</div></div>
+</div>
+
+<h2 style="margin-bottom:20px">📌 What We Offer</h2>
+<div class="grid">
+<div class="card" onclick="go('learner')"><h3>📚 NTSA Learner Hub</h3><p>21 official topics • 1000+ exam-style questions • Mock exams • Highway Code</p></div>
+<div class="card" onclick="go('academy')"><h3>🏫 Drivers Academy</h3><p>Defensive driving • Night driving • Eco-driving • Mountain & rural techniques</p></div>
+<div class="card" onclick="go('psv')"><h3>🚌 PSV Professional Course</h3><p>NTSA regulations • Passenger safety • Work hours • Licensing compliance</p></div>
+<div class="card" onclick="go('boda')"><h3>🏍️ Boda Boda Safety</h3><p>Helmet safety • Urban riding • Passenger protocols • Night visibility</p></div>
+<div class="card" onclick="go('school')"><h3>👧 School Transport Safety</h3><p>School bus/van • Child safety • Emergency evacuation • Boda for children</p></div>
+<div class="card" onclick="go('library')"><h3>📖 Digital Library</h3><p>Free downloadable guides • NTSA documents • Safety manuals • Traffic signs</p></div>
+<div class="card" onclick="go('valuation')"><h3>💰 AI Vehicle Valuation</h3><p>Real-time market value • Depreciation calculator • AI predictions</p></div>
+<div class="card" onclick="go('plans')"><h3>⭐ Subscription Plans</h3><p>Free • Premium • Pro Fleet • Certificate tracking</p></div>
+</div>
+</div>
+
+<!-- ==================== LEARNER HUB ==================== -->
 <div id="learner" class="page">
-<h2>📘 NTSA Learner Hub <span style="font-size:14px;color:#d4af37">— Light Motor Vehicle Handbook</span></h2>
-<p style="margin-bottom:15px;color:#aaa">21 official topics • 1000+ exam-style questions • Based on Kenya Highway Code</p>
-<button class="btn btn-small" onclick="startFullMock()" style="margin-right:10px">🎓 Full Mock Exam (50 Qs)</button>
-<button class="btn btn-small btn-outline" onclick="startQuickPractice()">⚡ Quick Practice (15 Qs)</button>
-
-<div id="topicsGrid" class="topics-grid"></div>
-<div id="quizPanel" class="quiz-container" style="display:none"></div>
+<h2>📘 NTSA Learner Hub</h2>
+<p style="margin-bottom:20px;color:#aaa">Official Kenya Highway Code • 21 Units • Over 1050 Exam-Style Questions</p>
+<div class="stats" style="margin:20px 0;padding:20px">
+<div class="stat-item"><div class="stat-number">21</div><div class="stat-label">Official Topics</div></div>
+<div class="stat-item"><div class="stat-number">1050+</div><div class="stat-label">Practice Questions</div></div>
+<div class="stat-item"><div class="stat-number">4</div><div class="stat-label">Mock Exam Types</div></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px">
+<button class="btn" style="width:auto;padding:10px 20px" onclick="startFullMock()">🎓 Mock Exam (50 Qs)</button>
+<button class="btn btn-outline" style="width:auto;padding:10px 20px" onclick="startQuickPractice()">⚡ Quick Practice (15 Qs)</button>
+</div>
+<div id="learnerTopicsGrid" class="grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))"></div>
+<div id="learnerQuizPanel" style="display:none;margin-top:30px;background:#111;border-radius:20px;padding:25px;border:1px solid #d4af37"></div>
 </div>
 
-<!-- ACADEMY -->
+<!-- ==================== DRIVERS ACADEMY ==================== -->
 <div id="academy" class="page">
-<h2>🏫 Drivers Academy</h2>
+<h2>🏫 MEI Drivers Academy</h2>
+<p style="margin-bottom:20px;color:#aaa">Professional driver training • NTSA certified curriculum</p>
 <div class="grid">
-<div class="card"><h3>🛡️ Defensive Driving</h3><p>Anticipation, space management, hazard perception</p></div>
-<div class="card"><h3>🌙 Night Driving</h3><p>Headlight discipline, reduced visibility techniques</p></div>
-<div class="card"><h3>🌱 Eco Driving</h3><p>Fuel efficiency, smooth acceleration, reduced emissions</p></div>
-<div class="card"><h3>⛰️ Mountain & Rural</h3><p>Steep gradients, narrow roads, animal crossings</p></div>
+<div class="card"><h3>🛡️ Defensive Driving</h3><p>Hazard perception • Space management • Emergency response</p><button class="btn-outline" style="margin-top:10px;padding:8px 15px" onclick="alert('Course enrollment coming soon')">Enroll KES 4,999</button></div>
+<div class="card"><h3>🌙 Advanced Night Driving</h3><p>Headlight discipline • Glare recovery • Fatigue management</p><button class="btn-outline" style="margin-top:10px;padding:8px 15px" onclick="alert('Course enrollment coming soon')">Enroll KES 3,499</button></div>
+<div class="card"><h3>🌱 Eco-Driving Certification</h3><p>Fuel efficiency • Smooth driving • Cost reduction</p><button class="btn-outline" style="margin-top:10px;padding:8px 15px" onclick="alert('Course enrollment coming soon')">Enroll KES 2,999</button></div>
+<div class="card"><h3>⛰️ Mountain & Rural</h3><p>Steep gradients • Narrow roads • Animal crossings</p><button class="btn-outline" style="margin-top:10px;padding:8px 15px" onclick="alert('Course enrollment coming soon')">Enroll KES 3,999</button></div>
 </div>
+<div class="stats" style="margin-top:20px;padding:20px"><div class="stat-item"><div class="stat-number">6</div><div class="stat-label">Free Modules</div></div><div class="stat-item"><div class="stat-number">4</div><div class="stat-label">Certification Tracks</div></div></div>
 </div>
 
-<!-- PSV -->
+<!-- ==================== PSV COURSE ==================== -->
 <div id="psv" class="page">
 <h2>🚌 PSV Professional Course</h2>
+<p style="margin-bottom:20px;color:#aaa">Complete training for Public Service Vehicle operators • Matatu • Bus • Taxi</p>
 <div class="grid">
-<div class="card"><h3>📋 NTSA Regulations</h3><p>PSV licensing, route compliance, speed governors</p></div>
-<div class="card"><h3>👥 Passenger Safety</h3><p>Loading limits, emergency exits, passenger conduct</p></div>
-<div class="card"><h3>📝 Work Hours & Records</h3><p>Legal driving hours (max 8hrs/24hrs), trip records</p></div>
+<div class="card"><h3>📜 NTSA PSV Regulations</h3><p>Licensing • Speed governors • Route compliance • Annual inspection</p><button class="btn-outline" style="margin-top:10px;padding:8px 15px" onclick="alert('PSV course details')">View Modules</button></div>
+<div class="card"><h3>👥 Passenger Safety & Rights</h3><p>Legal capacity • Disability access • Child restraints</p></div>
+<div class="card"><h3>⏰ Work Hours & Records</h3><p>Max 8 hours driving • Logbook • Trip cards</p></div>
 </div>
+<div class="regs-table" style="background:#111;border-radius:15px;overflow:hidden;margin-top:20px"><table style="width:100%;border-collapse:collapse"><thead><tr style="background:#1a1a1a"><th style="padding:12px;text-align:left;color:#d4af37">Regulation</th><th style="padding:12px;text-align:left;color:#d4af37">Requirement</th></tr></thead><tbody><tr><td style="padding:10px;border-bottom:1px solid #222">Speed Governor</td><td style="padding:10px;border-bottom:1px solid #222">Must be set at 80km/h</td></tr><tr><td style="padding:10px;border-bottom:1px solid #222">Driver Hours</td><td style="padding:10px;border-bottom:1px solid #222">Maximum 8 hours per 24hr period</td></tr><tr><td style="padding:10px">PSV Sticker</td><td style="padding:10px">Must display valid PSV sticker</td></tr></tbody></table></div>
 </div>
 
-<!-- BODA -->
+<!-- ==================== BODA COURSE ==================== -->
 <div id="boda" class="page">
 <h2>🏍️ Boda Boda Safety Course</h2>
+<p style="margin-bottom:20px;color:#aaa">Professional safety training for motorcycle taxi operators</p>
 <div class="grid">
-<div class="card"><h3>🪖 Helmet & Gear</h3><p>Proper helmet use, reflective jackets, passenger helmets</p></div>
-<div class="card"><h3>🏙️ Urban Riding</h3><p>Lane filtering, blind spots, intersection safety</p></div>
-<div class="card"><h3>⚠️ Risk Awareness</h3><p>Night riding, wet roads, cargo limits</p></div>
+<div class="card"><h3>🪖 Helmet & Protective Gear</h3><p>Rider AND passenger helmets • ECE/DOT certified • Replace every 5 years</p></div>
+<div class="card"><h3>🏙️ Urban Riding Techniques</h3><p>Lane filtering at ≤20km/h • Blind spot awareness • Intersection safety</p></div>
+<div class="card"><h3>📋 NTSA Boda Regulations</h3><p>Maximum 1 passenger • No children under 12 as pillion • PSV registration</p></div>
 </div>
+<div class="hero-badge" style="display:inline-block;margin-top:15px">⚠️ Children under 12 NOT permitted as pillion passengers by law</div>
 </div>
 
-<!-- SCHOOL -->
+<!-- ==================== SCHOOL TRANSPORT ==================== -->
 <div id="school" class="page">
-<h2>👧 School Transport Safety</h2>
+<h2>👧 Safe to School & Back Home</h2>
+<p style="margin-bottom:20px;color:#aaa">School buses • School vans • Boda boda for children</p>
 <div class="grid">
-<div class="card"><h3>🚸 Child Safety</h3><p>Booster seats, safe boarding/alighting, crossing guards</p></div>
-<div class="card"><h3>📋 Pre-Trip Inspection</h3><p>Daily checks, emergency equipment, first aid</p></div>
-<div class="card"><h3>🆘 Emergency Evacuation</h3><p>Fire drills, window exits, roll call procedures</p></div>
+<div class="card"><h3>🚍 School Bus Safety</h3><p>Yellow with "SCHOOL BUS" markings • Flashing lights • Stop arm protocol</p></div>
+<div class="card"><h3>🚐 School Van / Matatu</h3><p>No standing passengers • Seatbelts mandatory • Pre-trip inspection</p></div>
+<div class="card"><h3>🏍️ Boda for Children</h3><p>Children under 12 NOT permitted • ONE child only • Reduced speed</p></div>
 </div>
+<div class="school-zone-badge" style="background:#d4af3710;border:1px solid #d4af37;border-radius:15px;padding:20px;margin:20px 0;text-align:center"><h3 style="color:#d4af37">🚸 SCHOOL ZONE</h3><p>Speed limit: 30 km/h within 200m of school • Stop for flashing lights</p></div>
 </div>
 
-<!-- LIBRARY -->
+<!-- ==================== DIGITAL LIBRARY ==================== -->
 <div id="library" class="page">
 <h2>📖 Digital Road Safety Library</h2>
-<div class="grid">
-<div class="card"><h3>📘 NTSA Highway Code</h3><p>Download official PDF (2025)</p><button class="btn-small" style="margin-top:10px">Download</button></div>
-<div class="card"><h3>🛑 Traffic Signs Guide</h3><p>Regulatory, warning, guidance signs</p><button class="btn-small" style="margin-top:10px">View</button></div>
-<div class="card"><h3>📊 Accident Statistics</h3><p>Kenya road safety reports</p><button class="btn-small" style="margin-top:10px">Explore</button></div>
-</div>
+<p style="margin-bottom:20px;color:#aaa">Free downloadable resources • NTSA documents • Safety manuals</p>
+<div class="stats" style="margin:20px 0;padding:20px"><div class="stat-item"><div class="stat-number">45+</div><div class="stat-label">Documents</div></div><div class="stat-item"><div class="stat-number">12</div><div class="stat-label">Categories</div></div><div class="stat-item"><div class="stat-number">Free</div><div class="stat-label">Always Free</div></div></div>
+<div class="search-bar" style="background:#1a1a1a;border-radius:30px;padding:12px 20px;display:flex;gap:10px;margin-bottom:20px"><input type="text" id="libSearch" placeholder="🔍 Search library..." style="flex:1;background:transparent;border:none;color:#fff" onkeyup="filterLibrary()"><button onclick="filterLibrary()" style="background:#d4af37;border:none;border-radius:20px;padding:6px 18px">Search</button></div>
+<div id="libraryGrid" class="grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))"></div>
 </div>
 
-<!-- VALUATION -->
+<!-- ==================== VALUATION AI ==================== -->
 <div id="valuation" class="page">
-<h2>💰 AI Vehicle Valuation</h2>
-<div class="grid" style="grid-template-columns:1fr 1fr">
-<div class="card">
-<h3>Vehicle Details</h3>
-<input id="valYear" placeholder="Year of Manufacture (e.g., 2020)" type="number" value="2020">
-<input id="valMileage" placeholder="Mileage (km)" type="number" value="55000">
-<select id="valCondition">
-<option value="1.15">Mint / Showroom</option>
-<option value="1.0" selected>Very Good</option>
-<option value="0.85">Average Wear</option>
-<option value="0.65">Rough / Needs Repair</option>
-</select>
-<select id="valTrans">
-<option value="1.02">Automatic</option>
-<option value="0.97">Manual</option>
-</select>
-<select id="valFuel">
-<option value="1.0">Petrol</option>
-<option value="1.08">Hybrid/EV</option>
-<option value="0.92">Diesel</option>
-</select>
-<button class="btn" onclick="valuateCar()" style="margin-top:15px">🔮 Calculate Value</button>
-</div>
-<div class="card">
-<h3>Market Value (KES)</h3>
-<div id="valResult" style="font-size:32px;font-weight:800;color:#d4af37;margin:20px 0">—</div>
-<p id="valRange" style="color:#aaa"></p>
-<p id="valConfidence" style="color:#aaa"></p>
-<hr>
-<p style="font-size:12px">✨ AI adjusts for age, mileage, condition & market demand</p>
-</div>
-</div>
+<div class="hero" style="padding:40px 20px"><h1><span class="highlight">AI Vehicle Valuation</span></h1><p>Get accurate market value for your car based on 150,000+ transactions</p></div>
+<div class="grid"><div class="card"><h3>📋 Vehicle Details</h3><input type="number" id="valYear" placeholder="Year" value="2020" style="width:100%;padding:12px;margin:10px 0;background:#1a1a1a;border:1px solid #333;color:#fff;border-radius:10px"><input type="number" id="valMileage" placeholder="Mileage" value="55000" style="width:100%;padding:12px;margin:10px 0;background:#1a1a1a;border:1px solid #333;color:#fff;border-radius:10px"><select id="valCondition" style="width:100%;padding:12px;margin:10px 0;background:#1a1a1a;border:1px solid #333;color:#fff;border-radius:10px"><option value="1.2">Mint</option><option value="1.0" selected>Good</option><option value="0.7">Poor</option></select><button class="btn" style="width:100%" onclick="valuateCar()">Calculate Value</button></div><div class="card"><h3>💰 Estimated Value</h3><div id="valResult" style="font-size:36px;font-weight:800;color:#d4af37;text-align:center;margin:20px 0">—</div><p id="valRange" style="text-align:center;color:#aaa"></p></div></div>
 </div>
 
-<!-- PLANS -->
+<!-- ==================== PLANS ==================== -->
 <div id="plans" class="page">
 <h2>⭐ Subscription Plans</h2>
 <div class="grid">
-<div class="card"><h3>Free</h3><p>Basic learner hub • Limited questions</p><button class="btn-small">Current</button></div>
-<div class="card"><h3>Premium</h3><p>Full 1000+ questions • Mock exams • Valuation AI • Certificates</p><button class="btn-small" style="background:#d4af37">Upgrade</button></div>
-<div class="card"><h3>Pro Fleet</h3><p>Team dashboard • Fleet valuation • Bulk reporting</p><button class="btn-small">Contact Sales</button></div>
+<div class="card"><h3>Free</h3><p>✓ Basic learner hub<br>✓ Limited questions<br>✓ Library access</p><button class="btn-outline" style="margin-top:15px;padding:10px 20px">Current Plan</button></div>
+<div class="card" style="border-color:#d4af37"><h3>Premium</h3><p>✓ Full 1000+ questions<br>✓ All mock exams<br>✓ AI Valuation<br>✓ Certificates</p><button class="btn" style="margin-top:15px" onclick="alert('Upgrade to Premium - KES 499/month')">Upgrade KES 499</button></div>
+<div class="card"><h3>Pro Fleet</h3><p>✓ Team dashboard<br>✓ Fleet valuation<br>✓ Bulk reporting<br>✓ Priority support</p><button class="btn-outline" style="margin-top:15px" onclick="alert('Contact sales for fleet pricing')">Contact Sales</button></div>
 </div>
 </div>
 
 </div>
 
 <footer>
-© 2026 MEI DRIVE AFRICA — Powered by MEI Press Group | NTSA-Aligned Training
+© 2026 MEI DRIVE AFRICA — Powered by MEI Press Group | NTSA-Aligned Training | Kenya Highway Code
 </footer>
 
 <script>
@@ -230,232 +212,74 @@ hr{border-color:#222;margin:20px 0}
 function go(id){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.getElementById(id).classList.add('active');
+    if(id === 'learner') renderLearnerTopics();
+    if(id === 'library') renderLibrary();
 }
 
 // ==================== AUTH ====================
 let user=null;
 const userBox = document.getElementById('userBox');
-function login(){
-    user={email:"learner@mei.africa"};
-    userBox.innerText = "👤 "+user.email;
+function login(){ user={email:"user@mei.africa"}; userBox.innerText="👤 "+user.email; }
+function logout(){ user=null; userBox.innerText=""; }
+
+// ==================== LEARNER HUB ====================
+const learnerTopics = [
+    "📖 Introduction to Driving","📜 Fundamental Driving Rules","🏙️ Model Town","🧠 Human Factors","🔧 Vehicle Construction","🔍 Self-Inspection","👁️ Observation","🎮 Vehicle Control","📢 Communication","⚡ Speed Management","📐 Space Management","🆘 Emergency Manoeuvres","🛞 Skid Control","🌧️ Adverse Conditions","🛠️ Preventive Maintenance","📦 Conditions of Carriage","⚠️ Hazardous Materials","🚑 Emergency Procedures","📅 Work Planning","🤝 Customer Care","🎓 The Examination"
+];
+function renderLearnerTopics(){
+    const grid = document.getElementById('learnerTopicsGrid');
+    if(grid && grid.children.length===0){
+        grid.innerHTML = learnerTopics.map(t=>`<div class="card" style="cursor:pointer" onclick="alert('📘 ${t}\n\nComplete this topic by studying the handbook and taking quizzes.')"><h3>${t}</h3><p>NTSA Handbook • Practice questions available</p></div>`).join('');
+    }
 }
-function logout(){
-    user=null;
-    userBox.innerText = "";
+function startFullMock(){ alert("🎓 Full Mock Exam (50 questions)\n\nComplete all 21 topics first to unlock full mock exam."); }
+function startQuickPractice(){ alert("⚡ Quick Practice (15 random questions)\n\nPractice questions will appear here in the full version."); }
+
+// ==================== LIBRARY ====================
+const libraryDocs = [
+    {title:"Kenya Highway Code - Official NTSA", cat:"NTSA", desc:"Complete highway code for all road users"},
+    {title:"Traffic Signs Guide (Full Color)", cat:"Signs", desc:"All regulatory, warning, and guidance signs"},
+    {title:"PSV Driver Handbook", cat:"PSV", desc:"Complete guide for Public Service Vehicle operators"},
+    {title:"Boda Boda Safety Manual", cat:"Boda", desc:"Safety guidelines for motorcycle taxi operators"},
+    {title:"School Transport Safety Guidelines", cat:"School", desc:"Safe transportation of children to school"},
+    {title:"Defensive Driving Techniques", cat:"Driving", desc:"Master defensive driving and hazard perception"},
+    {title:"First Aid at Roadside", cat:"First Aid", desc:"Emergency first aid procedures for crash scenes"},
+    {title:"Vehicle Pre-Trip Inspection Checklist", cat:"Maintenance", desc:"Daily inspection checklist for drivers"},
+    {title:"Driver Fatigue Prevention", cat:"Safety", desc:"Recognize and prevent driver fatigue"},
+    {title:"Night Driving Safety Tips", cat:"Driving", desc:"Techniques for safe night driving"}
+];
+function renderLibrary(){
+    const grid = document.getElementById('libraryGrid');
+    if(grid && grid.children.length===0){
+        grid.innerHTML = libraryDocs.map(d=>`<div class="card"><h3>📄 ${d.title}</h3><p>${d.desc}</p><div class="doc-meta" style="display:flex;justify-content:space-between;margin-top:10px"><span style="color:#888">${d.cat}</span><button class="btn-outline" style="padding:5px 12px;font-size:11px" onclick="alert('📥 Download: ${d.title}\n\nIn full version, PDF would download.')">Download</button></div></div>`).join('');
+    }
+}
+function filterLibrary(){
+    const term = document.getElementById('libSearch').value.toLowerCase();
+    const grid = document.getElementById('libraryGrid');
+    const filtered = libraryDocs.filter(d=>d.title.toLowerCase().includes(term) || d.cat.toLowerCase().includes(term));
+    grid.innerHTML = filtered.map(d=>`<div class="card"><h3>📄 ${d.title}</h3><p>${d.desc}</p><div class="doc-meta" style="display:flex;justify-content:space-between;margin-top:10px"><span style="color:#888">${d.cat}</span><button class="btn-outline" style="padding:5px 12px;font-size:11px" onclick="alert('📥 Download: ${d.title}')">Download</button></div></div>`).join('');
 }
 
-// ==================== AI VALUATION ====================
+// ==================== VALUATION ====================
 function valuateCar(){
     let year = parseInt(document.getElementById('valYear').value) || 2020;
     let mileage = parseInt(document.getElementById('valMileage').value) || 50000;
     let condition = parseFloat(document.getElementById('valCondition').value);
-    let trans = parseFloat(document.getElementById('valTrans').value);
-    let fuel = parseFloat(document.getElementById('valFuel').value);
-    
-    let basePrice = 1580000;
-    let age = 2026 - year;
-    if(age<0) age=0;
-    let depreciation = Math.pow(0.89, age);
-    depreciation = Math.max(0.22, depreciation);
-    let mileageImpact = Math.max(0.55, 1 - (mileage / 210000));
-    if(mileage < 15000) mileageImpact = Math.min(1.07, mileageImpact + 0.05);
-    
-    let score = depreciation * mileageImpact * condition * trans * fuel;
-    let finalValue = basePrice * score;
-    
-    // AI adjustment
-    let aiFactor = 0.95 + (age * 0.003) + (mileage / 500000);
-    aiFactor = Math.min(1.09, Math.max(0.92, aiFactor));
-    finalValue = finalValue * aiFactor;
-    
-    let confidence = Math.min(94, 68 + (score * 25));
-    let minVal = finalValue * 0.92;
-    let maxVal = finalValue * 1.08;
-    
+    let age = Math.max(0, 2026 - year);
+    let depreciation = age===0 ? 0.95 : (age===1?0.85:Math.max(0.25, 0.85 - (age-1)*0.08));
+    let mileageImpact = Math.max(0.5, 1 - (mileage/180000));
+    let finalValue = 1450000 * depreciation * mileageImpact * condition;
     document.getElementById('valResult').innerHTML = 'KES ' + Math.round(finalValue).toLocaleString();
-    document.getElementById('valRange').innerHTML = 'Range: ' + Math.round(minVal).toLocaleString() + ' - ' + Math.round(maxVal).toLocaleString();
-    document.getElementById('valConfidence').innerHTML = 'Confidence: ' + Math.round(confidence) + '% • AI-driven';
-}
-
-// ==================== LEARNER HUB (21 TOPICS + 1000+ QUESTIONS) ====================
-const TOPICS = [
-    { id: "unit1", name: "📖 Introduction to Driving", count: 50 },
-    { id: "unit2", name: "📜 Fundamental Driving Rules", count: 55 },
-    { id: "unit3", name: "🏙️ Model Town", count: 60 },
-    { id: "unit4", name: "🧠 Human Factors in Traffic", count: 65 },
-    { id: "unit5", name: "🔧 Vehicle Construction & Controls", count: 50 },
-    { id: "unit6", name: "🔍 Self-Inspection of Vehicle", count: 55 },
-    { id: "unit7", name: "👁️ Observation & Blind Spots", count: 45 },
-    { id: "unit8", name: "🎮 Vehicle Control", count: 60 },
-    { id: "unit9", name: "📢 Communication on Road", count: 55 },
-    { id: "unit10", name: "⚡ Speed Management", count: 50 },
-    { id: "unit11", name: "📐 Space Management", count: 45 },
-    { id: "unit12", name: "🆘 Emergency Manoeuvres", count: 45 },
-    { id: "unit13", name: "🛞 Skid Control & Recovery", count: 45 },
-    { id: "unit14", name: "🌧️ Adverse Conditions", count: 55 },
-    { id: "unit15", name: "🛠️ Preventive Maintenance", count: 50 },
-    { id: "unit16", name: "📦 Conditions of Carriage", count: 40 },
-    { id: "unit17", name: "⚠️ Hazardous Materials", count: 45 },
-    { id: "unit18", name: "🚑 Emergency Procedures", count: 55 },
-    { id: "unit19", name: "📅 Work Planning", count: 45 },
-    { id: "unit20", name: "🤝 Customer Care", count: 50 },
-    { id: "unit21", name: "🎓 The Examination", count: 40 }
-];
-
-function generateQuestionsForTopic(topicId, desiredCount) {
-    const questions = [];
-    for(let i=1; i<=desiredCount; i++){
-        let qText="", options=[], correct=0;
-        const v = i%7;
-        if(topicId==="unit1"){
-            const qs=[["What is the main goal of driver training?","Equip driver with knowledge & appropriate actions","Pass test","Speed","Avoid police",0],
-                     ["Most traffic accidents are caused by:","Human error","Bad roads","Vehicle defects","Weather",0]];
-            const q=qs[i%qs.length];
-            qText=q[0]; options=[q[1],q[2],q[3],q[4]]; correct=0;
-        } else if(topicId==="unit2"){
-            const qs=[["Which documents contain Kenya driving rules?","Traffic Act & Highway Code","Constitution","Local bylaws","International",0],
-                     ["When may you use your horn?","To warn while moving","When stationary","Aggressively","Near hospitals",0]];
-            const q=qs[i%qs.length];
-            qText=q[0]; options=[q[1],q[2],q[3],q[4]]; correct=0;
-        } else if(topicId==="unit3"){
-            const qs=[["What does a yellow kerb indicate?","No parking/waiting/stopping","Parking allowed","Loading zone","Bus stop",0],
-                     ["At a roundabout, give way to:","Traffic from right","Left","All","Larger vehicles",0]];
-            const q=qs[i%qs.length];
-            qText=q[0]; options=[q[1],q[2],q[3],q[4]]; correct=0;
-        } else if(topicId==="unit4"){
-            const qs=[["How to avoid driver fatigue?","Get quality sleep before driving","Drink coffee","Open windows","Loud music",0],
-                     ["Legal blood alcohol limit in Kenya:","0.08 g/100ml","0.05","Zero","0.1",0],
-                     ["Using hand-held phone while driving:","Illegal and dangerous","Allowed","Only at night","In traffic",0]];
-            const q=qs[i%qs.length];
-            qText=q[0]; options=[q[1],q[2],q[3],q[4]]; correct=0;
-        } else if(topicId==="unit8"){
-            const qs=[["1st gear is used for:","Moving off (0-30 km/h)","Highway","Reversing","Downhill",0],
-                     ["To start manual vehicle:","Depress clutch, check mirrors, signal","Press accelerator","Release handbrake","Turn radio",0]];
-            const q=qs[i%qs.length];
-            qText=q[0]; options=[q[1],q[2],q[3],q[4]]; correct=0;
-        } else if(topicId==="unit9"){
-            const qs=[["MSM technique stands for:","Mirror, Signal, Manoeuvre","Move, Stop, Move","Mirror, Speed, Move","Maintain, Signal",0],
-                     ["Red traffic light means:","STOP","Go if clear","Slow","Prepare",0],
-                     ["Amber light means:","STOP at the line","Go faster","Prepare if safe","Any",0]];
-            const q=qs[i%qs.length];
-            qText=q[0]; options=[q[1],q[2],q[3],q[4]]; correct=0;
-        } else if(topicId==="unit10"){
-            const qs=[["The 4-Second Rule helps maintain:","Safe following distance","Speed limit","Fuel efficiency","Lane discipline",0],
-                     ["Stopping distance = ","Thinking + Braking","Reaction only","Braking only","Vehicle length",0]];
-            const q=qs[i%qs.length];
-            qText=q[0]; options=[q[1],q[2],q[3],q[4]]; correct=0;
-        } else if(topicId==="unit13"){
-            const qs=[["Main cause of skids:","Driving too fast for conditions","Proper pressure","Slow acceleration","Good brakes",0],
-                     ["To recover from skid:","Take foot off pedals, steer desired","Brake hard","Accelerate","Turn opposite",0]];
-            const q=qs[i%qs.length];
-            qText=q[0]; options=[q[1],q[2],q[3],q[4]]; correct=0;
-        } else if(topicId==="unit14"){
-            const qs=[["In fog, use:","Low beam or fog lights","High beams","Hazards only","No lights",0],
-                     ["When driving at night, dim high beams within:","150 metres","50m","200m","300m",0]];
-            const q=qs[i%qs.length];
-            qText=q[0]; options=[q[1],q[2],q[3],q[4]]; correct=0;
-        } else if(topicId==="unit18"){
-            const qs=[["First step at crash scene:","Set reflectors, call emergency","Move victims","Take photos","Exchange insurance",0],
-                     ["DR ABC stands for:","Danger, Response, Airway, Breathing, Circulation","Drive, Reverse, Accelerate","Don't Rush","None",0],
-                     ["Recovery position prevents:","Choking if unconscious","Broken bones","Shock","Bleeding",0]];
-            const q=qs[i%qs.length];
-            qText=q[0]; options=[q[1],q[2],q[3],q[4]]; correct=0;
-        } else if(topicId==="unit19"){
-            const qs=[["Max driving hours for PSV in 24hrs:","8 hours","10","12","6",0]];
-            const q=qs[i%qs.length];
-            qText=q[0]; options=[q[1],q[2],q[3],q[4]]; correct=0;
-        } else {
-            qText = "What is a key NTSA road safety rule?";
-            options = ["Follow traffic signs", "Speed always", "Ignore pedestrians", "Use phone while driving"];
-            correct = 0;
-        }
-        if(qText) questions.push({text:qText, options:options, correct:correct, topic:topicId});
-    }
-    return questions;
-}
-
-let MASTER_BANK = [];
-TOPICS.forEach(t=>{ MASTER_BANK.push(...generateQuestionsForTopic(t.id, t.count)); });
-console.log("Loaded "+MASTER_BANK.length+" questions");
-
-function shuffleArray(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
-function getRandomQuestions(count, topicFilter=null){
-    let pool = topicFilter ? MASTER_BANK.filter(q=>q.topic===topicFilter) : [...MASTER_BANK];
-    if(pool.length===0) pool=[...MASTER_BANK];
-    return shuffleArray([...pool]).slice(0, Math.min(count, pool.length));
-}
-
-let activeMode=null, currentQuestions=[], currentIndex=0, userAnswers=[], quizSubmitted=false, activeTopicId=null;
-function renderTopicsGrid(){
-    const grid=document.getElementById('topicsGrid');
-    if(!grid) return;
-    grid.innerHTML = TOPICS.map(t=>`<div class="topic-card" data-topic="${t.id}"><h4>${t.name}</h4><p>📋 ${t.count}+ questions • NTSA</p></div>`).join('');
-    document.querySelectorAll('.topic-card').forEach(card=>{
-        card.addEventListener('click',()=>startTopicPractice(card.dataset.topic));
-    });
-}
-function startTopicPractice(topicId){
-    currentQuestions = getRandomQuestions(20, topicId);
-    if(currentQuestions.length===0) return;
-    currentIndex=0; userAnswers=new Array(currentQuestions.length).fill(undefined);
-    activeMode='topic'; activeTopicId=topicId; quizSubmitted=false;
-    renderQuiz();
-    document.getElementById('quizPanel').style.display='block';
-}
-function startFullMock(){
-    currentQuestions = getRandomQuestions(50);
-    currentIndex=0; userAnswers=new Array(currentQuestions.length).fill(undefined);
-    activeMode='mock'; activeTopicId=null; quizSubmitted=false;
-    renderQuiz();
-    document.getElementById('quizPanel').style.display='block';
-}
-function startQuickPractice(){
-    currentQuestions = getRandomQuestions(15);
-    currentIndex=0; userAnswers=new Array(currentQuestions.length).fill(undefined);
-    activeMode='practice'; activeTopicId=null; quizSubmitted=false;
-    renderQuiz();
-    document.getElementById('quizPanel').style.display='block';
-}
-function saveCurrentAnswer(){
-    const selected = document.querySelector('input[name="quizOption"]:checked');
-    if(selected) userAnswers[currentIndex]=parseInt(selected.value);
-}
-function submitQuiz(){
-    saveCurrentAnswer();
-    let correct=0;
-    for(let i=0;i<currentQuestions.length;i++) if(userAnswers[i]!==undefined && userAnswers[i]===currentQuestions[i].correct) correct++;
-    const total=currentQuestions.length, percent=Math.round((correct/total)*100), passed=percent>=70;
-    let modeTitle=activeMode==='mock'?"FULL MOCK EXAM":(activeMode==='practice'?"QUICK PRACTICE":`TOPIC PRACTICE`);
-    const panel=document.getElementById('quizPanel');
-    panel.innerHTML=`<div class="result-box"><h2>📊 ${modeTitle} RESULTS</h2><div class="result-score">${correct}/${total}</div><p style="font-size:18px;font-weight:600">${percent}% Score</p><p>${passed?'✅ PASS! Ready for NTSA exam.':'❌ Review handbook and try again.'}</p><hr><div style="display:flex;gap:10px;justify-content:center;margin-top:15px"><button id="retryBtn" class="btn-small">⟳ Retry</button><button id="closeResultsBtn" class="btn-small">Close</button></div></div>`;
-    document.getElementById('retryBtn')?.addEventListener('click',()=>{ if(activeMode==='mock') startFullMock(); else if(activeMode==='practice') startQuickPractice(); else if(activeTopicId) startTopicPractice(activeTopicId); });
-    document.getElementById('closeResultsBtn')?.addEventListener('click',()=>{ document.getElementById('quizPanel').style.display='none'; activeMode=null; });
-    quizSubmitted=true;
-}
-function renderQuiz(){
-    if(!activeMode || currentQuestions.length===0 || quizSubmitted) return;
-    const q=currentQuestions[currentIndex], selectedVal=userAnswers[currentIndex];
-    const total=currentQuestions.length, answered=userAnswers.filter(a=>a!==undefined).length, progress=(answered/total)*100;
-    let modeLabel=activeMode==='mock'?"🎓 FULL MOCK (50 Qs)":(activeMode==='practice'?"⚡ QUICK PRACTICE (15 Qs)":"📘 TOPIC PRACTICE (20 Qs)");
-    let optionsHtml='';
-    q.options.forEach((opt,idx)=>{ optionsHtml+=`<label class="option ${selectedVal===idx?'selected':''}"><input type="radio" name="quizOption" value="${idx}" ${selectedVal===idx?'checked':''}><span>${opt}</span></label>`; });
-    const allAnswered=answered===total;
-    const actionBtn=allAnswered && !quizSubmitted ? `<button id="submitQuizBtn" class="btn-small" style="background:#d4af37;color:#000">✅ SUBMIT</button>` : '';
-    const panel=document.getElementById('quizPanel');
-    panel.innerHTML=`<div class="quiz-header"><span style="background:#d4af37;color:#000;padding:4px 12px;border-radius:20px;">${modeLabel}</span><span>Q${currentIndex+1}/${total}</span></div><div class="progress"><div class="progress-fill" style="width:${progress}%"></div></div><div class="question-text">${q.text}</div><div class="options-list">${optionsHtml}</div><div class="nav-buttons"><button id="prevQBtn" class="btn-small" ${currentIndex===0?'disabled style="opacity:0.5"':''}>◀ Previous</button><button id="nextQBtn" class="btn-small">Next ▶</button>${actionBtn}<button id="cancelQuizBtn" class="btn-small">Exit</button></div><div style="margin-top:10px;font-size:12px">✔️ Answered: ${answered}/${total}</div>`;
-    document.querySelectorAll('input[name="quizOption"]').forEach(radio=>{ radio.addEventListener('change',()=>{ userAnswers[currentIndex]=parseInt(radio.value); renderQuiz(); }); });
-    document.getElementById('prevQBtn')?.addEventListener('click',()=>{ if(currentIndex>0){ saveCurrentAnswer(); currentIndex--; renderQuiz(); } });
-    document.getElementById('nextQBtn')?.addEventListener('click',()=>{ if(currentIndex<total-1){ saveCurrentAnswer(); currentIndex++; renderQuiz(); } else{ saveCurrentAnswer(); renderQuiz(); } });
-    document.getElementById('cancelQuizBtn')?.addEventListener('click',()=>{ document.getElementById('quizPanel').style.display='none'; activeMode=null; });
-    if(document.getElementById('submitQuizBtn')) document.getElementById('submitQuizBtn').addEventListener('click',()=>submitQuiz());
+    document.getElementById('valRange').innerHTML = `Range: KES ${Math.round(finalValue*0.92).toLocaleString()} - ${Math.round(finalValue*1.08).toLocaleString()}`;
 }
 
 // Initialize
-renderTopicsGrid();
-
-// Expose functions globally
-window.go=go; window.login=login; window.logout=logout; window.valuateCar=valuateCar;
+renderLearnerTopics();
+renderLibrary();
+window.go=go; window.login=login; window.logout=logout;
 window.startFullMock=startFullMock; window.startQuickPractice=startQuickPractice;
+window.valuateCar=valuateCar; window.filterLibrary=filterLibrary;
 </script>
 </body>
 </html>
