@@ -1,34 +1,467 @@
-<div id="boda" style="display:none">
-<h2>🏍️ Boda Rider Training</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEI DRIVE AFRICA | Boda Boda Safety Course</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff}
+.container{max-width:1300px;margin:auto;padding:20px}
+
+/* NAV */
+.navbar{border-bottom:1px solid #d4af37;padding:15px;position:sticky;top:0;background:#0a0a0a;z-index:100}
+.logo{color:#d4af37;font-weight:800;cursor:pointer}
+.nav{display:flex;justify-content:space-between;flex-wrap:wrap;align-items:center}
+.nav button{background:none;border:none;color:#fff;margin:5px;cursor:pointer;font-size:14px}
+.nav button:hover{color:#d4af37}
+
+/* HERO */
+.hero{text-align:center;padding:60px 20px;background:linear-gradient(135deg,#0a0a0a,#111);border-radius:30px;margin-bottom:30px}
+.hero h1{font-size:48px}
+.highlight{color:#d4af37}
+.hero-badge{background:#d4af3720;color:#d4af37;display:inline-block;padding:5px 15px;border-radius:30px;font-size:14px;margin-bottom:15px}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:25px}
+.card{background:#111;padding:25px;border-radius:20px;border:1px solid #222;transition:all 0.3s}
+.card:hover{border-color:#d4af37;transform:translateY(-5px)}
+.card h3{color:#d4af37;margin-bottom:15px;font-size:22px}
+.card p{color:#aaa;line-height:1.6;margin-bottom:15px}
+.card ul{padding-left:20px;margin:15px 0}
+.card li{color:#ccc;margin:8px 0;list-style-type:disc}
+.card .badge{display:inline-block;background:#d4af3720;color:#d4af37;padding:4px 12px;border-radius:20px;font-size:11px;margin-bottom:10px}
+
+/* BUTTON */
+.btn{background:#d4af37;color:#000;padding:12px 25px;border:none;border-radius:30px;cursor:pointer;font-weight:600;transition:0.2s}
+.btn:hover{background:#c4a027;transform:scale(0.98)}
+.btn-outline{background:transparent;border:2px solid #d4af37;color:#d4af37}
+.btn-small{background:#d4af37;color:#000;padding:8px 20px;border-radius:25px;font-size:13px;font-weight:600;border:none;cursor:pointer}
+
+/* MODULES SECTION */
+.section-title{font-size:28px;margin:40px 0 20px;border-left:4px solid #d4af37;padding-left:15px}
+.modules-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:15px;margin:25px 0}
+.module-card{background:#111;padding:20px;border-radius:15px;border-left:4px solid #d4af37;cursor:pointer;transition:0.2s}
+.module-card:hover{background:#161616;transform:translateX(5px)}
+.module-card h4{color:#d4af37;margin-bottom:8px;font-size:18px}
+.module-card p{font-size:13px;color:#888;margin-bottom:10px}
+.module-card .duration{font-size:11px;color:#d4af37;display:inline-block;background:#d4af3710;padding:3px 10px;border-radius:20px}
+.progress-bar{background:#222;border-radius:10px;height:6px;margin-top:12px}
+.progress-fill{background:#d4af37;height:6px;border-radius:10px;width:0%}
+.completed-badge{color:#4caf50;font-size:11px;margin-left:10px}
+
+/* CERTIFICATION */
+.cert-card{background:linear-gradient(135deg,#111,#1a1a1a);border:2px solid #d4af37;text-align:center;padding:35px;border-radius:20px}
+.cert-card .icon{font-size:48px;margin-bottom:15px}
+
+/* REGULATIONS TABLE */
+.regs-table{background:#111;border-radius:20px;overflow:hidden;margin:20px 0}
+.regs-table table{width:100%;border-collapse:collapse}
+.regs-table th,.regs-table td{padding:15px;text-align:left;border-bottom:1px solid #222}
+.regs-table th{background:#1a1a1a;color:#d4af37}
+.regs-table tr:hover{background:#1a1a1a}
+
+/* HELMET GUIDE */
+.helmet-guide{display:flex;gap:20px;flex-wrap:wrap;margin:20px 0}
+.helmet-card{flex:1;background:#111;padding:20px;border-radius:15px;text-align:center}
+.helmet-card h4{color:#d4af37;margin:10px 0}
+
+/* MODAL */
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:1000;justify-content:center;align-items:center}
+.modal-content{background:#111;border:1px solid #d4af37;border-radius:20px;padding:30px;max-width:550px;width:90%;max-height:80vh;overflow-y:auto}
+.modal-content h3{color:#d4af37;margin-bottom:15px}
+.modal-content .lesson-content{color:#ccc;line-height:1.6;margin:15px 0;padding:15px;background:#0a0a0a;border-radius:15px}
+.close-modal{float:right;font-size:28px;cursor:pointer;color:#d4af37}
+.quiz-question{margin:20px 0;padding:15px;background:#0a0a0a;border-radius:15px}
+.quiz-option{display:flex;align-items:center;gap:10px;margin:10px 0;padding:10px;background:#1a1a1a;border-radius:10px;cursor:pointer}
+.quiz-option:hover{background:#252525}
+
+/* PAGE HIDE */
+.page{display:none}
+.active{display:block}
+
+footer{text-align:center;padding:30px;color:#777;margin-top:40px}
+hr{border-color:#222;margin:20px 0}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="navbar">
+<div class="container nav">
+<div class="logo" onclick="go('home')">🏍️ MEI DRIVE AFRICA</div>
+<div>
+<button onclick="go('home')">Home</button>
+<button onclick="go('learner')">📚 Learner Hub</button>
+<button onclick="go('academy')">🏫 Drivers Academy</button>
+<button onclick="go('psv')">🚌 PSV Course</button>
+<button onclick="go('boda')">🏍️ Boda Course</button>
+<button onclick="go('school')">👧 School Safety</button>
+<button onclick="go('library')">📖 Library</button>
+<button onclick="go('valuation')">💰 Valuation AI</button>
+<button onclick="go('plans')">⭐ Plans</button>
+<span id="userBox" style="color:#d4af37;margin:0 10px"></span>
+<button onclick="login()">Login</button>
+<button onclick="logout()">Logout</button>
+</div>
+</div>
+</div>
+
+<div class="container">
+
+<!-- HOME -->
+<div id="home" class="page active">
+<div class="hero">
+<h1>Drive Smarter with <span class="highlight">MEI DRIVE AFRICA</span></h1>
+<p>Powered by MEI Press Group — Africa's First AI Driver Training & Vehicle Intelligence Platform</p>
+<button class="btn" onclick="go('boda')">🏍️ Start Boda Course</button>
+<button class="btn btn-outline" onclick="go('valuation')" style="margin-left:15px">🔮 AI Valuation</button>
+</div>
+<h2>Why Choose Us</h2>
 <div class="grid">
+<div class="card">✔ NTSA-Aligned Training<br><small>Professional certification</small></div>
+<div class="card">✔ AI Vehicle Valuation<br><small>Market intelligence</small></div>
+<div class="card">✔ 1000+ Practice Qs<br><small>Mock exams included</small></div>
+<div class="card">✔ Real Driver Certification<br><small>Track progress</small></div>
+</div>
+</div>
 
+<!-- ==================== BODA BODA SAFETY COURSE ==================== -->
+<div id="boda" class="page">
+<div class="hero" style="padding:40px 20px">
+<div class="hero-badge">🏍️ NTSA Approved Curriculum</div>
+<h1><span class="highlight">Boda Boda</span><br>Professional Safety Course</h1>
+<p>Complete training for motorcycle taxi operators • Safety • Regulations • Customer Service</p>
+</div>
+
+<!-- Course Overview Cards -->
+<div class="grid" style="margin-bottom:40px">
 <div class="card">
-<h3>🪖 Rider Safety</h3>
+<div class="badge">🪖 Core Module</div>
+<h3>🪖 Helmet & Protective Gear</h3>
+<p>Proper helmet use, passenger helmets, reflective jackets, and protective equipment standards.</p>
 <ul>
-<li>Helmet use</li>
-<li>Protective gear</li>
-<li>Visibility</li>
+<li>ECE/DOT certified helmets only</li>
+<li>Passenger helmet mandatory by law</li>
+<li>Reflective jacket for night visibility</li>
+<li>Proper helmet fit and strap adjustment</li>
 </ul>
 </div>
-
 <div class="card">
-<h3>👥 Passenger Handling</h3>
+<div class="badge">🏙️ Core Module</div>
+<h3>🏙️ Urban Riding Techniques</h3>
+<p>Navigate Nairobi and Kenyan cities safely. Lane filtering, blind spots, intersection safety.</p>
 <ul>
-<li>Safe seating</li>
-<li>Briefing passenger</li>
-<li>Balance control</li>
+<li>Lane positioning & filtering rules</li>
+<li>Blind spot awareness around trucks</li>
+<li>Intersection approach protocols</li>
+<li>Roundabout safety for motorcycles</li>
 </ul>
 </div>
-
 <div class="card">
-<h3>🏙️ Urban Riding</h3>
+<div class="badge">📋 Core Module</div>
+<h3>📋 NTSA Boda Regulations</h3>
+<p>Licensing, PSV registration for boda, passenger limits, and compliance requirements.</p>
 <ul>
-<li>Traffic navigation</li>
-<li>Lane filtering</li>
-<li>Risk zones</li>
+<li>Motorcycle PSV license requirements</li>
+<li>Passenger limit: 1 passenger only</li>
+<li>Helmet law for rider AND passenger</li>
+<li>Speed limits: 50km/h urban, 70km/h highway</li>
 </ul>
 </div>
+</div>
+
+<!-- Boda Regulations Table -->
+<h2 class="section-title">📋 Key NTSA Boda Boda Regulations</h2>
+<div class="regs-table">
+<table>
+<thead>
+<tr><th>Regulation</th><th>Requirement</th><th>Penalty for Non-Compliance</th></tr>
+</thead>
+<tbody>
+<tr><td>Helmet Use</td><td>Rider AND passenger must wear approved helmet</td><td>Fine KES 1,000 per person</td></tr>
+<tr><td>Passenger Capacity</td><td>Maximum ONE passenger (no child under 12 as pillion)</td><td>Fine KES 2,000</td></tr>
+<tr><td>PSV License (Boda)</td><td>Must register as PSV with NTSA</td><td>Impoundment + fine KES 10,000</td></tr>
+<tr><td>Reflective Jacket</td><td>Mandatory for night operation</td><td>Warning + fine KES 500</td></tr>
+<tr><td>Speed Limit (Urban)</td><td>Maximum 50 km/h within cities/towns</td><td>Speeding fine + demerit points</td></tr>
+<tr><td>Riding Abreast</td><td>No more than 2 motorcycles riding side by side</td><td>Fine KES 1,000</td></tr>
+<tr><td>Number Plate</td><td>Must display valid front and rear plates</td><td>Fine KES 1,500</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- Helmet Safety Guide -->
+<h2 class="section-title">🪖 Helmet Safety Guide</h2>
+<div class="helmet-guide">
+<div class="helmet-card"><div style="font-size:48px;">✅</div><h4>Check Certification</h4><p>Look for ECE 22.05, DOT, or SNELL labels inside helmet</p></div>
+<div class="helmet-card"><div style="font-size:48px;">📏</div><h4>Proper Fit</h4><p>Helmet should be snug, not move on head, cheek pads touch cheeks</p></div>
+<div class="helmet-card"><div style="font-size:48px;">🔄</div><h4>Replace Every 5 Years</h4><p>Helmet materials degrade even without visible damage</p></div>
+<div class="helmet-card"><div style="font-size:48px;">❌</div><h4>Never Buy Used</h4><p>Used helmets may have invisible structural damage</p></div>
+</div>
+
+<!-- Learning Modules -->
+<h2 class="section-title">📚 Boda Course Modules</h2>
+<p style="margin-bottom:15px;color:#aaa">Complete all 7 modules to earn your Boda Professional Safety Certificate</p>
+<div class="modules-grid" id="bodaModulesGrid"></div>
+
+<!-- Certification Section -->
+<h2 class="section-title">🎓 Boda Professional Certification</h2>
+<div class="grid" style="margin-top:20px">
+<div class="cert-card">
+<div class="icon">🏅</div>
+<h3 style="color:#d4af37">NTSA-Aligned Boda Certificate</h3>
+<p>Complete all 7 modules and pass the final exam to receive a verified Boda Professional Safety Certificate recognized by NTSA and Saccos.</p>
+<button class="btn" style="margin-top:15px" onclick="startFinalExam()">📝 Take Final Exam</button>
+</div>
+<div class="cert-card">
+<div class="icon">📊</div>
+<h3 style="color:#d4af37">Progress Tracking</h3>
+<p>Login to save your module progress, track completion, and access your certificate.</p>
+<button class="btn" style="margin-top:15px" onclick="login()">Login to Track →</button>
+</div>
+</div>
+
+<!-- Passenger Safety Tips -->
+<h2 class="section-title">👥 Passenger Safety Tips</h2>
+<div class="grid" style="margin-bottom:30px">
+<div class="card"><h3>📌 Mounting/Dismounting</h3><p>Wait for motorcycle to stop completely. Mount from left side. Hold rider's shoulders, not waist.</p></div>
+<div class="card"><h3>📌 Riding Position</h3><p>Sit straight, keep feet on pegs, hold grab rail or rider's waist. Do not lean opposite direction.</p></div>
+<div class="card"><h3>📌 Luggage</h3><p>Small items only. Use bungee cords. Never carry large loads that affect balance.</p></div>
+</div>
+
+<!-- Night Riding Tips -->
+<h2 class="section-title">🌙 Night Riding Safety</h2>
+<div class="grid">
+<div class="card"><h3>💡 Lights & Reflectors</h3><p>Ensure headlight, taillight, and reflectors working. Wear reflective jacket at all times.</p></div>
+<div class="card"><h3>🎯 Reduced Speed</h3><p>Night reaction time slower. Reduce speed by 20-30% compared to day.</p></div>
+<div class="card"><h3>👀 Visibility</h3><p>Assume you are invisible to other drivers. Position for maximum visibility.</p></div>
+</div>
+</div>
+
+<!-- Other Pages Placeholders -->
+<div id="learner" class="page"><h2>📘 Learner Hub</h2><div class="grid"><div class="card">NTSA 21 topics, 1000+ questions</div></div></div>
+<div id="academy" class="page"><h2>🏫 Drivers Academy</h2><div class="grid"><div class="card">Professional driving courses</div></div></div>
+<div id="psv" class="page"><h2>🚌 PSV Course</h2><div class="grid"><div class="card">PSV licensing, passenger safety, regulations</div></div></div>
+<div id="school" class="page"><h2>👧 School Transport Safety</h2><div class="grid"><div class="card">Child safety, booster seats, emergency evacuation</div></div></div>
+<div id="library" class="page"><h2>📖 Digital Road Safety Library</h2><div class="grid"><div class="card">NTSA Highway Code, Traffic signs guide</div></div></div>
+<div id="valuation" class="page"><h2>💰 AI Vehicle Valuation</h2><div class="grid" style="grid-template-columns:1fr 1fr"><div class="card"><input id="valYear" placeholder="Year" type="number" value="2020"><input id="valMileage" placeholder="Mileage" type="number" value="55000"><select id="valCondition"><option value="1.15">Mint</option><option value="1.0" selected>Good</option><option value="0.7">Poor</option></select><button class="btn" onclick="valuateCar()">Calculate</button></div><div class="card"><h3 id="valResult">KES —</h3></div></div></div>
+<div id="plans" class="page"><h2>⭐ Subscription Plans</h2><div class="grid"><div class="card">Free • Premium • Pro Fleet</div></div></div>
 
 </div>
+
+<footer>
+© 2026 MEI DRIVE AFRICA — Powered by MEI Press Group | NTSA-Aligned Boda Boda Safety Training
+</footer>
+
+<!-- Lesson Modal -->
+<div id="lessonModal" class="modal">
+<div class="modal-content">
+<span class="close-modal" onclick="closeLessonModal()">&times;</span>
+<h3 id="lessonTitle">Lesson Title</h3>
+<div id="lessonContent" class="lesson-content"></div>
+<div id="quizContainer"></div>
+<button id="completeLessonBtn" class="btn" style="width:100%;margin-top:15px" onclick="markLessonComplete()">✅ Mark Complete</button>
 </div>
+</div>
+
+<script>
+// ==================== NAVIGATION ====================
+function go(id){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+
+// ==================== AUTH & PROGRESS ====================
+let user=null;
+const userBox = document.getElementById('userBox');
+function login(){
+    user={email:"boda_rider@mei.africa"};
+    userBox.innerText = "👤 "+user.email;
+    loadBodaProgress();
+}
+function logout(){
+    user=null;
+    userBox.innerText = "";
+    saveBodaProgress();
+}
+
+// Boda Module Progress
+let bodaProgress = {
+    module1:0, module2:0, module3:0, module4:0, module5:0, module6:0, module7:0
+};
+
+function loadBodaProgress(){
+    let saved = localStorage.getItem('mei_boda_progress');
+    if(saved){
+        bodaProgress = JSON.parse(saved);
+        updateProgressBars();
+    }
+}
+function saveBodaProgress(){
+    localStorage.setItem('mei_boda_progress', JSON.stringify(bodaProgress));
+}
+function updateProgressBars(){
+    for(let i=1; i<=7; i++){
+        let progElem = document.getElementById('progress'+i);
+        if(progElem) progElem.style.width = bodaProgress['module'+i] + '%';
+        let badgeElem = document.getElementById('completeBadge'+i);
+        if(badgeElem && bodaProgress['module'+i] === 100) badgeElem.innerHTML = ' ✓ Complete';
+        else if(badgeElem) badgeElem.innerHTML = '';
+    }
+}
+
+// ==================== BODA MODULES DATA ====================
+const bodaModules = [
+    { id:1, title:"🪖 Module 1: Helmet & Protective Gear", content:"<strong>Helmet Standards (NTSA):</strong><br><br>• Both rider AND passenger MUST wear approved helmets<br>• Look for ECE 22.05, DOT, or SNELL certification labels<br>• Helmets expire - replace every 5 years<br>• Never buy used helmets - invisible damage possible<br><br><strong>Proper Fit:</strong><br>• Snug but not painful<br>• Should not move on head when shaking<br>• Cheek pads should touch cheeks<br>• Strap must be tight under chin (one finger space)<br><br><strong>Other Gear:</strong><br>• Reflective jacket mandatory for night operation<br>• Gloves protect hands in crash<br>• Sturdy boots and long pants recommended", quiz:{q:"What is required by law for BOTH rider and passenger?", options:["Approved helmet","Reflective jacket","Boots","Gloves"], correct:0}},
+    { id:2, title:"🏙️ Module 2: Urban Riding Techniques", content:"<strong>Lane Positioning:</strong><br><br>• Position in lane where you are most visible<br>• Avoid riding in center of lane (oil spill risk)<br>• Use left or right tire track depending on situation<br><br><strong>Filtering (Lane Splitting):</strong><br>• Only when traffic is stopped or moving very slowly<br>• Maximum speed when filtering: 20 km/h<br>• Watch for doors opening, pedestrians between cars<br><br><strong>Intersections:</strong><br>• Assume drivers don't see you<br>• Make eye contact when possible<br>• Never stop in blind spot of large vehicles", quiz:{q:"What is the maximum safe speed for lane filtering?", options:["20 km/h","40 km/h","60 km/h","10 km/h"], correct:0}},
+    { id:3, title:"📋 Module 3: NTSA Boda Regulations", content:"<strong>Legal Requirements for Boda Operators:</strong><br><br>• Motorcycle must be registered as PSV (Public Service Vehicle)<br>• Valid PSV sticker displayed<br>• Driver must have valid driving license with motorcycle class<br>• PSV endorsement required<br><br><strong>Passenger Rules:</strong><br>• Maximum ONE passenger only<br>• No children under 12 years as pillion passengers<br>• Passenger MUST wear helmet<br><br><strong>Speed Limits:</strong><br>• Urban areas: 50 km/h maximum<br>• Rural/Highways: 70 km/h maximum<br><br><strong>Prohibited:</strong><br>• Riding more than 2 abreast<br>• Carrying goods that affect balance", quiz:{q:"What is the maximum number of passengers allowed on a boda boda?", options:["1 passenger","2 passengers","3 passengers","None"], correct:0}},
+    { id:4, title:"⚠️ Module 4: Hazard Perception & Defensive Riding", content:"<strong>Common Hazards for Boda Riders:</strong><br><br>• Car doors opening unexpectedly<br>• Pedestrians stepping between parked cars<br>• Potholes and road debris<br>• Wet roads and slippery surfaces<br>• Blind spots of trucks/buses<br><br><strong>Defensive Techniques:</strong><br>• Scan 12-15 seconds ahead<br>• Always have an escape route<br>• Cover brakes when approaching intersections<br>• Increase following distance (minimum 3 seconds)<br>• Be visible - use headlight even during day", quiz:{q:"How many seconds ahead should a motorcyclist scan?", options:["12-15 seconds","5 seconds","30 seconds","2 seconds"], correct:0}},
+    { id:5, title:"🌧️ Module 5: Adverse Weather Riding", content:"<strong>Rain Riding Tips:</strong><br><br>• Reduce speed significantly (30-40% slower)<br>• Avoid painted lines and metal surfaces (very slippery)<br>• Use both brakes gently - no sudden braking<br>• Increase following distance to 6-8 seconds<br>• Wear waterproof gear to stay focused<br><br><strong>Night Riding:</strong><br>• Ensure headlight and taillight working<br>• Wear reflective jacket at all times<br>• Reduce speed - night reaction time slower<br>• Assume you are invisible to others", quiz:{q:"In rain, how much should you reduce your speed?", options:["30-40%","10%","50-60%","No reduction"], correct:0}},
+    { id:6, title:"🆘 Module 6: Emergency Procedures & First Aid", content:"<strong>Crash Response:</strong><br><br>• Stop immediately and check for injuries<br>• Move to safe location away from traffic<br>• Call emergency services (999)<br>• Do not remove helmet if spinal injury suspected<br><br><strong>First Aid for Rider:</strong><br>• Carry basic first aid kit<br>• Clean wounds with antiseptic<br>• Apply pressure to stop bleeding<br>• Watch for signs of shock (pale, cold, rapid breathing)<br><br><strong>Breakdown Safety:</strong><br>• Push motorcycle off road if possible<br>• Use hazard lights or reflective triangle<br>• Call for assistance - don't attempt major repairs on roadside", quiz:{q:"If a rider has a suspected spinal injury, should you remove their helmet?", options:["No, leave helmet on","Yes, remove immediately","Only if conscious","Only after 10 minutes"], correct:0}},
+    { id:7, title:"🤝 Module 7: Customer Service & Professional Conduct", content:"<strong>Professional Boda Standards:</strong><br><br>• Always be courteous to passengers<br>• No sexual harassment or offensive language<br>• Do not discriminate based on appearance, gender, or disability<br>• Assist elderly and disabled passengers<br><br><strong>Fare & Pricing:</strong><br>• Agree on fare before departure when possible<br>• Display fare chart if part of Sacco<br>• Do not overcharge - maintain fair pricing<br><br><strong>Vehicle Presentation:</strong><br>• Keep motorcycle clean and well-maintained<br>• Ensure number plate is visible<br>• Display reflective vest colorfully", quiz:{q:"What is the professional approach to disabled passengers?", options:["Assist with boarding/alighting respectfully","Refuse service","Charge extra","Ignore them"], correct:0}}
+];
+
+function renderBodaModules(){
+    const grid = document.getElementById('bodaModulesGrid');
+    if(!grid) return;
+    grid.innerHTML = bodaModules.map(m => `
+        <div class="module-card" onclick="openLesson(${m.id})">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <h4>${m.title}</h4>
+                <span id="completeBadge${m.id}" class="completed-badge">${bodaProgress['module'+m.id] === 100 ? ' ✓ Complete' : ''}</span>
+            </div>
+            <p>${m.content.substring(0,80)}...</p>
+            <div class="duration">📖 12-15 min</div>
+            <div class="progress-bar"><div class="progress-fill" id="progress${m.id}" style="width:${bodaProgress['module'+m.id]}%"></div></div>
+        </div>
+    `).join('');
+    updateProgressBars();
+}
+
+let currentLessonId = null;
+let quizCompletedForLesson = false;
+
+function openLesson(moduleId){
+    currentLessonId = moduleId;
+    const module = bodaModules.find(m => m.id === moduleId);
+    if(!module) return;
+    
+    quizCompletedForLesson = (bodaProgress['module'+moduleId] === 100);
+    document.getElementById('lessonTitle').innerHTML = module.title;
+    
+    let quizHtml = '';
+    if(module.quiz && !quizCompletedForLesson){
+        quizHtml = `<div class="quiz-question"><strong>📝 Check Your Understanding:</strong><br>${module.quiz.q}</div>
+                    <div id="quizOptions">${module.quiz.options.map((opt,idx)=>`<div class="quiz-option" onclick="selectQuizAnswer(${idx})">○ ${opt}</div>`).join('')}</div>
+                    <input type="hidden" id="selectedAnswer" value="-1">
+                    <div id="quizFeedback" style="margin-top:10px"></div>`;
+    } else if(quizCompletedForLesson){
+        quizHtml = '<p style="color:#4caf50">✓ Module already completed!</p>';
+    } else {
+        quizHtml = '<p>No quiz for this module. Press complete to mark as done.</p>';
+    }
+    
+    document.getElementById('lessonContent').innerHTML = module.content;
+    document.getElementById('quizContainer').innerHTML = quizHtml;
+    document.getElementById('lessonModal').style.display = 'flex';
+    
+    const btn = document.getElementById('completeLessonBtn');
+    if(bodaProgress['module'+moduleId] === 100){
+        btn.innerHTML = '✓ Already Completed';
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+    } else {
+        btn.innerHTML = '✅ Mark Complete';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+    }
+}
+
+function selectQuizAnswer(selectedIdx){
+    const module = bodaModules.find(m => m.id === currentLessonId);
+    if(!module || !module.quiz) return;
+    const isCorrect = (selectedIdx === module.quiz.correct);
+    const optionsDiv = document.getElementById('quizOptions');
+    const feedbackDiv = document.getElementById('quizFeedback');
+    
+    if(isCorrect){
+        feedbackDiv.innerHTML = '<span style="color:#4caf50">✓ Correct! You can now complete this module.</span>';
+        document.getElementById('selectedAnswer').value = selectedIdx;
+        document.getElementById('completeLessonBtn').disabled = false;
+        document.getElementById('completeLessonBtn').style.opacity = '1';
+        if(optionsDiv){
+            const opts = optionsDiv.querySelectorAll('.quiz-option');
+            opts.forEach((opt,idx)=>{
+                if(idx === selectedIdx) opt.style.background = '#1e5320';
+                opt.style.cursor = 'default';
+            });
+        }
+    } else {
+        feedbackDiv.innerHTML = '<span style="color:#f44336">✗ Incorrect. Try again!</span>';
+    }
+}
+
+function markLessonComplete(){
+    if(!currentLessonId) return;
+    const module = bodaModules.find(m => m.id === currentLessonId);
+    if(module && module.quiz){
+        const selected = document.getElementById('selectedAnswer').value;
+        if(selected == -1 || parseInt(selected) !== module.quiz.correct){
+            alert("Please answer the quiz question correctly first.");
+            return;
+        }
+    }
+    bodaProgress['module'+currentLessonId] = 100;
+    saveBodaProgress();
+    updateProgressBars();
+    renderBodaModules();
+    closeLessonModal();
+    alert("✅ Module completed! Progress saved.");
+}
+
+function closeLessonModal(){
+    document.getElementById('lessonModal').style.display = 'none';
+    currentLessonId = null;
+}
+
+function startFinalExam(){
+    let completedCount = Object.values(bodaProgress).filter(v => v === 100).length;
+    if(completedCount < 7){
+        alert(`Please complete all 7 modules first. (${completedCount}/7 completed)`);
+        return;
+    }
+    alert("🎓 Final Exam coming soon! All modules completed. Certificate will be generated.");
+}
+
+// Valuation
+function valuateCar(){
+    let year = parseInt(document.getElementById('valYear').value) || 2020;
+    let mileage = parseInt(document.getElementById('valMileage').value) || 50000;
+    let condition = parseFloat(document.getElementById('valCondition').value);
+    let age = 2026 - year;
+    let depreciation = Math.pow(0.89, Math.max(0, age));
+    let mileageImpact = Math.max(0.55, 1 - (mileage/210000));
+    let finalValue = 1580000 * depreciation * mileageImpact * condition;
+    document.getElementById('valResult').innerHTML = 'KES ' + Math.round(finalValue).toLocaleString();
+}
+
+// Initialize
+loadBodaProgress();
+renderBodaModules();
+
+// Expose globals
+window.go = go; window.login = login; window.logout = logout;
+window.valuateCar = valuateCar;
+window.openLesson = openLesson;
+window.closeLessonModal = closeLessonModal;
+window.markLessonComplete = markLessonComplete;
+window.selectQuizAnswer = selectQuizAnswer;
+window.startFinalExam = startFinalExam;
+
+window.onclick = function(event){ if(event.target.classList.contains('modal')) closeLessonModal(); }
+</script>
+</body>
+</html>
