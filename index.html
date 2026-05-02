@@ -1,1 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEI DRIVE AFRICA</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff}
+.container{max-width:1300px;margin:auto;padding:20px}
+
+/* NAV */
+.navbar{border-bottom:1px solid #d4af37;padding:15px;position:sticky;top:0;background:#0a0a0a}
+.logo{color:#d4af37;font-weight:800;cursor:pointer}
+.nav{display:flex;justify-content:space-between;flex-wrap:wrap}
+.nav button{background:none;border:none;color:#fff;margin:5px;cursor:pointer}
+.nav button:hover{color:#d4af37}
+
+/* HERO */
+.hero{text-align:center;padding:80px 20px}
+.hero h1{font-size:48px}
+.highlight{color:#d4af37}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.card{background:#111;padding:20px;border-radius:15px;border:1px solid #222}
+.card:hover{border-color:#d4af37}
+
+/* BUTTON */
+.btn{background:#d4af37;color:#000;padding:10px 20px;border:none;border-radius:20px;cursor:pointer}
+
+/* FORM */
+input,select{width:100%;padding:10px;margin:10px 0;background:#1a1a1a;border:1px solid #333;color:#fff}
+
+/* HIDE */
+.page{display:none}
+.active{display:block}
+
+footer{text-align:center;padding:30px;color:#777}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<div class="navbar">
+<div class="container nav">
+<div class="logo" onclick="go('home')">MEI DRIVE AFRICA</div>
+
+<div>
+<button onclick="go('home')">Home</button>
+<button onclick="go('learner')">Learner Hub</button>
+<button onclick="go('academy')">Drivers Academy</button>
+<button onclick="go('psv')">PSV Course</button>
+<button onclick="go('boda')">Boda Course</button>
+<button onclick="go('school')">School Safety</button>
+<button onclick="go('library')">Library</button>
+<button onclick="go('valuation')">Valuation AI</button>
+<button onclick="go('plans')">Plans</button>
+<span id="userBox"></span>
+<button onclick="login()">Login</button>
+<button onclick="logout()">Logout</button>
+</div>
+</div>
+</div>
+
+<div class="container">
+
+<!-- HOME -->
+<div id="home" class="page active">
+<div class="hero">
+<h1>Drive Smarter with <span class="highlight">MEI DRIVE AFRICA</span></h1>
+<p>Powered by MEI Press Group — Africa’s First AI Driver Training & Vehicle Intelligence Platform</p>
+<button class="btn" onclick="go('learner')">Start Learning</button>
+</div>
+
+<h2>Why Choose Us</h2>
+<div class="grid">
+<div class="card">✔ NTSA-Aligned Training</div>
+<div class="card">✔ AI Vehicle Valuation</div>
+<div class="card">✔ Africa-Focused</div>
+<div class="card">✔ Real Driver Certification</div>
+</div>
+</div>
+
+<!-- LEARNER -->
+<div id="learner" class="page">
+<h2>Learner Hub</h2>
+<div class="card">
+<h3>Topics</h3>
+<ul>
+<li>Traffic Rules</li>
+<li>Road Signs</li>
+<li>Vehicle Control</li>
+<li>Highway Code</li>
+</ul>
+<button class="btn">Start Mock Test</button>
+</div>
+</div>
+
+<!-- ACADEMY -->
+<div id="academy" class="page">
+<h2>Drivers Academy</h2>
+<div class="grid">
+<div class="card">Defensive Driving</div>
+<div class="card">Night Driving</div>
+<div class="card">Eco Driving</div>
+</div>
+</div>
+
+<!-- PSV -->
+<div id="psv" class="page">
+<h2>PSV Course</h2>
+<div class="card">NTSA Regulations • Passenger Safety • Compliance</div>
+</div>
+
+<!-- BODA -->
+<div id="boda" class="page">
+<h2>Boda Course</h2>
+<div class="card">Helmet Safety • Urban Riding • Risk Awareness</div>
+</div>
+
+<!-- SCHOOL -->
+<div id="school" class="page">
+<h2>School Safety</h2>
+<div class="card">Child Safety • Pre-Trip • Evacuation</div>
+</div>
+
+<!-- LIBRARY -->
+<div id="library" class="page">
+<h2>Digital Road Safety Library</h2>
+<div class="card">Downloadable guides, safety manuals, NTSA docs</div>
+</div>
+
+<!-- VALUATION -->
+<div id="valuation" class="page">
+<h2>AI Vehicle Valuation</h2>
+
+<input id="year" placeholder="Year">
+<input id="mileage" placeholder="Mileage">
+
+<select id="condition">
+<option value="1.1">Excellent</option>
+<option value="1">Good</option>
+<option value="0.7">Poor</option>
+</select>
+
+<button class="btn" onclick="valuate()">Value</button>
+<h3 id="valResult"></h3>
+</div>
+
+<!-- PLANS -->
+<div id="plans" class="page">
+<h2>Subscription Plans</h2>
+<div class="grid">
+<div class="card">Free</div>
+<div class="card">Premium (Unlock All Features)</div>
+</div>
+</div>
+
+</div>
+
+<footer>
+© 2026 MEI DRIVE AFRICA — Powered by MEI Press Group
+</footer>
+
+<script>
+function go(id){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+document.getElementById(id).classList.add('active')
+}
+
+/* AUTH (basic) */
+let user=null
+function login(){
+user={email:"user@test.com"}
+userBox.innerText="👤 "+user.email
+}
+function logout(){
+user=null
+userBox.innerText=""
+}
+
+/* VALUATION */
+function valuate(){
+let y=year.value
+let m=mileage.value
+let c=condition.value
+let val=(1500000-(2026-y)*50000-(m*2))*c
+valResult.innerText="KES "+Math.round(val)
+}
+</script>
+
+</body>
+</html>
