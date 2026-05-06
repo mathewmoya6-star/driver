@@ -30,7 +30,7 @@ app.use(express.json());
 console.log('🚀 MEI DRIVE API Starting...');
 console.log('='.repeat(50));
 
-// Health check
+// ==================== HEALTH & ROOT ====================
 app.get('/health', (req, res) => {
     res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
@@ -38,6 +38,8 @@ app.get('/health', (req, res) => {
 app.get('/', (req, res) => {
     res.json({ name: 'MEI DRIVE AFRICA API', status: 'running' });
 });
+
+// ==================== AUTH ENDPOINTS ====================
 
 // REGISTER
 app.post('/auth/register', (req, res) => {
@@ -59,7 +61,14 @@ app.post('/auth/register', (req, res) => {
     }
     
     const userId = Date.now().toString();
-    localUsers.push({ id: userId, email: email, password: password });
+    localUsers.push({ 
+        id: userId, 
+        email: email, 
+        password: password,
+        name: '',
+        phone: '',
+        createdAt: new Date().toISOString()
+    });
     saveUsers();
     
     const token = jwt.sign(
@@ -95,37 +104,49 @@ app.post('/auth/login', (req, res) => {
     
     res.json({
         success: true,
-        user: { id: user.id, email: email, name: email.split('@')[0] },
+        user: { id: user.id, email: email, name: user.name || email.split('@')[0] },
         token: token
     });
 });
 
-// Get users list
+// ==================== USER ENDPOINTS ====================
+
+// Get all users (for admin)
 app.get('/users', (req, res) => {
-    res.json({ total: localUsers.length, users: localUsers.map(u => ({ email: u.email })) });
+    const safeUsers = localUsers.map(u => ({
+        id: u.id,
+        email: u.email,
+        name: u.name || '',
+        phone: u.phone || '',
+        createdAt: u.createdAt
+    }));
+    res.json({ total: safeUsers.length, users: safeUsers });
 });
 
-// Profile
+// Get single user profile
 app.get('/profile/:userId', (req, res) => {
     const user = localUsers.find(u => u.id === req.params.userId);
     res.json({ name: user?.name || '', phone: user?.phone || '' });
 });
 
+// Save profile
 app.post('/profile', (req, res) => {
     const { id, name, phone } = req.body;
     const userIndex = localUsers.findIndex(u => u.id === id);
     
     if (userIndex !== -1) {
-        localUsers[userIndex].name = name || '';
-        localUsers[userIndex].phone = phone || '';
+        if (name !== undefined) localUsers[userIndex].name = name || '';
+        if (phone !== undefined) localUsers[userIndex].phone = phone || '';
         saveUsers();
-        res.json({ success: true });
+        res.json({ success: true, message: 'Profile saved' });
     } else {
         res.status(404).json({ error: 'User not found' });
     }
 });
 
-// Progress
+// ==================== PROGRESS ENDPOINTS ====================
+
+// Progress storage
 const userProgress = {};
 
 app.get('/progress/:type', (req, res) => {
@@ -157,8 +178,49 @@ app.post('/progress/:type', (req, res) => {
     }
 });
 
-// Start server
+// ==================== ADMIN ENDPOINTS ====================
+
+// Admin stats
+app.get('/stats', (req, res) => {
+    const totalUsers = localUsers.length;
+    let totalCompletedUnits = 0;
+    
+    // Calculate total completed units across all users
+    for (let key in userProgress) {
+        const progress = userProgress[key];
+        if (progress && typeof progress === 'object') {
+            totalCompletedUnits += Object.values(progress).filter(v => v === 100).length;
+        }
+    }
+    
+    const avgProgress = totalUsers > 0 ? Math.floor((totalCompletedUnits / (totalUsers * 21)) * 100) : 0;
+    
+    res.json({
+        totalUsers: totalUsers,
+        totalCompletedUnits: totalCompletedUnits,
+        avgProgress: avgProgress + '%',
+        totalQuestions: 50
+    });
+});
+
+// Admin delete user
+app.delete('/admin/user/:userId', (req, res) => {
+    const { userId } = req.params;
+    const userIndex = localUsers.findIndex(u => u.id === userId);
+    
+    if (userIndex !== -1) {
+        localUsers.splice(userIndex, 1);
+        saveUsers();
+        res.json({ success: true, message: 'User deleted' });
+    } else {
+        res.status(404).json({ error: 'User not found' });
+    }
+});
+
+// ==================== START SERVER ====================
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`✅ Server running on port ${PORT}`);
+    console.log(`✅ MEI DRIVE API running on port ${PORT}`);
     console.log(`📍 Health: http://localhost:${PORT}/health`);
+    console.log(`👥 Users: http://localhost:${PORT}/users`);
+    console.log(`📊 Stats: http://localhost:${PORT}/stats`);
 });

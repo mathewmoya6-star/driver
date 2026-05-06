@@ -248,7 +248,7 @@ hr{margin:20px 0;border-color:#222}
 <div id="downloadModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeDownloadModal()">&times;</span><h3>Download</h3><p id="downloadDesc"></p><button class="btn" style="width:100%" onclick="confirmDownload()">Download</button></div></div>
 
 <script>
-const API_BASE = "http://localhost:5000";
+const API_BASE ="https://mei-drive-api.onrender.com"; // Use your actual URL
 let currentUser = null;
 let learnerProgress = {};
 for(let i=1;i<=21;i++) learnerProgress[i]=0;
