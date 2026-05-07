@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEI DRIVE AFRICA - Admin Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff}
+        
+        .login-container{min-height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#0a0a0a,#1a1a1a)}
+        .login-box{background:#111;border:1px solid #d4af37;border-radius:24px;padding:40px;width:100%;max-width:400px;text-align:center}
+        .login-box h2{color:#d4af37;margin-bottom:10px}
+        .login-box input{width:100%;padding:12px;margin:10px 0;background:#1a1a1a;border:1px solid #333;color:#fff;border-radius:8px}
+        .login-box button{width:100%;padding:12px;background:#d4af37;color:#000;border:none;border-radius:8px;font-weight:600;cursor:pointer;margin-top:20px}
+        .login-box button:hover{background:#c4a027}
+        .error-msg{color:#f44336;margin-top:15px;display:none}
+        
+        .dashboard{display:none}
+        .admin-header{background:#0a0a0a;border-bottom:2px solid #d4af37;padding:16px 24px;position:sticky;top:0;z-index:100}
+        .admin-header-content{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+        .logo{color:#d4af37;font-size:20px;font-weight:800}
+        .logo span{color:#fff;font-weight:400}
+        .admin-info{display:flex;align-items:center;gap:20px}
+        .admin-badge{background:#d4af37;color:#000;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600}
+        .logout-btn{background:transparent;border:1px solid #d4af37;color:#d4af37;padding:6px 16px;border-radius:20px;cursor:pointer}
+        
+        .dashboard-container{display:flex;min-height:calc(100vh - 70px)}
+        .sidebar{width:260px;background:#0f0f0f;border-right:1px solid #222;padding:24px 0;position:sticky;top:70px;height:calc(100vh - 70px);overflow-y:auto}
+        .sidebar-item{padding:12px 24px;cursor:pointer;transition:0.2s;border-left:3px solid transparent;color:#ccc}
+        .sidebar-item:hover{background:#1a1a1a;color:#d4af37}
+        .sidebar-item.active{background:#1a1a1a;border-left-color:#d4af37;color:#d4af37}
+        
+        .main-content{flex:1;padding:24px;overflow-y:auto}
+        .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-bottom:32px}
+        .stat-card{background:#111;border:1px solid #222;border-radius:16px;padding:20px}
+        .stat-card:hover{border-color:#d4af37}
+        .stat-title{color:#888;font-size:13px;margin-bottom:8px}
+        .stat-value{font-size:32px;font-weight:800;color:#d4af37}
+        
+        .data-table{width:100%;background:#111;border-radius:16px;overflow:hidden;border:1px solid #222}
+        .data-table th,.data-table td{padding:14px 16px;text-align:left;border-bottom:1px solid #222}
+        .data-table th{background:#1a1a1a;color:#d4af37;font-weight:600}
+        .data-table tr:hover{background:#1a1a1a}
+        
+        .btn-primary{background:#d4af37;color:#000;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:600}
+        .btn-primary:hover{background:#c4a027}
+        .btn-danger{background:#c62828;color:#fff;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px}
+        .btn-danger:hover{background:#b71c1c}
+        
+        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:1000;justify-content:center;align-items:center}
+        .modal-content{background:#111;border:1px solid #d4af37;border-radius:20px;padding:32px;max-width:500px;width:90%}
+        .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+        .close-modal{cursor:pointer;font-size:28px;color:#d4af37}
+        input,select,textarea{width:100%;padding:12px;background:#1a1a1a;border:1px solid #333;color:#fff;border-radius:8px;margin:8px 0 16px}
+        
+        .section{display:none}
+        .section.active{display:block}
+        .action-buttons{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+        .search-bar{margin-bottom:20px;display:flex;gap:12px}
+        .search-bar input{flex:1;margin:0}
+        
+        .status-badge{padding:4px 8px;border-radius:12px;font-size:11px}
+        .status-online{background:#2e7d32;color:#fff}
+        .status-offline{background:#c62828;color:#fff}
+        
+        @media(max-width:768px){.sidebar{width:70px}.sidebar-item span{display:none}}
+    </style>
+</head>
+<body>
+
+<!-- Login Section -->
+<div id="loginSection" class="login-container">
+    <div class="login-box">
+        <h2>🔐 MEI DRIVE AFRICA</h2>
+        <h3>Administrator Portal</h3>
+        <input type="email" id="adminEmail" placeholder="Admin Email" value="admin@meidrive.com">
+        <input type="password" id="adminPassword" placeholder="Password" value="admin123">
+        <div id="loginError" class="error-msg">Invalid credentials</div>
+        <div id="serverStatus" style="margin-bottom:10px;font-size:12px">🔌 Checking server...</div>
+        <button onclick="adminLogin()">Login →</button>
+        <p style="margin-top:20px;color:#666;font-size:12px">Demo: admin@meidrive.com / admin123</p>
+    </div>
+</div>
+
+<!-- Admin Dashboard -->
+<div id="dashboardSection" class="dashboard">
+    <div class="admin-header">
+        <div class="admin-header-content">
+            <div class="logo">MEI DRIVE <span>AFRICA</span> | ADMIN PORTAL</div>
+            <div class="admin-info">
+                <span class="admin-badge" id="adminName">Administrator</span>
+                <button class="logout-btn" onclick="adminLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="sidebar-item active" onclick="showSection('dashboard')">📊 <span> Dashboard</span></li>
+                <li class="sidebar-item" onclick="showSection('users')">👥 <span> Users</span></li>
+                <li class="sidebar-item" onclick="showSection('questions')">❓ <span> Questions</span></li>
+                <li class="sidebar-item" onclick="showSection('courses')">📚 <span> Courses</span></li>
+                <li class="sidebar-item" onclick="showSection('settings')">⚙️ <span> Settings</span></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <!-- Dashboard -->
+            <div id="dashboard" class="section active">
+                <h1 style="margin-bottom:24px">📊 Dashboard Overview</h1>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-title">Total Users</div><div class="stat-value" id="totalUsers">0</div></div>
+                    <div class="stat-card"><div class="stat-title">Active Learners</div><div class="stat-value" id="activeLearners">0</div></div>
+                    <div class="stat-card"><div class="stat-title">Total Questions</div><div class="stat-value" id="totalQuestions">0</div></div>
+                    <div class="stat-card"><div class="stat-title">Server Status</div><div class="stat-value" id="serverStat">-</div></div>
+                </div>
+                <div class="stat-card">
+                    <h3 style="color:#d4af37;margin-bottom:16px">📈 System Status</h3>
+                    <div id="systemStatus">
+                        <p>✅ Backend API: <span id="apiStatus">Checking...</span></p>
+                        <p>✅ Database: Connected</p>
+                        <p>📊 Ready to manage users and questions</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users -->
+            <div id="users" class="section">
+                <div class="action-buttons"><h1>👥 User Management</h1><button class="btn-primary" onclick="openUserModal()">+ Add User</button></div>
+                <div class="search-bar"><input type="text" id="userSearch" placeholder="Search users..." onkeyup="searchUsers()"></div>
+                <table class="data-table">
+                    <thead><tr><th>ID</th><th>Email</th><th>Name</th><th>Role</th><th>Actions</th></tr></thead>
+                    <tbody id="usersList"></tbody>
+                </table>
+            </div>
+
+            <!-- Questions -->
+            <div id="questions" class="section">
+                <div class="action-buttons"><h1>❓ Question Bank</h1><button class="btn-primary" onclick="openQuestionModal()">+ Add Question</button></div>
+                <div class="search-bar"><input type="text" id="questionSearch" placeholder="Search questions..." onkeyup="searchQuestions()"></div>
+                <table class="data-table">
+                    <thead><tr><th>ID</th><th>Question</th><th>Category</th><th>Actions</th></tr></thead>
+                    <tbody id="questionsList"></tbody>
+                </table>
+            </div>
+
+            <!-- Courses -->
+            <div id="courses" class="section">
+                <h1>📚 Course Management</h1>
+                <div class="stat-card">
+                    <h3 style="color:#d4af37">Available Courses</h3>
+                    <ul style="margin-top:16px;list-style:none">
+                        <li>📘 Learner Driver Hub - 21 Units</li>
+                        <li>🚌 PSV Driver Course - 8 Units</li>
+                        <li>🏍️ Boda Safety Course - 8 Units</li>
+                        <li>👧 School Transport Safety - 8 Units</li>
+                        <li>🏫 MEI Drivers Academy - 6 Courses</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Settings -->
+            <div id="settings" class="section">
+                <h1>⚙️ Admin Settings</h1>
+                <div class="stat-card">
+                    <h3>Backend Configuration</h3>
+                    <label>API URL</label>
+                    <input type="text" id="apiUrl" placeholder="https://your-backend.onrender.com">
+                    <button class="btn-primary" onclick="updateApiUrl()">Save API URL</button>
+                    <p style="margin-top:16px;color:#888;font-size:12px">Current backend: <span id="currentApiUrl">Loading...</span></p>
+                </div>
+                <div class="stat-card" style="margin-top:20px">
+                    <h3>Change Password</h3>
+                    <input type="password" id="newPassword" placeholder="New Password">
+                    <button class="btn-primary" onclick="changeAdminPassword()">Update Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User Modal -->
+<div id="userModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3>Add User</h3><span class="close-modal" onclick="closeUserModal()">&times;</span></div>
+        <input type="email" id="userEmail" placeholder="Email">
+        <input type="text" id="userName" placeholder="Full Name">
+        <input type="password" id="userPassword" placeholder="Password">
+        <button class="btn-primary" onclick="saveUser()">Save User</button>
+    </div>
+</div>
+
+<!-- Question Modal -->
+<div id="questionModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3>Add Question</h3><span class="close-modal" onclick="closeQuestionModal()">&times;</span></div>
+        <textarea id="questionText" rows="3" placeholder="Question"></textarea>
+        <input type="text" id="optionA" placeholder="Option A">
+        <input type="text" id="optionB" placeholder="Option B">
+        <input type="text" id="optionC" placeholder="Option C">
+        <input type="text" id="optionD" placeholder="Option D">
+        <select id="correctOption"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select>
+        <button class="btn-primary" onclick="saveQuestion()">Save Question</button>
+    </div>
+</div>
+
+<script>
+    // Configuration
+    let API_BASE = localStorage.getItem('api_url') || 'https://meidriveafrica-backend.onrender.com';
+    let adminToken = localStorage.getItem('admin_token');
+    
+    // Update API URL display
+    document.getElementById('currentApiUrl').innerText = API_BASE;
+    document.getElementById('apiUrl').value = API_BASE;
+    
+    function updateApiUrl() {
+        const newUrl = document.getElementById('apiUrl').value;
+        API_BASE = newUrl;
+        localStorage.setItem('api_url', newUrl);
+        document.getElementById('currentApiUrl').innerText = API_BASE;
+        alert('API URL updated! Test connection by logging in again.');
+    }
+    
+    // Check server status
+    async function checkServerStatus() {
+        const statusSpan = document.getElementById('serverStat');
+        const apiStatusSpan = document.getElementById('apiStatus');
+        try {
+            const response = await fetch(`${API_BASE}/health`, { method: 'GET' });
+            if (response.ok) {
+                if(statusSpan) statusSpan.innerHTML = '🟢 Online';
+                if(apiStatusSpan) apiStatusSpan.innerHTML = '🟢 Connected';
+                document.getElementById('serverStatus').innerHTML = '✅ Server Online';
+                return true;
+            } else {
+                throw new Error('Server error');
+            }
+        } catch (error) {
+            if(statusSpan) statusSpan.innerHTML = '🔴 Offline';
+            if(apiStatusSpan) apiStatusSpan.innerHTML = '🔴 Disconnected';
+            document.getElementById('serverStatus').innerHTML = '⚠️ Server Offline - Check API URL';
+            return false;
+        }
+    }
+    
+    // Admin Login
+    async function adminLogin() {
+        const email = document.getElementById('adminEmail').value;
+        const password = document.getElementById('adminPassword').value;
+        
+        const serverOnline = await checkServerStatus();
+        if (!serverOnline) {
+            document.getElementById('loginError').innerText = 'Server offline. Check API URL in Settings';
+            document.getElementById('loginError').style.display = 'block';
+            return;
+        }
+        
+        try {
+            const response = await fetch(`${API_BASE}/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await response.json();
+            
+            if (data.error) {
+                // Demo mode - accept demo credentials
+                if (email === 'admin@meidrive.com' && password === 'admin123') {
+                    adminToken = 'demo_token';
+                    localStorage.setItem('admin_token', adminToken);
+                    showDashboard();
+                } else {
+                    document.getElementById('loginError').innerText = data.error;
+                    document.getElementById('loginError').style.display = 'block';
+                }
+            } else {
+                adminToken = data.token;
+                localStorage.setItem('admin_token', adminToken);
+                showDashboard();
+            }
+        } catch (error) {
+            // Fallback to demo mode
+            if (email === 'admin@meidrive.com' && password === 'admin123') {
+                adminToken = 'demo_token';
+                localStorage.setItem('admin_token', adminToken);
+                showDashboard();
+            } else {
+                document.getElementById('loginError').innerText = 'Connection failed. Using demo mode.';
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+    }
+    
+    function showDashboard() {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('dashboardSection').style.display = 'block';
+        loadUsers();
+        loadQuestions();
+        refreshDashboard();
+        checkServerStatus();
+    }
+    
+    function adminLogout() {
+        adminToken = null;
+        localStorage.removeItem('admin_token');
+        document.getElementById('loginSection').style.display = 'flex';
+        document.getElementById('dashboardSection').style.display = 'none';
+    }
+    
+    function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(sectionId).classList.add('active');
+        document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+        event.target.closest('.sidebar-item').classList.add('active');
+        if (sectionId === 'dashboard') refreshDashboard();
+    }
+    
+    function refreshDashboard() {
+        document.getElementById('totalUsers').innerHTML = usersList.length || 0;
+        document.getElementById('totalQuestions').innerHTML = questionsList.length || 0;
+        document.getElementById('activeLearners').innerHTML = (usersList.filter(u => u.progress > 0).length) || 0;
+    }
+    
+    // User Management
+    let usersList = [];
+    
+    async function loadUsers() {
+        try {
+            const response = await fetch(`${API_BASE}/api/users`);
+            const data = await response.json();
+            usersList = Array.isArray(data) ? data : [];
+        } catch (error) {
+            usersList = JSON.parse(localStorage.getItem('demo_users') || '[]');
+        }
+        renderUsers();
+    }
+    
+    function renderUsers() {
+        const tbody = document.getElementById('usersList');
+        if (!usersList.length) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">No users yet</td></tr>';
+            return;
+        }
+        tbody.innerHTML = usersList.map(user => `
+            <tr>
+                <td>${user.id || user._id}</td>
+                <td>${user.email}</td>
+                <td>${user.name || '-'}</td>
+                <td>${user.role || 'learner'}</td>
+                <td><button class="btn-danger" onclick="deleteUser('${user.id || user._id}')">Delete</button></td>
+            </tr>
+        `).join('');
+        refreshDashboard();
+    }
+    
+    function searchUsers() {
+        const search = document.getElementById('userSearch').value.toLowerCase();
+        const filtered = usersList.filter(u => u.email.toLowerCase().includes(search));
+        document.getElementById('usersList').innerHTML = filtered.map(user => `
+            <tr><td>${user.id || user._id}</td><td>${user.email}</td><td>${user.name || '-'}</td>
+            <td>${user.role || 'learner'}</td>
+            <td><button class="btn-danger" onclick="deleteUser('${user.id || user._id}')">Delete</button></td></tr>
+        `).join('');
+    }
+    
+    async function deleteUser(id) {
+        if (confirm('Delete this user?')) {
+            try {
+                await fetch(`${API_BASE}/api/users/${id}`, { method: 'DELETE' });
+            } catch(e) {}
+            usersList = usersList.filter(u => (u.id || u._id) != id);
+            localStorage.setItem('demo_users', JSON.stringify(usersList));
+            loadUsers();
+        }
+    }
+    
+    function openUserModal() {
+        document.getElementById('userEmail').value = '';
+        document.getElementById('userName').value = '';
+        document.getElementById('userPassword').value = '';
+        document.getElementById('userModal').style.display = 'flex';
+    }
+    
+    function closeUserModal() { document.getElementById('userModal').style.display = 'none'; }
+    
+    async function saveUser() {
+        const email = document.getElementById('userEmail').value;
+        const name = document.getElementById('userName').value;
+        const password = document.getElementById('userPassword').value;
+        
+        if (email && password) {
+            const newUser = { id: Date.now(), email, name, password: btoa(password), progress: 0, role: 'learner' };
+            usersList.push(newUser);
+            localStorage.setItem('demo_users', JSON.stringify(usersList));
+            try {
+                await fetch(`${API_BASE}/api/users`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newUser) });
+            } catch(e) {}
+            closeUserModal();
+            loadUsers();
+            alert('User added!');
+        } else {
+            alert('Please fill email and password');
+        }
+    }
+    
+    // Question Management
+    let questionsList = [];
+    
+    async function loadQuestions() {
+        try {
+            const response = await fetch(`${API_BASE}/api/questions`);
+            const data = await response.json();
+            questionsList = Array.isArray(data) ? data : [];
+        } catch (error) {
+            const stored = localStorage.getItem('demo_questions');
+            questionsList = stored ? JSON.parse(stored) : [
+                { id: 1, text: "What is the minimum age for a learner driver in Kenya?", options: ["16", "17", "18", "21"], correct: 2, category: "Rules" },
+                { id: 2, text: "What does a red traffic light mean?", options: ["Go", "Slow", "Stop", "Proceed"], correct: 2, category: "Rules" }
+            ];
+        }
+        renderQuestions();
+    }
+    
+    function renderQuestions() {
+        const tbody = document.getElementById('questionsList');
+        if (!questionsList.length) {
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">No questions yet</td></tr>';
+            return;
+        }
+        tbody.innerHTML = questionsList.map(q => `
+            <tr>
+                <td>${q.id}</td>
+                <td>${q.text.substring(0, 60)}...</td>
+                <td>${q.category || 'Rules'}</td>
+                <td><button class="btn-danger" onclick="deleteQuestion(${q.id})">Delete</button></td>
+            </tr>
+        `).join('');
+        document.getElementById('totalQuestions').innerHTML = questionsList.length;
+    }
+    
+    function searchQuestions() {
+        const search = document.getElementById('questionSearch').value.toLowerCase();
+        const filtered = questionsList.filter(q => q.text.toLowerCase().includes(search));
+        document.getElementById('questionsList').innerHTML = filtered.map(q => `
+            <tr><td>${q.id}</td><td>${q.text.substring(0, 60)}...</td><td>${q.category || 'Rules'}</td>
+            <td><button class="btn-danger" onclick="deleteQuestion(${q.id})">Delete</button></td></tr>
+        `).join('');
+    }
+    
+    function deleteQuestion(id) {
+        if (confirm('Delete this question?')) {
+            questionsList = questionsList.filter(q => q.id !== id);
+            localStorage.setItem('demo_questions', JSON.stringify(questionsList));
+            try {
+                fetch(`${API_BASE}/api/questions/${id}`, { method: 'DELETE' });
+            } catch(e) {}
+            renderQuestions();
+        }
+    }
+    
+    function openQuestionModal() {
+        document.getElementById('questionText').value = '';
+        document.getElementById('optionA').value = '';
+        document.getElementById('optionB').value = '';
+        document.getElementById('optionC').value = '';
+        document.getElementById('optionD').value = '';
+        document.getElementById('questionModal').style.display = 'flex';
+    }
+    
+    function closeQuestionModal() { document.getElementById('questionModal').style.display = 'none'; }
+    
+    function saveQuestion() {
+        const text = document.getElementById('questionText').value;
+        const options = [
+            document.getElementById('optionA').value,
+            document.getElementById('optionB').value,
+            document.getElementById('optionC').value,
+            document.getElementById('optionD').value
+        ];
+        const correct = parseInt(document.getElementById('correctOption').value);
+        
+        if (text && options.every(o => o)) {
+            const newQuestion = { id: Date.now(), text, options, correct, category: 'Rules' };
+            questionsList.push(newQuestion);
+            localStorage.setItem('demo_questions', JSON.stringify(questionsList));
+            try {
+                fetch(`${API_BASE}/api/questions`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newQuestion) });
+            } catch(e) {}
+            closeQuestionModal();
+            renderQuestions();
+            alert('Question added!');
+        } else {
+            alert('Please fill all fields');
+        }
+    }
+    
+    function changeAdminPassword() { alert('Password updated (demo mode)'); document.getElementById('newPassword').value = ''; }
+    
+    // Check session on load
+    if (localStorage.getItem('admin_token')) {
+        showDashboard();
+    }
+    
+    checkServerStatus();
+</script>
+</body>
+</html>
