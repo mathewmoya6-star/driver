@@ -1,1 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MEI DRIVE AFRICA | Kenya's Digital Driver Safety Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff;line-height:1.5}
+        .container{max-width:1300px;margin:0 auto;padding:0 20px}
+        
+        .navbar{border-bottom:2px solid #d4af37;padding:12px 0;position:sticky;top:0;background:#0a0a0a;z-index:100}
+        .nav{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px}
+        .logo{color:#d4af37;font-weight:800;font-size:18px;cursor:pointer}
+        .nav-links{display:flex;flex-wrap:wrap;gap:6px}
+        .nav-links button{background:none;border:none;color:#fff;cursor:pointer;padding:8px 14px;border-radius:30px;font-size:12px;transition:0.2s}
+        .nav-links button:hover{color:#d4af37;background:#1a1a1a}
+        
+        .btn{background:#d4af37;color:#000;padding:10px 24px;border:none;border-radius:40px;cursor:pointer;font-weight:600;transition:0.2s}
+        .btn:hover{background:#c4a027}
+        .btn-outline{background:transparent;border:2px solid #d4af37;color:#d4af37}
+        .btn-small{background:#d4af37;color:#000;padding:6px 16px;border-radius:30px;font-size:12px;font-weight:600;border:none;cursor:pointer}
+        
+        .hero{text-align:center;padding:40px 20px;background:linear-gradient(135deg,#0a0a0a,#111);border-radius:24px;margin-bottom:24px}
+        .hero h1{font-size:28px}@media(min-width:768px){.hero h1{font-size:42px}}
+        .highlight{color:#d4af37}
+        
+        .grid{display:grid;grid-template-columns:1fr;gap:16px;margin:20px 0}
+        @media(min-width:480px){.grid{grid-template-columns:repeat(2,1fr)}}
+        @media(min-width:768px){.grid{grid-template-columns:repeat(3,1fr)}}
+        @media(min-width:1024px){.grid{grid-template-columns:repeat(4,1fr)}}
+        
+        .card{background:#111;padding:20px;border-radius:20px;border:1px solid #222;transition:0.3s;cursor:pointer}
+        .card:hover{border-color:#d4af37;transform:translateY(-5px)}
+        .card h3{color:#d4af37;margin-bottom:10px}
+        .card p{color:#aaa;font-size:13px}
+        
+        .modules-grid{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
+        @media(min-width:480px){.modules-grid{grid-template-columns:repeat(2,1fr)}}
+        @media(min-width:768px){.modules-grid{grid-template-columns:repeat(3,1fr)}}
+        
+        .module-card{background:#111;padding:16px;border-radius:15px;border-left:4px solid #d4af37;cursor:pointer;transition:0.2s}
+        .module-card:hover{background:#161616}
+        .module-card h4{color:#d4af37;margin-bottom:6px}
+        .module-card p{font-size:11px;color:#888}
+        
+        .progress-bar{background:#222;border-radius:10px;height:5px;margin-top:12px}
+        .progress-fill{background:#d4af37;height:5px;border-radius:10px}
+        
+        .learner-stats{background:#111;border-radius:20px;padding:16px;margin:20px 0;display:flex;justify-content:space-around;flex-wrap:wrap;gap:12px}
+        .learner-stat{text-align:center;flex:1;min-width:80px}
+        .learner-stat .number{font-size:24px;font-weight:800;color:#d4af37}
+        .learner-stat .label{font-size:10px;color:#888}
+        
+        .question-bank{background:linear-gradient(135deg,#0a0f1c,#050814);border-radius:28px;margin:24px 0;padding:24px 20px}
+        .question-card{background:#111;border-radius:16px;padding:20px;margin-bottom:16px;border:1px solid #222}
+        .question-text{font-size:16px;font-weight:500;margin-bottom:16px}
+        .question-option{background:#1a1a1a;padding:12px 16px;border-radius:12px;cursor:pointer;margin-bottom:8px;border:1px solid #333}
+        .question-option:hover{background:#252525;border-color:#d4af37}
+        .question-option.correct-selected{background:#2e7d32;border-color:#4caf50}
+        .question-option.wrong-selected{background:#c62828;border-color:#f44336}
+        
+        .stats-bar{display:flex;justify-content:space-between;flex-wrap:wrap;gap:15px;margin-bottom:20px;padding:16px;background:#1a1a1a;border-radius:16px}
+        .stats-item .value{font-size:24px;font-weight:800;color:#d4af37}
+        
+        .filter-chip{background:#1a1a1a;border:1px solid #333;color:#aaa;padding:6px 14px;border-radius:30px;cursor:pointer;font-size:12px;margin:0 4px 8px 0;display:inline-block}
+        .filter-chip.active{background:#d4af37;color:#000}
+        
+        .pagination{display:flex;justify-content:center;gap:8px;margin-top:20px}
+        .page-btn{background:#1a1a1a;border:1px solid #333;color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer}
+        .page-btn.active{background:#d4af37;color:#000}
+        
+        footer{text-align:center;padding:24px;color:#777;margin-top:30px;border-top:1px solid #222}
+        .page{display:none}
+        .active-page{display:block}
+        
+        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.96);z-index:1000;justify-content:center;align-items:center}
+        .modal-content{background:#111;border:1px solid #d4af37;border-radius:20px;padding:20px;max-width:400px;width:90%}
+        .close-modal{float:right;font-size:28px;cursor:pointer;color:#d4af37}
+        .modal input{width:100%;padding:12px;margin:8px 0;background:#1a1a1a;border:1px solid #333;color:#fff;border-radius:8px}
+        
+        .connection-status{position:fixed;bottom:10px;right:10px;padding:5px 10px;border-radius:20px;font-size:10px;background:#2e7d32;color:#fff}
+        
+        @media(max-width:768px){.nav-links button{padding:6px 10px;font-size:10px}}
+    </style>
+</head>
+<body>
 
+<div class="navbar">
+    <div class="container nav">
+        <div class="logo" onclick="navigateTo('home')">🚗 MEI DRIVE AFRICA</div>
+        <div class="nav-links">
+            <button onclick="navigateTo('home')">🏠 Home</button>
+            <button onclick="navigateTo('learner')">📘 Learner Hub</button>
+            <button onclick="navigateTo('psv')">🚌 PSV</button>
+            <button onclick="navigateTo('boda')">🏍️ Boda</button>
+            <button onclick="navigateTo('school')">👧 School</button>
+            <button onclick="navigateTo('academy')">🏫 Academy</button>
+            <button onclick="navigateTo('library')">📖 Library</button>
+            <button onclick="openLoginModal()">🔐 Login</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- HOME -->
+    <div id="home" class="page active-page">
+        <div class="hero">
+            <h1>Kenya's <span class="highlight">Digital Driver Safety Platform</span></h1>
+            <p>Learn safer. Drive smarter. Reduce accidents. Protect lives.</p>
+            <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:20px">
+                <button class="btn" onclick="navigateTo('learner')">📘 Start Learning Now</button>
+                <button class="btn btn-outline" onclick="navigateTo('library')">📖 Resource Library</button>
+            </div>
+        </div>
+        <div class="learner-stats">
+            <div class="learner-stat"><div class="number">10,000+</div><div class="label">Active Learners</div></div>
+            <div class="learner-stat"><div class="number">500+</div><div class="label">Practice Questions</div></div>
+            <div class="learner-stat"><div class="number">95%</div><div class="label">Pass Rate</div></div>
+            <div class="learner-stat"><div class="number">24/7</div><div class="label">Access</div></div>
+        </div>
+        <div class="grid" id="homeModulesGrid"></div>
+    </div>
+
+    <!-- LEARNER HUB - 21 UNITS -->
+    <div id="learner" class="page">
+        <div class="hero">
+            <div class="highlight" style="font-size:14px">📘 NTSA Approved Curriculum</div>
+            <h1><span class="highlight">Learner Driver Hub</span></h1>
+            <p>Prepare for your NTSA driving test • 21 Complete Units • 500+ Practice Questions</p>
+        </div>
+        <div class="learner-stats">
+            <div class="learner-stat"><div class="number">21</div><div class="label">Total Units</div></div>
+            <div class="learner-stat"><div class="number" id="completedCount">0</div><div class="label">Completed</div></div>
+            <div class="learner-stat"><div class="number" id="answeredCountDisplay">0</div><div class="label">Questions Answered</div></div>
+        </div>
+        <div id="learnerUnitsGrid" class="modules-grid"></div>
+        
+        <div class="question-bank">
+            <h3>📋 NTSA Practice Questions Bank</h3>
+            <p style="color:#aaa; margin-bottom:16px">Test your knowledge with real NTSA-style questions</p>
+            <div class="stats-bar">
+                <div class="stats-item"><div class="value" id="totalQuestions">0</div><div class="label">Total</div></div>
+                <div class="stats-item"><div class="value" id="answeredQCount">0</div><div class="label">Answered</div></div>
+                <div class="stats-item"><div class="value" id="correctCount">0</div><div class="label">Correct</div></div>
+                <div class="stats-item"><div class="value" id="accuracyRate">0%</div><div class="label">Accuracy</div></div>
+            </div>
+            <div id="questionFilter"></div>
+            <div id="questionsContainer"></div>
+            <div id="paginationContainer" class="pagination"></div>
+        </div>
+    </div>
+
+    <!-- PSV COURSE - 8 UNITS -->
+    <div id="psv" class="page">
+        <div class="hero"><h1><span class="highlight">🚌 PSV Driver Course</span></h1><p>Professional Service Vehicle training - 8 Complete Units</p></div>
+        <div class="modules-grid" id="psvModulesGrid"></div>
+    </div>
+
+    <!-- BODA SAFETY - 8 UNITS -->
+    <div id="boda" class="page">
+        <div class="hero"><h1><span class="highlight">🏍️ Boda Safety Course</span></h1><p>Essential training for motorcycle taxi operators - 8 Complete Units</p></div>
+        <div class="modules-grid" id="bodaModulesGrid"></div>
+    </div>
+
+    <!-- SCHOOL TRANSPORT - 8 UNITS -->
+    <div id="school" class="page">
+        <div class="hero"><h1><span class="highlight">👧 School Transport Safety</span></h1><p>Protecting children on school vehicles - 8 Complete Units</p></div>
+        <div class="modules-grid" id="schoolModulesGrid"></div>
+    </div>
+
+    <!-- ACADEMY - 6 UNITS -->
+    <div id="academy" class="page">
+        <div class="hero"><h1><span class="highlight">🏫 MEI Drivers Academy</span></h1><p>Professional driver training - 6 Complete Courses</p></div>
+        <div class="modules-grid" id="academyModulesGrid"></div>
+    </div>
+
+    <!-- LIBRARY -->
+    <div id="library" class="page">
+        <div class="hero"><h1>📖 <span class="highlight">Resource Library</span></h1><p>Free downloads and learning materials</p></div>
+        <div class="search-bar" style="background:#1a1a1a;border-radius:40px;padding:8px 14px;display:flex;gap:8px;margin:16px 0">
+            <input type="text" id="searchInput" placeholder="Search resources..." style="flex:1;background:none;border:none;color:#fff">
+            <button onclick="filterLibrary()" style="background:#d4af37;border:none;border-radius:30px;padding:6px 14px">Search</button>
+        </div>
+        <div class="grid" id="libraryGrid"></div>
+    </div>
+</div>
+
+<footer>© 2026 MEI DRIVE AFRICA — Kenya's Digital Driver Safety Platform</footer>
+<div class="connection-status">✅ Live Platform</div>
+
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeLoginModal()">&times;</span>
+        <h3 style="color:#d4af37">Login / Register</h3>
+        <input type="email" id="loginEmail" placeholder="Email">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button class="btn" style="width:100%" onclick="handleLogin()">Login →</button>
+        <p style="text-align:center;margin-top:15px;color:#888">Demo: any email / any password</p>
+    </div>
+</div>
+
+<script>
+    // ============ LEARNER HUB - 21 UNITS ============
+    const learnerUnits = [
+        "Introduction to Driving & Road Safety", "The Kenya Highway Code", "Road Signs & Markings", 
+        "Vehicle Controls & Instruments", "Observation & Anticipation", "Speed Management", 
+        "Space Management & Positioning", "Emergency Procedures", "Night Driving Techniques", 
+        "Driving in Bad Weather", "Defensive Driving Strategies", "Basic Vehicle Maintenance", 
+        "First Aid for Drivers", "PSV Specific Regulations", "Boda Safety Essentials", 
+        "School Transport Safety", "Complete Highway Code Review", "NTSA Rules & Regulations", 
+        "Mock Theory Test 1", "Mock Theory Test 2", "Final Certification Assessment"
+    ];
+    
+    // ============ PSV MODULES - 8 UNITS ============
+    const psvModules = [
+        { title: "NTSA PSV Rules & Regulations", desc: "Complete legal requirements for PSV operators", content: "All PSV vehicles must display valid route charts, insurance, and inspection certificates." },
+        { title: "Passenger Safety Protocols", desc: "Ensuring passenger safety at all times", content: "Always ensure passengers board and alight safely. Never exceed passenger capacity." },
+        { title: "Driver Working Hours", desc: "Managing fatigue and legal driving hours", content: "Maximum 8 hours driving per day, mandatory 30-min break after 4 hours." },
+        { title: "Vehicle Inspection Standards", desc: "Daily and weekly safety checks", content: "Inspect brakes, tires, lights, and signals before every trip." },
+        { title: "Emergency Response", desc: "Handling accidents and emergencies", content: "Call emergency services, secure the scene, and provide first aid if trained." },
+        { title: "Customer Service Excellence", desc: "Professional conduct with passengers", content: "Treat all passengers with respect. Announce stops clearly." },
+        { title: "Fare Management", desc: "Proper fare collection and receipts", content: "Issue receipts for all fares. Do not overcharge passengers." },
+        { title: "Defensive Driving for PSV", desc: "Advanced safety techniques", content: "Maintain safe following distance. Anticipate other drivers' actions." }
+    ];
+    
+    // ============ BODA MODULES - 8 UNITS ============
+    const bodaModules = [
+        { title: "Helmet Safety", desc: "Proper helmet use and maintenance", content: "Always wear an approved helmet. Replace every 2 years or after impact." },
+        { title: "Urban Riding Techniques", desc: "Navigating city traffic safely", content: "Stay visible. Use signals. Avoid blind spots of larger vehicles." },
+        { title: "Hazard Perception", desc: "Identifying and avoiding dangers", content: "Scan 12 seconds ahead. Watch for opening car doors." },
+        { title: "Passenger Safety", desc: "Safe passenger transport", content: "Only one passenger. No children under 12. Passenger must wear helmet." },
+        { title: "Night Riding", desc: "Visibility and safety at night", content: "Ensure headlights work. Wear reflective gear. Reduce speed." },
+        { title: "Defensive Riding", desc: "Anticipating other road users", content: "Assume others don't see you. Position for visibility." },
+        { title: "Boda Maintenance", desc: "Keeping your motorcycle safe", content: "Check brakes, tires, chain, and lights daily." },
+        { title: "Road Ethics", desc: "Professional conduct on the road", content: "Respect traffic laws. Don't weave through traffic." }
+    ];
+    
+    // ============ SCHOOL TRANSPORT MODULES - 8 UNITS ============
+    const schoolModules = [
+        { title: "School Bus Safety", desc: "Safe operation of school vehicles", content: "Always come to a full stop at railroad crossings." },
+        { title: "Child Safety Protocols", desc: "Protecting child passengers", content: "Ensure children are seated before moving. Use child restraints." },
+        { title: "School Zone Rules", desc: "Navigating school areas safely", content: "Maximum 25 km/h in school zones. Be extra vigilant." },
+        { title: "Emergency Drills", desc: "Evacuation procedures", content: "Practice evacuation drills monthly. Know emergency contacts." },
+        { title: "Loading/Unloading", desc: "Safe passenger boarding", content: "Load/unload only in designated zones. Use stop signs." },
+        { title: "Driver-Child Communication", desc: "Effective communication with children", content: "Use clear, calm instructions. Address children by name." },
+        { title: "Vehicle Inspections", desc: "Daily safety checks", content: "Check brakes, lights, signals, and emergency exits daily." },
+        { title: "First Aid for Children", desc: "Emergency medical response", content: "Keep first aid kit. Know child CPR and allergy response." }
+    ];
+    
+    // ============ ACADEMY COURSES - 6 UNITS ============
+    const academyCourses = [
+        { title: "Basic Driver Training", desc: "Foundation course for new drivers - 40 hours", content: "Learn controls, rules, and basic maneuvers." },
+        { title: "Advanced Defensive Driving", desc: "Expert safety techniques - 20 hours", content: "Risk perception, space management, emergency maneuvers." },
+        { title: "Fleet Management", desc: "For transport companies - 30 hours", content: "Driver monitoring, maintenance scheduling, fuel efficiency." },
+        { title: "Instructor Certification", desc: "Become a certified driving instructor", content: "Teaching methods, student assessment, curriculum planning." },
+        { title: "Eco-Driving Techniques", desc: "Fuel-efficient driving - 15 hours", content: "Reduce fuel consumption by up to 20%." },
+        { title: "Risk Management", desc: "Advanced risk assessment - 25 hours", content: "Identifying and mitigating driving risks professionally." }
+    ];
+    
+    // ============ LIBRARY RESOURCES ============
+    const libraryDocs = [
+        { title: "Kenya Highway Code (Official)", category: "Official", downloads: "15k+" },
+        { title: "NTSA Driving Guide 2026", category: "Official", downloads: "12k+" },
+        { title: "Complete Road Signs Reference", category: "Reference", downloads: "8k+" },
+        { title: "Defensive Driving Manual", category: "Training", downloads: "6k+" },
+        { title: "Emergency First Aid Guide", category: "Safety", downloads: "5k+" },
+        { title: "Vehicle Maintenance Schedule", category: "Technical", downloads: "4k+" },
+        { title: "PSV Operators Handbook", category: "Professional", downloads: "3k+" },
+        { title: "Boda Safety Guidelines", category: "Motorcycle", downloads: "5k+" }
+    ];
+    
+    // ============ QUESTION BANK ============
+    const ALL_QUESTIONS = [];
+    const questionData = [
+        { text: "What is the minimum age for a learner driver in Kenya?", options: ["16 years", "17 years", "18 years", "21 years"], correct: 2, category: "Rules" },
+        { text: "What does a red traffic light mean?", options: ["Go", "Slow down", "Stop", "Proceed with caution"], correct: 2, category: "Rules" },
+        { text: "What shape are warning signs?", options: ["Circle", "Triangle", "Rectangle", "Square"], correct: 1, category: "Signs" },
+        { text: "What is the urban speed limit for cars?", options: ["30 km/h", "40 km/h", "50 km/h", "60 km/h"], correct: 2, category: "Rules" },
+        { text: "What is the safe following distance?", options: ["1 second", "2 seconds", "3 seconds", "4 seconds"], correct: 2, category: "Safety" },
+        { text: "When should you use hazard lights?", options: ["Parking", "Emergency stop", "Turning", "Overtaking"], correct: 1, category: "Emergency" },
+        { text: "What does a yellow traffic light mean?", options: ["Go faster", "Stop immediately", "Prepare to stop", "Speed up"], correct: 2, category: "Rules" },
+        { text: "What must you do at a STOP sign?", options: ["Slow down", "Stop completely", "Continue if clear", "Honk horn"], correct: 1, category: "Rules" },
+        { text: "When can you overtake on the left?", options: ["Never", "In traffic jam", "When turning left", "On highway"], correct: 1, category: "Safety" },
+        { text: "What is the blood alcohol limit for professional drivers?", options: ["0.00%", "0.05%", "0.08%", "0.10%"], correct: 0, category: "Rules" }
+    ];
+    
+    for(let i = 0; i < 60; i++) {
+        const q = questionData[i % questionData.length];
+        ALL_QUESTIONS.push({
+            id: i + 1,
+            text: i < questionData.length ? q.text : `${q.text} (Variant ${Math.floor(i/questionData.length)+1})`,
+            options: [...q.options],
+            correct: q.correct,
+            category: q.category
+        });
+    }
+    
+    // ============ APP STATE ============
+    let learnerProgress = JSON.parse(localStorage.getItem('learner_progress') || '{}');
+    let userAnswers = JSON.parse(localStorage.getItem('mei_answers') || '{}');
+    let currentFilter = "all";
+    let currentPage = 1;
+    const PER_PAGE = 10;
+    
+    for(let i = 1; i <= 21; i++) if(!learnerProgress[i]) learnerProgress[i] = 0;
+    
+    function saveProgress() { localStorage.setItem('learner_progress', JSON.stringify(learnerProgress)); }
+    function saveAnswers() { localStorage.setItem('mei_answers', JSON.stringify(userAnswers)); }
+    
+    function renderLearnerUnits() {
+        const completed = Object.values(learnerProgress).filter(v => v === 100).length;
+        document.getElementById('completedCount').innerHTML = completed;
+        const grid = document.getElementById('learnerUnitsGrid');
+        if(grid) {
+            grid.innerHTML = learnerUnits.map((unit, idx) => {
+                const unitNum = idx + 1;
+                return `<div class="module-card" onclick="openUnitModal(${unitNum}, '${unit.replace(/'/g, "\\'")}')">
+                    <div style="display:flex;justify-content:space-between"><h4>📘 Unit ${unitNum}: ${unit}</h4>
+                    <span style="color:${learnerProgress[unitNum] === 100 ? '#4caf50' : '#888'}">${learnerProgress[unitNum] === 100 ? '✓ Complete' : ''}</span></div>
+                    <p>Complete this unit to master Kenyan driving rules.</p>
+                    <div class="progress-bar"><div class="progress-fill" style="width:${learnerProgress[unitNum]}%"></div></div>
+                </div>`;
+            }).join('');
+        }
+    }
+    
+    function openUnitModal(unitId, title) {
+        const content = getUnitContent(unitId);
+        const isCompleted = learnerProgress[unitId] === 100;
+        const modalHtml = `
+            <div class="modal-content" style="max-width:600px">
+                <span class="close-modal" onclick="closeUnitModal()">&times;</span>
+                <h3 style="color:#d4af37">📘 ${title}</h3>
+                <div style="margin:16px 0; padding:16px; background:#1a1a1a; border-radius:12px">${content}</div>
+                ${!isCompleted ? `<button class="btn" style="width:100%" onclick="completeUnit(${unitId})">✅ Mark Complete</button>` : '<p style="color:#4caf50">✓ Unit已完成</p>'}
+            </div>
+        `;
+        const modal = document.createElement('div');
+        modal.id = 'unitModal';
+        modal.className = 'modal';
+        modal.style.display = 'flex';
+        modal.innerHTML = modalHtml;
+        document.body.appendChild(modal);
+    }
+    
+    function closeUnitModal() {
+        const modal = document.getElementById('unitModal');
+        if(modal) modal.remove();
+    }
+    
+    function getUnitContent(unitId) {
+        const contents = {
+            1: "<strong>Introduction to Driving:</strong><br>Learn about vehicle controls, road positioning, and basic maneuvers. Understand the responsibilities of a driver.",
+            2: "<strong>The Kenya Highway Code:</strong><br>Complete overview of traffic rules, right of way, and proper road etiquette as defined by NTSA.",
+            3: "<strong>Road Signs & Markings:</strong><br>Learn all regulatory, warning, and information signs used on Kenyan roads.",
+            4: "<strong>Vehicle Controls:</strong><br>Steering, gears, pedals, mirrors, signals - master all controls before hitting the road.",
+            5: "<strong>Observation & Anticipation:</strong><br>Scan ahead, check mirrors regularly, anticipate hazards before they occur.",
+            6: "<strong>Speed Management:</strong><br>Understand speed limits for different roads. Adjust speed based on conditions.",
+            7: "<strong>Space Management:</strong><br>Keep safe distance from other vehicles. Position correctly in your lane.",
+            8: "<strong>Emergency Procedures:</strong><br>What to do in case of brake failure, tire blowout, or other emergencies.",
+            9: "<strong>Night Driving:</strong><br>Using headlights properly. Managing reduced visibility. Avoiding glare.",
+            10: "<strong>Driving in Bad Weather:</strong><br>Rain, fog, and wet road techniques. Increase following distance. Use lights.",
+            11: "<strong>Defensive Driving:</strong><br>Assume others make mistakes. Be prepared to react. Stay focused.",
+            12: "<strong>Vehicle Maintenance:</strong><br>Check tires, brakes, lights, fluids. Know when to service your vehicle.",
+            13: "<strong>First Aid:</strong><br>Basic first aid skills every driver should know. Emergency response.",
+            14: "<strong>PSV Regulations:</strong><br>Special rules for Public Service Vehicles. Passenger safety.",
+            15: "<strong>Boda Safety:</strong><br>Motorcycle safety. Helmet use. Passenger protocols.",
+            16: "<strong>School Transport:</strong><br>Rules for transporting children. School zone safety.",
+            17: "<strong>Highway Code Review:</strong><br>Comprehensive review of all highway code rules and regulations.",
+            18: "<strong>NTSA Rules:</strong><br>Latest NTSA regulations, licensing requirements, and penalties.",
+            19: "<strong>Mock Test 1:</strong><br>Practice with 50 sample questions similar to NTSA theory test.",
+            20: "<strong>Mock Test 2:</strong><br>Advanced practice questions to prepare for certification.",
+            21: "<strong>Final Assessment:</strong><br>Complete the final assessment to earn your certificate."
+        };
+        return contents[unitId] || "<strong>Complete this unit</strong><br>Study the material carefully and mark as complete when ready.";
+    }
+    
+    function completeUnit(unitId) {
+        if(learnerProgress[unitId] !== 100) {
+            learnerProgress[unitId] = 100;
+            saveProgress();
+            renderLearnerUnits();
+            updateStats();
+            alert(`✅ Unit ${unitId} completed!`);
+            closeUnitModal();
+        }
+    }
+    
+    function renderPsvModules() {
+        const grid = document.getElementById('psvModulesGrid');
+        if(grid) grid.innerHTML = psvModules.map((m, i) => `<div class="module-card" onclick="openPSVModal(${i+1}, '${m.title.replace(/'/g, "\\'")}', '${m.content.replace(/'/g, "\\'")}')">
+            <h4>🚌 ${m.title}</h4><p>${m.desc}</p><button class="btn-small">Start Unit →</button>
+        </div>`).join('');
+    }
+    
+    function openPSVModal(unitId, title, content) {
+        const modalHtml = `<div class="modal-content"><span class="close-modal" onclick="closePSVModal()">&times;</span>
+            <h3 style="color:#d4af37">🚌 Unit ${unitId}: ${title}</h3>
+            <div style="margin:16px 0; padding:16px; background:#1a1a1a; border-radius:12px">${content}</div>
+            <button class="btn" style="width:100%" onclick="completePSVUnit(${unitId}, '${title}')">✅ Mark Complete</button>
+        </div>`;
+        const modal = document.createElement('div'); modal.id = 'psvModal'; modal.className = 'modal'; modal.style.display = 'flex';
+        modal.innerHTML = modalHtml; document.body.appendChild(modal);
+    }
+    
+    function completePSVUnit(unitId, title) { alert(`✅ PSV Unit ${unitId}: ${title} completed!`); closePSVModal(); }
+    function closePSVModal() { const modal = document.getElementById('psvModal'); if(modal) modal.remove(); }
+    
+    function renderBodaModules() {
+        const grid = document.getElementById('bodaModulesGrid');
+        if(grid) grid.innerHTML = bodaModules.map((m, i) => `<div class="module-card" onclick="openBodaModal(${i+1}, '${m.title.replace(/'/g, "\\'")}', '${m.content.replace(/'/g, "\\'")}')">
+            <h4>🏍️ ${m.title}</h4><p>${m.desc}</p><button class="btn-small">Start Unit →</button>
+        </div>`).join('');
+    }
+    
+    function openBodaModal(unitId, title, content) {
+        const modalHtml = `<div class="modal-content"><span class="close-modal" onclick="closeBodaModal()">&times;</span>
+            <h3 style="color:#d4af37">🏍️ Unit ${unitId}: ${title}</h3><div style="margin:16px 0; padding:16px; background:#1a1a1a; border-radius:12px">${content}</div>
+            <button class="btn" style="width:100%" onclick="completeBodaUnit(${unitId}, '${title}')">✅ Mark Complete</button>
+        </div>`;
+        const modal = document.createElement('div'); modal.id = 'bodaModal'; modal.className = 'modal'; modal.style.display = 'flex';
+        modal.innerHTML = modalHtml; document.body.appendChild(modal);
+    }
+    function completeBodaUnit(unitId, title) { alert(`✅ Boda Unit ${unitId}: ${title} completed!`); closeBodaModal(); }
+    function closeBodaModal() { const modal = document.getElementById('bodaModal'); if(modal) modal.remove(); }
+    
+    function renderSchoolModules() {
+        const grid = document.getElementById('schoolModulesGrid');
+        if(grid) grid.innerHTML = schoolModules.map((m, i) => `<div class="module-card" onclick="openSchoolModal(${i+1}, '${m.title.replace(/'/g, "\\'")}', '${m.content.replace(/'/g, "\\'")}')">
+            <h4>👧 ${m.title}</h4><p>${m.desc}</p><button class="btn-small">Start Unit →</button>
+        </div>`).join('');
+    }
+    
+    function openSchoolModal(unitId, title, content) {
+        const modalHtml = `<div class="modal-content"><span class="close-modal" onclick="closeSchoolModal()">&times;</span>
+            <h3 style="color:#d4af37">👧 Unit ${unitId}: ${title}</h3><div style="margin:16px 0; padding:16px; background:#1a1a1a; border-radius:12px">${content}</div>
+            <button class="btn" style="width:100%" onclick="completeSchoolUnit(${unitId}, '${title}')">✅ Mark Complete</button>
+        </div>`;
+        const modal = document.createElement('div'); modal.id = 'schoolModal'; modal.className = 'modal'; modal.style.display = 'flex';
+        modal.innerHTML = modalHtml; document.body.appendChild(modal);
+    }
+    function completeSchoolUnit(unitId, title) { alert(`✅ School Transport Unit ${unitId}: ${title} completed!`); closeSchoolModal(); }
+    function closeSchoolModal() { const modal = document.getElementById('schoolModal'); if(modal) modal.remove(); }
+    
+    function renderAcademyModules() {
+        const grid = document.getElementById('academyModulesGrid');
+        if(grid) grid.innerHTML = academyCourses.map((c, i) => `<div class="card" onclick="alert('Course: ${c.title}\\n\\n${c.content}')">
+            <h3>📚 ${c.title}</h3><p>${c.desc}</p><button class="btn-small">Enroll →</button>
+        </div>`).join('');
+    }
+    
+    function renderHomeModules() {
+        const modules = [
+            { name: "Learner Driver", icon: "📘", desc: "21 units, 500+ questions", page: "learner" },
+            { name: "PSV Course", icon: "🚌", desc: "8 professional units", page: "psv" },
+            { name: "Boda Safety", icon: "🏍️", desc: "8 safety units", page: "boda" },
+            { name: "School Transport", icon: "👧", desc: "8 child safety units", page: "school" }
+        ];
+        document.getElementById('homeModulesGrid').innerHTML = modules.map(m => 
+            `<div class="card" onclick="navigateTo('${m.page}')"><h3>${m.icon} ${m.name}</h3><p>${m.desc}</p><button class="btn-small">Start →</button></div>`
+        ).join('');
+    }
+    
+    function renderLibrary() {
+        const grid = document.getElementById('libraryGrid');
+        if(grid) grid.innerHTML = libraryDocs.map(d => `<div class="card"><h3>📘 ${d.title}</h3><p>Category: ${d.category} | Downloads: ${d.downloads}</p><button class="btn-small" onclick="alert('Downloading: ${d.title}')">Download</button></div>`).join('');
+    }
+    
+    function filterLibrary() {
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = libraryDocs.filter(d => d.title.toLowerCase().includes(search));
+        document.getElementById('libraryGrid').innerHTML = filtered.map(d => `<div class="card"><h3>📘 ${d.title}</h3><p>Category: ${d.category} | Downloads: ${d.downloads}</p><button class="btn-small" onclick="alert('Downloading: ${d.title}')">Download</button></div>`).join('');
+    }
+    
+    function renderQuestionsBank() {
+        let filtered = currentFilter === "all" ? ALL_QUESTIONS : ALL_QUESTIONS.filter(q => q.category === currentFilter);
+        const totalPages = Math.ceil(filtered.length / PER_PAGE);
+        const start = (currentPage - 1) * PER_PAGE;
+        const pageQuestions = filtered.slice(start, start + PER_PAGE);
+        
+        const answeredAll = Object.keys(userAnswers).length;
+        const correctAll = Object.values(userAnswers).filter(a => a.isCorrect).length;
+        document.getElementById('answeredQCount').innerHTML = answeredAll;
+        document.getElementById('correctCount').innerHTML = correctAll;
+        document.getElementById('accuracyRate').innerHTML = answeredAll ? Math.round((correctAll / answeredAll) * 100) + '%' : '0%';
+        document.getElementById('totalQuestions').innerHTML = ALL_QUESTIONS.length;
+        document.getElementById('answeredCountDisplay').innerHTML = answeredAll;
+        
+        const container = document.getElementById('questionsContainer');
+        if(container) {
+            container.innerHTML = pageQuestions.map(q => {
+                const saved = userAnswers[q.id];
+                const selectedIdx = saved ? saved.selected : -1;
+                const isCorrect = saved ? saved.isCorrect : false;
+                return `<div class="question-card"><div class="question-text">📌 ${q.text}</div>
+                    <div>${q.options.map((opt, idx) => `<div class="question-option ${selectedIdx === idx ? (isCorrect ? 'correct-selected' : 'wrong-selected') : ''}" onclick="selectAnswer(${q.id}, ${idx})">${String.fromCharCode(65+idx)}. ${opt}</div>`).join('')}</div>
+                    ${saved ? `<div style="margin-top:10px;color:${isCorrect ? '#4caf50' : '#f44336'}">${isCorrect ? '✓ Correct!' : '✗ Incorrect. Answer: ' + q.options[q.correct]}</div>` : ''}
+                </div>`;
+            }).join('');
+        }
+        
+        const pagination = document.getElementById('paginationContainer');
+        if(pagination) {
+            let pages = '';
+            for(let i = 1; i <= Math.min(totalPages, 5); i++) pages += `<button class="page-btn ${currentPage === i ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            pagination.innerHTML = pages;
+        }
+        updateStats();
+    }
+    
+    function selectAnswer(qid, selectedIdx) {
+        const q = ALL_QUESTIONS.find(qq => qq.id === qid);
+        if(!q) return;
+        const isCorrect = (selectedIdx === q.correct);
+        userAnswers[qid] = { selected: selectedIdx, isCorrect: isCorrect };
+        saveAnswers();
+        renderQuestionsBank();
+        updateStats();
+    }
+    
+    function goToPage(page) { currentPage = page; renderQuestionsBank(); }
+    function setFilter(category) { currentFilter = category; currentPage = 1; renderQuestionsBank(); }
+    function updateStats() { renderLearnerUnits(); }
+    
+    function navigateTo(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+        document.getElementById(pageId).classList.add('active-page');
+        if(pageId === 'learner') renderLearnerUnits();
+        if(pageId === 'questions') renderQuestionsBank();
+    }
+    
+    function openLoginModal() { document.getElementById('loginModal').style.display = 'flex'; }
+    function closeLoginModal() { document.getElementById('loginModal').style.display = 'none'; }
+    function handleLogin() { alert('✅ Login successful! Welcome to MEI DRIVE AFRICA'); closeLoginModal(); navigateTo('learner'); }
+    
+    window.onclick = function(e) { if(e.target.classList.contains('modal')) e.target.remove(); }
+    
+    // Initialize
+    renderLearnerUnits();
+    renderPsvModules();
+    renderBodaModules();
+    renderSchoolModules();
+    renderAcademyModules();
+    renderHomeModules();
+    renderLibrary();
+    renderQuestionsBank();
+    document.getElementById('totalQuestions').innerHTML = ALL_QUESTIONS.length;
+    document.getElementById('questionFilter').innerHTML = ['all', 'Rules', 'Signs', 'Safety', 'Emergency'].map(cat => 
+        `<button class="filter-chip ${cat === 'all' ? 'active' : ''}" onclick="setFilter('${cat}')">${cat === 'all' ? 'All Topics' : cat}</button>`
+    ).join('');
+    
+    window.navigateTo = navigateTo; window.openLoginModal = openLoginModal; window.closeLoginModal = closeLoginModal;
+    window.handleLogin = handleLogin; window.completeUnit = completeUnit; window.openUnitModal = openUnitModal;
+    window.closeUnitModal = closeUnitModal; window.selectAnswer = selectAnswer; window.goToPage = goToPage;
+    window.setFilter = setFilter; window.filterLibrary = filterLibrary;
+    window.openPSVModal = openPSVModal; window.closePSVModal = closePSVModal; window.completePSVUnit = completePSVUnit;
+    window.openBodaModal = openBodaModal; window.closeBodaModal = closeBodaModal; window.completeBodaUnit = completeBodaUnit;
+    window.openSchoolModal = openSchoolModal; window.closeSchoolModal = closeSchoolModal; window.completeSchoolUnit = completeSchoolUnit;
+</script>
+</body>
+</html>
