@@ -1,29 +1,24 @@
-const express = require('express');
+const express = require("express");
+
 const app = express();
-const PORT = 5000;
 
-app.use(express.json());
-
-app.get('/health', (req, res) => {
-    res.json({ status: 'ok', message: 'Server is running!' });
+// Home route
+app.get("/", (req, res) => {
+  res.send("MEI DRIVE AFRICA API RUNNING");
 });
 
-app.post('/auth/register', (req, res) => {
-    res.json({ user: { id: 1, email: req.body.email }, token: 'test' });
+// Health check route
+app.get("/api/health", (req, res) => {
+  res.json({
+    status: "OK",
+    app: "MEI DRIVE AFRICA"
+  });
 });
 
-app.post('/auth/login', (req, res) => {
-    res.json({ user: { id: 1, email: req.body.email }, token: 'test' });
-});
+// Render port
+const PORT = process.env.PORT || 10000;
 
-app.get('/profile/:userId', (req, res) => {
-    res.json({ name: '', phone: '' });
-});
-
-app.post('/profile', (req, res) => {
-    res.json({ success: true });
-});
-
+// Start server
 app.listen(PORT, () => {
-    console.log('Server running on http://localhost:' + PORT);
+  console.log(`Server running on port ${PORT}`);
 });
