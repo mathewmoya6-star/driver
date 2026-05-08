@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>MEI DRIVE AFRICA | Kenya's Digital Driver Safety Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEI DRIVE AFRICA | Digital Driver Safety Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -12,17 +12,15 @@
         .container{max-width:1300px;margin:0 auto;padding:0 20px}
         
         .navbar{border-bottom:2px solid #d4af37;padding:12px 0;position:sticky;top:0;background:#0a0a0a;z-index:100}
-        .nav{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px}
-        .logo{color:#d4af37;font-weight:800;font-size:18px;cursor:pointer}
-        .logo i{margin-right:8px}
-        .nav-links{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-        .nav-links button{background:none;border:none;color:#fff;cursor:pointer;padding:8px 14px;border-radius:30px;font-size:12px;transition:0.2s}
+        .nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+        .logo{color:#d4af37;font-weight:800;font-size:20px;cursor:pointer}
+        .nav-links{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+        .nav-links button{background:none;border:none;color:#fff;padding:8px 14px;border-radius:30px;cursor:pointer}
         .nav-links button:hover{color:#d4af37;background:#1a1a1a}
         
-        .btn{background:#d4af37;color:#000;padding:10px 24px;border:none;border-radius:40px;cursor:pointer;font-weight:600;transition:0.2s}
-        .btn:hover{background:#c4a027}
+        .btn{background:#d4af37;color:#000;padding:10px 24px;border:none;border-radius:40px;cursor:pointer;font-weight:600}
         .btn-outline{background:transparent;border:2px solid #d4af37;color:#d4af37}
-        .btn-small{background:#d4af37;color:#000;padding:6px 16px;border-radius:30px;font-size:12px;font-weight:600;border:none;cursor:pointer}
+        .btn-small{background:#d4af37;color:#000;padding:6px 16px;border-radius:30px;font-size:12px;border:none;cursor:pointer}
         
         .hero{text-align:center;padding:40px 20px;background:linear-gradient(135deg,#0a0a0a,#111);border-radius:24px;margin-bottom:24px}
         .hero h1{font-size:28px}@media(min-width:768px){.hero h1{font-size:42px}}
@@ -33,40 +31,38 @@
         @media(min-width:768px){.grid{grid-template-columns:repeat(3,1fr)}}
         @media(min-width:1024px){.grid{grid-template-columns:repeat(4,1fr)}}
         
-        .card{background:#111;padding:20px;border-radius:20px;border:1px solid #222;transition:0.3s;cursor:pointer}
+        .card{background:#111;padding:20px;border-radius:20px;border:1px solid #222;cursor:pointer;transition:0.3s}
         .card:hover{border-color:#d4af37;transform:translateY(-5px)}
         .card h3{color:#d4af37;margin-bottom:10px}
-        .card p{color:#aaa;font-size:13px}
         
-        .modules-grid{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
+        .modules-grid{display:grid;gap:12px;margin:20px 0}
         @media(min-width:480px){.modules-grid{grid-template-columns:repeat(2,1fr)}}
         @media(min-width:768px){.modules-grid{grid-template-columns:repeat(3,1fr)}}
         
-        .module-card{background:#111;padding:16px;border-radius:15px;border-left:4px solid #d4af37;cursor:pointer;transition:0.2s}
+        .module-card{background:#111;padding:16px;border-radius:15px;border-left:4px solid #d4af37;cursor:pointer}
         .module-card:hover{background:#161616}
         .module-card h4{color:#d4af37;margin-bottom:6px}
-        .module-card p{font-size:11px;color:#888}
         
         .progress-bar{background:#222;border-radius:10px;height:5px;margin-top:12px}
         .progress-fill{background:#d4af37;height:5px;border-radius:10px}
         
         .learner-stats{background:#111;border-radius:20px;padding:16px;margin:20px 0;display:flex;justify-content:space-around;flex-wrap:wrap;gap:12px}
-        .learner-stat{text-align:center;flex:1;min-width:80px}
+        .learner-stat{text-align:center;flex:1}
         .learner-stat .number{font-size:24px;font-weight:800;color:#d4af37}
         .learner-stat .label{font-size:10px;color:#888}
         
         .question-bank{background:linear-gradient(135deg,#0a0f1c,#050814);border-radius:28px;margin:24px 0;padding:24px 20px}
-        .question-card{background:#111;border-radius:16px;padding:20px;margin-bottom:16px;border:1px solid #222}
+        .question-card{background:#111;border-radius:16px;padding:20px;margin-bottom:16px}
         .question-text{font-size:16px;font-weight:500;margin-bottom:16px}
         .question-option{background:#1a1a1a;padding:12px 16px;border-radius:12px;cursor:pointer;margin-bottom:8px;border:1px solid #333}
         .question-option:hover{background:#252525;border-color:#d4af37}
-        .question-option.correct-selected{background:#2e7d32;border-color:#4caf50}
-        .question-option.wrong-selected{background:#c62828;border-color:#f44336}
+        .question-option.correct-selected{background:#2e7d32}
+        .question-option.wrong-selected{background:#c62828}
         
         .stats-bar{display:flex;justify-content:space-between;flex-wrap:wrap;gap:15px;margin-bottom:20px;padding:16px;background:#1a1a1a;border-radius:16px}
         .stats-item .value{font-size:24px;font-weight:800;color:#d4af37}
         
-        .filter-chip{background:#1a1a1a;border:1px solid #333;color:#aaa;padding:6px 14px;border-radius:30px;cursor:pointer;font-size:12px;margin:0 4px 8px 0;display:inline-block}
+        .filter-chip{background:#1a1a1a;border:1px solid #333;color:#aaa;padding:6px 14px;border-radius:30px;cursor:pointer;font-size:12px;display:inline-block;margin:0 4px 8px 0}
         .filter-chip.active{background:#d4af37;color:#000}
         
         .pagination{display:flex;justify-content:center;gap:8px;margin-top:20px}
@@ -78,15 +74,17 @@
         .active-page{display:block}
         
         .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.96);z-index:1000;justify-content:center;align-items:center}
-        .modal-content{background:#111;border:1px solid #d4af37;border-radius:20px;padding:24px;max-width:500px;width:90%;max-height:80vh;overflow-y:auto}
+        .modal-content{background:#111;border:1px solid #d4af37;border-radius:20px;padding:24px;max-width:500px;width:90%}
         .modal-content h3{color:#d4af37;margin-bottom:16px}
-        .modal input,.modal select{width:100%;padding:12px;margin:8px 0;background:#1a1a1a;border:1px solid #333;color:#fff;border-radius:8px}
+        .modal input{width:100%;padding:12px;margin:8px 0;background:#1a1a1a;border:1px solid #333;color:#fff;border-radius:8px}
         .close-modal{float:right;font-size:28px;cursor:pointer;color:#d4af37}
         
         .user-badge{background:#d4af37;color:#000;padding:6px 14px;border-radius:30px;font-weight:600;font-size:12px;display:flex;align-items:center;gap:8px}
-        .admin-link{background:#d4af37;color:#000!important;font-weight:600}
-        .toast{position:fixed;bottom:20px;right:20px;background:#111;border-left:4px solid #d4af37;padding:12px 20px;border-radius:8px;z-index:2000;animation:slideIn 0.3s}
-        @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+        .toast{position:fixed;bottom:20px;right:20px;background:#111;border-left:4px solid #d4af37;padding:12px 20px;border-radius:8px;z-index:2000}
+        
+        .connection-status{position:fixed;bottom:10px;left:10px;padding:5px 10px;border-radius:20px;font-size:10px;background:#333}
+        .connection-status.connected{background:#2e7d32}
+        .connection-status.disconnected{background:#c62828}
         
         @media(max-width:768px){.nav-links button{padding:6px 10px;font-size:10px}}
     </style>
@@ -97,194 +95,151 @@
     <div class="container nav">
         <div class="logo" onclick="navigateTo('home')"><i class="fas fa-car"></i> MEI DRIVE AFRICA</div>
         <div class="nav-links" id="navLinks">
-            <button onclick="navigateTo('home')"><i class="fas fa-home"></i> Home</button>
-            <button onclick="navigateTo('learner')"><i class="fas fa-book"></i> Learner Hub</button>
-            <button onclick="navigateTo('psv')"><i class="fas fa-bus"></i> PSV</button>
-            <button onclick="navigateTo('boda')"><i class="fas fa-motorcycle"></i> Boda</button>
-            <button onclick="navigateTo('school')"><i class="fas fa-school"></i> School</button>
-            <button onclick="navigateTo('academy')"><i class="fas fa-graduation-cap"></i> Academy</button>
-            <button onclick="navigateTo('library')"><i class="fas fa-book-open"></i> Library</button>
+            <button onclick="navigateTo('home')">Home</button>
+            <button onclick="navigateTo('learner')">Learner Hub</button>
+            <button onclick="navigateTo('psv')">PSV</button>
+            <button onclick="navigateTo('boda')">Boda</button>
+            <button onclick="navigateTo('school')">School</button>
+            <button onclick="navigateTo('academy')">Academy</button>
+            <button onclick="navigateTo('library')">Library</button>
             <div id="authButtons"></div>
         </div>
     </div>
 </div>
 
 <div class="container">
-    <!-- HOME PAGE -->
     <div id="home" class="page active-page">
         <div class="hero">
             <h1>Kenya's <span class="highlight">Digital Driver Safety Platform</span></h1>
-            <p>Learn safer. Drive smarter. Reduce accidents. Protect lives.</p>
-            <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:20px">
-                <button class="btn" onclick="navigateTo('learner')"><i class="fas fa-play"></i> Start Learning Now</button>
-                <button class="btn btn-outline" onclick="navigateTo('library')"><i class="fas fa-download"></i> Resource Library</button>
-            </div>
-        </div>
-        <div class="learner-stats">
-            <div class="learner-stat"><div class="number">10,000+</div><div class="label">Active Learners</div></div>
-            <div class="learner-stat"><div class="number">500+</div><div class="label">Practice Questions</div></div>
-            <div class="learner-stat"><div class="number">95%</div><div class="label">Pass Rate</div></div>
-            <div class="learner-stat"><div class="number">24/7</div><div class="label">Access</div></div>
+            <p>Based on Kenya Highway Code • NTSA Curriculum • Learner Driver Handbook</p>
+            <button class="btn" onclick="navigateTo('learner')">Start Learning Now</button>
         </div>
         <div class="grid" id="homeModulesGrid"></div>
     </div>
-
-    <!-- LEARNER HUB -->
-    <div id="learner" class="page">
-        <div class="hero">
-            <div class="highlight" style="font-size:14px"><i class="fas fa-graduation-cap"></i> NTSA Approved Curriculum</div>
-            <h1><span class="highlight">Learner Driver Hub</span></h1>
-            <p>Prepare for your NTSA driving test • 21 Complete Units • 500+ Practice Questions</p>
-        </div>
-        <div class="learner-stats">
-            <div class="learner-stat"><div class="number">21</div><div class="label">Total Units</div></div>
-            <div class="learner-stat"><div class="number" id="completedCount">0</div><div class="label">Completed</div></div>
-            <div class="learner-stat"><div class="number" id="answeredCountDisplay">0</div><div class="label">Questions Answered</div></div>
-        </div>
-        <div id="learnerUnitsGrid" class="modules-grid"></div>
-        
-        <div class="question-bank">
-            <h3><i class="fas fa-question-circle"></i> NTSA Practice Questions Bank</h3>
-            <p style="color:#aaa; margin-bottom:16px">Test your knowledge with real NTSA-style questions</p>
-            <div class="stats-bar">
-                <div class="stats-item"><div class="value" id="totalQuestions">0</div><div class="label">Total</div></div>
-                <div class="stats-item"><div class="value" id="answeredQCount">0</div><div class="label">Answered</div></div>
-                <div class="stats-item"><div class="value" id="correctCount">0</div><div class="label">Correct</div></div>
-                <div class="stats-item"><div class="value" id="accuracyRate">0%</div><div class="label">Accuracy</div></div>
-            </div>
-            <div id="questionFilter"></div>
-            <div id="questionsContainer"></div>
-            <div id="paginationContainer" class="pagination"></div>
-        </div>
-    </div>
-
-    <!-- PSV COURSE -->
-    <div id="psv" class="page">
-        <div class="hero"><h1><span class="highlight"><i class="fas fa-bus"></i> PSV Driver Course</span></h1><p>Professional Service Vehicle training - 8 Complete Units</p></div>
-        <div class="modules-grid" id="psvModulesGrid"></div>
-    </div>
-
-    <!-- BODA SAFETY -->
-    <div id="boda" class="page">
-        <div class="hero"><h1><span class="highlight"><i class="fas fa-motorcycle"></i> Boda Safety Course</span></h1><p>Essential training for motorcycle taxi operators - 8 Complete Units</p></div>
-        <div class="modules-grid" id="bodaModulesGrid"></div>
-    </div>
-
-    <!-- SCHOOL TRANSPORT -->
-    <div id="school" class="page">
-        <div class="hero"><h1><span class="highlight"><i class="fas fa-school"></i> School Transport Safety</span></h1><p>Protecting children on school vehicles - 8 Complete Units</p></div>
-        <div class="modules-grid" id="schoolModulesGrid"></div>
-    </div>
-
-    <!-- ACADEMY -->
-    <div id="academy" class="page">
-        <div class="hero"><h1><span class="highlight"><i class="fas fa-graduation-cap"></i> MEI Drivers Academy</span></h1><p>Professional driver training - 6 Complete Courses</p></div>
-        <div class="modules-grid" id="academyModulesGrid"></div>
-    </div>
-
-    <!-- LIBRARY -->
-    <div id="library" class="page">
-        <div class="hero"><h1><span class="highlight"><i class="fas fa-book-open"></i> Resource Library</span></h1><p>Free downloads and learning materials</p></div>
-        <div class="search-bar" style="background:#1a1a1a;border-radius:40px;padding:8px 14px;display:flex;gap:8px;margin:16px 0">
-            <input type="text" id="searchInput" placeholder="Search resources..." style="flex:1;background:none;border:none;color:#fff">
-            <button onclick="filterLibrary()" style="background:#d4af37;border:none;border-radius:30px;padding:6px 14px"><i class="fas fa-search"></i> Search</button>
-        </div>
-        <div class="grid" id="libraryGrid"></div>
-    </div>
+    <div id="learner" class="page"><div class="hero"><h1>Learner Driver Hub</h1></div><div id="learnerUnitsGrid" class="modules-grid"></div><div class="question-bank"><h3>Practice Questions</h3><div id="questionFilter"></div><div id="questionsContainer"></div><div id="paginationContainer"></div></div></div>
+    <div id="psv" class="page"><div class="hero"><h1>PSV Driver Course</h1></div><div id="psvModulesGrid" class="modules-grid"></div></div>
+    <div id="boda" class="page"><div class="hero"><h1>Boda Safety Course</h1></div><div id="bodaModulesGrid" class="modules-grid"></div></div>
+    <div id="school" class="page"><div class="hero"><h1>School Transport</h1></div><div id="schoolModulesGrid" class="modules-grid"></div></div>
+    <div id="academy" class="page"><div class="hero"><h1>Drivers Academy</h1></div><div id="academyModulesGrid" class="modules-grid"></div></div>
+    <div id="library" class="page"><div class="hero"><h1>Resource Library</h1></div><div class="grid" id="libraryGrid"></div></div>
 </div>
 
-<footer>© 2026 MEI DRIVE AFRICA — Kenya's Digital Driver Safety Platform</footer>
+<footer>© 2026 MEI DRIVE AFRICA</footer>
+<div class="connection-status disconnected" id="connectionStatus">🔌 Connecting...</div>
 
 <script>
-    // Data and state (same as before, but without admin panel)
+    const API_URL = window.location.origin;
     let currentUser = null;
+    let contentData = null;
+    let userProgress = { units: {}, answers: [] };
     
-    // Predefined users
-    const DEFAULT_USERS = [
-        { id: 1, name: "Admin User", email: "admin@meidrive.com", password: "admin123", role: "admin", modules: ["learner","psv","boda","school","academy","library"], status: "active", createdAt: new Date().toISOString() },
-        { id: 2, name: "John Learner", email: "john@example.com", password: "pass123", role: "learner", modules: ["learner","library"], status: "active", createdAt: new Date().toISOString() },
-        { id: 3, name: "Peter PSV", email: "peter@psv.com", password: "psv123", role: "psv_driver", modules: ["psv","learner","library"], status: "active", createdAt: new Date().toISOString() },
-        { id: 4, name: "Mary Boda", email: "mary@boda.com", password: "boda123", role: "boda_rider", modules: ["boda","learner","library"], status: "active", createdAt: new Date().toISOString() },
-        { id: 5, name: "James Instructor", email: "james@academy.com", password: "instructor123", role: "instructor", modules: ["learner","psv","boda","school","academy","library"], status: "active", createdAt: new Date().toISOString() }
-    ];
-    
-    let users = JSON.parse(localStorage.getItem('mei_users')) || DEFAULT_USERS;
-    
-    // Module content
-    const learnerUnits = Array(21).fill().map((_,i) => `Unit ${i+1}: Driver Training Module ${i+1}`);
-    const psvModules = Array(8).fill().map((_,i) => ({ title: `PSV Module ${i+1}`, desc: `Professional unit ${i+1}`, content: "Content here" }));
-    const bodaModules = Array(8).fill().map((_,i) => ({ title: `Boda Unit ${i+1}`, desc: `Safety unit ${i+1}`, content: "Content here" }));
-    const schoolModules = Array(8).fill().map((_,i) => ({ title: `School Transport ${i+1}`, desc: `Child safety ${i+1}`, content: "Content here" }));
-    const academyCourses = Array(6).fill().map((_,i) => ({ title: `Course ${i+1}`, desc: `Professional course ${i+1}`, content: "Content here" }));
-    const libraryDocs = [
-        { title: "Kenya Highway Code", category: "Official", downloads: "15k+" },
-        { title: "NTSA Driving Guide", category: "Official", downloads: "12k+" },
-        { title: "Road Signs Reference", category: "Reference", downloads: "8k+" }
-    ];
-    
-    // Question Bank
-    const ALL_QUESTIONS = [];
-    const questionData = [
-        { text: "What is the minimum age for a learner driver in Kenya?", options: ["16 years", "17 years", "18 years", "21 years"], correct: 2, category: "Rules" },
-        { text: "What does a red traffic light mean?", options: ["Go", "Slow down", "Stop", "Proceed with caution"], correct: 2, category: "Rules" }
-    ];
-    
-    for(let i = 0; i < 20; i++) {
-        const q = questionData[i % questionData.length];
-        ALL_QUESTIONS.push({
-            id: i + 1,
-            text: i < questionData.length ? q.text : `${q.text} (Variant ${Math.floor(i/questionData.length)+1})`,
-            options: [...q.options],
-            correct: q.correct,
-            category: q.category
-        });
+    // Check connection to backend
+    async function checkConnection() {
+        try {
+            const response = await fetch(`${API_URL}/api/health`);
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById('connectionStatus').innerHTML = `✅ Connected to Server | ${new Date(data.timestamp).toLocaleTimeString()}`;
+                document.getElementById('connectionStatus').className = 'connection-status connected';
+                return true;
+            }
+        } catch(e) {
+            document.getElementById('connectionStatus').innerHTML = '❌ Offline Mode - Server Connection Failed';
+            document.getElementById('connectionStatus').className = 'connection-status disconnected';
+            return false;
+        }
+        return false;
     }
     
-    let learnerProgress = JSON.parse(localStorage.getItem('learner_progress') || '{}');
-    let userAnswers = JSON.parse(localStorage.getItem('mei_answers') || '{}');
-    let currentFilter = "all";
-    let currentPage = 1;
-    const PER_PAGE = 10;
+    // Load content from backend
+    async function loadContent() {
+        try {
+            const response = await fetch(`${API_URL}/api/content`);
+            if (response.ok) {
+                contentData = await response.json();
+                return true;
+            }
+        } catch(e) {
+            console.error('Error loading content:', e);
+        }
+        return false;
+    }
     
-    function saveUsers() { localStorage.setItem('mei_users', JSON.stringify(users)); }
-    function saveProgress() { localStorage.setItem('learner_progress', JSON.stringify(learnerProgress)); }
-    function saveAnswers() { localStorage.setItem('mei_answers', JSON.stringify(userAnswers)); }
+    // Load user progress
+    async function loadProgress(userId) {
+        if (!userId) return;
+        try {
+            const response = await fetch(`${API_URL}/api/progress/${userId}`);
+            if (response.ok) {
+                const data = await response.json();
+                userProgress = data.progress;
+                if (!userProgress.units) userProgress.units = {};
+                if (!userProgress.answers) userProgress.answers = [];
+                return true;
+            }
+        } catch(e) {
+            console.error('Error loading progress:', e);
+        }
+        return false;
+    }
     
-    // Authentication
+    // Save progress
+    async function saveProgress(unitId, completed) {
+        if (!currentUser) return;
+        try {
+            await fetch(`${API_URL}/api/progress`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: currentUser.id, unitId, completed })
+            });
+        } catch(e) {
+            console.error('Error saving progress:', e);
+        }
+    }
+    
+    // Login
+    async function loginUser() {
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        
+        try {
+            const response = await fetch(`${API_URL}/api/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                currentUser = data.user;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                await loadProgress(currentUser.id);
+                showToast(`Welcome ${currentUser.name}!`, 'success');
+                closeModal();
+                updateNavigation();
+                navigateTo('home');
+                renderLearnerUnits();
+                renderQuestionsBank();
+            } else {
+                showToast('Invalid credentials', 'error');
+            }
+        } catch(e) {
+            showToast('Connection error. Please try again.', 'error');
+        }
+    }
+    
     function showLoginModal() {
         const modalHtml = `
             <div class="modal-content">
                 <span class="close-modal" onclick="closeModal()">&times;</span>
-                <h3><i class="fas fa-lock"></i> Login to MEI Drive Africa</h3>
+                <h3>Login to MEI Drive Africa</h3>
                 <input type="email" id="loginEmail" placeholder="Email">
                 <input type="password" id="loginPassword" placeholder="Password">
-                <button class="btn" style="width:100%;margin-top:10px" onclick="loginUser()"><i class="fas fa-sign-in-alt"></i> Login</button>
-                <p style="text-align:center;margin-top:15px;color:#888;font-size:12px">
-                    <strong>Demo Accounts:</strong><br>
-                    👑 Admin: admin@meidrive.com / admin123<br>
-                    📘 Learner: john@example.com / pass123<br>
-                    🚌 PSV: peter@psv.com / psv123
-                </p>
+                <button class="btn" style="width:100%" onclick="loginUser()">Login</button>
+                <p style="margin-top:15px;color:#888;font-size:12px">Demo: john@example.com / pass123</p>
             </div>
         `;
         showModal(modalHtml);
-    }
-    
-    function loginUser() {
-        const email = document.getElementById('loginEmail').value;
-        const password = document.getElementById('loginPassword').value;
-        const user = users.find(u => u.email === email && u.password === password && u.status === 'active');
-        
-        if(user) {
-            currentUser = user;
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            showToast(`Welcome back, ${user.name}!`, 'success');
-            closeModal();
-            updateNavigation();
-            navigateTo('home');
-        } else {
-            showToast('Invalid credentials', 'error');
-        }
     }
     
     function logout() {
@@ -292,39 +247,21 @@
         localStorage.removeItem('currentUser');
         updateNavigation();
         navigateTo('home');
-        showToast('Logged out successfully', 'info');
+        showToast('Logged out', 'info');
     }
     
     function updateNavigation() {
         const authDiv = document.getElementById('authButtons');
         if(currentUser) {
-            authDiv.innerHTML = `
-                <div class="user-badge"><i class="fas fa-user-circle"></i> ${currentUser.name}</div>
-                ${currentUser.role === 'admin' ? `<a href="admin.html" target="_blank" class="btn-small" style="background:#d4af37;color:#000;text-decoration:none;display:inline-flex;align-items:center;gap:5px"><i class="fas fa-cog"></i> Admin Panel</a>` : ''}
-                <button onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-            `;
+            authDiv.innerHTML = `<div class="user-badge">${currentUser.name}</div><button onclick="logout()">Logout</button>`;
         } else {
-            authDiv.innerHTML = `<button onclick="showLoginModal()"><i class="fas fa-sign-in-alt"></i> Login</button>`;
+            authDiv.innerHTML = `<button onclick="showLoginModal()">Login</button>`;
         }
-    }
-    
-    function checkModuleAccess(moduleName) {
-        if(!currentUser) return moduleName === 'home' || moduleName === 'library';
-        if(currentUser.role === 'admin') return true;
-        return currentUser.modules.includes(moduleName);
     }
     
     function navigateTo(pageId) {
-        if(!checkModuleAccess(pageId) && pageId !== 'home' && pageId !== 'library') {
-            showToast('Please login to access this module', 'error');
-            showLoginModal();
-            return;
-        }
-        
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-        const targetPage = document.getElementById(pageId);
-        if(targetPage) targetPage.classList.add('active-page');
-        
+        document.getElementById(pageId).classList.add('active-page');
         if(pageId === 'learner') { renderLearnerUnits(); renderQuestionsBank(); }
         if(pageId === 'psv') renderPsvModules();
         if(pageId === 'boda') renderBodaModules();
@@ -334,95 +271,101 @@
         if(pageId === 'home') renderHomeModules();
     }
     
-    // Render functions
     function renderLearnerUnits() {
-        const completed = Object.values(learnerProgress).filter(v => v === 100).length;
-        document.getElementById('completedCount').innerHTML = completed;
+        if (!contentData) return;
+        const completedCount = Object.values(userProgress.units).filter(v => v === 100).length;
         const grid = document.getElementById('learnerUnitsGrid');
-        if(grid) {
-            grid.innerHTML = learnerUnits.map((unit, idx) => {
-                const unitNum = idx + 1;
-                return `<div class="module-card" onclick="alert('📘 ${unit}')">
-                    <h4><i class="fas fa-book"></i> ${unit}</h4>
-                    <div class="progress-bar"><div class="progress-fill" style="width:${learnerProgress[unitNum] || 0}%"></div></div>
+        if(grid && contentData.content.learnerUnits) {
+            grid.innerHTML = contentData.content.learnerUnits.map(unit => {
+                const progress = userProgress.units[unit.id] || 0;
+                return `<div class="module-card" onclick="completeUnit(${unit.id})">
+                    <h4>Unit ${unit.id}: ${unit.title}</h4>
+                    <p>${unit.desc}</p>
+                    <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
                 </div>`;
             }).join('');
         }
     }
     
+    async function completeUnit(unitId) {
+        if (userProgress.units[unitId] !== 100) {
+            userProgress.units[unitId] = 100;
+            await saveProgress(unitId, 100);
+            renderLearnerUnits();
+            showToast(`Unit ${unitId} completed!`, 'success');
+        }
+    }
+    
     function renderPsvModules() {
+        if (!contentData) return;
         const grid = document.getElementById('psvModulesGrid');
-        if(grid) grid.innerHTML = psvModules.map((m, i) => `<div class="module-card" onclick="alert('🚌 ${m.title}\\n\\n${m.content}')">
-            <h4><i class="fas fa-bus"></i> ${m.title}</h4><p>${m.desc}</p>
-        </div>`).join('');
+        if(grid && contentData.content.psvModules) {
+            grid.innerHTML = contentData.content.psvModules.map(m => `<div class="module-card"><h4>🚌 ${m.title}</h4><p>${m.desc}</p></div>`).join('');
+        }
     }
     
     function renderBodaModules() {
+        if (!contentData) return;
         const grid = document.getElementById('bodaModulesGrid');
-        if(grid) grid.innerHTML = bodaModules.map((m, i) => `<div class="module-card" onclick="alert('🏍️ ${m.title}\\n\\n${m.content}')">
-            <h4><i class="fas fa-motorcycle"></i> ${m.title}</h4><p>${m.desc}</p>
-        </div>`).join('');
+        if(grid && contentData.content.bodaModules) {
+            grid.innerHTML = contentData.content.bodaModules.map(m => `<div class="module-card"><h4>🏍️ ${m.title}</h4><p>${m.desc}</p></div>`).join('');
+        }
     }
     
     function renderSchoolModules() {
+        if (!contentData) return;
         const grid = document.getElementById('schoolModulesGrid');
-        if(grid) grid.innerHTML = schoolModules.map((m, i) => `<div class="module-card" onclick="alert('👧 ${m.title}\\n\\n${m.content}')">
-            <h4><i class="fas fa-school"></i> ${m.title}</h4><p>${m.desc}</p>
-        </div>`).join('');
+        if(grid && contentData.content.schoolModules) {
+            grid.innerHTML = contentData.content.schoolModules.map(m => `<div class="module-card"><h4>👧 ${m.title}</h4><p>${m.desc}</p></div>`).join('');
+        }
     }
     
     function renderAcademyModules() {
+        if (!contentData) return;
         const grid = document.getElementById('academyModulesGrid');
-        if(grid) grid.innerHTML = academyCourses.map((c, i) => `<div class="card" onclick="alert('🎓 ${c.title}\\n\\n${c.content}')">
-            <h3><i class="fas fa-graduation-cap"></i> ${c.title}</h3><p>${c.desc}</p>
-        </div>`).join('');
+        if(grid && contentData.content.academyCourses) {
+            grid.innerHTML = contentData.content.academyCourses.map(c => `<div class="card"><h3>${c.title}</h3><p>${c.desc}</p></div>`).join('');
+        }
     }
     
     function renderHomeModules() {
-        const modules = [
-            { name: "Learner Driver", icon: "fa-book", desc: "21 units, 500+ questions", page: "learner" },
-            { name: "PSV Course", icon: "fa-bus", desc: "8 professional units", page: "psv" },
-            { name: "Boda Safety", icon: "fa-motorcycle", desc: "8 safety units", page: "boda" },
-            { name: "School Transport", icon: "fa-school", desc: "8 child safety units", page: "school" }
-        ];
+        const modules = ['Learner Hub', 'PSV Course', 'Boda Safety', 'School Transport', 'Academy', 'Library'];
         document.getElementById('homeModulesGrid').innerHTML = modules.map(m => 
-            `<div class="card" onclick="navigateTo('${m.page}')"><h3><i class="fas ${m.icon}"></i> ${m.name}</h3><p>${m.desc}</p><button class="btn-small">Start →</button></div>`
+            `<div class="card" onclick="navigateTo('${m.toLowerCase().replace(' ', '')}')"><h3>${m}</h3><button class="btn-small">Start →</button></div>`
         ).join('');
     }
     
     function renderLibrary() {
+        if (!contentData) return;
         const grid = document.getElementById('libraryGrid');
-        if(grid) grid.innerHTML = libraryDocs.map(d => `<div class="card"><h3><i class="fas fa-file-pdf"></i> ${d.title}</h3><p>Category: ${d.category} | Downloads: ${d.downloads}</p><button class="btn-small" onclick="alert('Downloading: ${d.title}')">Download</button></div>`).join('');
+        if(grid && contentData.content.libraryDocs) {
+            grid.innerHTML = contentData.content.libraryDocs.map(d => `<div class="card"><h3>${d.title}</h3><p>${d.category} | ${d.downloads}</p></div>`).join('');
+        }
     }
     
-    function filterLibrary() {
-        const search = document.getElementById('searchInput').value.toLowerCase();
-        const filtered = libraryDocs.filter(d => d.title.toLowerCase().includes(search));
-        document.getElementById('libraryGrid').innerHTML = filtered.map(d => `<div class="card"><h3><i class="fas fa-file-pdf"></i> ${d.title}</h3><p>Category: ${d.category} | Downloads: ${d.downloads}</p><button class="btn-small" onclick="alert('Downloading: ${d.title}')">Download</button></div>`).join('');
-    }
+    let currentFilter = 'all';
+    let currentPage = 1;
+    const PER_PAGE = 10;
     
     function renderQuestionsBank() {
-        let filtered = currentFilter === "all" ? ALL_QUESTIONS : ALL_QUESTIONS.filter(q => q.category === currentFilter);
+        if (!contentData || !contentData.content.questions) return;
+        
+        let filtered = currentFilter === 'all' ? contentData.content.questions : contentData.content.questions.filter(q => q.category === currentFilter);
         const totalPages = Math.ceil(filtered.length / PER_PAGE);
         const start = (currentPage - 1) * PER_PAGE;
         const pageQuestions = filtered.slice(start, start + PER_PAGE);
         
-        const answeredAll = Object.keys(userAnswers).length;
-        const correctAll = Object.values(userAnswers).filter(a => a.isCorrect).length;
-        document.getElementById('answeredQCount').innerHTML = answeredAll;
-        document.getElementById('correctCount').innerHTML = correctAll;
-        document.getElementById('accuracyRate').innerHTML = answeredAll ? Math.round((correctAll / answeredAll) * 100) + '%' : '0%';
-        document.getElementById('totalQuestions').innerHTML = ALL_QUESTIONS.length;
-        document.getElementById('answeredCountDisplay').innerHTML = answeredAll;
+        const userAnswersMap = {};
+        userProgress.answers.forEach(a => { userAnswersMap[a.id] = a; });
         
         const container = document.getElementById('questionsContainer');
         if(container) {
             container.innerHTML = pageQuestions.map(q => {
-                const saved = userAnswers[q.id];
+                const saved = userAnswersMap[q.id];
                 const selectedIdx = saved ? saved.selected : -1;
-                const isCorrect = saved ? saved.isCorrect : false;
-                return `<div class="question-card"><div class="question-text">📌 ${q.text}</div>
-                    <div>${q.options.map((opt, idx) => `<div class="question-option ${selectedIdx === idx ? (isCorrect ? 'correct-selected' : 'wrong-selected') : ''}" onclick="selectAnswer(${q.id}, ${idx})">${String.fromCharCode(65+idx)}. ${opt}</div>`).join('')}</div>
+                return `<div class="question-card">
+                    <div class="question-text">${q.text}</div>
+                    <div>${q.options.map((opt, idx) => `<div class="question-option" onclick="selectAnswer(${q.id}, ${idx}, ${q.correct === idx})">${String.fromCharCode(65+idx)}. ${opt}</div>`).join('')}</div>
                 </div>`;
             }).join('');
         }
@@ -430,18 +373,31 @@
         const pagination = document.getElementById('paginationContainer');
         if(pagination) {
             let pages = '';
-            for(let i = 1; i <= Math.min(totalPages, 5); i++) pages += `<button class="page-btn ${currentPage === i ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            for(let i = 1; i <= Math.min(totalPages, 5); i++) {
+                pages += `<button class="page-btn ${currentPage === i ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
             pagination.innerHTML = pages;
         }
     }
     
-    function selectAnswer(qid, selectedIdx) {
-        const q = ALL_QUESTIONS.find(qq => qq.id === qid);
-        if(!q) return;
-        const isCorrect = (selectedIdx === q.correct);
-        userAnswers[qid] = { selected: selectedIdx, isCorrect: isCorrect };
-        saveAnswers();
+    async function selectAnswer(qid, selectedIdx, isCorrect) {
+        if (!currentUser) { showToast('Please login first', 'error'); showLoginModal(); return; }
+        
+        const existingIndex = userProgress.answers.findIndex(a => a.id === qid);
+        if (existingIndex >= 0) {
+            userProgress.answers[existingIndex] = { id: qid, selected: selectedIdx, isCorrect };
+        } else {
+            userProgress.answers.push({ id: qid, selected: selectedIdx, isCorrect });
+        }
+        
+        await fetch(`${API_URL}/api/progress`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: currentUser.id, answers: userProgress.answers })
+        });
+        
         renderQuestionsBank();
+        showToast(isCorrect ? '✓ Correct!' : '✗ Incorrect', isCorrect ? 'success' : 'error');
     }
     
     function goToPage(page) { currentPage = page; renderQuestionsBank(); }
@@ -466,37 +422,47 @@
     }
     
     // Initialize
-    const savedUser = localStorage.getItem('currentUser');
-    if(savedUser) {
-        currentUser = JSON.parse(savedUser);
-        const exists = users.find(u => u.id === currentUser.id);
-        if(!exists) currentUser = null;
+    async function init() {
+        await checkConnection();
+        await loadContent();
+        
+        const savedUser = localStorage.getItem('currentUser');
+        if(savedUser) {
+            currentUser = JSON.parse(savedUser);
+            await loadProgress(currentUser.id);
+        }
+        
+        updateNavigation();
+        renderHomeModules();
+        renderLearnerUnits();
+        renderPsvModules();
+        renderBodaModules();
+        renderSchoolModules();
+        renderAcademyModules();
+        renderLibrary();
+        renderQuestionsBank();
+        
+        if(contentData && contentData.content.questions) {
+            const categories = [...new Set(contentData.content.questions.map(q => q.category))];
+            document.getElementById('questionFilter').innerHTML = ['all', ...categories].map(cat => 
+                `<button class="filter-chip ${cat === 'all' ? 'active' : ''}" onclick="setFilter('${cat}')">${cat}</button>`
+            ).join('');
+        }
+        
+        setInterval(checkConnection, 30000);
     }
     
-    updateNavigation();
-    renderHomeModules();
-    renderLearnerUnits();
-    renderPsvModules();
-    renderBodaModules();
-    renderSchoolModules();
-    renderAcademyModules();
-    renderLibrary();
-    renderQuestionsBank();
-    
-    document.getElementById('totalQuestions').innerHTML = ALL_QUESTIONS.length;
-    document.getElementById('questionFilter').innerHTML = ['all', 'Rules', 'Signs', 'Safety', 'Emergency'].map(cat => 
-        `<button class="filter-chip ${cat === 'all' ? 'active' : ''}" onclick="setFilter('${cat}')">${cat === 'all' ? 'All Topics' : cat}</button>`
-    ).join('');
-    
     window.navigateTo = navigateTo;
-    window.showLoginModal = showLoginModal;
     window.loginUser = loginUser;
     window.logout = logout;
     window.closeModal = closeModal;
+    window.completeUnit = completeUnit;
     window.selectAnswer = selectAnswer;
     window.goToPage = goToPage;
     window.setFilter = setFilter;
-    window.filterLibrary = filterLibrary;
+    window.showLoginModal = showLoginModal;
+    
+    init();
 </script>
 </body>
 </html>
