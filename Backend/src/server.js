@@ -3,6 +3,9 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
+// ======================
+// FIXED IMPORTS (IMPORTANT)
+// ======================
 const authRoutes = require("./routes/auth.routes");
 const userRoutes = require("./routes/user.routes");
 
@@ -12,7 +15,7 @@ const app = express();
 // MIDDLEWARE
 // ======================
 app.use(cors({
-  origin: "*", // change to your frontend URL in production
+  origin: "*", // change to your frontend domain in production
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
@@ -26,14 +29,14 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 
 // ======================
-// HEALTH CHECK
+// TEST ROUTE
 // ======================
 app.get("/", (req, res) => {
-  res.status(200).send("MEI DRIVE AFRICA API RUNNING 🚀");
+  res.send("MEI DRIVE AFRICA API RUNNING 🚀");
 });
 
 // ======================
-// ERROR HANDLING (optional but good)
+// HANDLE UNKNOWN ROUTES
 // ======================
 app.use((req, res) => {
   res.status(404).json({
