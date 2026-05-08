@@ -608,7 +608,199 @@
 
       event.target.classList.add('active');
     }
-  </script>
+  // ================= API CONFIG =================
+const API_BASE = window.location.origin;
+
+// ================= DASHBOARD STATS =================
+async function loadDashboardStats() {
+    try {
+        const res = await fetch(`${API_BASE}/api/admin/stats`);
+        const data = await res.json();
+
+        document.getElementById('totalUsers').innerText = data.users || 0;
+        document.getElementById('totalCourses').innerText = data.courses || 0;
+        document.getElementById('totalQuestions').innerText = data.questions || 0;
+        document.getElementById('totalRevenue').innerText = 'KES ' + (data.revenue || 0);
+    } catch (err) {
+        console.error('Stats error', err);
+    }
+}
+
+// ================= USERS =================
+async function loadUsers() {
+    try {
+        const res = await fetch(`${API_BASE}/api/admin/users`);
+        const users = await res.json();
+
+        const tbody = document.getElementById('usersTable');
+        if (!tbody) return;
+
+        tbody.innerHTML = users.map(user => `
+            <tr>
+                <td>${user.id}</td>
+                <td>${user.name}</td>
+                <td>${user.email}</td>
+                <td>${user.role}</td>
+                <td>
+                    <button onclick="deleteUser('${user.id}')">Delete</button>
+                </td>
+            </tr>
+        `).join('');
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+async function deleteUser(id) {
+    if (!confirm('Delete user?')) return;
+
+    await fetch(`${API_BASE}/api/admin/users/${id}`, {
+        method: 'DELETE'
+    });
+
+    loadUsers();
+}
+
+// ================= COURSES =================
+async function loadCourses() {
+    try {
+        const res = await fetch(`${API_BASE}/api/admin/courses`);
+        const courses = await res.json();
+
+        const container = document.getElementById('coursesContainer');
+        if (!container) return;
+
+        container.innerHTML = courses.map(course => `
+            <div class="course-card">
+                <h3>${course.title}</h3>
+                <p>${course.description}</p>
+                <button onclick="deleteCourse('${course.id}')">Delete</button>
+            </div>
+        `).join('');
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+async function addCourse() {
+    const title = document.getElementById('courseTitle').value;
+    const description = document.getElementById('courseDescription').value;
+
+    await fetch(`${API_BASE}/api/admin/courses`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ title, description })
+    });
+
+    loadCourses();
+}
+
+async function deleteCourse(id) {
+    await fetch(`${API_BASE}/api/admin/courses/${id}`, {
+        method: 'DELETE'
+    });
+
+    loadCourses();
+}
+
+// ================= QUESTIONS =================
+async function loadQuestions() {
+    try {
+        const res = await fetch(`${API_BASE}/api/admin/questions`);
+        const questions = await res.json();
+
+        const container = document.getElementById('questionsContainer');
+        if (!container) return;
+
+        container.innerHTML = questions.map(q => `
+            <div class="question-item">
+                <h4>${q.question}</h4>
+                <p>Category: ${q.category}</p>
+                <button onclick="deleteQuestion('${q.id}')">Delete</button>
+            </div>
+        `).join('');
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+async function addQuestion() {
+    const question = document.getElementById('questionText').value;
+    const category = document.getElementById('questionCategory').value;
+
+    await fetch(`${API_BASE}/api/admin/questions`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ question, category })
+    });
+
+    loadQuestions();
+}
+
+async function deleteQuestion(id) {
+    await fetch(`${API_BASE}/api/admin/questions/${id}`, {
+        method: 'DELETE'
+    });
+
+    loadQuestions();
+}
+
+// ================= PAYMENTS =================
+async function loadPayments() {
+    try {
+        const res = await fetch(`${API_BASE}/api/admin/payments`);
+        const payments = await res.json();
+
+        const tbody = document.getElementById('paymentsTable');
+        if (!tbody) return;
+
+        tbody.innerHTML = payments.map(payment => `
+            <tr>
+                <td>${payment.user}</td>
+                <td>${payment.course}</td>
+                <td>KES ${payment.amount}</td>
+                <td>${payment.status}</td>
+            </tr>
+        `).join('');
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+// ================= SETTINGS =================
+async function saveSettings() {
+    const siteName = document.getElementById('siteName').value;
+    const supportEmail = document.getElementById('supportEmail').value;
+
+    await fetch(`${API_BASE}/api/admin/settings`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            siteName,
+            supportEmail
+        })
+    });
+
+    alert('Settings saved');
+}
+
+// ================= INITIALIZE =================
+document.addEventListener('DOMContentLoaded', () => {
+    loadDashboardStats();
+    loadUsers();
+    loadCourses();
+    loadQuestions();
+    loadPayments();
+});
+
+</script>
 
 </body>
 </html>
+
