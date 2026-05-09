@@ -1,36 +1,42 @@
+const supabase = require("../config/supabase");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
-// Fake DB for now (replace with Supabase later)
-let users = [];
 
 // REGISTER
 exports.register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
-    // check if user exists
-    const userExists = users.find(u => u.email === email);
-    if (userExists) {
+    const { data: existing } = await supabase
+      .from("users")
+      .select("*")
+      .eq("email", email)
+      .single();
+
+    if (existing) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = {
-      id: Date.now(),
-      name,
-      email,
-      password: hashedPassword,
-      role: role || "student",
-    };
+    const { data, error } = await supabase
+      .from("users")
+      .insert([
+        {
+          name,
+          email,
+          password: hashedPassword,
+          role: role || "student",
+        },
+      ])
+      .select()
+      .single();
 
-    users.push(newUser);
+    if (error) throw error;
 
     res.json({
       message: "User registered successfully",
-      user: newUser,
+      user: data,
     });
 
   } catch (err) {
@@ -43,8 +49,13 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = users.find(u => u.email === email);
-    if (!user) {
+    const { data: user, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("email", email)
+      .single();
+
+    if (error || !user) {
       return res.status(404).json({ message: "User not found" });
     }
 
@@ -53,14 +64,13 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    // create token
     const token = jwt.sign(
       {
         id: user.id,
         role: user.role,
         email: user.email,
       },
-      process.env.JWT_SECRET || "secretkey",
+      process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
 
