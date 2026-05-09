@@ -10,39 +10,41 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ================= STATIC FILES =================
-// Optional (Render supports this, Vercel ignores safely)
-app.use(express.static(path.join(__dirname)));
+// ================= FRONTEND SERVING =================
+// This fixes your 404 on "/"
+app.use(express.static(path.join(__dirname, "frontend")));
 
-// ================= HEALTH =================
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "index.html"));
+});
+
+// ================= API ROUTES =================
 app.get("/api/health", (req, res) => {
   res.json({
     status: "OK",
     message: "MEI DRIVE AFRICA API running",
-    timestamp: new Date().toISOString(),
-    env: process.env.NODE_ENV || "development"
+    timestamp: new Date().toISOString()
   });
 });
 
-// ================= CONTENT =================
 app.get("/api/content", (req, res) => {
   res.json({
     success: true,
     content: {
       psvModules: [
         { id: 1, title: "Passenger Safety & Etiquette", desc: "Loading, exits, conduct" },
-        { id: 2, title: "Route Compliance", desc: "NTSA approved PSV routes" },
-        { id: 3, title: "Driver Hours Management", desc: "Rest and fatigue control" }
+        { id: 2, title: "Route Compliance", desc: "NTSA regulations" },
+        { id: 3, title: "Driver Hours Management", desc: "Rest periods & fatigue control" }
       ],
       bodaModules: [
         { id: 1, title: "Helmet Safety", desc: "Protective gear standards" },
-        { id: 2, title: "Road Discipline", desc: "Lane use and signaling" }
+        { id: 2, title: "Road Discipline", desc: "Lane use & signaling" }
       ],
       schoolModules: [
         { id: 1, title: "School Bus Safety", desc: "Child safety procedures" }
       ],
       academyCourses: [
-        { id: 1, title: "Defensive Driving", desc: "Hazard awareness" }
+        { id: 1, title: "Defensive Driving", desc: "Hazard awareness training" }
       ],
       libraryDocs: [
         { title: "Kenya Highway Code", category: "Regulation", downloads: "4.2k" }
@@ -51,21 +53,13 @@ app.get("/api/content", (req, res) => {
   });
 });
 
-// ================= DEFAULT ROUTE =================
-app.get("/", (req, res) => {
-  res.json({
-    message: "MEI DRIVE AFRICA API is running",
-    endpoints: ["/api/health", "/api/content"]
-  });
-});
-
 // ================= ERROR HANDLER =================
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(500).json({ error: "Server error", message: err.message });
+  res.status(500).json({ error: "Server error" });
 });
 
-// ================= SERVER START (ONLY RENDER) =================
+// ================= SERVER (Render ONLY) =================
 if (require.main === module) {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
@@ -73,5 +67,5 @@ if (require.main === module) {
   });
 }
 
-// ================= EXPORT (FOR VERCEL) =================
+// ================= EXPORT (Vercel) =================
 module.exports = app;
