@@ -1,37 +1,52 @@
-require("dotenv").config();
-
 const express = require("express");
-const cors = require("cors");
+const dotenv = require("dotenv");
+
+// Load environment variables
+dotenv.config();
 
 const app = express();
 
 // Middleware
-app.use(cors());
 app.use(express.json());
-
-// 🔐 Safety check (prevents silent crashes)
-if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
-  console.error("Missing environment variables");
-  process.exit(1);
-}
+app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use("/api/auth", require("./routes/auth.routes"));
-app.use("/api/admin", require("./routes/admin.routes"));
-app.use("/api/driver", require("./routes/driver.routes"));
-app.use("/api/student", require("./routes/student.routes"));
+const authRoutes = require("./routes/auth.routes");
 
-// Health check
-app.get("/", (req, res) => {
+// API routes
+app.use("/api/auth", authRoutes);
+
+// Health check route
+app.get("/api/health", (req, res) => {
   res.json({
     status: "OK",
-    app: "MEI DRIVE AFRICA"
+    message: "MEI DRIVE AFRICA API is running",
   });
 });
 
-// 🚀 Render-safe server binding
-const PORT = process.env.PORT || 10000;
+// Root route
+app.get("/", (req, res) => {
+  res.send("MEI DRIVE AFRICA BACKEND RUNNING 🚀");
+});
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running on port ${PORT}`);
+// Handle 404 errors
+app.use((req, res) => {
+  res.status(404).json({
+    error: "Route not found",
+  });
+});
+
+// Global error handler (important for production)
+app.use((err, req, res, next) => {
+  console.error("Server Error:", err.message);
+  res.status(500).json({
+    error: "Internal Server Error",
+  });
+});
+
+// Start server
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
