@@ -1,7 +1,6 @@
 {
   "name": "mei-drive-africa",
   "version": "1.0.0",
-  "description": "Digital Driver Safety Platform",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
