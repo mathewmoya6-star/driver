@@ -1,85 +1,45 @@
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
 
 const app = express();
-
-/* =========================
-   MIDDLEWARE
-========================= */
 app.use(cors());
 app.use(express.json());
 
-/* =========================
-   HEALTH CHECK (RENDER + TESTING)
-========================= */
-app.get("/", (req, res) => {
-  res.send("MEI DRIVE AFRICA API RUNNING 🚀");
-});
-
+// ================= HEALTH CHECK =================
 app.get("/api/health", (req, res) => {
   res.json({
     status: "OK",
-    message: "Server is healthy",
-    time: new Date().toISOString()
+    message: "MEI DRIVE AFRICA backend running",
+    timestamp: new Date().toISOString()
   });
 });
 
-/* =========================
-   SAMPLE API ROUTES
-   (replace later with real Supabase logic)
-========================= */
-
-// Get learning content (placeholder)
+// ================= TEST CONTENT =================
 app.get("/api/content", (req, res) => {
   res.json({
-    success: true,
-    message: "Content API working",
-    data: []
-  });
-});
-
-// User progress (placeholder)
-app.get("/api/progress/:userId", (req, res) => {
-  res.json({
-    success: true,
-    userId: req.params.userId,
-    progress: {}
-  });
-});
-
-// Save progress (placeholder)
-app.post("/api/progress", (req, res) => {
-  res.json({
-    success: true,
-    message: "Progress saved",
-    data: req.body
-  });
-});
-
-/* =========================
-   AUTH ROUTES (PLACEHOLDER)
-========================= */
-app.post("/api/login", (req, res) => {
-  const { email } = req.body;
-
-  res.json({
-    success: true,
-    user: {
-      id: "123",
-      name: "Demo User",
-      email
+    content: {
+      learnerUnits: [
+        { id: 1, title: "Road Signs", desc: "Learn all road signs" },
+        { id: 2, title: "Traffic Rules", desc: "Understand traffic laws" }
+      ],
+      questions: [
+        {
+          id: 1,
+          text: "What does a red light mean?",
+          options: ["Stop", "Go", "Speed up", "Honk"],
+          correct: 0,
+          category: "Signs"
+        }
+      ]
     }
   });
 });
 
-/* =========================
-   START SERVER
-========================= */
+// ================= SERVER START =================
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log("========================================");
-  console.log(`SERVER RUNNING ON http://localhost:${PORT}`);
+  console.log("SERVER RUNNING ON PORT", PORT);
   console.log("========================================");
 });
