@@ -7,25 +7,26 @@ const { createClient } = require("@supabase/supabase-js");
 const app = express();
 
 // =====================
+// Safety Check (CRASH FAST)
+// =====================
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
+  console.error("❌ Missing SUPABASE_URL or SUPABASE_ANON_KEY");
+  process.exit(1);
+}
+
+// =====================
 // Middleware
 // =====================
 app.use(cors());
 app.use(express.json());
 
 // =====================
-// Environment Variables
-// =====================
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseKey) {
-  throw new Error("Missing SUPABASE_URL or SUPABASE_ANON_KEY");
-}
-
-// =====================
 // Supabase Client
 // =====================
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
+);
 
 // =====================
 // Auth Middleware
@@ -55,9 +56,6 @@ const authMiddleware = async (req, res, next) => {
 // Routes
 // =====================
 
-// Auth routes (external file)
-app.use("/api/auth", require("./auth.routes"));
-
 // Health check
 app.get("/", (req, res) => {
   res.json({
@@ -82,11 +80,10 @@ app.get("/api/profile", authMiddleware, (req, res) => {
 });
 
 // =====================
-// Server Start
+// Start Server
 // =====================
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
-  console.log(`📍 http://localhost:${PORT}`);
 });
