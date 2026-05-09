@@ -7,28 +7,28 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ================= API ROUTES =================
+// ================= API =================
 app.get("/api/health", (req, res) => {
-  res.json({ status: "OK", message: "MEI DRIVE AFRICA API running" });
-});
-
-app.get("/api/content", (req, res) => {
   res.json({
-    success: true,
-    content: {
-      message: "Content loaded"
-    }
+    status: "OK",
+    message: "MEI DRIVE AFRICA API running"
   });
 });
 
-// ================= FRONTEND =================
-// IMPORTANT: Vercel needs absolute safe path
-app.use(express.static(path.join(__dirname, "frontend")));
+// ================= FRONTEND PATH =================
+const frontendPath = path.join(__dirname, "frontend");
 
-// SPA fallback (IMPORTANT)
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "index.html"));
+// Serve static frontend files
+app.use(express.static(frontendPath));
+
+// HOME ROUTE
+app.get("/", (req, res) => {
+  res.sendFile(path.join(frontendPath, "index.html"));
 });
 
-// ================= EXPORT =================
+// SPA fallback
+app.get("*", (req, res) => {
+  res.sendFile(path.join(frontendPath, "index.html"));
+});
+
 module.exports = app;
