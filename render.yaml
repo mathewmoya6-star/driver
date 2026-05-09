@@ -3,5 +3,4 @@ services:
     name: mei-drive-africa
     env: node
     buildCommand: npm install
-    startCommand: npm start
-    autoDeploy: true
+    startCommand: node server.js
