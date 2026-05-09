@@ -2,88 +2,36 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const { createClient } = require("@supabase/supabase-js");
 
 const app = express();
 
-// =====================
-// Safety Check (CRASH FAST)
-// =====================
-if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
-  console.error("❌ Missing SUPABASE_URL or SUPABASE_ANON_KEY");
-  process.exit(1);
-}
-
-// =====================
 // Middleware
-// =====================
 app.use(cors());
 app.use(express.json());
 
-// =====================
-// Supabase Client
-// =====================
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
-);
+// 🔐 Safety check (prevents silent crashes)
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
+  console.error("Missing environment variables");
+  process.exit(1);
+}
 
-// =====================
-// Auth Middleware
-// =====================
-const authMiddleware = async (req, res, next) => {
-  try {
-    const token = req.headers.authorization?.split(" ")[1];
-
-    if (!token) {
-      return res.status(401).json({ error: "Missing token" });
-    }
-
-    const { data, error } = await supabase.auth.getUser(token);
-
-    if (error || !data?.user) {
-      return res.status(401).json({ error: "Invalid token" });
-    }
-
-    req.user = data.user;
-    next();
-  } catch (err) {
-    return res.status(500).json({ error: "Auth failed" });
-  }
-};
-
-// =====================
 // Routes
-// =====================
+app.use("/api/auth", require("./routes/auth.routes"));
+app.use("/api/admin", require("./routes/admin.routes"));
+app.use("/api/driver", require("./routes/driver.routes"));
+app.use("/api/student", require("./routes/student.routes"));
 
 // Health check
 app.get("/", (req, res) => {
   res.json({
     status: "OK",
-    app: "MEI DRIVE AFRICA API 🚀"
+    app: "MEI DRIVE AFRICA"
   });
 });
 
-// Public route
-app.get("/api/public", (req, res) => {
-  res.json({
-    message: "Public route working"
-  });
-});
+// 🚀 Render-safe server binding
+const PORT = process.env.PORT || 10000;
 
-// Protected route
-app.get("/api/profile", authMiddleware, (req, res) => {
-  res.json({
-    message: "User profile fetched successfully",
-    user: req.user
-  });
-});
-
-// =====================
-// Start Server
-// =====================
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
 });
