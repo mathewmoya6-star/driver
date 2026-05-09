@@ -9,6 +9,7 @@ try {
   console.log("ws not installed, using default WebSocket");
 }
 
+// ENV CONFIG (CLEAN)
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
@@ -26,14 +27,20 @@ const supabaseOptions = {
   },
 };
 
-// Only attach custom WebSocket if available
+// Only attach WebSocket if available
 if (WebSocket) {
   supabaseOptions.realtime = {
     ...supabaseOptions.realtime,
-    websocket: WebSocket, // Supabase supports custom websocket here
+    transport: WebSocket,
+    websocket: WebSocket,
   };
 }
 
-const supabase = createClient(supabaseUrl, supabaseKey, supabaseOptions);
+// Create client
+const supabase = createClient(
+  supabaseUrl,
+  supabaseKey,
+  supabaseOptions
+);
 
 module.exports = supabase;
