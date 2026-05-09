@@ -1,48 +1,127 @@
-const express = require('express');
-const path = require('path');
+// =====================
+// SERVER.JS - Works on Vercel & Render
+// =====================
+
+const express = require("express");
+const path = require("path");
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files
-app.use(express.static(__dirname));
+// =====================
+// MIDDLEWARE
+// =====================
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(__dirname));
 
-// Health check endpoint (required for Render)
-app.get('/health', (req, res) => {
-    res.json({ status: 'healthy', timestamp: new Date().toISOString() });
+// =====================
+// HEALTH CHECK ENDPOINTS
+// =====================
+app.get("/", (req, res) => {
+  res.json({
+    status: "OK",
+    message: "MEI DRIVE AFRICA API RUNNING 🚀",
+    timestamp: new Date().toISOString()
+  });
 });
 
-// API endpoint to get content (optional)
-app.get('/api/content', (req, res) => {
-    res.json({
-        content: {
-            psvModules: [
-                { title: "Passenger Safety", desc: "Loading procedures and emergency exits" },
-                { title: "Route Compliance", desc: "Licensed PSV routes" }
-            ],
-            bodaModules: [
-                { title: "Helmet Safety", desc: "NTSA approved helmets" },
-                { title: "Lane Discipline", desc: "Safe filtering" }
-            ],
-            schoolModules: [
-                { title: "School Bus Safety", desc: "Child safety protocols" }
-            ],
-            academyCourses: [
-                { title: "Defensive Driving", desc: "Advanced techniques" }
-            ],
-            libraryDocs: [
-                { title: "Highway Code", category: "Official", downloads: "4.2k" }
-            ]
-        }
-    });
+app.get("/health", (req, res) => {
+  res.json({
+    status: "healthy",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
 });
 
-// Serve index.html for all other routes (SPA support)
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+app.get("/api/health", (req, res) => {
+  res.json({
+    status: "OK",
+    message: "Server is running properly",
+    timestamp: new Date().toISOString()
+  });
 });
 
-app.listen(PORT, () => {
+// =====================
+// API ENDPOINTS FOR CONTENT
+// =====================
+app.get("/api/content", (req, res) => {
+  res.json({
+    content: {
+      psvModules: [
+        { title: "Passenger Safety & Etiquette", desc: "Loading procedures, door operation, emergency exits" },
+        { title: "Route Compliance", desc: "Licensed PSV routes and NTSA regulations" },
+        { title: "Driver Hours Management", desc: "Maximum driving hours and mandatory rest periods" }
+      ],
+      bodaModules: [
+        { title: "Helmet & Protective Gear", desc: "NTSA approved helmets and safety equipment" },
+        { title: "Lane Discipline", desc: "Safe filtering, signaling, and positioning" },
+        { title: "Passenger & Cargo Limits", desc: "Maximum passengers and proper load securing" }
+      ],
+      schoolModules: [
+        { title: "School Bus Safety Protocol", desc: "Child safety zones and loading/unloading procedures" },
+        { title: "Emergency Response", desc: "Fire, accident, and medical emergency protocols" }
+      ],
+      academyCourses: [
+        { title: "Defensive Driving Course", desc: "Advanced hazard perception and collision avoidance" },
+        { title: "Eco-Driving Techniques", desc: "Fuel efficiency and environmental awareness" }
+      ],
+      libraryDocs: [
+        { title: "Kenya Highway Code (Official)", category: "Regulation", downloads: "4.2k" },
+        { title: "PSV Regulations Guide", category: "Legal", downloads: "2.1k" },
+        { title: "Motorcycle Safety Handbook", category: "Boda", downloads: "3.5k" }
+      ]
+    }
+  });
+});
+
+// =====================
+// USER PROGRESS ENDPOINTS (Optional - can use Supabase directly)
+// =====================
+app.get("/api/progress/:userId", (req, res) => {
+  // This is a placeholder - actual progress is handled by Supabase
+  // You can implement caching here if needed
+  res.json({
+    progress: {
+      units: {},
+      answers: []
+    }
+  });
+});
+
+app.post("/api/progress", (req, res) => {
+  // This is a placeholder - actual progress saving is handled by Supabase
+  res.json({ success: true, message: "Progress saved to Supabase" });
+});
+
+// =====================
+// SPA FALLBACK - Serve index.html for all other routes
+// =====================
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
+// =====================
+// ERROR HANDLER
+// =====================
+app.use((err, req, res, next) => {
+  console.error("Server Error:", err.message);
+  res.status(500).json({
+    error: "Internal Server Error",
+    message: err.message
+  });
+});
+
+// =====================
+// START SERVER (Only for local/Render - Vercel uses serverless)
+// =====================
+if (require.main === module) {
+  app.listen(PORT, () => {
     console.log(`✅ MEI DRIVE AFRICA running on port ${PORT}`);
     console.log(`🔗 Supabase URL: https://fktjmkmzlixlapeyhhyl.supabase.co`);
-});
+    console.log(`📍 Environment: ${process.env.NODE_ENV || "development"}`);
+  });
+}
+
+// Export for Vercel serverless deployment
+module.exports = app;
