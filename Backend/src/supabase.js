@@ -1,15 +1,23 @@
 const { createClient } = require("@supabase/supabase-js");
 
+// Optional WebSocket support
 let WebSocket;
 try {
   WebSocket = require("ws");
+  console.log("ws package loaded");
 } catch (e) {
   console.log("ws not installed, using default WebSocket");
 }
 
-const supabaseUrl = "https://fktjmkmzlixlapeyhhyl.supabase.co";
+const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
+// Fail fast if env is missing
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error("Missing SUPABASE_URL or SUPABASE_ANON_KEY in environment");
+}
+
+// Supabase options
 const supabaseOptions = {
   realtime: {
     params: {
@@ -18,11 +26,11 @@ const supabaseOptions = {
   },
 };
 
-// ONLY add ws if available
+// Only attach custom WebSocket if available
 if (WebSocket) {
   supabaseOptions.realtime = {
     ...supabaseOptions.realtime,
-    transport: WebSocket,
+    websocket: WebSocket, // Supabase supports custom websocket here
   };
 }
 
