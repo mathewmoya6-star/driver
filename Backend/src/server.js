@@ -55,26 +55,29 @@ const authMiddleware = async (req, res, next) => {
 // Routes
 // =====================
 
+// Auth routes (external file)
+app.use("/api/auth", require("./auth.routes"));
+
 // Health check
 app.get("/", (req, res) => {
   res.json({
     status: "OK",
-    app: "MEI DRIVE AFRICA API"
+    app: "MEI DRIVE AFRICA API 🚀"
   });
 });
 
-// Protected route example
-app.get("/api/profile", authMiddleware, async (req, res) => {
-  res.json({
-    message: "User profile fetched successfully",
-    user: req.user
-  });
-});
-
-// Example public route
+// Public route
 app.get("/api/public", (req, res) => {
   res.json({
     message: "Public route working"
+  });
+});
+
+// Protected route
+app.get("/api/profile", authMiddleware, (req, res) => {
+  res.json({
+    message: "User profile fetched successfully",
+    user: req.user
   });
 });
 
@@ -84,5 +87,6 @@ app.get("/api/public", (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`✅ Server running on port ${PORT}`);
+  console.log(`📍 http://localhost:${PORT}`);
 });
