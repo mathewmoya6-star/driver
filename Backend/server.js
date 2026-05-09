@@ -1,67 +1,48 @@
-const express = require("express");
-const dotenv = require("dotenv");
-
-dotenv.config();
-
+const express = require('express');
+const path = require('path');
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// =====================
-// MIDDLEWARE
-// =====================
+// Serve static files
+app.use(express.static(__dirname));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// =====================
-// ROUTES
-// =====================
-const authRoutes = require("./routes/auth.routes");
-const adminRoutes = require("./routes/admin.routes");
-
-// Auth routes
-app.use("/api/auth", authRoutes);
-
-// Admin routes
-app.use("/api/admin", adminRoutes);
-
-// =====================
-// HEALTH CHECK
-// =====================
-app.get("/", (req, res) => {
-  res.send("MEI DRIVE AFRICA API RUNNING 🚀");
+// Health check endpoint (required for Render)
+app.get('/health', (req, res) => {
+    res.json({ status: 'healthy', timestamp: new Date().toISOString() });
 });
 
-app.get("/api/health", (req, res) => {
-  res.json({
-    status: "OK",
-    message: "Server is running properly",
-  });
+// API endpoint to get content (optional)
+app.get('/api/content', (req, res) => {
+    res.json({
+        content: {
+            psvModules: [
+                { title: "Passenger Safety", desc: "Loading procedures and emergency exits" },
+                { title: "Route Compliance", desc: "Licensed PSV routes" }
+            ],
+            bodaModules: [
+                { title: "Helmet Safety", desc: "NTSA approved helmets" },
+                { title: "Lane Discipline", desc: "Safe filtering" }
+            ],
+            schoolModules: [
+                { title: "School Bus Safety", desc: "Child safety protocols" }
+            ],
+            academyCourses: [
+                { title: "Defensive Driving", desc: "Advanced techniques" }
+            ],
+            libraryDocs: [
+                { title: "Highway Code", category: "Official", downloads: "4.2k" }
+            ]
+        }
+    });
 });
 
-// =====================
-// 404 HANDLER
-// =====================
-app.use((req, res) => {
-  res.status(404).json({
-    error: "Route not found",
-  });
+// Serve index.html for all other routes (SPA support)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
-
-// =====================
-// GLOBAL ERROR HANDLER
-// =====================
-app.use((err, req, res, next) => {
-  console.error("Server Error:", err.message);
-
-  res.status(500).json({
-    error: "Internal Server Error",
-  });
-});
-
-// =====================
-// START SERVER
-// =====================
-const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`✅ MEI DRIVE AFRICA running on port ${PORT}`);
+    console.log(`🔗 Supabase URL: https://fktjmkmzlixlapeyhhyl.supabase.co`);
 });
