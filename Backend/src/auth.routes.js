@@ -1,22 +1,34 @@
-const jwt = require("jsonwebtoken");
+const express = require("express");
+const router = express.Router();
 
-module.exports = (req, res, next) => {
-  const token = req.headers.authorization;
+const authController = require("../controllers/auth.controller");
+const auth = require("../src/middleware/auth");
+const role = require("../src/middleware/role");
 
-  if (!token) {
-    return res.status(401).json({ message: "No token provided" });
-  }
+// PUBLIC ROUTES
+router.post("/register", authController.register);
+router.post("/login", authController.login);
 
-  try {
-    const decoded = jwt.verify(
-      token.replace("Bearer ", ""),
-      process.env.JWT_SECRET || "secretkey"
-    );
+// PROTECTED ROUTE (any logged in user)
+router.get("/profile", auth, (req, res) => {
+  res.json({
+    message: "Profile data",
+    user: req.user,
+  });
+});
 
-    req.user = decoded;
-    next();
+// ADMIN ONLY ROUTE
+router.get("/admin", auth, role(["admin"]), (req, res) => {
+  res.json({
+    message: "Welcome Admin",
+  });
+});
 
-  } catch (err) {
-    return res.status(401).json({ message: "Invalid token" });
-  }
-};
+// DRIVER ONLY ROUTE
+router.get("/driver", auth, role(["driver"]), (req, res) => {
+  res.json({
+    message: "Welcome Driver",
+  });
+});
+
+module.exports = router;
