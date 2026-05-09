@@ -1,21 +1,27 @@
-const jwt = require("jsonwebtoken");
+const express = require("express");
+const router = express.Router();
 
-module.exports = (req, res, next) => {
-  const header = req.headers.authorization;
+const authController = require("../controllers/auth.controller");
+const auth = require("../middleware/auth");
+const role = require("../middleware/role");
 
-  if (!header) {
-    return res.status(401).json({ message: "No token provided" });
-  }
+// public
+router.post("/register", authController.register);
+router.post("/login", authController.login);
 
-  try {
-    const token = header.replace("Bearer ", "");
+// protected
+router.get("/profile", auth, (req, res) => {
+  res.json(req.user);
+});
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+// admin only
+router.get("/admin", auth, role(["admin"]), (req, res) => {
+  res.json({ message: "Admin access granted" });
+});
 
-    req.user = decoded;
-    next();
+// driver only
+router.get("/driver", auth, role(["driver"]), (req, res) => {
+  res.json({ message: "Driver access granted" });
+});
 
-  } catch (err) {
-    res.status(401).json({ message: "Invalid token" });
-  }
-};
+module.exports = router;
