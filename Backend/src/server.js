@@ -1,50 +1,65 @@
 const express = require("express");
 const dotenv = require("dotenv");
 
-// Load environment variables
 dotenv.config();
 
 const app = express();
 
-// Middleware
+// =====================
+// MIDDLEWARE
+// =====================
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
+// =====================
+// ROUTES
+// =====================
 const authRoutes = require("./routes/auth.routes");
+const adminRoutes = require("./routes/admin.routes");
 
-// API routes
+// Auth routes
 app.use("/api/auth", authRoutes);
 
-// Health check route
+// Admin routes
+app.use("/api/admin", adminRoutes);
+
+// =====================
+// HEALTH CHECK
+// =====================
+app.get("/", (req, res) => {
+  res.send("MEI DRIVE AFRICA API RUNNING 🚀");
+});
+
 app.get("/api/health", (req, res) => {
   res.json({
     status: "OK",
-    message: "MEI DRIVE AFRICA API is running",
+    message: "Server is running properly",
   });
 });
 
-// Root route
-app.get("/", (req, res) => {
-  res.send("MEI DRIVE AFRICA BACKEND RUNNING 🚀");
-});
-
-// Handle 404 errors
+// =====================
+// 404 HANDLER
+// =====================
 app.use((req, res) => {
   res.status(404).json({
     error: "Route not found",
   });
 });
 
-// Global error handler (important for production)
+// =====================
+// GLOBAL ERROR HANDLER
+// =====================
 app.use((err, req, res, next) => {
   console.error("Server Error:", err.message);
+
   res.status(500).json({
     error: "Internal Server Error",
   });
 });
 
-// Start server
+// =====================
+// START SERVER
+// =====================
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
