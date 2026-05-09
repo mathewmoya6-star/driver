@@ -1,7 +1,7 @@
 {
   "name": "mei-drive-africa",
   "version": "1.0.0",
-  "description": "Digital Driver Safety Platform with Supabase",
+  "description": "Digital Driver Safety Platform for Kenya",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
