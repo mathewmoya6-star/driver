@@ -1,40 +1,27 @@
 require("dotenv").config();
-
 const express = require("express");
 const cors = require("cors");
 
 const app = express();
 
-// ======================
-// MIDDLEWARE
-// ======================
-app.use(cors({
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
-
+// Middleware
+app.use(cors());
 app.use(express.json());
 
-// ======================
-// ROUTES (FIXED PATH)
-// ======================
-const authRoutes = require("./auth.routes.js");
+// Routes
+app.use("/api/auth", require("./auth.routes"));
 
-app.use("/api/auth", authRoutes);
-
-// ======================
-// HEALTH CHECK
-// ======================
+// Health check
 app.get("/", (req, res) => {
-  res.send("MEI DRIVE AFRICA API RUNNING 🚀");
+  res.json({ 
+    success: true, 
+    message: "MEI DRIVE AFRICA API RUNNING 🚀" 
+  });
 });
 
-// ======================
-// START SERVER
-// ======================
+// Start server
 const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`✅ Server running on port ${PORT}`);
+  console.log(`📍 http://localhost:${PORT}`);
 });
