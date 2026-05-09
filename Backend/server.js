@@ -1,52 +1,48 @@
-// server.js - MEI DRIVE AFRICA (Vercel + Render Ready)
-
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+const path = require("path");
+require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// ==================== MIDDLEWARE ====================
+// ================= MIDDLEWARE =================
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ==================== HEALTH CHECK ====================
-app.get('/health', (req, res) => {
+// ================= STATIC FILES =================
+// Optional (Render supports this, Vercel ignores safely)
+app.use(express.static(path.join(__dirname)));
+
+// ================= HEALTH =================
+app.get("/api/health", (req, res) => {
   res.json({
-    status: 'healthy',
+    status: "OK",
+    message: "MEI DRIVE AFRICA API running",
     timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
-    environment: process.env.VERCEL ? 'Vercel' : 'Render/Local',
-    node_version: process.version
+    env: process.env.NODE_ENV || "development"
   });
 });
 
-// ==================== API ====================
-app.get('/api/health', (req, res) => {
-  res.json({
-    status: 'OK',
-    message: 'MEI DRIVE AFRICA API running 🚀',
-    timestamp: new Date().toISOString()
-  });
-});
-
-app.get('/api/content', (req, res) => {
+// ================= CONTENT =================
+app.get("/api/content", (req, res) => {
   res.json({
     success: true,
     content: {
       psvModules: [
-        { title: "Passenger Safety & Etiquette", desc: "Loading procedures, door operation, emergency exits" }
+        { id: 1, title: "Passenger Safety & Etiquette", desc: "Loading, exits, conduct" },
+        { id: 2, title: "Route Compliance", desc: "NTSA approved PSV routes" },
+        { id: 3, title: "Driver Hours Management", desc: "Rest and fatigue control" }
       ],
       bodaModules: [
-        { title: "Helmet & Protective Gear", desc: "NTSA approved helmets and safety equipment" }
+        { id: 1, title: "Helmet Safety", desc: "Protective gear standards" },
+        { id: 2, title: "Road Discipline", desc: "Lane use and signaling" }
       ],
       schoolModules: [
-        { title: "School Bus Safety Protocol", desc: "Child safety zones and procedures" }
+        { id: 1, title: "School Bus Safety", desc: "Child safety procedures" }
       ],
       academyCourses: [
-        { title: "Defensive Driving Course", desc: "Advanced hazard perception" }
+        { id: 1, title: "Defensive Driving", desc: "Hazard awareness" }
       ],
       libraryDocs: [
         { title: "Kenya Highway Code", category: "Regulation", downloads: "4.2k" }
@@ -55,12 +51,27 @@ app.get('/api/content', (req, res) => {
   });
 });
 
-// ==================== START SERVER ====================
+// ================= DEFAULT ROUTE =================
+app.get("/", (req, res) => {
+  res.json({
+    message: "MEI DRIVE AFRICA API is running",
+    endpoints: ["/api/health", "/api/content"]
+  });
+});
+
+// ================= ERROR HANDLER =================
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: "Server error", message: err.message });
+});
+
+// ================= SERVER START (ONLY RENDER) =================
 if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
 }
 
-// ==================== VERCEL EXPORT ====================
+// ================= EXPORT (FOR VERCEL) =================
 module.exports = app;
