@@ -10,62 +10,81 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ================= FRONTEND SERVING =================
-// This fixes your 404 on "/"
-app.use(express.static(path.join(__dirname, "frontend")));
-
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "index.html"));
-});
-
-// ================= API ROUTES =================
+// ================= HEALTH =================
 app.get("/api/health", (req, res) => {
   res.json({
     status: "OK",
     message: "MEI DRIVE AFRICA API running",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    runtime: process.env.VERCEL ? "vercel" : "render/local"
   });
 });
 
+// ================= CONTENT API =================
 app.get("/api/content", (req, res) => {
   res.json({
     success: true,
     content: {
       psvModules: [
-        { id: 1, title: "Passenger Safety & Etiquette", desc: "Loading, exits, conduct" },
-        { id: 2, title: "Route Compliance", desc: "NTSA regulations" },
-        { id: 3, title: "Driver Hours Management", desc: "Rest periods & fatigue control" }
+        { title: "Passenger Safety", desc: "PSV rules & safety" },
+        { title: "Route Compliance", desc: "NTSA approved routes" }
       ],
       bodaModules: [
-        { id: 1, title: "Helmet Safety", desc: "Protective gear standards" },
-        { id: 2, title: "Road Discipline", desc: "Lane use & signaling" }
+        { title: "Helmet Safety", desc: "Protective gear rules" }
       ],
       schoolModules: [
-        { id: 1, title: "School Bus Safety", desc: "Child safety procedures" }
+        { title: "School Transport Safety", desc: "Child safety rules" }
       ],
       academyCourses: [
-        { id: 1, title: "Defensive Driving", desc: "Hazard awareness training" }
+        { title: "Defensive Driving", desc: "Advanced driving skills" }
       ],
       libraryDocs: [
         { title: "Kenya Highway Code", category: "Regulation", downloads: "4.2k" }
+      ],
+      questions: [
+        {
+          id: 1,
+          text: "What does a red traffic light mean?",
+          options: ["Stop", "Go", "Speed up", "Turn left"],
+          correct: 0,
+          category: "rules"
+        }
+      ],
+      learnerUnits: [
+        { id: 1, title: "Road Signs", desc: "Learn all road signs" },
+        { id: 2, title: "Traffic Rules", desc: "Basic rules" }
       ]
     }
   });
 });
 
-// ================= ERROR HANDLER =================
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).json({ error: "Server error" });
+// ================= STATIC FRONTEND (IMPORTANT) =================
+const frontendPath = path.join(__dirname, "..", "frontend");
+
+// serve frontend if it exists
+app.use(express.static(frontendPath));
+
+// fallback route (must be LAST)
+app.get("*", (req, res) => {
+  const indexPath = path.join(frontendPath, "index.html");
+
+  res.sendFile(indexPath, (err) => {
+    if (err) {
+      res.status(404).json({
+        error: "Frontend not found",
+        hint: "Ensure frontend/index.html exists"
+      });
+    }
+  });
 });
 
-// ================= SERVER (Render ONLY) =================
+// ================= SERVER START (ONLY FOR RENDER) =================
+const PORT = process.env.PORT || 3000;
+
 if (require.main === module) {
-  const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`🚀 Server running on port ${PORT}`);
   });
 }
 
-// ================= EXPORT (Vercel) =================
 module.exports = app;
