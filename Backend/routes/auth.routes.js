@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const supabase = require("./supabase.js");
+const supabase = require("../supabase.js");
 
 // REGISTER
 router.post("/register", async (req, res) => {
@@ -10,12 +10,12 @@ router.post("/register", async (req, res) => {
 
     const { data, error } = await supabase.auth.signUp({
       email,
-      password
+      password,
     });
 
     if (error) {
       return res.status(400).json({
-        error: error.message
+        error: error.message,
       });
     }
 
@@ -23,7 +23,7 @@ router.post("/register", async (req, res) => {
 
   } catch (err) {
     res.status(500).json({
-      error: err.message
+      error: err.message,
     });
   }
 });
@@ -35,12 +35,12 @@ router.post("/login", async (req, res) => {
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
-      password
+      password,
     });
 
     if (error) {
       return res.status(400).json({
-        error: error.message
+        error: error.message,
       });
     }
 
@@ -48,7 +48,7 @@ router.post("/login", async (req, res) => {
 
   } catch (err) {
     res.status(500).json({
-      error: err.message
+      error: err.message,
     });
   }
 });
