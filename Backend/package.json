@@ -1,0 +1,47 @@
+{
+  "name": "mei-drive-africa",
+  "version": "1.0.0",
+  "description": "Digital Driver Safety Platform for Kenya - Based on Kenya Highway Code, NTSA curriculum, and Learner Driver Handbook",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve . -p 3000",
+    "start": "npx serve . -p 3000",
+    "build": "echo 'No build step required - static HTML/CSS/JS'",
+    "preview": "npx serve . -p 3000",
+    "lint": "echo 'No linting configured'",
+    "format": "prettier --write \"*.html\""
+  },
+  "keywords": [
+    "driving-school",
+    "kenya",
+    "driver-safety",
+    "supabase",
+    "ntsa",
+    "highway-code",
+    "driver-education",
+    "traffic-safety"
+  ],
+  "author": "MEI DRIVE AFRICA",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/mei-drive-africa.git"
+  },
+  "homepage": "https://meidriveafrica.com",
+  "bugs": {
+    "url": "https://github.com/yourusername/mei-drive-africa/issues"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.0",
+    "serve": "^14.2.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
