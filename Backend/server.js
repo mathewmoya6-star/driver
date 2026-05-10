@@ -1,14 +1,19 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const ws = require("ws");
+
+global.WebSocket = ws;
+
 const { createClient } = require("@supabase/supabase-js");
+
 require("dotenv").config();
 
 const app = express();
 
-/* ======================
-   CLEAN CORS (PRODUCTION)
-====================== */
+/* =========================================
+   CORS
+========================================= */
 app.use(cors({
   origin: [
     "https://www.meidriveafrica.com",
@@ -19,15 +24,22 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+/* =========================================
+   STATIC FILES
+========================================= */
 app.use(express.static(path.join(__dirname, "public")));
 
-/* ======================
-   SUPABASE (STABLE MODE)
-====================== */
+/* =========================================
+   SUPABASE CLIENT
+========================================= */
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY,
   {
+    realtime: {
+      transport: ws
+    },
     auth: {
       autoRefreshToken: false,
       persistSession: false
@@ -35,68 +47,102 @@ const supabase = createClient(
   }
 );
 
-/* ======================
+/* =========================================
    HEALTH CHECK
-====================== */
-app.get("/api/health", (req, res) => {
+========================================= */
+app.get("/", (req, res) => {
   res.json({
     status: "OK",
-    server: "MEI Drive Africa API",
-    time: new Date().toISOString()
+    message: "MEI Drive Africa Backend Running 🚀"
   });
 });
 
-/* ======================
-   AUTH LOGIN
-====================== */
+/* =========================================
+   LOGIN
+========================================= */
 app.post("/api/auth/login", async (req, res) => {
-  const { email, password } = req.body;
-
   try {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
+    const { email, password } = req.body;
 
-    if (error) return res.status(401).json({ error: error.message });
+    if (!email || !password) {
+      return res.status(400).json({
+        error: "Email and password required"
+      });
+    }
+
+    const { data, error } =
+      await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+    if (error) {
+      return res.status(401).json({
+        error: error.message
+      });
+    }
 
     res.json({
+      success: true,
       user: data.user,
       session: data.session
     });
 
   } catch (err) {
-    res.status(500).json({ error: "Server error" });
+    console.error("LOGIN ERROR:", err);
+
+    res.status(500).json({
+      error: "Internal server error"
+    });
   }
 });
 
-/* ======================
-   PROTECT ROUTE EXAMPLE
-====================== */
+/* =========================================
+   AUTH TEST
+========================================= */
 app.get("/api/me", async (req, res) => {
-  const token = req.headers.authorization?.replace("Bearer ", "");
+  try {
+    const token =
+      req.headers.authorization?.replace("Bearer ", "");
 
-  if (!token) return res.status(401).json({ error: "No token" });
+    if (!token) {
+      return res.status(401).json({
+        error: "No token provided"
+      });
+    }
 
-  const { data, error } = await supabase.auth.getUser(token);
+    const { data, error } =
+      await supabase.auth.getUser(token);
 
-  if (error) return res.status(401).json({ error: "Invalid token" });
+    if (error) {
+      return res.status(401).json({
+        error: "Invalid token"
+      });
+    }
 
-  res.json(data.user);
+    res.json(data.user);
+
+  } catch (err) {
+    res.status(500).json({
+      error: "Auth error"
+    });
+  }
 });
 
-/* ======================
-   FRONTEND ROUTE
-====================== */
+/* =========================================
+   FRONTEND
+========================================= */
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(
+    path.join(__dirname, "public", "index.html")
+  );
 });
 
-/* ======================
+/* =========================================
    START SERVER
-====================== */
+========================================= */
 const PORT = process.env.PORT || 10000;
 
 app.listen(PORT, () => {
-  console.log("🚀 Server running on port", PORT);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
