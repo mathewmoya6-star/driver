@@ -1,35 +1,40 @@
 const jwt = require("jsonwebtoken");
 
-function auth(req, res, next) {
+module.exports = (req, res, next) => {
+  try {
+    const authHeader = req.headers.authorization;
 
-    const header = req.headers.authorization;
-
-    if (!header) {
-        return res.status(401).json({ error: "No token" });
+    if (!authHeader) {
+      return res.status(401).json({
+        success: false,
+        error: "No token provided",
+      });
     }
 
-    try {
+    const token = authHeader.split(" ")[1];
 
-        const token = header.split(" ")[1];
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        req.user = decoded;
-
-        next();
-
-    } catch (err) {
-        res.status(401).json({ error: "Invalid token" });
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        error: "Invalid token format",
+      });
     }
-}
 
-function adminOnly(req, res, next) {
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    );
 
-    if (req.user.role !== "admin") {
-        return res.status(403).json({ error: "Admin only" });
-    }
+    req.user = decoded;
 
     next();
-}
 
-module.exports = { auth, adminOnly };
+  } catch (err) {
+    console.error("AUTH ERROR:", err);
+
+    return res.status(401).json({
+      success: false,
+      error: "Unauthorized",
+    });
+  }
+};
