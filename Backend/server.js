@@ -1,62 +1,73 @@
-import express from "express";
-import { createClient } from "@supabase/supabase-js";
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const { createClient } = require("@supabase/supabase-js");
+
+dotenv.config();
 
 const app = express();
+
+// Middleware
+app.use(cors());
 app.use(express.json());
 
-// SAFE INIT (prevents crash)
-function supabaseClient() {
-  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
-    console.log("ENV ERROR:", {
-      url: process.env.SUPABASE_URL,
-      key: !!process.env.SUPABASE_ANON_KEY,
-    });
+// Supabase setup (SAFE: uses env variables)
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-    throw new Error("Missing Supabase environment variables");
-  }
-
-  return createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_ANON_KEY
-  );
+if (!supabaseUrl || !supabaseKey) {
+  console.error("Missing Supabase environment variables");
+  process.exit(1);
 }
 
-// TEST ROUTE (debug)
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Test route
 app.get("/", (req, res) => {
   res.json({
-    status: "Server running",
-    supabase_url: !!process.env.SUPABASE_URL,
-    supabase_key: !!process.env.SUPABASE_ANON_KEY,
+    message: "MEI Drive Africa API is running 🚀",
+    status: "OK"
   });
 });
 
-// LOGIN ROUTE
-app.post("/api/login", async (req, res) => {
+// Example: fetch users (admin example)
+app.get("/users", async (req, res) => {
   try {
-    const supabase = supabaseClient();
-
-    const { email, password } = req.body;
-
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { data, error } = await supabase.from("users").select("*");
 
     if (error) {
-      return res.status(401).json({ error: error.message });
+      return res.status(400).json({ error: error.message });
     }
 
-    return res.json({
-      user: data.user,
-      session: data.session,
-    });
+    res.json(data);
   } catch (err) {
-    console.error("LOGIN ERROR:", err.message);
-    return res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Server error" });
   }
 });
 
+// Example: create user
+app.post("/users", async (req, res) => {
+  try {
+    const { name, email } = req.body;
+
+    const { data, error } = await supabase
+      .from("users")
+      .insert([{ name, email }])
+      .select();
+
+    if (error) {
+      return res.status(400).json({ error: error.message });
+    }
+
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// Start server (Render requires process.env.PORT)
 const PORT = process.env.PORT || 10000;
+
 app.listen(PORT, () => {
-  console.log("Server running on port", PORT);
+  console.log(`Server running on port ${PORT}`);
 });
