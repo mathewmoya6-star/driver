@@ -1,3 +1,14 @@
+const jwt = require("jsonwebtoken");
+const express = require("express");
+const router = express.Router();
+
+const { createClient } = require("@supabase/supabase-js");
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
+
 router.post("/login", async (req, res) => {
   try {
     const body =
@@ -27,7 +38,7 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // ✅ JWT TOKEN GENERATION
+    // 🔐 CREATE JWT TOKEN
     const token = jwt.sign(
       {
         id: data.user.id,
@@ -39,7 +50,7 @@ router.post("/login", async (req, res) => {
       }
     );
 
-    // ✅ FINAL RESPONSE
+    // ✅ RESPONSE
     return res.status(200).json({
       success: true,
       message: "Login successful",
@@ -59,3 +70,5 @@ router.post("/login", async (req, res) => {
     });
   }
 });
+
+module.exports = router;
