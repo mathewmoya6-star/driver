@@ -1,40 +1,33 @@
-const jwt = require("jsonwebtoken");
+const supabase = require("../supabase");
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   try {
-    const authHeader = req.headers.authorization;
-
-    if (!authHeader) {
-      return res.status(401).json({
-        success: false,
-        error: "No token provided",
-      });
-    }
-
-    const token = authHeader.split(" ")[1];
+    const token = req.headers.authorization?.split(" ")[1];
 
     if (!token) {
-      return res.status(401).json({
-        success: false,
-        error: "Invalid token format",
-      });
+      return res.status(401).json({ error: "No token provided" });
     }
 
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET
-    );
+    const { data, error } = await supabase.auth.getUser(token);
 
-    req.user = decoded;
+    if (error || !data.user) {
+      return res.status(401).json({ error: "Invalid token" });
+    }
+
+    req.user = data.user;
+
+    // attach profile
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", data.user.id)
+      .single();
+
+    req.profile = profile;
 
     next();
-
   } catch (err) {
-    console.error("AUTH ERROR:", err);
-
-    return res.status(401).json({
-      success: false,
-      error: "Unauthorized",
-    });
+    console.error(err);
+    res.status(500).json({ error: "Auth error" });
   }
 };
