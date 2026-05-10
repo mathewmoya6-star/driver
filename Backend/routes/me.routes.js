@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
 
-router.get("/me", auth, (req, res) => {
+router.get("/", auth, (req, res) => {
   res.json({
+    success: true,
     user: req.user,
-    profile: req.profile
   });
 });
 
