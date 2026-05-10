@@ -1,148 +1,98 @@
-const express = require("express");
-const cors = require("cors");
-const path = require("path");
-const ws = require("ws");
-
-global.WebSocket = ws;
-
-const { createClient } = require("@supabase/supabase-js");
-
 require("dotenv").config();
+
+const express = require("express");
+const path = require("path");
 
 const app = express();
 
-/* =========================================
-   CORS
-========================================= */
-app.use(cors({
-  origin: [
-    "https://www.meidriveafrica.com",
-    "https://meidriveafrica.vercel.app",
-    "http://localhost:3000"
-  ],
-  credentials: true
-}));
-
+/**
+ * =========================
+ * MIDDLEWARE
+ * =========================
+ */
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-/* =========================================
-   STATIC FILES
-========================================= */
-app.use(express.static(path.join(__dirname, "public")));
+/**
+ * =========================
+ * SAFE WEBSOCKET IMPORT
+ * =========================
+ */
+let WebSocket;
 
-/* =========================================
-   SUPABASE CLIENT
-========================================= */
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY,
-  {
-    realtime: {
-      transport: ws
-    },
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false
-    }
-  }
-);
+try {
+  WebSocket = require("ws");
+} catch (err) {
+  console.log("ws not installed - skipping websocket feature");
+}
 
-/* =========================================
-   HEALTH CHECK
-========================================= */
+/**
+ * =========================
+ * STATIC FRONTEND
+ * =========================
+ */
+app.use(express.static(path.join(__dirname, "frontend")));
+
+/**
+ * =========================
+ * ROUTES
+ * =========================
+ */
+
+// Auth routes
+app.use("/api/auth", require("./routes/auth"));
+
+// AI routes (if you have it)
+if (require("fs").existsSync("./routes/ai.js")) {
+  app.use("/api/ai", require("./routes/ai"));
+}
+
+/**
+ * =========================
+ * HOME ROUTE
+ * =========================
+ */
 app.get("/", (req, res) => {
-  res.json({
-    status: "OK",
-    message: "MEI Drive Africa Backend Running 🚀"
+  res.sendFile(path.join(__dirname, "frontend", "index.html"));
+});
+
+/**
+ * =========================
+ * OPTIONAL WEBSOCKET SERVER
+ * (only if ws is installed)
+ * =========================
+ */
+if (WebSocket) {
+  const http = require("http");
+  const server = http.createServer(app);
+
+  const wss = new WebSocket.Server({ server });
+
+  wss.on("connection", (ws) => {
+    console.log("WebSocket connected");
+
+    ws.on("message", (message) => {
+      console.log("WS message:", message.toString());
+    });
+
+    ws.send("Connected to MEI DRIVE WebSocket");
   });
-});
 
-/* =========================================
-   LOGIN
-========================================= */
-app.post("/api/auth/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
+  const PORT = process.env.PORT || 10000;
 
-    if (!email || !password) {
-      return res.status(400).json({
-        error: "Email and password required"
-      });
-    }
+  server.listen(PORT, () => {
+    console.log("Server running with WebSocket on port", PORT);
+  });
 
-    const { data, error } =
-      await supabase.auth.signInWithPassword({
-        email,
-        password
-      });
+} else {
+  /**
+   * =========================
+   * NORMAL EXPRESS SERVER
+   * =========================
+   */
+  const PORT = process.env.PORT || 10000;
 
-    if (error) {
-      return res.status(401).json({
-        error: error.message
-      });
-    }
-
-    res.json({
-      success: true,
-      user: data.user,
-      session: data.session
-    });
-
-  } catch (err) {
-    console.error("LOGIN ERROR:", err);
-
-    res.status(500).json({
-      error: "Internal server error"
-    });
-  }
-});
-
-/* =========================================
-   AUTH TEST
-========================================= */
-app.get("/api/me", async (req, res) => {
-  try {
-    const token =
-      req.headers.authorization?.replace("Bearer ", "");
-
-    if (!token) {
-      return res.status(401).json({
-        error: "No token provided"
-      });
-    }
-
-    const { data, error } =
-      await supabase.auth.getUser(token);
-
-    if (error) {
-      return res.status(401).json({
-        error: "Invalid token"
-      });
-    }
-
-    res.json(data.user);
-
-  } catch (err) {
-    res.status(500).json({
-      error: "Auth error"
-    });
-  }
-});
-
-/* =========================================
-   FRONTEND
-========================================= */
-app.get("*", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "public", "index.html")
-  );
-});
-
-/* =========================================
-   START SERVER
-========================================= */
-const PORT = process.env.PORT || 10000;
-
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+  app.listen(PORT, () => {
+    console.log("Server running on port", PORT);
+  });
+}
