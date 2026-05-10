@@ -1,6 +1,9 @@
-const API_URL = "https://YOUR-RENDER-BACKEND.onrender.com"; // CHANGE THIS
+const API_URL = "https://YOUR-RENDER-BACKEND.onrender.com";
 
-async function login(email, password) {
+async function login() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
   try {
     const res = await fetch(`${API_URL}/api/auth/login`, {
       method: "POST",
@@ -13,10 +16,11 @@ async function login(email, password) {
     const data = await res.json();
 
     if (!res.ok) {
-      throw new Error(data.error || "Login failed");
+      alert(data.error || "Login failed");
+      return;
     }
 
-    // Save session securely
+    // Save token
     localStorage.setItem("token", data.session.access_token);
     localStorage.setItem("user", JSON.stringify(data.user));
 
@@ -24,6 +28,7 @@ async function login(email, password) {
     window.location.href = "/dashboard.html";
 
   } catch (err) {
-    alert(err.message);
+    console.error(err);
+    alert("Network error. Try again.");
   }
 }
