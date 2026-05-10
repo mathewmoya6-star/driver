@@ -17,27 +17,30 @@ app.use(express.urlencoded({ extended: true }));
  */
 app.get("/", (req, res) => {
   res.json({
-    message: "MEI DRIVE AFRICA API RUNNING",
     status: "OK",
+    message: "MEI DRIVE AFRICA API RUNNING",
   });
 });
 
 /**
- * ROUTES (IMPORTANT - THIS FIXES YOUR ERROR)
+ * ROUTES (FIXED PATHS)
+ * IMPORTANT: These must match your folder structure
  */
 app.use("/api/auth", require("./routes/auth.routes"));
 app.use("/api/me", require("./routes/me.routes"));
 app.use("/api/admin", require("./routes/admin.routes"));
+app.use("/api/user", require("./routes/user.routes"));
+app.use("/api/ai", require("./routes/ai"));
 
 /**
- * Static frontend (optional)
+ * Frontend (optional)
  */
 app.use(express.static(path.join(__dirname, "frontend")));
 
 /**
- * PORT (Render + local safe)
+ * PORT
  */
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log("========================================");
