@@ -1,148 +1,96 @@
+const { createClient } = require('@supabase/supabase-js');
 
-// ================= AUTH LOGIN =================
-async function login() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+// Initialize Supabase
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
 
+// Helper: verify admin token
+async function verifyAdmin(req) {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) return null;
+  
+  const token = authHeader.replace('Bearer ', '');
+  
+  const { data, error } = await supabase.auth.getUser(token);
+  if (error || !data.user) return null;
+  
+  const role = data.user.user_metadata?.role;
+  if (role !== 'admin') return null;
+  
+  return data.user;
+}
+
+module.exports = async (req, res) => {
+  // Enable CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  
   try {
-    const res = await fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      alert(data.error || "Login failed");
-      return;
+    // Verify admin
+    const user = await verifyAdmin(req);
+    if (!user) {
+      return res.status(401).json({ error: 'Unauthorized: Admin access required' });
     }
-
-    // Save token (Supabase session)
-    localStorage.setItem("token", data.session.access_token);
-
-    alert("Login successful");
-
-    // redirect to admin dashboard (optional)
-    window.location.href = "/admin.html";
-
+    
+    const url = new URL(req.url, `http://${req.headers.host}`);
+    const path = url.pathname;
+    
+    // GET /api/admin/stats
+    if (req.method === 'GET' && path === '/api/admin/stats') {
+      const { data } = await supabase.from('user_progress').select('*');
+      const totalUsers = new Set(data?.map(u => u.user_id)).size;
+      return res.json({ totalUsers, students: Math.floor(totalUsers * 0.6), drivers: Math.floor(totalUsers * 0.3), totalCompletions: 0 });
+    }
+    
+    // GET /api/admin/users
+    if (req.method === 'GET' && path === '/api/admin/users') {
+      const { data, error } = await supabase
+        .from('user_progress')
+        .select('*')
+        .order('updated_at', { ascending: false });
+      
+      if (error) throw error;
+      return res.json(data || []);
+    }
+    
+    // POST /api/admin/users
+    if (req.method === 'POST' && path === '/api/admin/users') {
+      const { user_id, name, email, role } = req.body;
+      
+      const { error } = await supabase.from('user_progress').insert({
+        user_id: user_id || email,
+        user_name: name,
+        user_email: email,
+        user_role: role || 'learner',
+        progress_data: { units: {}, answers: [] },
+        updated_at: new Date().toISOString()
+      });
+      
+      if (error) throw error;
+      return res.json({ success: true });
+    }
+    
+    // DELETE /api/admin/users/:id
+    if (req.method === 'DELETE' && path.startsWith('/api/admin/users/')) {
+      const id = path.split('/').pop();
+      const { error } = await supabase.from('user_progress').delete().eq('user_id', id);
+      
+      if (error) throw error;
+      return res.json({ success: true });
+    }
+    
+    // 404
+    res.status(404).json({ error: 'Not found' });
+    
   } catch (err) {
-    console.error(err);
-    alert("Network error");
+    console.error('API Error:', err);
+    res.status(500).json({ error: err.message });
   }
-}
-
-// ================= AUTH HEADER =================
-function authHeaders() {
-  return {
-    "Content-Type": "application/json",
-    Authorization: localStorage.getItem("token"),
-  };
-}
-
-// ================= LOAD USERS =================
-async function loadUsers() {
-  try {
-    const res = await fetch("/api/admin/users", {
-      headers: authHeaders(),
-    });
-
-    if (!res.ok) {
-      console.error("Failed to load users");
-      return;
-    }
-
-    const users = await res.json();
-
-    const tbody = document.getElementById("usersTableBody");
-    if (!tbody) return;
-
-    if (!users.length) {
-      tbody.innerHTML = `<tr><td colspan="5">No users found</td></tr>`;
-      return;
-    }
-
-    tbody.innerHTML = users.map(user => `
-      <tr>
-        <td>${user.user_id}</td>
-        <td>${user.user_id}@user</td>
-        <td><span class="role-badge">learner</span></td>
-        <td>—</td>
-        <td>
-          <button class="delete-btn" onclick="deleteUser('${user.user_id}')">
-            Delete
-          </button>
-        </td>
-      </tr>
-    `).join("");
-
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-// ================= ADD USER =================
-async function addUser() {
-  const user_id = document.getElementById("user_id")?.value;
-
-  if (!user_id) {
-    alert("Enter user ID");
-    return;
-  }
-
-  try {
-    const res = await fetch("/api/admin/users", {
-      method: "POST",
-      headers: authHeaders(),
-      body: JSON.stringify({ user_id }),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      alert(data.error || "Failed to add user");
-      return;
-    }
-
-    alert("User created");
-    loadUsers();
-
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-// ================= DELETE USER =================
-async function deleteUser(id) {
-  if (!confirm("Delete this user?")) return;
-
-  try {
-    const res = await fetch("/api/admin/users/" + id, {
-      method: "DELETE",
-      headers: authHeaders(),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      alert(data.error || "Delete failed");
-      return;
-    }
-
-    alert("User deleted");
-    loadUsers();
-
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-// ================= INIT =================
-window.addEventListener("load", () => {
-  // auto-load users if table exists
-  if (document.getElementById("usersTableBody")) {
-    loadUsers();
-  }
-});
+};
