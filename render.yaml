@@ -1,6 +1,14 @@
 services:
   - type: web
     name: mei-drive-africa
-    env: node
+    runtime: node
+    repo: https://github.com/your-username/mei-drive-africa
     buildCommand: npm install
-    startCommand: node server.js
+    startCommand: npm start
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: PORT
+        value: 10000
