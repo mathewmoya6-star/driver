@@ -1,70 +1,45 @@
 require("dotenv").config();
-
 const express = require("express");
 const cors = require("cors");
-const path = require("path");
+const { createClient } = require("@supabase/supabase-js");
 
 const app = express();
-
-/**
- * Middleware (ALWAYS FIRST)
- */
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-/**
- * Safe WebSocket Import
- */
-let WebSocket;
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
+);
 
-try {
-  WebSocket = require("ws");
-} catch (err) {
-  console.log("ws not installed - skipping websocket");
-}
+// middleware: verify user
+const auth = async (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
 
-/**
- * Static Frontend
- */
-app.use(express.static(path.join(__dirname, "frontend")));
+  if (!token) return res.status(401).json({ error: "No token" });
 
-/**
- * Routes
- */
-app.use("/api/auth", require("./routes/auth.routes"));
+  const { data, error } = await supabase.auth.getUser(token);
 
-/**
- * Middleware import AFTER setup
- */
-const adminAuth = require("./middleware/admin");
+  if (error) return res.status(401).json({ error: error.message });
 
-/**
- * Admin Route
- */
-app.get("/api/admin", adminAuth, (req, res) => {
-  res.json({
-    success: true,
-    message: "Welcome Admin Panel",
-    user: req.user,
-  });
+  req.user = data.user;
+  next();
+};
+
+// admin route
+app.get("/api/admin", auth, async (req, res) => {
+  const { data } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", req.user.id)
+    .single();
+
+  if (data.role !== "admin") {
+    return res.status(403).json({ error: "Forbidden" });
+  }
+
+  res.json({ success: true, user: data });
 });
 
-/**
- * Home Route
- */
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "index.html"));
-});
-
-/**
- * Start Server
- */
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log("========================================");
-  console.log("SERVER IS RUNNING!");
-  console.log(`http://localhost:${PORT}`);
-  console.log("========================================");
-});
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => console.log("Server running on", PORT));
