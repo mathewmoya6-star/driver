@@ -1,98 +1,51 @@
 require("dotenv").config();
 
 const express = require("express");
+const cors = require("cors");
 const path = require("path");
 
 const app = express();
 
 /**
- * =========================
- * MIDDLEWARE
- * =========================
+ * Middleware
  */
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /**
- * =========================
- * SAFE WEBSOCKET IMPORT
- * =========================
+ * Safe WebSocket Import
  */
 let WebSocket;
 
 try {
   WebSocket = require("ws");
 } catch (err) {
-  console.log("ws not installed - skipping websocket feature");
+  console.log("ws not installed - skipping websocket");
 }
 
 /**
- * =========================
- * STATIC FRONTEND
- * =========================
+ * Static Frontend
  */
 app.use(express.static(path.join(__dirname, "frontend")));
 
 /**
- * =========================
- * ROUTES
- * =========================
+ * Routes
  */
-
-// Auth routes
-app.use("/api/auth", require("./routes/auth"));
-
-// AI routes (if you have it)
-if (require("fs").existsSync("./routes/ai.js")) {
-  app.use("/api/ai", require("./routes/ai"));
-}
+app.use("/api/auth", require("./routes/auth.routes"));
 
 /**
- * =========================
- * HOME ROUTE
- * =========================
+ * Home Route
  */
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "index.html"));
 });
 
 /**
- * =========================
- * OPTIONAL WEBSOCKET SERVER
- * (only if ws is installed)
- * =========================
+ * Start Server
  */
-if (WebSocket) {
-  const http = require("http");
-  const server = http.createServer(app);
+const PORT = process.env.PORT || 10000;
 
-  const wss = new WebSocket.Server({ server });
-
-  wss.on("connection", (ws) => {
-    console.log("WebSocket connected");
-
-    ws.on("message", (message) => {
-      console.log("WS message:", message.toString());
-    });
-
-    ws.send("Connected to MEI DRIVE WebSocket");
-  });
-
-  const PORT = process.env.PORT || 10000;
-
-  server.listen(PORT, () => {
-    console.log("Server running with WebSocket on port", PORT);
-  });
-
-} else {
-  /**
-   * =========================
-   * NORMAL EXPRESS SERVER
-   * =========================
-   */
-  const PORT = process.env.PORT || 10000;
-
-  app.listen(PORT, () => {
-    console.log("Server running on port", PORT);
-  });
-}
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
