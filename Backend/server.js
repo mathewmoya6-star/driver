@@ -7,65 +7,30 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Supabase setup (SAFE: uses env variables)
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+// Supabase setup
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
 
-if (!supabaseUrl || !supabaseKey) {
-  console.error("Missing Supabase environment variables");
-  process.exit(1);
-}
-
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-// Test route
+// Health check
 app.get("/", (req, res) => {
-  res.json({
-    message: "MEI Drive Africa API is running 🚀",
-    status: "OK"
-  });
+  res.json({ message: "Server is running 🚀" });
 });
 
-// Example: fetch users (admin example)
+// Example route
 app.get("/users", async (req, res) => {
-  try {
-    const { data, error } = await supabase.from("users").select("*");
+  const { data, error } = await supabase.from("users").select("*");
 
-    if (error) {
-      return res.status(400).json({ error: error.message });
-    }
+  if (error) return res.status(400).json({ error: error.message });
 
-    res.json(data);
-  } catch (err) {
-    res.status(500).json({ error: "Server error" });
-  }
+  res.json(data);
 });
 
-// Example: create user
-app.post("/users", async (req, res) => {
-  try {
-    const { name, email } = req.body;
-
-    const { data, error } = await supabase
-      .from("users")
-      .insert([{ name, email }])
-      .select();
-
-    if (error) {
-      return res.status(400).json({ error: error.message });
-    }
-
-    res.json(data);
-  } catch (err) {
-    res.status(500).json({ error: "Server error" });
-  }
-});
-
-// Start server (Render requires process.env.PORT)
+// Start server
 const PORT = process.env.PORT || 10000;
 
 app.listen(PORT, () => {
