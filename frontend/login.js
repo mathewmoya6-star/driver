@@ -7,9 +7,7 @@ async function login() {
   try {
     const res = await fetch(`${API_URL}/api/auth/login`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })
     });
 
@@ -20,15 +18,12 @@ async function login() {
       return;
     }
 
-    // Save token
     localStorage.setItem("token", data.session.access_token);
     localStorage.setItem("user", JSON.stringify(data.user));
 
-    // Redirect
     window.location.href = "/dashboard.html";
 
   } catch (err) {
-    console.error(err);
-    alert("Network error. Try again.");
+    alert("Server unreachable");
   }
 }
