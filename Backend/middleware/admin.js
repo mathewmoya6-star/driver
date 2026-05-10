@@ -1,11 +1,35 @@
+const jwt = require("jsonwebtoken");
+
 module.exports = (req, res, next) => {
-  if (!req.user) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
+  try {
+    const authHeader = req.headers.authorization;
 
-  if (req.user.role !== "admin") {
-    return res.status(403).json({ message: "Admin only access" });
-  }
+    if (!authHeader) {
+      return res.status(401).json({
+        success: false,
+        error: "No token provided",
+      });
+    }
 
-  next();
+    const token = authHeader.split(" ")[1];
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    req.user = decoded;
+
+    // 🔥 ADMIN CHECK (simple version)
+    if (decoded.email !== "admin@meidrive.com") {
+      return res.status(403).json({
+        success: false,
+        error: "Access denied: Admin only",
+      });
+    }
+
+    next();
+  } catch (err) {
+    return res.status(401).json({
+      success: false,
+      error: "Invalid token",
+    });
+  }
 };
