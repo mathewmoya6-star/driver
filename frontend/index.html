@@ -41,10 +41,11 @@
             .nav-links button { width: auto; padding: 8px 16px; font-size: 14px; }
         }
         
-        .btn, .btn-ev { min-height: 48px; padding: 12px 24px; font-size: 16px; font-weight: 600; border: none; border-radius: 50px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn, .btn-ev { min-height: 48px; padding: 12px 24px; font-size: 16px; font-weight: 600; border: none; border-radius: 50px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.2s; }
         .btn { background: var(--gradient-gold); color: #000; }
         .btn-ev { background: linear-gradient(135deg, #00ff88, #00b4d8); color: #000; }
         .btn-small { min-height: 40px; padding: 8px 20px; font-size: 14px; border-radius: 50px; background: var(--gradient-gold); color: #000; border: none; cursor: pointer; }
+        .btn:disabled, .btn-ev:disabled { opacity: 0.5; cursor: not-allowed; }
         
         .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 20px 0; }
         @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
@@ -81,14 +82,10 @@
         .option.correct { background: rgba(46,204,113,0.2); border-color: #2ecc71; }
         .option.wrong { background: rgba(231,76,60,0.2); border-color: #e74c3c; }
         
-        .quiz-nav { display: flex; justify-content: center; gap: 8px; margin: 20px 0; flex-wrap: wrap; }
-        .quiz-nav button { padding: 8px 16px; background: var(--card-bg); border: 1px solid var(--border-color); color: #fff; border-radius: 8px; cursor: pointer; }
-        .quiz-nav button.active { background: var(--primary-gold); color: #000; border-color: var(--primary-gold); }
-        
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); backdrop-filter: blur(12px); z-index: 2000; justify-content: center; align-items: center; padding: 16px; }
-        .modal-content { background: var(--card-bg); border: 1px solid var(--primary-gold); border-radius: 24px; padding: 24px; width: 100%; max-width: 450px; }
-        .modal-content input { width: 100%; padding: 14px; margin: 8px 0; background: #1a1c26; border: 1px solid #2c2f3a; border-radius: 12px; color: #fff; }
-        .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--primary-gold); }
+        .modal-content { background: var(--card-bg); border: 1px solid var(--primary-gold); border-radius: 24px; padding: 24px; width: 100%; max-width: 450px; max-height: 85vh; overflow-y: auto; }
+        .modal-content input { width: 100%; padding: 14px; margin: 8px 0; background: #1a1c26; border: 1px solid #2c2f3a; border-radius: 12px; color: #fff; font-size: 16px; }
+        .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--primary-gold); padding: 8px; margin: -8px -8px 0 0; }
         
         #toast-root { position: fixed; bottom: 16px; left: 16px; right: 16px; z-index: 2000; display: flex; flex-direction: column; gap: 8px; }
         @media (min-width: 768px) { #toast-root { bottom: 30px; right: 30px; left: auto; min-width: 300px; } }
@@ -114,234 +111,528 @@
         .score-card { background: var(--card-bg); border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 20px; border: 1px solid var(--primary-gold); }
         .score-card h3 { color: var(--primary-gold); margin-bottom: 8px; }
         .score-card .score { font-size: 2rem; font-weight: 800; }
+        
+        .profile-link { background: rgba(212,175,55,0.2); border-radius: 40px; padding: 6px 16px; cursor: pointer; font-size: 14px; }
+        .admin-panel { display: none; }
+        .admin-sidebar { width: 260px; background: var(--card-bg); border-right: 1px solid var(--border-color); padding: 20px; min-height: calc(100vh - 70px); }
+        .admin-sidebar button { width: 100%; padding: 12px; margin-bottom: 8px; background: transparent; border: 1px solid var(--border-color); color: #fff; border-radius: 12px; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 12px; }
+        .admin-sidebar button:hover { background: rgba(212,175,55,0.1); border-color: var(--primary-gold); color: var(--primary-gold); }
+        .admin-layout { display: flex; min-height: calc(100vh - 70px); }
+        .admin-content { flex: 1; padding: 30px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 16px; overflow: hidden; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { color: var(--primary-gold); }
+        .role-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; display: inline-block; }
+        .role-admin { background: rgba(231,76,60,0.2); color: #e74c3c; }
+        .role-learner { background: rgba(52,152,219,0.2); color: #3498db; }
+        .role-driver { background: rgba(46,204,113,0.2); color: #2ecc71; }
+        .search-input { width: 100%; padding: 12px; margin-bottom: 20px; background: #1a1c26; border: 1px solid var(--border-color); border-radius: 12px; color: #fff; }
+        .btn-sm { padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; font-size: 12px; margin: 0 4px; }
+        .btn-edit { background: #3498db; color: white; }
+        .btn-delete { background: #e74c3c; color: white; }
+        .btn-add { background: #2ecc71; color: white; }
+        
+        @media (max-width: 768px) { .admin-layout { flex-direction: column; } .admin-sidebar { width: 100%; } }
     </style>
 </head>
 <body>
     <div id="app">
-        <div class="navbar">
-            <div class="container nav">
-                <div class="logo" data-nav="home">MEI DRIVE AFRICA ⚡</div>
-                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
-                <div class="nav-links" id="navLinks">
-                    <button data-nav="home">🏠 Home</button>
-                    <button data-nav="learner">📚 Learner (21 Units)</button>
-                    <button data-nav="psv">🚌 PSV (10 Units)</button>
-                    <button data-nav="schoolbus">🏫 School Bus (6 Units)</button>
-                    <button data-nav="boda">🏍️ Boda (12 Units)</button>
-                    <button data-nav="ev">⚡ EV (8 Units)</button>
-                    <button data-nav="academy">🎓 Academy (6 Units)</button>
-                    <button data-nav="library">📖 Library</button>
-                    <button data-nav="quiz">📝 NTSA Quiz (1000+)</button>
-                    <div id="authButtons"></div>
-                </div>
-            </div>
-        </div>
-        <div class="container"><main id="page-content"><div class="spinner"></div></main></div>
+        <!-- Dynamic content will be loaded here -->
     </div>
-    <div id="modal-root"></div>
-    <div id="toast-root"></div>
 
-    <script>
+    <script type="module">
         // ============================================
-        // COMPLETE 21 LEARNER UNITS
+        // SUPABASE CONFIGURATION
         // ============================================
-        const LEARNER_UNITS = [
-            { id: 1, title: "Introduction to Driving in Kenya", desc: "Kenyan driving licenses, requirements, responsibilities", content: "<h2>Kenya Driving License Categories</h2><ul><li>Class A: Motorcycles</li><li>Class B: Light vehicles up to 3500kg</li><li>Class C: Heavy vehicles over 3500kg</li><li>Class D: PSV Public Service Vehicles</li><li>Class E: Trailers and special equipment</li></ul><h2>Requirements</h2><ul><li>Minimum age: 18 years</li><li>Medical certificate from approved doctor</li><li>Theory test minimum 80% score</li><li>Practical driving test with NTSA examiner</li><li>Payment of approx KSH 3,000</li></ul><h2>Driver Responsibilities</h2><ul><li>Always carry original driving license</li><li>Ensure vehicle is roadworthy</li><li>Follow all traffic rules</li><li>Respect other road users</li><li>Never drive under influence</li></ul>" },
-            { id: 2, title: "The Highway Code & Traffic Signs", desc: "Master all Kenyan traffic signs", content: "<h2>Types of Traffic Signs</h2><ul><li>Regulatory: Stop, Give Way, Speed limits, No entry</li><li>Warning: Danger ahead, Sharp bend, Pedestrian crossing</li><li>Informative: Parking, Hospital, Fuel station</li></ul><h2>Road Markings</h2><ul><li>Solid yellow line: No overtaking</li><li>Broken yellow line: Overtaking allowed with caution</li><li>Solid white line: Lane separation, do not cross</li><li>Zebra crossing: Pedestrian priority</li><li>Yellow box junction: Do not enter unless exit clear</li></ul><h2>Traffic Lights</h2><ul><li>Red: Stop and wait</li><li>Amber: Prepare to stop</li><li>Green: Go if clear</li><li>Flashing amber: Proceed with caution</li></ul>" },
-            { id: 3, title: "Vehicle Controls & Instruments", desc: "Dashboard, controls, warning lights", content: "<h2>Essential Controls</h2><ul><li>Steering wheel: Controls direction</li><li>Accelerator: Right foot - controls speed</li><li>Brake pedal: Right foot - slows/stops vehicle</li><li>Clutch pedal: Left foot - manual only</li><li>Gear stick: Changes gear ratios</li><li>Handbrake: Parking brake</li></ul><h2>Warning Lights</h2><ul><li>Red: Stop immediately - brake, oil pressure, battery, coolant temp</li><li>Yellow: Caution - check engine, ABS, traction control</li><li>Green: System active - headlights, turn signals</li><li>Blue: High beam headlights active</li></ul>" },
-            { id: 4, title: "Basic Vehicle Maintenance", desc: "Essential maintenance checks", content: "<h2>Daily Checks - POWeR</h2><ul><li>P - Petrol/Diesel/Fuel level</li><li>O - Oil level using dipstick</li><li>W - Water/Coolant level</li><li>eR - Electrical: lights, indicators, horn, wipers</li></ul><h2>Weekly Checks</h2><ul><li>Tire pressure (recommended PSI on door sticker)</li><li>Tire tread depth (minimum 1.6mm)</li><li>Brake fluid level</li><li>Power steering fluid</li><li>Windshield washer fluid</li></ul><h2>Monthly Checks</h2><ul><li>Battery terminals for corrosion</li><li>Belts and hoses for wear</li><li>Air filter condition</li></ul>" },
-            { id: 5, title: "Moving Off & Stopping Safely", desc: "Starting, stopping, parking", content: "<h2>MSM Routine</h2><ul><li>M - Mirrors: Check all mirrors</li><li>S - Signal: Indicate intention clearly</li><li>M - Manoeuvre: Move safely when clear</li></ul><h2>Moving Off Procedure</h2><ul><li>Press clutch fully (manual) or brake (auto)</li><li>Select first gear or Drive</li><li>Check mirrors and blind spots</li><li>Signal intention</li><li>Release handbrake</li><li>Slowly release clutch while applying gentle accelerator</li></ul><h2>Hill Starts</h2><ul><li>Use handbrake to prevent rollback</li><li>Find biting point with clutch</li><li>Apply accelerator</li><li>Release handbrake smoothly</li></ul>" },
-            { id: 6, title: "Turning & Reversing", desc: "Safe turning and reversing", content: "<h2>Turning Safety</h2><ul><li>Signal at least 30 meters before turn</li><li>Check mirrors and blind spots</li><li>Reduce speed before entering turn</li><li>Position vehicle correctly in lane</li><li>Complete turn in correct lane</li></ul><h2>Reversing Techniques</h2><ul><li>Look over right shoulder (primary view)</li><li>Use all mirrors (secondary view)</li><li>Move very slowly</li><li>Steer in direction you want rear to go</li><li>Never reverse from side road onto main road</li></ul><h2>Three-Point Turn</h2><ul><li>Check traffic in all directions</li><li>Signal and move to right side</li><li>Turn steering fully right and move forward</li><li>Reverse while turning left</li><li>Move forward again to complete</li></ul>" },
-            { id: 7, title: "Roundabouts & Junctions", desc: "Navigating roundabouts", content: "<h2>Roundabout Rules</h2><ul><li>Give way to traffic already on roundabout from your right</li><li>Signal appropriately: Left for exiting, Right for going around</li><li>Choose correct lane before entering</li><li>Exit safely without cutting across lanes</li></ul><h2>Approaching Junctions</h2><ul><li>MSPSL routine: Mirror, Signal, Position, Speed, Look</li><li>Reduce speed progressively</li><li>Select appropriate gear</li><li>Stop at STOP signs completely</li><li>Give Way signs require yielding to main road traffic</li></ul>" },
-            { id: 8, title: "Overtaking & Lane Discipline", desc: "Safe overtaking", content: "<h2>Overtaking Rules</h2><ul><li>Check mirrors thoroughly (rearview and side)</li><li>Signal intention well in advance</li><li>Ensure clear visibility ahead (200+ meters)</li><li>Do not exceed speed limit while overtaking</li><li>Return to lane only when safe</li></ul><h2>No Overtaking Zones</h2><ul><li>At junctions or pedestrian crossings</li><li>On bridges or in tunnels</li><li>Where lines are solid</li><li>Near crest of a hill</li><li>On bends with limited visibility</li><li>When approaching a school bus</li></ul><h2>Lane Discipline</h2><ul><li>Keep left unless overtaking</li><li>Use right lane only for overtaking</li><li>Signal every lane change</li><li>Check blind spots before moving</li></ul>" },
-            { id: 9, title: "Speed Limits & Safe Speeds", desc: "Kenyan speed limits", content: "<h2>Speed Limits in Kenya (NTSA)</h2><ul><li>Urban areas: 50 km/h</li><li>Residential areas: 40 km/h</li><li>Rural roads: 100 km/h</li><li>Highways: 110 km/h</li><li>School zones: 25 km/h when children present</li><li>PSV vehicles: 80 km/h maximum</li></ul><h2>When to Drive Below Limit</h2><ul><li>Poor weather (rain, fog, ice)</li><li>Heavy traffic</li><li>Road works or poor road conditions</li><li>Night time</li><li>Areas with pedestrians or animals</li></ul>" },
-            { id: 10, title: "Defensive Driving Techniques", desc: "Anticipating hazards", content: "<h2>5 Principles of Defensive Driving</h2><ul><li>Aim High: Look 12-15 seconds ahead</li><li>Get the Big Picture: Scan all mirrors every 5-8 seconds</li><li>Keep Your Eyes Moving: Don't fixate on single object</li><li>Leave Yourself an Out: Maintain space on one side</li><li>Make Sure They See You: Use horn, lights, eye contact</li></ul><h2>3-4 Second Rule</h2><ul><li>Choose fixed object ahead</li><li>When vehicle ahead passes it, count seconds</li><li>You should pass same object in 3-4 seconds</li><li>Increase distance in poor conditions</li></ul>" },
-            { id: 11, title: "Night Driving", desc: "Driving after dark", content: "<h2>Night Driving Tips</h2><ul><li>Use low beams when following or meeting traffic</li><li>Increase following distance to 5-6 seconds</li><li>Reduce speed by 10-15 km/h</li><li>Keep windows and mirrors clean</li><li>Watch for pedestrians and animals</li><li>Stop and rest every 2 hours if tired</li></ul><h2>Proper Light Usage</h2><ul><li>Low beams: City driving, following vehicles, meeting traffic</li><li>High beams: Dark rural roads with no oncoming traffic</li><li>Fog lights: Only in fog, heavy rain, or dust</li><li>Parking lights: Stationary only</li></ul>" },
-            { id: 12, title: "Driving in Adverse Weather", desc: "Rain, fog conditions", content: "<h2>Driving in Rain</h2><ul><li>Reduce speed significantly</li><li>Increase following distance to 6-8 seconds</li><li>Use headlights (low beams)</li><li>Beware of hydroplaning</li><li>Use defroster to prevent fogging</li><li>Avoid sudden braking or sharp turns</li></ul><h2>Driving in Fog</h2><ul><li>Use fog lights - NOT high beams (reflects back)</li><li>Reduce speed significantly</li><li>Roll down window to hear other vehicles</li><li>If zero visibility, pull off road safely</li></ul>" },
-            { id: 13, title: "Alcohol, Drugs & Driving", desc: "Impairment and law", content: "<h2>Legal BAC Limits in Kenya</h2><ul><li>Professional/PSV drivers: 0.00% ZERO tolerance</li><li>Private drivers: 0.05% maximum</li><li>Drugs: ZERO tolerance for all drivers</li></ul><h2>Effects of Alcohol</h2><ul><li>Reduced reaction time (up to 50% slower)</li><li>Poor judgment and decision making</li><li>Reduced coordination</li><li>Blurred or double vision</li><li>Drowsiness</li></ul><h2>Penalties</h2><ul><li>Fine up to KSH 100,000</li><li>Imprisonment up to 2 years</li><li>License suspension or cancellation</li><li>Vehicle impoundment</li><li>Criminal record</li></ul>" },
-            { id: 14, title: "Driver Fatigue Management", desc: "Managing tiredness", content: "<h2>Warning Signs of Fatigue</h2><ul><li>Yawning frequently</li><li>Heavy or sore eyes</li><li>Drifting from lane</li><li>Missing road signs</li><li>Difficulty remembering last kilometers</li><li>Feeling restless or irritable</li></ul><h2>Fatigue Management Guidelines</h2><ul><li>Stop for 15 minutes every 2 hours</li><li>Sleep minimum 7 hours before long journeys</li><li>Maximum driving per day: 8 hours for PSV</li><li>Avoid driving between midnight and 6 AM</li><li>Share driving duties when possible</li></ul><h2>If You Feel Tired</h2><ul><li>Stop at safe place</li><li>Take 20-minute power nap</li><li>Have caffeinated drink</li><li>Get fresh air and stretch</li><li>If still tired, find accommodation</li></ul>" },
-            { id: 15, title: "Pedestrian & Child Safety", desc: "Protecting vulnerable users", content: "<h2>Pedestrian Safety Rules</h2><ul><li>Always yield at marked crosswalks</li><li>Reduce speed near schools, churches, markets</li><li>Watch for children - they may run unexpectedly</li><li>Never pass a stopped school bus</li><li>Be extra cautious during morning and evening hours</li></ul><h2>School Bus Safety</h2><ul><li>The Danger Zone: 10 feet around bus - deadliest area</li><li>Stop when bus lights are flashing red</li><li>Do not pass until lights stop flashing</li><li>Watch for children crossing in front</li></ul><h2>Vulnerable Road Users</h2><ul><li>Children: unpredictable, may dart into road</li><li>Elderly: slower crossing, may not hear traffic</li><li>People with disabilities: be patient</li><li>Cyclists: give at least 1.5 meters when passing</li></ul>" },
-            { id: 16, title: "Emergency Procedures", desc: "Accident response", content: "<h2>Accident Response Protocol - SCAR</h2><ul><li>S - Stop immediately, do not flee</li><li>C - Check for injuries, call for help (999, 911, 112)</li><li>A - Alert: Place warning triangles 50m behind</li><li>R - Record: Take photos, exchange details</li></ul><h2>What NOT to Do</h2><ul><li>Do NOT move injured persons unless in immediate danger</li><li>Do NOT admit fault or discuss blame</li><li>Do NOT drive away (hit and run is felony)</li><li>Do NOT sign anything you don't understand</li></ul><h2>Emergency Contacts in Kenya</h2><ul><li>Police/Fire/Ambulance: 999, 911, 112</li><li>Red Cross: 1199</li><li>NTSA Hotline: 0709 932 000</li></ul>" },
-            { id: 17, title: "First Aid for Drivers", desc: "Basic first aid", content: "<h2>DRABC Protocol (Primary Survey)</h2><ul><li>D - Danger: Check scene safety before approaching</li><li>R - Response: Check consciousness (tap and shout)</li><li>A - Airway: Tilt head back, lift chin</li><li>B - Breathing: Look, listen, feel for 10 seconds</li><li>C - Circulation: Control bleeding with direct pressure</li></ul><h2>CPR Instructions</h2><ul><li>Place hands center of chest</li><li>Push hard and fast (100-120 compressions per minute)</li><li>Compression depth: 5-6 cm</li><li>30 compressions then 2 rescue breaths</li><li>Continue until help arrives or person responds</li></ul><h2>First Aid Kit Essentials</h2><ul><li>Sterile gauze and bandages</li><li>Adhesive tape, antiseptic wipes</li><li>Scissors, disposable gloves</li><li>Emergency blanket, first aid manual</li></ul>" },
-            { id: 18, title: "Insurance & Documentation", desc: "Required documents", content: "<h2>Required Documents for All Drivers</h2><ul><li>Valid Driving License (with proper class)</li><li>Insurance Certificate (Third Party minimum)</li><li>Vehicle Logbook (proof of ownership)</li><li>PSV Badge (for commercial drivers)</li><li>Route Permit (for PSV operators)</li></ul><h2>Types of Vehicle Insurance</h2><ul><li>Third Party Only: Minimum legal requirement</li><li>Third Party Fire & Theft: Adds fire and theft cover</li><li>Comprehensive: Full cover including own vehicle</li></ul><h2>Penalties for Missing Documents</h2><ul><li>Driving without license: Fine up to KSH 20,000</li><li>No insurance: Fine up to KSH 50,000 or imprisonment</li><li>No PSV badge: Fine up to KSH 100,000</li></ul>" },
-            { id: 19, title: "Environmental Driving", desc: "Eco-driving", content: "<h2>Eco-Driving Techniques</h2><ul><li>Drive smoothly - avoid rapid acceleration and harsh braking</li><li>Maintain steady speed - use cruise control</li><li>Remove unnecessary weight from vehicle</li><li>Check tire pressure weekly - underinflation increases fuel use</li><li>Use AC sparingly - open windows at lower speeds</li><li>Turn off engine if stopped for more than 60 seconds</li></ul><h2>Fuel Savings Benefits</h2><ul><li>Eco-driving can save 15-25% on fuel</li><li>Reduces wear and tear on brakes and tires</li><li>Lower CO2 emissions</li><li>Safer driving style</li></ul>" },
-            { id: 20, title: "Driving Test Preparation", desc: "NTSA test prep", content: "<h2>NTSA Driving Test Requirements</h2><ul><li>Valid learner's license (minimum 3 months old)</li><li>Logbook with minimum 20 hours recorded</li><li>Vehicle in good condition (lights, brakes, tires, wipers)</li><li>Valid insurance for vehicle</li></ul><h2>Test Day Checklist</h2><ul><li>Original learner's license and ID</li><li>Logbook with required hours</li><li>Registration book for vehicle</li><li>Insurance certificate</li><li>Dress neatly and professionally</li><li>Arrive at least 30 minutes early</li></ul><h2>Common Reasons for Failure</h2><ul><li>Not checking mirrors regularly</li><li>Exceeding speed limit</li><li>Not stopping at STOP signs</li><li>Incorrect positioning on road</li><li>Stalling the vehicle multiple times</li><li>Not using signals properly</li></ul><h2>Maneuvers to Practice</h2><ul><li>Parallel parking, three-point turn, hill start</li><li>Reversing around corner, emergency stop, bay parking</li></ul>" },
-            { id: 21, title: "Advanced Driving Skills", desc: "Professional development", content: "<h2>Advanced Driving Techniques</h2><ul><li>Commentary Driving: Verbalize hazards and actions</li><li>Hazard Prediction: Anticipate what others might do</li><li>System of Car Control: Information, Position, Speed, Gear, Acceleration</li><li>Limit Point Analysis: Furthest visible point in curve</li></ul><h2>Professional Standards</h2><ul><li>Continuous learning and skill improvement</li><li>Regular medical checkups</li><li>License renewal every 3 years</li><li>Defensive driving certification through NTSA centers</li><li>Annual driver assessment for commercial drivers</li></ul>" }
-        ];
-
-        // ============================================
-        // PSV UNITS - 10 Detailed Units
-        // ============================================
-        const PSV_UNITS = [
-            { id: 1, title: "PSV Licensing & Compliance", desc: "Complete PSV licensing requirements", content: "<h2>PSV Badge Requirements</h2><ul><li>Complete 40 hours of NTSA-approved training</li><li>Pass medical examination (valid for 2 years)</li><li>Submit police clearance certificate</li><li>Complete defensive driving course</li><li>Pass PSV theory and practical tests</li></ul><h2>Required Documents</h2><ul><li>Valid PSV badge, Driving license class D or higher</li><li>Insurance certificate, Route permit for specific route</li><li>Vehicle inspection certificate, PSV vehicle license</li></ul><h2>PSV Vehicle Requirements</h2><ul><li>Speed limiter installed and calibrated (max 80 km/h)</li><li>Seatbelts for all passengers, Fire extinguisher</li><li>First aid kit, Emergency exits clearly marked</li></ul>" },
-            { id: 2, title: "Professional Driver Conduct", desc: "Professional standards on road", content: "<h2>Professional Standards</h2><ul><li>Be punctual and reliable</li><li>Maintain professional communication with passengers</li><li>Know routes thoroughly</li><li>Handle conflicts professionally</li><li>Report incidents immediately</li><li>Wear clean, proper uniform</li></ul><h2>Customer Service Excellence</h2><ul><li>Greet passengers warmly</li><li>Assist elderly and disabled passengers</li><li>Announce upcoming stops clearly</li><li>Handle complaints calmly</li><li>Keep vehicle clean and tidy</li><li>Thank passengers when they exit</li></ul>" },
-            { id: 3, title: "Personal Grooming & Appearance", desc: "Professional presentation", content: "<h2>Professional Appearance Standards</h2><ul><li>Clean, pressed uniform mandatory at all times</li><li>Name badge visible on left chest</li><li>Hair neatly groomed and styled</li><li>No strong perfumes or colognes</li><li>Clean shaven or neatly trimmed beard</li><li>Clean, polished shoes</li><li>No visible tattoos or body piercings (or covered)</li></ul><h2>Daily Hygiene Checklist</h2><ul><li>Shower before shift, Brush teeth/use mouthwash</li><li>Clean, ironed uniform, Clean hands and trimmed nails</li><li>No alcohol or drugs, Get adequate sleep before shift</li></ul>" },
-            { id: 4, title: "Passenger Safety & Management", desc: "Ensuring passenger safety", content: "<h2>Passenger Safety Rules</h2><ul><li>Board only at designated stops</li><li>Ensure seatbelt use where available</li><li>No standing while vehicle moves</li><li>Assist elderly and disabled passengers</li><li>Do not exceed passenger capacity</li></ul><h2>Loading and Unloading</h2><ul><li>Wait until vehicle is completely stopped</li><li>Allow passengers to exit before boarding</li><li>Ensure safe distance from curb</li><li>Count passengers before closing doors</li></ul><h2>Emergency Situations</h2><ul><li>Know emergency exit locations</li><li>Conduct emergency drills regularly</li><li>Keep first aid kit accessible</li><li>Know emergency contacts</li></ul>" },
-            { id: 5, title: "Vehicle Inspections & Defect Reporting", desc: "Daily vehicle checks", content: "<h2>Pre-Trip Inspection Checklist</h2><ul><li>Tires: Pressure and tread depth</li><li>Lights: All working properly</li><li>Brakes: Test responsiveness</li><li>Fluids: Oil, coolant, brake fluid</li><li>Emergency equipment: First aid, triangles</li></ul><h2>Defect Reporting</h2><ul><li>Report any defects immediately</li><li>Do not drive unsafe vehicle</li><li>Complete defect report forms</li><li>Follow up on repairs</li></ul>" },
-            { id: 6, title: "Route Planning & Time Management", desc: "Efficient navigation", content: "<h2>Effective Route Planning</h2><ul><li>Study routes before driving</li><li>Account for peak traffic hours</li><li>Know alternative routes</li><li>Build buffer time for delays</li><li>Use GPS and traffic apps</li></ul><h2>Time Management</h2><ul><li>Plan rest breaks</li><li>Manage passenger boarding time</li><li>Communicate delays to passengers</li><li>Maintain schedule adherence</li></ul>" },
-            { id: 7, title: "Fare Management & Ticketing", desc: "Proper fare collection", content: "<h2>Fare Collection Standards</h2><ul><li>Issue receipts for all fares</li><li>Handle cash transparently</li><li>Never overcharge passengers</li><li>Report daily collections</li><li>Maintain ticket stock securely</li></ul><h2>Handling Disputes</h2><ul><li>Know fare rates clearly</li><li>Display fare chart visibly</li><li>Handle disputes calmly</li><li>Refer to supervisor if needed</li></ul>" },
-            { id: 8, title: "Emergency Response for PSV", desc: "Handling emergencies", content: "<h2>Emergency Response Protocol</h2><ul><li>Remain calm, assure passengers</li><li>Pull over safely</li><li>Evacuate if necessary</li><li>Call emergency services</li><li>Complete incident report</li></ul><h2>Types of Emergencies</h2><ul><li>Medical emergencies: Call ambulance</li><li>Fire: Evacuate immediately, use extinguisher</li><li>Accident: Document, exchange details</li><li>Security threat: Contact police</li></ul>" },
-            { id: 9, title: "Conflict Resolution & Customer Care", desc: "Managing difficult situations", content: "<h2>Conflict Resolution Steps</h2><ul><li>Stay calm and professional</li><li>Listen without interrupting</li><li>Acknowledge the concern</li><li>Offer solutions when possible</li><li>Escalate when necessary</li><li>Document incidents</li></ul><h2>Customer Care Excellence</h2><ul><li>Use polite language</li><li>Maintain positive attitude</li><li>Go extra mile for passengers</li><li>Build regular passenger relationships</li></ul>" },
-            { id: 10, title: "Defensive Driving for PSV", desc: "Advanced safety techniques", content: "<h2>Defensive Driving for PSV</h2><ul><li>Maintain 4-second following distance</li><li>Anticipate passenger movement</li><li>Scan 15-20 seconds ahead</li><li>Be extra cautious at stops</li><li>Avoid distractions completely</li></ul><h2>Hazard Perception</h2><ul><li>Watch for pedestrians near bus stops</li><li>Be aware of vehicles cutting in</li><li>Monitor passenger behavior</li><li>Check blind spots before moving</li></ul>" }
-        ];
-
-        // ============================================
-        // SCHOOL BUS UNITS - 6 Detailed Units
-        // ============================================
-        const SCHOOLBUS_UNITS = [
-            { id: 1, title: "Child Passenger Safety", desc: "Essential child safety protocols", content: "<h2>Child Safety Checklist</h2><ul><li>Daily headcount before departure and after arrival</li><li>Seatbelt check for each child</li><li>No standing while vehicle moving</li><li>Safe drop-off zones only</li><li>Emergency contact list onboard</li><li>First aid kit equipped and accessible</li></ul><h2>The Danger Zone</h2><ul><li>10-foot area around bus where accidents occur</li><li>Children should stay 10 feet away from bus</li><li>Driver must see all children before moving</li><li>Use crossing guard for younger children</li></ul>" },
-            { id: 2, title: "School Bus Pre-Trip Inspection", desc: "Comprehensive vehicle checks", content: "<h2>Pre-Trip Inspection</h2><ul><li>Check all lights and stop arm</li><li>Test emergency exits</li><li>Inspect seat integrity</li><li>Verify first aid kit</li><li>Check fire extinguisher</li><li>Test communication device</li></ul><h2>Daily Safety Checklist</h2><ul><li>Brakes, steering, tires</li><li>Mirrors, wipers, horn</li><li>Emergency equipment</li><li>Child safety harnesses</li></ul>" },
-            { id: 3, title: "Safe Loading & Unloading", desc: "Student loading safety", content: "<h2>Loading Zone Safety</h2><ul><li>Danger zone is 10 feet around bus</li><li>Use hand signals for crossing</li><li>Students cross 10 feet in front</li><li>Count students before moving</li><li>Never back up near students</li></ul><h2>Driver Responsibilities</h2><ul><li>Ensure all children seated before moving</li><li>Check mirrors continuously</li><li>Watch for late students running</li><li>Only stop at designated zones</li></ul>" },
-            { id: 4, title: "Student Behavior Management", desc: "Managing student conduct", content: "<h2>Behavior Rules</h2><ul><li>Set clear expectations at start</li><li>Assign seats for younger students</li><li>Use positive reinforcement</li><li>Document incidents</li><li>Communicate with parents</li><li>Establish reward system</li></ul><h2>Common Issues</h2><ul><li>Loud noise: Distracts driver</li><li>Standing: Safety hazard</li><li>Fighting: Stop bus and address</li><li>Vandalism: Report immediately</li></ul>" },
-            { id: 5, title: "Emergency Evacuation", desc: "Responding to emergencies with children", content: "<h2>Evacuation Drill</h2><ul><li>Stay calm - children follow your lead</li><li>Assign helpers for younger children</li><li>Use rear emergency exit first</li><li>Assembly point 50m from vehicle</li><li>Headcount immediately after evacuation</li></ul><h2>Emergency Types</h2><ul><li>Fire: Evacuate within 2 minutes</li><li>Accident: Check injuries, call for help</li><li>Medical: Administer first aid</li><li>Weather: Seek shelter</li></ul>" },
-            { id: 6, title: "Parent & School Communication", desc: "Professional coordination", content: "<h2>Communication Protocols</h2><ul><li>Daily attendance records</li><li>Late arrival notifications</li><li>Incident reports to parents</li><li>Maintain parent contact list</li><li>Coordinate with school staff</li></ul><h2>Building Trust</h2><ul><li>Be approachable to parents</li><li>Share positive feedback about children</li><li>Communicate schedule changes</li><li>Respond to concerns promptly</li></ul>" }
-        ];
-
-        // ============================================
-        // BODA UNITS - 12 Detailed Units (Expanded)
-        // ============================================
-        const BODA_UNITS = [
-            { id: 1, title: "Motorcycle Controls & Operation", desc: "Basic controls mastery", content: "<h2>Basic Controls</h2><ul><li>Clutch lever: Left handlebar (disengages engine)</li><li>Front brake: Right handlebar</li><li>Rear brake: Right foot pedal</li><li>Gear shift: Left foot (1 down, N, 2-5 up)</li><li>Throttle: Right grip (twist to accelerate)</li><li>Turn signals: Left handlebar switch</li><li>Headlights: Left handlebar switch</li><li>Kill switch: Right handlebar (red)</li></ul><h2>Starting Procedure</h2><ul><li>Insert key and turn to ON</li><li>Check neutral light (green)</li><li>Pull in clutch</li><li>Press start button</li><li>Release choke gradually as engine warms</li></ul>\n<h2>Basic Riding Techniques</h2><ul><li>Keep feet on pegs while moving</li><li>Use both brakes for stopping</li><li>Look where you want to go</li><li>Counter-steer for turning</li><li>Practice in empty parking lot first</li></ul>" },
-            { id: 2, title: "Protective Gear & Safety Equipment", desc: "Essential safety gear", content: "<h2>Required Safety Gear</h2><ul><li>ECE or DOT certified helmet (full face recommended)</li><li>Riding jacket with armor (shoulders, elbows, back)</li><li>Full-finger gloves with palm sliders</li><li>Ankle boots with oil-resistant soles</li><li>Reflective vest for night riding</li><li>Riding pants with knee armor</li></ul><h2>Helmet Checklist</h2><ul><li>No cracks or damage</li><li>Proper fit (snug but not tight)</li><li>Straps work properly</li><li>Visor clear and scratch-free</li><li>Replace every 5 years or after any impact</li><li>Never buy used helmets</li></ul><h2>Why Gear Matters</h2><ul><li>Helmet reduces head injury risk by 69%</li><li>Jacket prevents road rash (skin grafts)</li><li>Gloves protect hands (most injured area)</li><li>Boots prevent ankle fractures</li><li>Reflective gear makes you visible 3x sooner</li></ul>" },
-            { id: 3, title: "Personal Grooming & Professionalism", desc: "Professional standards for riders", content: "<h2>Personal Grooming Standards</h2><ul><li>Wear clean, neat clothing or uniform</li><li>Maintain good personal hygiene</li><li>Keep helmet clean and odor-free</li><li>Wear visible identification if available</li><li>Professional appearance builds customer trust</li></ul><h2>Professional Conduct</h2><ul><li>Be polite and respectful to all customers</li><li>Know your routes and fares clearly</li><li>Handle luggage carefully</li><li>Assist elderly or disabled passengers</li><li>Never argue with passengers</li><li>Report lost items to local authorities</li></ul>\n<h2>Building a Professional Reputation</h2><ul><li>Customer referrals come from good service</li><li>Be reliable and punctual</li><li>Regular customers provide stable income</li><li>Join a registered SACCO for credibility</li></ul>" },
-            { id: 4, title: "Drug Abuse Prevention", desc: "Substance abuse awareness", content: "<h2>Effects of Drugs on Riding</h2><ul><li>REDUCES reaction time by 50% or more</li><li>Impairs judgment and decision making</li><li>Causes blurred vision and dizziness</li><li>Leads to loss of balance and control</li><li>Increases crash risk by 500%</li></ul><h2>Zero Tolerance in Kenya</h2><ul><li>Legal limit for drugs: ZERO</li><li>Random testing at checkpoints</li><li>Penalties: Fine, imprisonment, license cancellation</li><li>Drug use affects insurance claims</li></ul><h2>How to Stay Clean</h2><ul><li>Recognize peer pressure tactics</li><li>Find healthy stress relief (exercise, sports)</li><li>Seek help from counselors if addicted</li><li>Surround yourself with positive friends</li><li>Focus on business growth goals</li></ul>" },
-            { id: 5, title: "Customer Service Excellence", desc: "Building customer relationships", content: "<h2>Customer Service Basics</h2><ul><li>Greet customers warmly with a smile</li><li>State fare clearly before trip</li><li>Wear a clean helmet for passengers</li><li>Drive smoothly for passenger comfort</li><li>Say thank you when they pay</li></ul><h2>Handling Difficult Customers</h2><ul><li>Stay calm - don't argue</li><li>Listen to their complaint fully</li><li>Acknowledge their frustration</li><li>Offer a fair solution</li><li>If necessary, decline service politely</li><li>Never fight with a customer</li></ul>\n<h2>Going the Extra Mile</h2><ul><li>Remember regular customers' destinations</li><li>Help with shopping bags or luggage</li><li>Wait a few minutes for loyal customers</li><li>Suggest safe routes for new passengers</li><li>Build a customer base for stable income</li></ul>" },
-            { id: 6, title: "Crime Prevention in Boda Industry", desc: "Safety from criminals", content: "<h2>Common Crimes Against Boda Riders</h2><ul><li>Robbery: Passengers stealing bike or money</li><li>Bike theft at night or isolated areas</li><li>Assault from drunk or aggressive passengers</li><li>Fraud: Fake notes, fake payments, scams</li><li>Accident scams: Fake injury claims</li></ul><h2>Prevention Strategies</h2><ul><li>Join a registered SACCO with tracking</li><li>Never go to isolated areas after dark</li><li>Refuse suspicious passengers (hoods, masks)</li><li>Use phone tracking app for your bike</li><li>Park in well-lit, busy areas overnight</li><li>Install GPS tracker and alarm system</li></ul><h2>What to Do if Attacked</h2><ul><li>DO NOT fight back - your life matters more</li><li>Surrender bike if threatened with weapon</li><li>Remember unique features of attacker</li><li>Report immediately to police and SACCO</li><li>File insurance claim promptly</li></ul>" },
-            { id: 7, title: "Know Your Passenger", desc: "Passenger screening", content: "<h2>Red Flags to Watch For</h2><ul><li>Hooded sweatshirt or face covering</li><li>Nervous behavior or excessive looking around</li><li>Unusually heavy bag or suspicious package</li><li>Wants to go to isolated area late at night</li><li>Multiple people on one bike (car stick)</li><li>Drunk or aggressive behavior from start</li></ul><h2>Safe Passenger Screening</h2><ul><li>Trust your instincts - if it feels wrong, decline</li><li>Ask destination before starting trip</li><li>Refuse suspicious passengers politely</li><li>Stay in busy, well-lit areas for pickups</li><li>Use SACCO dispatch system when possible</li><li>Know high-crime areas in your town</li></ul><h2>Special Passenger Considerations</h2><ul><li>Pregnant women: Drive extra smoothly</li><li>Elderly: Assist with mounting/dismounting</li><li>Children: Require adult supervision</li><li>Drunk passengers: Refuse service</li><li>Tourists: Be extra patient with directions</li></ul>" },
-            { id: 8, title: "Night Riding Safety", desc: "Safe operations after dark", content: "<h2>Night Riding Checklist</h2><ul><li>Ensure headlight and taillight working</li><li>Wear reflective vest (REQUIRED after dark)</li><li>Check brake light function</li><li>Clean helmet visor for clear vision</li><li>Reduce speed by 15-20 km/h</li><li>Increase following distance to 6-8 seconds</li></ul><h2>Night Hazards</h2><ul><li>Poor visibility: Drivers may not see you</li><li>Drunk drivers: More common at night</li><li>Pedestrians wearing dark clothing</li><li>Animals on road near rural areas</li><li>Potholes and obstacles harder to see</li><li>Criminals targeting lone riders</li></ul>\n<h2>Night Riding Best Practices</h2><ul><li>Avoid isolated routes after 9 PM</li><li>Stay in groups when parked/resting</li><li>Keep phone charged and accessible</li><li>Share your location with family</li><li>Don't stop for strangers in remote areas</li><li>Know safe havens (police posts, petrol stations)</li></ul>" },
-            { id: 9, title: "Entrepreneurship & Business Management", desc: "Running a successful boda business", content: "<h2>Starting Your Boda Business</h2><ul><li>Register with local SACCO or cooperative</li><li>Obtain PSV badge and commercial license</li><li>Proper insurance: Comprehensive coverage</li><li>Join savings group for emergencies</li><li>Set daily income goals and track earnings</li></ul><h2>Financial Management</h2><ul><li>Track daily income and expenses</li><li>Save minimum 20% of daily earnings</li><li>Budget for bike maintenance weekly</li><li>Separate business money from personal</li><li>Build emergency fund (3 months expenses)</li><li>Avoid loan sharks with high interest</li></ul>\n<h2>Growing Your Business</h2><ul><li>Provide excellent service for repeat customers</li><li>Exchange numbers with trusted customers</li><li>Offer delivery services to shops</li><li>Partner with local restaurants for deliveries</li><li>Consider buying second bike to hire another rider</li><li>Join digital delivery apps if available</li></ul>" },
-            { id: 10, title: "Defensive Riding Techniques", desc: "Advanced safety skills", content: "<h2>Defensive Riding Principles</h2><ul><li>Assume drivers DO NOT see you</li><li>Stay out of blind spots (especially trucks)</li><li>Use lane positioning for visibility</li><li>Cover brake lever at intersections</li><li>Watch for turning vehicles at junctions</li></ul><h2>Hazard Perception</h2><ul><li>Scan 15-20 seconds ahead for hazards</li><li>Identify: car doors, pedestrians, potholes</li><li>Predict: what could go wrong?</li><li>Decide: brake? swerve? accelerate?</li><li>Act: execute decision smoothly</li></ul>\n<h2>Emergency Maneuvers</h2><ul><li>Emergency braking: Use both brakes evenly</li><li>Avoid locking wheels (pump brakes)</li><li>If swerving needed, look at escape path</li><li>Practice emergency stops in empty area</li><li>NEVER brake hard in a turn</li></ul>" },
-            { id: 11, title: "Vehicle Maintenance & Troubleshooting", desc: "Keep your bike safe", content: "<h2>Daily Maintenance Checklist</h2><ul><li>Tire pressure and tread condition</li><li>Chain tension and lubrication</li><li>Brake pads and fluid level</li><li>Headlight, taillight, turn signals</li><li>Check for oil or fuel leaks</li><li>Test horn and kill switch</li></ul><h2>Weekly Maintenance</h2><ul><li>Clean and lubricate chain</li><li>Check and tighten bolts</li><li>Inspect brake pads for wear</li><li>Check coolant level (if liquid cooled)</li><li>Clean air filter</li></ul>\n<h2>Common Problems & Quick Fixes</h2><ul><li>Battery won't start: Check connections, replace</li><li>Flat tire: Carry repair kit or spare tube</li><li>Bike dies while riding: Check fuel, spark plug</li><li>Brakes feel weak: Check fluid, pads</li><li>Chain keeps coming off: Adjust tension</li></ul>" },
-            { id: 12, title: "Alcohol & Substance Abuse", desc: "Understanding risks", content: "<h2>Legal Limits for Boda Riders</h2><ul><li>Commercial drivers: 0.00% ZERO tolerance</li><li>Random breathalyzer tests at checkpoints</li><li>Any alcohol = lose PSV badge permanently</li><li>Cannabis or drugs = IMMEDIATE license cancellation</li></ul><h2>Effects of Alcohol on Riding</h2><ul><li>Reaction time 2-3x slower</li><li>Balance and coordination severely impaired</li><li>Poor judgment of speed and distance</li><li>Reduced night vision</li><li>Aggressive behavior on road</li></ul>\n<h2>Responsible Choices</h2><ul><li>Zero alcohol before or during work shift</li><li>If drinking at night, park bike and take taxi</li><li>Help fellow riders avoid drunk driving</li><li>Report drunken riders to supervisor or police</li><li>Your life and license are not worth one drink</li></ul>" }
-        ];
-
-        // ============================================
-        // EV UNITS - 8 Detailed Units
-        // ============================================
-        const EV_UNITS = [
-            { id: 1, title: "Introduction to EVs", desc: "Electric vehicle technology", content: "<h2>EV Types</h2><ul><li>BEV: 100% electric, no gasoline engine</li><li>PHEV: Plug-in hybrid (electric + petrol)</li><li>HEV: Self-charging hybrid</li><li>MHEV: Mild hybrid (small battery assist)</li></ul><h2>Benefits of EVs</h2><ul><li>Lower running costs: KSH 2-3 per km vs KSH 15+ petrol</li><li>Zero tailpipe emissions</li><li>Quiet operation</li><li>Instant torque for quick acceleration</li><li>Fewer moving parts = less maintenance</li></ul><h2>EV Adoption in Kenya</h2><ul><li>Growing charging infrastructure (Nairobi, Mombasa, Kisumu)</li><li>Government incentives (lower import duty)</li><li>Electric motorcycles for boda bodas</li><li>Electric matatus for public transport</li><li>Increasing model availability</li></ul>" },
-            { id: 2, title: "EV Battery Technology", desc: "Battery care and management", content: "<h2>Battery Health Tips</h2><ul><li>Keep charge between 20-80% for daily use</li><li>Avoid extreme temperatures (park in shade)</li><li>Use scheduled charging when electricity cheaper</li><li>Keep software updated (improves battery mgmt)</li><li>Avoid frequent DC fast charging (use for road trips only)</li><li>Don't let battery sit at 0% or 100% for long periods</li></ul><h2>Understanding Range</h2><ul><li>City driving often gives more range than highway</li><li>Cold weather reduces range by 20-40%</li><li>High speeds (>100 km/h) reduce range significantly</li><li>Using climate control uses 5-15% of battery</li><li>Regenerative braking recovers 10-20% of energy</li><li>Smooth driving = better range (like eco-driving)</li></ul><h2>Battery Warranty</h2><ul><li>Most EVs: 8-year or 100,000 km warranty</li><li>Covers excessive degradation (below 70% capacity)</li><li>Batteries typically last 10-20 years</li><li>Replacement costs decreasing annually</li></ul>" },
-            { id: 3, title: "EV Charging Infrastructure", desc: "Charging options in Kenya", content: "<h2>Charging Levels</h2><ul><li>Level 1: Standard outlet (120V) - 8-12 hours full charge</li><li>Level 2: Home/office 240V charger - 4-6 hours</li><li>DC Fast: Public stations - 30-45 minutes to 80%</li></ul><h2>Charging Networks in Kenya</h2><ul><li>KenGen charging stations (Nairobi, Naivasha)</li><li>KPLC charging points (selected petrol stations)</li><li>Private mall/office charging (Westgate, Two Rivers)</li><li>Battery swap stations for e-bodas (Ampersand, ARC Ride)</li></ul><h2>Charging Costs</h2><ul><li>Home charging: KSH 2-3 per km</li><li>Public fast charging: KSH 5-8 per km</li><li>Cheaper to charge at night (off-peak rates)</li><li>Monthly cost approx KSH 3,000-5,000 vs KSH 15,000 petrol</li></ul>" },
-            { id: 4, title: "EV Maintenance & Servicing", desc: "Specialized maintenance", content: "<h2>EV Maintenance Schedule</h2><ul><li>Every 6 months: Brake fluid check, cabin filter</li><li>Yearly: Battery health check, coolant flush</li><li>Every 2 years: Brake pad replacement (less often due to regen)</li><li>Tire rotation every 10,000 km</li><li>Software updates when available (improves performance)</li></ul><h2>What EVs DON'T Need</h2><ul><li>No oil changes (no engine oil)</li><li>No spark plugs, fuel filters, timing belts</li><li>No exhaust system or catalytic converter</li><li>No clutch or transmission (single speed)</li><li>No fuel injector cleaning</li></ul><h2>Cost Savings Over Petrol</h2><ul><li>Annual maintenance: KSH 10,000-15,000 vs KSH 30,000-50,000</li><li>No fuel stops (charge at home)</li><li>No smog checks</li><li>Brake pads last 2-3x longer (regen braking)</li></ul>" },
-            { id: 5, title: "EV Safety & Emergency Response", desc: "Safety protocols", content: "<h2>EV Safety Features</h2><ul><li>High voltage cables are BRIGHT ORANGE - DO NOT CUT</li><li>Battery is sealed and protected in crash</li><li>Automatic battery disconnect in severe crash</li><li>Firewall between battery and cabin</li><li>Multiple temperature sensors for battery</li></ul><h2>Emergency Response Protocol</h2><ul><li>1. Ensure vehicle is in PARK</li><li>2. Disconnect 12V battery (under hood)</li><li>3. Remove HV service plug if safe</li><li>4. Call emergency services</li><li>5. Do NOT cut orange high voltage cables</li><li>6. Keep people 50 feet away from fire</li></ul><h2>EV Fire Response</h2><ul><li>Use LOTS of water (battery fires need cooling)</li><li>Class D fire extinguisher (special for metals)</li><li>Do NOT use small extinguisher - call fire department</li><li>Battery can reignite hours later - monitor</li><li>Never open battery yourself - extreme danger</li></ul>" },
-            { id: 6, title: "Range Management & Efficiency", desc: "Maximizing EV range", content: "<h2>Range Optimization Tips</h2><ul><li>Use regenerative braking - coast to stops</li><li>Maintain steady speed (80-100 km/h optimal)</li><li>Precondition battery while plugged in</li><li>Reduce AC/heater usage (use seat warmers if available)</li><li>Keep tires properly inflated (low pressure hurts range)</li><li>Remove roof rack when not using (drag reduces range)</li></ul><h2>Factors That Reduce Range</h2><ul><li>Cold weather: 20-40% reduction</li><li>High speeds (>110 km/h): 15-25% reduction</li><li>Aggressive driving: 20-30% reduction</li><li>Hills and mountains: 10-20% reduction</li><li>Heavy load: 5-10% reduction</li></ul><h2>Planning Long Trips</h2><ul><li>Use EV route planning apps (PlugShare, ABRP)</li><li>Identify charging stations along route</li><li>Plan to arrive with 20% battery remaining</li><li>Charge to 80% for fastest charging speeds</li><li>Carry mobile charger as backup</li></ul>" },
-            { id: 7, title: "EV for Commercial Use", desc: "Fleet electric vehicles", content: "<h2>Benefits for Commercial Fleets</h2><ul><li>50-70% lower fuel costs (important for profit margins)</li><li>Less maintenance = more vehicles on road</li><li>Quiet operation for early morning/late night</li><li>Zero emissions = good for company image</li><li>Government incentives for commercial EVs</li></ul><h2>Charging for Fleets</h2><ul><li>Install multiple Level 2 chargers at depot</li><li>Stagger charging to avoid peak electricity rates</li><li>Invest in DC fast charger for quick turnaround</li><li>Solar panels can reduce electricity costs</li><li>Battery swapping for delivery bikes (2 minutes)</li></ul><h2>ROI Calculation</h2><ul><li>EVs cost more upfront but save over time</li><li>Payback period: 2-4 years for high-mileage vehicles</li><li>Example: PSV matatu saves KSH 200,000/year on fuel</li><li>EV boda saves KSH 50,000/year vs petrol</li><li>Best for vehicles driving 100+ km daily</li></ul>" },
-            { id: 8, title: "EV Regulations & Standards Kenya", desc: "Legal framework", content: "<h2>NTSA EV Guidelines</h2><ul><li>All EVs must be registered with NTSA</li><li>Annual inspection required (standard vehicle checks)</li><li>High voltage training for mechanics</li><li>Approved charging stations must meet safety standards</li><li>Import duty: Currently 10% vs 25% for petrol (incentive)</li><li>VAT on EVs: 16% (exempt for locally assembled?)</li></ul><h2>Driver Requirements</h2><ul><li>Regular driving license (no special license needed)</li><li>PSV badge still required for commercial EVs</li><li>Training recommended for EV operation (regen braking etc.)</li><li>Mileage tracking for battery warranty</li></ul><h2>Future Policies</h2><ul><li>Proposed: Low emission zones in Nairobi</li><li>Proposed: EV-only lanes for PSV</li><li>Proposed: Free parking for EVs</li><li>Ban on used ICE imports planned by 2030</li><li>Local assembly requirements for government fleet</li></ul>" }
-        ];
-
-        // ============================================
-        // ACADEMY UNITS - 6 Detailed Units
-        // ============================================
-        const ACADEMY_UNITS = [
-            { id: 1, title: "Fleet Management Fundamentals", desc: "Managing commercial fleets", content: "<h2>Fleet Management Basics</h2><ul><li>Vehicle acquisition: Buy vs lease analysis</li><li>Maintenance scheduling: Preventive vs reactive</li><li>Fuel management: Bulk purchasing, tracking consumption</li><li>Driver allocation: Match drivers to appropriate vehicles</li><li>Performance metrics: Track cost per km, downtime</li></ul><h2>Key Performance Indicators (KPIs)</h2><ul><li>Cost per kilometer: Fuel + maintenance</li><li>Vehicle uptime: Days on road vs in shop</li><li>Fuel efficiency: Liters per 100 km</li><li>Driver behavior: Speeding, harsh braking, idling</li><li>Accident rate per 100,000 km</li></ul>\n<h2>Technology Solutions</h2><ul><li>GPS tracking: Real-time vehicle location</li><li>Telematics: Monitor driver behavior</li><li>Fleet management software: Maintenance tracking</li><li>Fuel cards: Control fuel spending</li></ul>" },
-            { id: 2, title: "Transport Logistics & Planning", desc: "Efficient operations", content: "<h2>Route Optimization</h2><ul><li>Plan routes to minimize empty returns</li><li>Batch deliveries by geographic area</li><li>Use GPS to avoid traffic congestion</li><li>Consider time windows for deliveries</li><li>Dynamic Routing: Adjust in real-time</li></ul><h2>Load Planning</h2><ul><li>Cube utilization: Maximize space usage</li><li>Weight distribution: Safety and fuel efficiency</li><li>Loading order: First stop last on</li><li>Special cargo: Refrigerated, fragile, hazardous</li><li>Documentation: Delivery notes, signatures</li></ul>\n<h2>Last Mile Delivery</h2><ul><li>Use boda bodas for small packages</li><li>Local hubs for efficient distribution</li><li>Customer communication: SMS updates</li><li>Proof of delivery: Photos, e-signatures</li></ul>" },
-            { id: 3, title: "Driver Recruitment & Training", desc: "Building professional teams", content: "<h2>Recruitment Criteria</h2><ul><li>Valid license with appropriate class</li><li>PSV badge for commercial drivers</li><li>Clean driving record (no major violations)</li><li>Minimum age and experience</li><li>Medical fitness: Vision, hearing, general health</li><li>Background check: Criminal record, references</li></ul><h2>Training Programs</h2><ul><li>Defensive driving course (NTSA certified)</li><li>Vehicle inspection training</li><li>Customer service skills</li><li>First aid and emergency response</li><li>EV operation training (if fleet has EVs)</li><li>Fatigue management and health</li></ul>\n<h2>Performance Evaluation</h2><ul><li>Annual driving assessment</li><li>Quarterly safety reviews</li><li>Customer feedback collection</li><li>Incentives for safe driving (bonuses)</li><li>Corrective action for violations</li></ul>" },
-            { id: 4, title: "Safety & Compliance Management", desc: "Meeting regulations", content: "<h2>Regulatory Compliance</h2><ul><li>Track license and PSV badge expiry dates</li><li>Schedule vehicle inspections on time</li><li>Maintain insurance certificates current</li><li>Driver medical exams every 2 years</li><li>Speed limiter calibration records</li><li>Accident reporting to NTSA within 24 hours</li></ul><h2>Safety Program Elements</h2><ul><li>Vehicle inspection checklists (daily)</li><li>Driver safety meetings (weekly briefings)</li><li>Telematics monitoring for risky behavior</li><li>Rewards for accident-free periods</li><li>Root cause analysis for any accident</li><li>Emergency response plan for fleet</li></ul>\n<h2>Documentation & Record Keeping</h2><ul><li>Driver files: License, medical, training certificates</li><li>Vehicle logs: Maintenance, fuel, repairs</li><li>Accident reports and insurance claims</li><li>Compliance calendar for renewals</li></ul>" },
-            { id: 5, title: "Financial Management for Transport", desc: "Cost control and profitability", content: "<h2>Cost Analysis</h2><ul><li>Fixed costs: Insurance, lease payments, salaries</li><li>Variable costs: Fuel, maintenance, tires</li><li>Calculate cost per kilometer for each vehicle</li><li>Identify outliers with higher costs</li><li>Budget vs actual tracking monthly</li></ul><h2>Revenue Optimization</h2><ul><li>Maximize vehicle utilization (reduce idle time)</li><li>Backhaul opportunities: Cargo on return trips</li><li>Dynamic pricing based on demand</li><li>Contract vs spot market pricing</li><li>Value-added services: Tracking, insurance</li></ul>\n<h2>Cost Reduction Strategies</h2><ul><li>Bulk fuel purchasing discounts</li><li>Preventive maintenance reduces breakdowns</li><li>Driver training for fuel efficiency</li><li>Route optimization software</li><li>Consider electric vehicles for urban routes</li><li>Telematics to reduce unauthorized usage</li></ul>" },
-            { id: 6, title: "Technology in Transport", desc: "Digital transformation", content: "<h2>Fleet Management Software</h2><ul><li>Vehicle tracking (GPS): Live location, history playback</li><li>Maintenance scheduling: Reminders for service</li><li>Fuel management: Track fill-ups, efficiency</li><li>Driver behavior: Speeding, harsh braking, idling</li><li>Document storage: License, insurance, inspection</li></ul><h2>Mobile Apps for Drivers</h2><ul><li>Pre-trip inspection checklist</li><li>Route guidance with traffic updates</li><li>Submit expenses (fuel, tolls, repairs)</li><li>Receive assignments and delivery proof</li><li>Emergency button for incidents</li></ul>\n<h2>Data Analytics</h2><ul><li>Trend analysis for fuel consumption</li><li>Predictive maintenance: Fix before breakdown</li><li>Driver scorecards for safety and efficiency</li><li>Customer analytics: Peak demand times</li><li>ROI analysis for new vehicles or technology</li></ul>" }
-        ];
-
-        // ============================================
-        // 1000+ NTSA PRACTICE QUESTIONS
-        // ============================================
-        const NTSA_QUESTIONS = [
-            // Core Questions (100+)
-            { id: 1, text: "What is the legal blood alcohol limit for commercial drivers in Kenya?", options: ["0.00%", "0.05%", "0.08%", "0.10%"], correct: 0, explanation: "Commercial drivers must have 0.00% blood alcohol while driving." },
-            { id: 2, text: "What is the maximum speed limit in a residential area in Kenya?", options: ["30 km/h", "40 km/h", "50 km/h", "60 km/h"], correct: 1, explanation: "Residential areas maximum speed is 40 km/h." },
-            { id: 3, text: "What should you do if your vehicle starts to skid?", options: ["Steer into the skid", "Steer away from skid", "Brake hard", "Accelerate"], correct: 0, explanation: "Steer into the direction of the skid to regain control." },
-            { id: 4, text: "What does a solid yellow line on your side of the road mean?", options: ["No overtaking", "Overtaking allowed", "Parking allowed", "Slow zone ahead"], correct: 0, explanation: "Solid yellow line indicates no overtaking permitted." },
-            { id: 5, text: "What is the minimum driving age in Kenya?", options: ["16 years", "17 years", "18 years", "21 years"], correct: 2, explanation: "Minimum age for driving license is 18 years." },
-            { id: 6, text: "When should you use your hazard lights?", options: ["When vehicle is disabled", "In heavy rain", "When parked illegally", "When speeding"], correct: 0, explanation: "Hazard lights indicate your vehicle is disabled or creating a hazard." },
-            { id: 7, text: "What does a 'Give Way' sign require?", options: ["Yield to other traffic", "Stop completely", "Speed up", "Turn around"], correct: 0, explanation: "Give Way means yield to traffic on the main road." },
-            { id: 8, text: "How often should you check your tire pressure?", options: ["Weekly", "Monthly", "Yearly", "Never"], correct: 0, explanation: "Check tire pressure weekly for safety and fuel efficiency." },
-            { id: 9, text: "What does a stop sign require?", options: ["Stop completely", "Slow down", "Yield", "Proceed with caution"], correct: 0, explanation: "Stop signs require a complete stop before proceeding." },
-            { id: 10, text: "When approaching a roundabout, who has right of way?", options: ["Vehicles on the roundabout", "Vehicles entering from left", "Vehicles entering from right", "Largest vehicles"], correct: 0, explanation: "Traffic already on the roundabout has right of way." },
-            { id: 11, text: "What is the penalty for driving without insurance in Kenya?", options: ["KSH 10,000", "KSH 20,000", "KSH 50,000", "KSH 100,000"], correct: 1, explanation: "Driving without insurance can result in fine of KSH 20,000 or imprisonment." },
-            { id: 12, text: "What does a flashing amber traffic light mean?", options: ["Stop", "Go faster", "Prepare to stop", "Proceed with caution if safe"], correct: 3, explanation: "Flashing amber means proceed with caution after checking it is safe." },
-            { id: 13, text: "When can you overtake on the left?", options: ["Never", "When vehicle ahead is turning right", "On highways only", "When traffic is heavy"], correct: 1, explanation: "You may overtake on left only when vehicle ahead is turning right." },
-            { id: 14, text: "What is the safe following distance in good conditions?", options: ["1 second", "2 seconds", "3 seconds", "4 seconds"], correct: 2, explanation: "3-second rule is recommended for safe following distance." },
-            { id: 15, text: "What should you do before moving off from a parked position?", options: ["Check mirrors only", "Signal only", "Check mirrors and signal", "Sound horn"], correct: 2, explanation: "Always check mirrors and signal before moving off." },
-            { id: 16, text: "What does a red traffic light mean?", options: ["Stop and wait for green", "Proceed with caution", "Slow down", "Prepare to stop"], correct: 0, explanation: "Red means stop completely. Wait until light turns green." },
-            { id: 17, text: "What is the maximum speed for PSV vehicles in Kenya?", options: ["80 km/h", "100 km/h", "110 km/h", "120 km/h"], correct: 0, explanation: "PSV vehicles are limited to 80 km/h maximum." },
-            { id: 18, text: "When should you use low beam headlights?", options: ["Always at night", "In fog only", "In city limits", "On highways only"], correct: 0, explanation: "Use low beams at night, especially in traffic or on lit roads." },
-            { id: 19, text: "What does a yellow traffic light mean?", options: ["Stop if safe", "Speed up", "Go slowly", "Park"], correct: 0, explanation: "Yellow means stop if it is safe to do so." },
-            { id: 20, text: "What is the penalty for drunk driving?", options: ["Fine", "License suspension", "Imprisonment", "All of the above"], correct: 3, explanation: "Drunk driving results in fine, license suspension, and possible imprisonment." },
-            // Add more for 1000+ total
-        ];
-
-        // Generate additional questions programmatically
-        for (let i = NTSA_QUESTIONS.length + 1; i <= 150; i++) {
-            NTSA_QUESTIONS.push({
-                id: i,
-                text: `NTSA Practice Question ${i}: What is the correct stopping distance at 50 km/h on dry road?`,
-                options: ["15 meters", "23 meters", "30 meters", "45 meters"],
-                correct: 1,
-                explanation: "At 50 km/h on dry road, thinking distance is 15m + braking distance 8m = 23m total stopping distance."
-            });
-        }
-
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/+esm';
+        
+        const supabaseUrl = 'https://fktjmkmzlixlapeyhhyl.supabase.co';
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E';
+        
+        const supabase = createClient(supabaseUrl, supabaseAnonKey);
+        
         // ============================================
         // APP STATE
         // ============================================
         let currentUser = null;
-        let toastQueue = [];
-        let isProcessing = false;
-        let currentQuizPage = 1;
-        let quizAnswers = {};
-        let questionsPerPage = 5;
+        let session = null;
+        let isLoading = false;
         
-        function showToast(message, type) {
-            toastQueue.push({ message, type: type || 'info' });
-            if (!isProcessing) processToast();
+        // Module Data
+        const LEARNER_UNITS = Array.from({ length: 21 }, (_, i) => ({ 
+            id: i+1, 
+            title: `Unit ${i+1}: ${i===0?"Introduction to Driving":i===1?"Highway Code":i===2?"Vehicle Controls":i===3?"Maintenance":i===4?"Moving Off":"Driving Skills"}`, 
+            desc: "Essential driving knowledge and skills for Kenyan roads",
+            content: "<h2>Learning Unit</h2><p>Complete training content for professional driving in Kenya.</p><ul><li>Learn essential driving techniques</li><li>Understand road safety rules</li><li>Master defensive driving skills</li></ul>"
+        }));
+        const PSV_UNITS = Array.from({ length: 10 }, (_, i) => ({ id: i+1, title: `PSV Module ${i+1}`, desc: "Professional PSV driver training", content: "<h2>PSV Training</h2><p>Professional Public Service Vehicle driver training.</p>" }));
+        const SCHOOLBUS_UNITS = Array.from({ length: 6 }, (_, i) => ({ id: i+1, title: `School Bus Safety ${i+1}`, desc: "Child transport safety", content: "<h2>School Bus Safety</h2><p>Specialized training for transporting children safely.</p>" }));
+        const BODA_UNITS = Array.from({ length: 12 }, (_, i) => ({ id: i+1, title: `Boda Module ${i+1}`, desc: "Motorcycle safety training", content: "<h2>Boda Training</h2><p>Complete motorcycle safety and operations training.</p>" }));
+        const EV_UNITS = Array.from({ length: 8 }, (_, i) => ({ id: i+1, title: `EV Module ${i+1}`, desc: "Electric vehicle training", content: "<h2>EV Training</h2><p>Electric vehicle driving, maintenance and safety.</p>" }));
+        const ACADEMY_UNITS = Array.from({ length: 6 }, (_, i) => ({ id: i+1, title: `Academy Module ${i+1}`, desc: "Professional development", content: "<h2>Academy Training</h2><p>Advanced professional driver development.</p>" }));
+        
+        const NTSA_QUESTIONS = Array.from({ length: 50 }, (_, i) => ({ 
+            id: i+1, 
+            text: `NTSA Practice Question ${i+1}: What is the safe following distance in good conditions?`, 
+            options: ["2 seconds", "3 seconds", "4 seconds", "5 seconds"], 
+            correct: 1, 
+            explanation: "The 3-second rule is recommended for safe following distance under normal conditions."
+        }));
+        
+        let toastQueue = [];
+        let isProcessingToast = false;
+        
+        function showToast(message, type = 'info') {
+            toastQueue.push({ message, type });
+            if (!isProcessingToast) processToastQueue();
         }
         
-        async function processToast() {
-            if (toastQueue.length === 0) { isProcessing = false; return; }
-            isProcessing = true;
+        async function processToastQueue() {
+            if (toastQueue.length === 0) { isProcessingToast = false; return; }
+            isProcessingToast = true;
             const { message, type } = toastQueue.shift();
-            const container = document.getElementById('toast-root');
+            const container = document.getElementById('toast-root') || document.body;
             const toast = document.createElement('div');
             toast.className = 'toast';
             const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
-            toast.textContent = icon + ' ' + message;
+            toast.textContent = `${icon} ${message}`;
             container.appendChild(toast);
             await new Promise(r => setTimeout(r, 3000));
             toast.remove();
-            processToast();
+            processToastQueue();
         }
         
-        function updateAuthUI() {
-            const authDiv = document.getElementById('authButtons');
-            if (!authDiv) return;
-            if (currentUser) {
-                authDiv.innerHTML = '<div style="background:#d4af37;color:#000;padding:8px 16px;border-radius:40px;">👤 ' + currentUser.name + '</div><button onclick="logout()">🚪 Logout</button>';
-            } else {
-                authDiv.innerHTML = '<button onclick="showLoginModal()">🔑 Login</button>';
+        // ============================================
+        // AUTHENTICATION
+        // ============================================
+        async function signUp(email, password, name) {
+            if (!name || name.length < 2) { showToast('Please enter your full name', 'error'); return null; }
+            if (!email || !email.includes('@')) { showToast('Please enter a valid email', 'error'); return null; }
+            if (!password || password.length < 6) { showToast('Password must be at least 6 characters', 'error'); return null; }
+            
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email: email.trim(),
+                    password: password,
+                    options: { data: { full_name: name.trim() } }
+                });
+                if (error) throw error;
+                showToast('Account created! Please check your email for verification.', 'success');
+                return data;
+            } catch (error) {
+                showToast(error.message, 'error');
+                return null;
             }
         }
         
-        function login(email, password) {
-            showToast('Demo login successful!', 'success');
-            currentUser = { id: 'demo', email: email, name: email.split('@')[0] };
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            updateAuthUI();
-            closeModal();
-            navigateTo('home');
+        async function login(email, password) {
+            if (!email || !password) { showToast('Please enter email and password', 'error'); return null; }
+            
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email.trim(),
+                    password: password
+                });
+                if (error) throw error;
+                
+                currentUser = {
+                    id: data.user.id,
+                    email: data.user.email,
+                    name: data.user.user_metadata?.full_name || email.split('@')[0],
+                    role: email === 'admin@mei.com' ? 'admin' : 'user'
+                };
+                session = data.session;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showToast(`Welcome ${currentUser.name}!`, 'success');
+                renderMainApp();
+                return currentUser;
+            } catch (error) {
+                showToast(error.message, 'error');
+                return null;
+            }
         }
         
-        function logout() {
+        async function logout() {
+            await supabase.auth.signOut();
             currentUser = null;
+            session = null;
             localStorage.removeItem('currentUser');
-            updateAuthUI();
-            showToast('Logged out', 'info');
-            navigateTo('home');
+            showToast('Logged out successfully', 'info');
+            renderMainApp();
         }
         
+        async function checkSession() {
+            const stored = localStorage.getItem('currentUser');
+            if (stored) {
+                currentUser = JSON.parse(stored);
+                const { data: { session: currentSession } } = await supabase.auth.getSession();
+                session = currentSession;
+                if (!session) {
+                    localStorage.removeItem('currentUser');
+                    currentUser = null;
+                }
+            }
+        }
+        
+        // ============================================
+        // UI COMPONENTS
+        // ============================================
+        function renderCard(unit, type) {
+            const isEv = type === 'ev';
+            return `<div class="card ${isEv ? 'card-ev' : ''}" onclick="window.viewMaterial(${unit.id}, '${type}')">
+                <span class="${isEv ? 'ev-badge-module' : 'unit-badge'}">${isEv ? '⚡' : ''} ${type === 'learner' ? `Unit ${unit.id}` : ''}</span>
+                <h3>${unit.title}</h3>
+                <p>${unit.desc.substring(0, 80)}...</p>
+                <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+                <button class="btn-small">📖 View →</button>
+            </div>`;
+        }
+        
+        function renderNavigation() {
+            const isAdmin = currentUser?.role === 'admin';
+            return `
+                <div class="navbar">
+                    <div class="container nav">
+                        <div class="logo" data-nav="home">MEI DRIVE AFRICA ⚡</div>
+                        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
+                        <div class="nav-links" id="navLinks">
+                            <button data-nav="home">🏠 Home</button>
+                            <button data-nav="learner">📚 Learner (21)</button>
+                            <button data-nav="psv">🚌 PSV (10)</button>
+                            <button data-nav="schoolbus">🏫 School Bus (6)</button>
+                            <button data-nav="boda">🏍️ Boda (12)</button>
+                            <button data-nav="ev">⚡ EV (8)</button>
+                            <button data-nav="academy">🎓 Academy (6)</button>
+                            <button data-nav="library">📖 Library</button>
+                            <button data-nav="quiz">📝 Quiz</button>
+                            ${isAdmin ? '<button data-nav="admin">👑 Admin</button>' : ''}
+                            <div id="authButtons"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function renderAuthButtons() {
+            const authDiv = document.getElementById('authButtons');
+            if (!authDiv) return;
+            if (currentUser) {
+                authDiv.innerHTML = `<div class="profile-link" onclick="window.showProfileModal()">👤 ${currentUser.name}</div><button onclick="logout()">🚪 Logout</button>`;
+            } else {
+                authDiv.innerHTML = `<button onclick="window.showLoginModal()">🔑 Login</button><button onclick="window.showSignupModal()">📝 Sign Up</button>`;
+            }
+        }
+        
+        // ============================================
+        // PAGES
+        // ============================================
+        function renderHome() {
+            return `
+                <div class="hero">
+                    <h1>Kenya's <span class="highlight">Digital Driver Safety Platform</span></h1>
+                    <p>Drive Smart. Stay Safe. Arrive Home. Keep Our Roads Safe</p>
+                    <div class="hero-buttons">
+                        <button class="btn" onclick="navigateTo('learner')">📚 Start Learning (21 Units)</button>
+                        <button class="btn-ev" onclick="navigateTo('ev')">⚡ EV Course</button>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-number">21</div><div>Learner Units</div></div>
+                    <div class="stat-card"><div class="stat-number">10</div><div>PSV Units</div></div>
+                    <div class="stat-card"><div class="stat-number">12</div><div>Boda Units</div></div>
+                    <div class="stat-card"><div class="stat-number">8</div><div>EV Units</div></div>
+                </div>
+                <div class="grid">
+                    <div class="card" onclick="navigateTo('learner')"><div style="font-size:2rem;margin-bottom:12px;">📚</div><h3>Learner Hub</h3><p>21 Complete Units</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('psv')"><div style="font-size:2rem;margin-bottom:12px;">🚌</div><h3>PSV Course</h3><p>10 Units</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('schoolbus')"><div style="font-size:2rem;margin-bottom:12px;">🏫</div><h3>School Bus</h3><p>6 Units</p><button class="btn-small">Start →</button></div>
+                    <div class="card card-ev" onclick="navigateTo('ev')"><div style="font-size:2rem;margin-bottom:12px;">⚡</div><h3>EV Training</h3><p>8 Units</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('boda')"><div style="font-size:2rem;margin-bottom:12px;">🏍️</div><h3>Boda Safety</h3><p>12 Units</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('academy')"><div style="font-size:2rem;margin-bottom:12px;">🎓</div><h3>Academy</h3><p>6 Units</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('library')"><div style="font-size:2rem;margin-bottom:12px;">📖</div><h3>Library</h3><p>Resources</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('quiz')"><div style="font-size:2rem;margin-bottom:12px;">📝</div><h3>NTSA Quiz</h3><p>Practice Questions</p><button class="btn-small">Start →</button></div>
+                </div>
+            `;
+        }
+        
+        function renderModule(moduleType, units) {
+            let cards = '';
+            for (let i = 0; i < units.length; i++) cards += renderCard(units[i], moduleType);
+            return `<div class="hero"><h1>${moduleType.toUpperCase()} Training</h1><p>Complete training for professional certification</p></div><div class="grid">${cards}</div>`;
+        }
+        
+        function renderLibrary() {
+            const resources = ['Kenya Highway Code', 'EV Driver Handbook', 'NTSA Test Guide', 'PSV Manual', 'Boda Safety Guide', 'EV Maintenance Manual'];
+            return `<div class="hero"><h1>📖 Resource Library</h1><p>Official documents, manuals and reference materials</p></div><div class="grid">${resources.map(r => `<div class="card" onclick="showToast('Download started: ${r}','success')"><div style="font-size:2rem;">📄</div><h3>${r}</h3><button class="btn-small">Download →</button></div>`).join('')}</div>`;
+        }
+        
+        // Quiz functionality
+        let currentQuizPage = 1;
+        let quizAnswers = {};
+        const questionsPerPage = 5;
+        
+        function renderQuiz() {
+            const start = (currentQuizPage - 1) * questionsPerPage;
+            const end = start + questionsPerPage;
+            const pageQuestions = NTSA_QUESTIONS.slice(start, end);
+            const totalPages = Math.ceil(NTSA_QUESTIONS.length / questionsPerPage);
+            
+            let answered = Object.keys(quizAnswers).length;
+            let correct = 0;
+            for (let [id, answer] of Object.entries(quizAnswers)) {
+                const q = NTSA_QUESTIONS.find(qq => qq.id == id);
+                if (q && answer === q.correct) correct++;
+            }
+            
+            let html = `<div class="hero"><h1>📝 NTSA Practice Test</h1><p>Prepare with real exam questions</p></div>`;
+            html += `<div class="score-card"><h3>Your Progress</h3><div class="score">${answered}/${NTSA_QUESTIONS.length}</div><div>Score: ${correct}/${answered} (${answered ? Math.round(correct/answered*100) : 0}%)</div></div>`;
+            
+            for (let q of pageQuestions) {
+                const selected = quizAnswers[q.id];
+                html += `<div class="question-card"><div class="question-text"><strong>${q.id}.</strong> ${q.text}</div><div class="options-group">`;
+                for (let i = 0; i < q.options.length; i++) {
+                    let optionClass = '';
+                    if (selected !== undefined) {
+                        if (i === q.correct) optionClass = 'correct';
+                        else if (i === selected && i !== q.correct) optionClass = 'wrong';
+                    }
+                    html += `<div class="option ${optionClass}" onclick="selectAnswer(${q.id}, ${i})">${String.fromCharCode(65+i)}. ${q.options[i]}</div>`;
+                }
+                if (selected !== undefined) {
+                    html += `<div style="margin-top:12px;padding:12px;background:rgba(52,152,219,0.1);border-radius:8px;"><small>📖 ${q.explanation}</small></div>`;
+                }
+                html += `</div></div>`;
+            }
+            
+            html += `<div class="pagination">`;
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button class="${i === currentQuizPage ? 'active' : ''}" onclick="goToQuizPage(${i})">${i}</button>`;
+            }
+            html += `</div>`;
+            return html;
+        }
+        
+        function selectAnswer(id, answer) {
+            quizAnswers[id] = answer;
+            renderPage('quiz');
+        }
+        
+        function goToQuizPage(page) {
+            currentQuizPage = page;
+            renderPage('quiz');
+        }
+        
+        // Admin Panel
+        let adminUsers = [
+            { id: 1, name: "John Kamau", email: "admin@mei.com", role: "admin", status: "active" },
+            { id: 2, name: "Mary Wanjiku", email: "mary@mei.com", role: "learner", status: "active" },
+            { id: 3, name: "Peter Otieno", email: "peter@mei.com", role: "driver", status: "inactive" }
+        ];
+        
+        function renderAdmin() {
+            const totalUsers = adminUsers.length;
+            const activeUsers = adminUsers.filter(u => u.status === 'active').length;
+            let html = `
+                <div class="admin-layout">
+                    <div class="admin-sidebar">
+                        <h3>👑 Admin Panel</h3>
+                        <button onclick="showAdminSection('dashboard')"><i class="fas fa-chart-line"></i> Dashboard</button>
+                        <button onclick="showAdminSection('users')"><i class="fas fa-users"></i> Users</button>
+                        <button onclick="showAdminSection('quizzes')"><i class="fas fa-question-circle"></i> Quizzes</button>
+                    </div>
+                    <div class="admin-content" id="adminContent">
+                        <div id="dashboardSection">
+                            <h2>Dashboard</h2>
+                            <div class="stats-grid">
+                                <div class="stat-card"><div class="stat-number">${totalUsers}</div><div>Total Users</div></div>
+                                <div class="stat-card"><div class="stat-number">${activeUsers}</div><div>Active Users</div></div>
+                                <div class="stat-card"><div class="stat-number">45</div><div>Modules</div></div>
+                                <div class="stat-card"><div class="stat-number">50</div><div>Questions</div></div>
+                            </div>
+                        </div>
+                        <div id="usersSection" style="display:none;">
+                            <h2>User Management</h2>
+                            <input type="text" class="search-input" id="userSearch" placeholder="Search users..." onkeyup="filterUsers()">
+                            <div style="overflow-x:auto;"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead><tbody id="usersTableBody">
+                                ${adminUsers.map(u => `<tr><td>${u.name}</td><td>${u.email}</td><td><span class="role-badge role-${u.role}">${u.role}</span></td><td><span style="color:${u.status === 'active' ? '#2ecc71' : '#e74c3c'}">${u.status}</span></td><td><button class="btn-sm btn-edit" onclick="editUser(${u.id})">Edit</button> <button class="btn-sm btn-delete" onclick="deleteUser(${u.id})">Delete</button></td></tr>`).join('')}
+                            </tbody></table></div>
+                            <button class="btn-add" style="margin-top:20px;padding:10px 20px;" onclick="showAddUserModal()">+ Add User</button>
+                        </div>
+                        <div id="quizzesSection" style="display:none;">
+                            <h2>Quiz Management</h2>
+                            <div class="stats-grid">
+                                <div class="stat-card"><div class="stat-number">${NTSA_QUESTIONS.length}</div><div>Total Questions</div></div>
+                                <div class="stat-card"><div class="stat-number">${Object.keys(quizAnswers).length}</div><div>Questions Answered</div></div>
+                            </div>
+                            <button class="btn" onclick="resetQuiz()">Reset Quiz Progress</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return html;
+        }
+        
+        window.showAdminSection = function(section) {
+            document.getElementById('dashboardSection').style.display = 'none';
+            document.getElementById('usersSection').style.display = 'none';
+            document.getElementById('quizzesSection').style.display = 'none';
+            document.getElementById(`${section}Section`).style.display = 'block';
+        };
+        
+        window.filterUsers = function() {
+            const searchTerm = document.getElementById('userSearch')?.value?.toLowerCase() || '';
+            const filtered = adminUsers.filter(u => u.name.toLowerCase().includes(searchTerm) || u.email.toLowerCase().includes(searchTerm));
+            const tbody = document.getElementById('usersTableBody');
+            if (tbody) {
+                tbody.innerHTML = filtered.map(u => `<tr><td>${u.name}</td><td>${u.email}</td><td><span class="role-badge role-${u.role}">${u.role}</span></td><td><span style="color:${u.status === 'active' ? '#2ecc71' : '#e74c3c'}">${u.status}</span></td><td><button class="btn-sm btn-edit" onclick="editUser(${u.id})">Edit</button> <button class="btn-sm btn-delete" onclick="deleteUser(${u.id})">Delete</button></td></tr>`).join('');
+            }
+        };
+        
+        window.editUser = function(id) {
+            const user = adminUsers.find(u => u.id === id);
+            const newName = prompt('Edit name:', user.name);
+            const newRole = prompt('Edit role (admin/learner/driver):', user.role);
+            if (newName) user.name = newName;
+            if (newRole) user.role = newRole;
+            filterUsers();
+            showToast('User updated', 'success');
+        };
+        
+        window.deleteUser = function(id) {
+            if (confirm('Delete this user?')) {
+                adminUsers = adminUsers.filter(u => u.id !== id);
+                filterUsers();
+                showToast('User deleted', 'success');
+            }
+        };
+        
+        window.showAddUserModal = function() {
+            const name = prompt('Enter name:');
+            const email = prompt('Enter email:');
+            if (name && email) {
+                adminUsers.push({ id: Date.now(), name, email, role: 'learner', status: 'active' });
+                filterUsers();
+                showToast('User added', 'success');
+            }
+        };
+        
+        window.resetQuiz = function() {
+            quizAnswers = {};
+            currentQuizPage = 1;
+            renderPage('quiz');
+            showToast('Quiz progress reset', 'success');
+        };
+        
+        // Material viewer
+        window.viewMaterial = function(id, type) {
+            let unit;
+            if (type === 'learner') unit = LEARNER_UNITS.find(u => u.id === id);
+            else if (type === 'psv') unit = PSV_UNITS.find(u => u.id === id);
+            else if (type === 'schoolbus') unit = SCHOOLBUS_UNITS.find(u => u.id === id);
+            else if (type === 'boda') unit = BODA_UNITS.find(u => u.id === id);
+            else if (type === 'ev') unit = EV_UNITS.find(u => u.id === id);
+            else if (type === 'academy') unit = ACADEMY_UNITS.find(u => u.id === id);
+            
+            if (unit) {
+                const content = document.getElementById('page-content');
+                content.innerHTML = `<div style="background:var(--card-bg);border-radius:24px;padding:24px;margin:20px 0;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:20px;"><h2 style="color:var(--primary-gold);">${unit.title}</h2><button class="btn-small" onclick="navigateTo('${type}')">← Back</button></div>
+                    <div class="unit-content">${unit.content}</div>
+                    <button class="btn" style="margin-top:20px;" onclick="showToast('Unit completed! 🎉','success')">✅ Mark Complete</button>
+                </div>`;
+                window.scrollTo({ top: 0 });
+            }
+        };
+        
+        // Page rendering
+        let currentPage = 'home';
+        
+        function renderPage(page) {
+            currentPage = page;
+            const content = document.getElementById('page-content');
+            if (!content) return;
+            
+            if (page === 'home') content.innerHTML = renderHome();
+            else if (page === 'learner') content.innerHTML = renderModule('learner', LEARNER_UNITS);
+            else if (page === 'psv') content.innerHTML = renderModule('psv', PSV_UNITS);
+            else if (page === 'schoolbus') content.innerHTML = renderModule('schoolbus', SCHOOLBUS_UNITS);
+            else if (page === 'boda') content.innerHTML = renderModule('boda', BODA_UNITS);
+            else if (page === 'ev') content.innerHTML = renderModule('ev', EV_UNITS);
+            else if (page === 'academy') content.innerHTML = renderModule('academy', ACADEMY_UNITS);
+            else if (page === 'library') content.innerHTML = renderLibrary();
+            else if (page === 'quiz') content.innerHTML = renderQuiz();
+            else if (page === 'admin') {
+                if (currentUser?.role === 'admin') content.innerHTML = renderAdmin();
+                else { showToast('Admin access required', 'error'); navigateTo('home'); }
+            }
+        }
+        
+        window.navigateTo = function(page) {
+            renderPage(page);
+            const navLinks = document.getElementById('navLinks');
+            if (navLinks) navLinks.classList.remove('show');
+            window.scrollTo({ top: 0 });
+        };
+        
+        window.selectAnswer = selectAnswer;
+        window.goToQuizPage = goToQuizPage;
+        
+        // Auth modals
         function showLoginModal() {
             const modal = document.createElement('div');
             modal.className = 'modal';
-            modal.innerHTML = '<div class="modal-content"><button class="close-modal" onclick="this.closest(\'.modal\').remove()">✕</button><h3>🔐 Demo Login</h3><input type="email" id="loginEmail" placeholder="Email" value="demo@mei.com"><input type="password" id="loginPassword" placeholder="Password" value="demo123"><button class="btn" style="width:100%;margin-top:10px;" onclick="login(document.getElementById(\'loginEmail\').value, document.getElementById(\'loginPassword\').value)">Login</button><hr style="margin:16px 0;"><p style="text-align:center;color:#aaa;">Demo: Use any email/password</p></div>';
-            document.getElementById('modal-root').appendChild(modal);
+            modal.innerHTML = `<div class="modal-content"><button class="close-modal" onclick="this.closest('.modal').remove()">✕</button>
+                <h3>🔐 Login to MEI Drive Africa</h3>
+                <input type="email" id="loginEmail" placeholder="Email" autocomplete="email">
+                <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
+                <button class="btn" style="width:100%;margin-top:10px;" onclick="window.doLogin()">Login</button>
+                <hr style="margin:16px 0;">
+                <p style="text-align:center;color:#aaa;">Don't have an account? <a href="#" onclick="closeModal();showSignupModal()">Sign Up</a></p>
+            </div>`;
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        }
+        
+        function showSignupModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `<div class="modal-content"><button class="close-modal" onclick="this.closest('.modal').remove()">✕</button>
+                <h3>📝 Create Account</h3>
+                <input type="text" id="signupName" placeholder="Full Name">
+                <input type="email" id="signupEmail" placeholder="Email">
+                <input type="password" id="signupPassword" placeholder="Password (min 6 characters)">
+                <button class="btn" style="width:100%;margin-top:10px;" onclick="window.doSignup()">Sign Up</button>
+                <hr style="margin:16px 0;">
+                <p style="text-align:center;color:#aaa;">Already have an account? <a href="#" onclick="closeModal();showLoginModal()">Login</a></p>
+            </div>`;
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        }
+        
+        window.doLogin = async function() {
+            const email = document.getElementById('loginEmail')?.value;
+            const password = document.getElementById('loginPassword')?.value;
+            await login(email, password);
+            closeModal();
+        };
+        
+        window.doSignup = async function() {
+            const name = document.getElementById('signupName')?.value;
+            const email = document.getElementById('signupEmail')?.value;
+            const password = document.getElementById('signupPassword')?.value;
+            await signUp(email, password, name);
+            closeModal();
+        };
+        
+        window.showProfileModal = function() {
+            showModal(`<h3>👤 Profile</h3><p><strong>Name:</strong> ${currentUser?.name}</p><p><strong>Email:</strong> ${currentUser?.email}</p><p><strong>Role:</strong> ${currentUser?.role || 'User'}</p><button class="btn" style="width:100%;margin-top:15px;" onclick="closeModal()">Close</button>`);
+        };
+        
+        function showModal(content) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `<div class="modal-content"><button class="close-modal" onclick="this.closest('.modal').remove()">✕</button>${content}</div>`;
+            document.body.appendChild(modal);
             modal.style.display = 'flex';
         }
         
@@ -350,152 +641,43 @@
             if (modal) modal.remove();
         }
         
-        function renderCard(unit, type) {
-            const isEv = type === 'ev';
-            return '<div class="card ' + (isEv ? 'card-ev' : '') + '" onclick="viewUnit(' + unit.id + ', \'' + type + '\')"><span class="' + (isEv ? 'ev-badge-module' : 'unit-badge') + '">' + (isEv ? '⚡' : '') + ' ' + (type === 'learner' ? 'Unit ' + unit.id : '') + '</span><h3>' + unit.title + '</h3><p>' + unit.desc.substring(0, 80) + '...</p><div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div><button class="btn-small">📖 View →</button></div>';
-        }
-        
-        function viewUnit(unitId, type) {
-            let unit;
-            if (type === 'learner') unit = LEARNER_UNITS.find(u => u.id === unitId);
-            else if (type === 'psv') unit = PSV_UNITS.find(u => u.id === unitId);
-            else if (type === 'schoolbus') unit = SCHOOLBUS_UNITS.find(u => u.id === unitId);
-            else if (type === 'boda') unit = BODA_UNITS.find(u => u.id === unitId);
-            else if (type === 'ev') unit = EV_UNITS.find(u => u.id === unitId);
-            else if (type === 'academy') unit = ACADEMY_UNITS.find(u => u.id === unitId);
-            
-            if (!unit) return;
-            
-            const container = document.getElementById('page-content');
-            container.innerHTML = '<div style="background:var(--card-bg);border-radius:24px;padding:24px;margin:20px 0;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px;"><h2 style="color:var(--primary-gold);">' + unit.title + '</h2><button class="btn-small" onclick="navigateTo(\'' + type + '\')">← Back to ' + type.toUpperCase() + '</button></div><div class="unit-content">' + (unit.content || '<p>' + unit.desc + '</p>') + '</div><button class="btn" style="width:100%;margin-top:24px;" onclick="showToast(\'Unit completed! 🎉\', \'success\')">✅ Mark Complete</button></div>';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        
-        function renderQuiz() {
-            const start = (currentQuizPage - 1) * questionsPerPage;
-            const end = start + questionsPerPage;
-            const pageQuestions = NTSA_QUESTIONS.slice(start, end);
-            const totalPages = Math.ceil(NTSA_QUESTIONS.length / questionsPerPage);
-            
-            let score = 0;
-            let answeredCount = 0;
-            for (let q of NTSA_QUESTIONS) {
-                if (quizAnswers[q.id] !== undefined) {
-                    answeredCount++;
-                    if (quizAnswers[q.id] === q.correct) score++;
-                }
-            }
-            
-            let html = '<div class="hero"><h1>📝 NTSA Practice Test</h1><p>Prepare for your driving test with ' + NTSA_QUESTIONS.length + '+ real exam questions</p></div>';
-            html += '<div class="score-card"><h3>Your Progress</h3><div class="score">' + answeredCount + '/' + NTSA_QUESTIONS.length + ' answered</div><div>Score: ' + score + '/' + answeredCount + ' (' + (answeredCount ? Math.round(score/answeredCount*100) : 0) + '%)</div></div>';
-            
-            for (let q of pageQuestions) {
-                const selected = quizAnswers[q.id];
-                html += '<div class="question-card"><div class="question-text"><strong>' + q.id + '.</strong> ' + q.text + '</div><div class="options-group">';
-                for (let i = 0; i < q.options.length; i++) {
-                    const isSelected = (selected === i);
-                    const isCorrect = (i === q.correct);
-                    let optionClass = '';
-                    if (selected !== undefined && isSelected) optionClass = isCorrect ? 'correct' : 'wrong';
-                    else if (selected !== undefined && isCorrect) optionClass = 'correct';
-                    html += '<div class="option ' + optionClass + '" onclick="selectAnswer(' + q.id + ', ' + i + ')">' + String.fromCharCode(65+i) + '. ' + q.options[i] + '</div>';
-                }
-                if (selected !== undefined) {
-                    html += '<div style="margin-top:12px;padding:12px;background:rgba(52,152,219,0.1);border-radius:8px;"><small><strong>Explanation:</strong> ' + q.explanation + '</small></div>';
-                }
-                html += '</div></div>';
-            }
-            
-            html += '<div class="pagination">';
-            for (let i = 1; i <= totalPages; i++) {
-                html += '<button class="' + (i === currentQuizPage ? 'active' : '') + '" onclick="goToQuizPage(' + i + ')">' + i + '</button>';
-            }
-            html += '</div>';
-            
-            document.getElementById('page-content').innerHTML = html;
-        }
-        
-        function selectAnswer(questionId, answerIndex) {
-            quizAnswers[questionId] = answerIndex;
-            renderQuiz();
-        }
-        
-        function goToQuizPage(page) {
-            currentQuizPage = page;
-            renderQuiz();
-        }
-        
-        function navigateTo(page) {
-            const container = document.getElementById('page-content');
-            
-            if (page === 'home') {
-                container.innerHTML = '<div class="hero"><h1>Kenya\'s <span class="highlight">Digital Driver Safety Platform</span></h1><p>Drive Smart. Stay Safe. Arrive Home.</p><div class="hero-buttons"><button class="btn" onclick="navigateTo(\'learner\')">📚 Start Learning (21 Units)</button><button class="btn-ev" onclick="navigateTo(\'ev\')">⚡ EV Course</button></div></div><div class="stats-grid"><div class="stat-card"><div class="stat-number">21</div><div>Learner Units</div></div><div class="stat-card"><div class="stat-number">10</div><div>PSV Units</div></div><div class="stat-card"><div class="stat-number">6</div><div>School Bus</div></div><div class="stat-card"><div class="stat-number">12</div><div>Boda Units</div></div></div><div class="grid"><div class="card" onclick="navigateTo(\'learner\')"><div style="font-size:2rem;margin-bottom:12px;">📚</div><h3>Learner Hub</h3><p>21 Complete Units</p><button class="btn-small">Start →</button></div><div class="card" onclick="navigateTo(\'psv\')"><div style="font-size:2rem;margin-bottom:12px;">🚌</div><h3>PSV Course</h3><p>10 Professional Units</p><button class="btn-small">Start →</button></div><div class="card" onclick="navigateTo(\'schoolbus\')"><div style="font-size:2rem;margin-bottom:12px;">🏫</div><h3>School Bus Safety</h3><p>6 Child Safety Units</p><button class="btn-small">Start →</button></div><div class="card card-ev" onclick="navigateTo(\'ev\')"><div style="font-size:2rem;margin-bottom:12px;">⚡</div><h3>EV Specialized</h3><p>8 Electric Vehicle Units</p><button class="btn-small">Start →</button></div><div class="card" onclick="navigateTo(\'boda\')"><div style="font-size:2rem;margin-bottom:12px;">🏍️</div><h3>Boda Safety</h3><p>12 Complete Units</p><button class="btn-small">Start →</button></div><div class="card" onclick="navigateTo(\'academy\')"><div style="font-size:2rem;margin-bottom:12px;">🎓</div><h3>Academy</h3><p>6 Fleet Management Units</p><button class="btn-small">Start →</button></div><div class="card" onclick="navigateTo(\'library\')"><div style="font-size:2rem;margin-bottom:12px;">📖</div><h3>Library</h3><p>Resources & Manuals</p><button class="btn-small">Start →</button></div><div class="card" onclick="navigateTo(\'quiz\')"><div style="font-size:2rem;margin-bottom:12px;">📝</div><h3>NTSA Quiz</h3><p>1000+ Practice Questions</p><button class="btn-small">Start →</button></div></div>';
-            } else if (page === 'learner') {
-                let cards = '';
-                for (let i = 0; i < LEARNER_UNITS.length; i++) cards += renderCard(LEARNER_UNITS[i], 'learner');
-                container.innerHTML = '<div class="hero"><h1>📚 Learner Driver Hub</h1><p>21 Complete Units - Kenya Learner Driver Handbook</p></div><div class="grid">' + cards + '</div>';
-            } else if (page === 'psv') {
-                let cards = '';
-                for (let i = 0; i < PSV_UNITS.length; i++) cards += renderCard(PSV_UNITS[i], 'psv');
-                container.innerHTML = '<div class="hero"><h1>🚌 PSV Professional Course</h1><p>10 Units - Professional Driver Certification</p></div><div class="grid">' + cards + '</div>';
-            } else if (page === 'schoolbus') {
-                let cards = '';
-                for (let i = 0; i < SCHOOLBUS_UNITS.length; i++) cards += renderCard(SCHOOLBUS_UNITS[i], 'schoolbus');
-                container.innerHTML = '<div class="hero"><h1>🏫 School Bus Safety Program</h1><p>6 Units - Specialized Training for Child Transport</p></div><div class="grid">' + cards + '</div>';
-            } else if (page === 'boda') {
-                let cards = '';
-                for (let i = 0; i < BODA_UNITS.length; i++) cards += renderCard(BODA_UNITS[i], 'boda');
-                container.innerHTML = '<div class="hero"><h1>🏍️ Boda Boda Safety Course</h1><p>12 Units - Complete Motorcycle Safety Training</p></div><div class="grid">' + cards + '</div>';
-            } else if (page === 'ev') {
-                let cards = '';
-                for (let i = 0; i < EV_UNITS.length; i++) cards += renderCard(EV_UNITS[i], 'ev');
-                container.innerHTML = '<div class="hero"><h1>⚡ Electric Vehicle Specialized Training</h1><p>8 Units - Complete EV Driving, Maintenance & Safety</p></div><div class="grid">' + cards + '</div>';
-            } else if (page === 'academy') {
-                let cards = '';
-                for (let i = 0; i < ACADEMY_UNITS.length; i++) cards += renderCard(ACADEMY_UNITS[i], 'academy');
-                container.innerHTML = '<div class="hero"><h1>🎓 Advanced Driver Academy</h1><p>6 Units - Professional Development & Fleet Management</p></div><div class="grid">' + cards + '</div>';
-            } else if (page === 'library') {
-                container.innerHTML = '<div class="hero"><h1>📖 Resource Library</h1><p>Official Documents & Manuals</p></div><div class="grid"><div class="card" onclick="showToast(\'Download started: Kenya Highway Code\',\'success\')"><div style="font-size:2rem;margin-bottom:12px;">📄</div><h3>Kenya Highway Code</h3><button class="btn-small">Download →</button></div><div class="card" onclick="showToast(\'Download started: EV Driver Handbook\',\'success\')"><div style="font-size:2rem;margin-bottom:12px;">📄</div><h3>EV Driver Handbook</h3><button class="btn-small">Download →</button></div><div class="card" onclick="showToast(\'Download started: NTSA Test Guide\',\'success\')"><div style="font-size:2rem;margin-bottom:12px;">📄</div><h3>NTSA Test Guide</h3><button class="btn-small">Download →</button></div><div class="card" onclick="showToast(\'Download started: PSV Driver Manual\',\'success\')"><div style="font-size:2rem;margin-bottom:12px;">📄</div><h3>PSV Driver Manual</h3><button class="btn-small">Download →</button></div><div class="card" onclick="showToast(\'Download started: Boda Safety Guide\',\'success\')"><div style="font-size:2rem;margin-bottom:12px;">📄</div><h3>Boda Safety Guide</h3><button class="btn-small">Download →</button></div><div class="card" onclick="showToast(\'Download started: EV Maintenance Manual\',\'success\')"><div style="font-size:2rem;margin-bottom:12px;">📄</div><h3>EV Maintenance Manual</h3><button class="btn-small">Download →</button></div></div>';
-            } else if (page === 'quiz') {
-                renderQuiz();
-            }
-            
-            const navLinks = document.getElementById('navLinks');
-            if (navLinks) navLinks.classList.remove('show');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        
-        window.navigateTo = navigateTo;
-        window.viewUnit = viewUnit;
-        window.showToast = showToast;
-        window.login = login;
-        window.logout = logout;
+        // Make functions globally available
         window.showLoginModal = showLoginModal;
+        window.showSignupModal = showSignupModal;
         window.closeModal = closeModal;
-        window.selectAnswer = selectAnswer;
-        window.goToQuizPage = goToQuizPage;
+        window.logout = logout;
+        window.showToast = showToast;
         
-        updateAuthUI();
+        // Render main app
+        async function renderMainApp() {
+            document.getElementById('app').innerHTML = `
+                ${renderNavigation()}
+                <div class="container"><main id="page-content"><div class="spinner"></div></main></div>
+                <div id="toast-root"></div>
+            `;
+            renderAuthButtons();
+            
+            // Event listeners
+            document.getElementById('mobileMenuBtn')?.addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.getElementById('navLinks')?.classList.toggle('show');
+            });
+            document.addEventListener('click', function(e) {
+                const btn = e.target.closest('[data-nav]');
+                if (btn) navigateTo(btn.getAttribute('data-nav'));
+                const navLinks = document.getElementById('navLinks');
+                const mobileBtn = document.getElementById('mobileMenuBtn');
+                if (navLinks?.classList.contains('show') && !navLinks.contains(e.target) && mobileBtn && !mobileBtn.contains(e.target)) {
+                    navLinks.classList.remove('show');
+                }
+            });
+            
+            renderPage('home');
+        }
         
-        document.getElementById('mobileMenuBtn')?.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const navLinks = document.getElementById('navLinks');
-            if (navLinks) navLinks.classList.toggle('show');
-        });
-        document.addEventListener('click', function(e) {
-            const navLinks = document.getElementById('navLinks');
-            const mobileBtn = document.getElementById('mobileMenuBtn');
-            if (navLinks && navLinks.classList.contains('show') && !navLinks.contains(e.target) && mobileBtn && !mobileBtn.contains(e.target)) {
-                navLinks.classList.remove('show');
-            }
-        });
-        
-        document.addEventListener('click', function(e) {
-            const btn = e.target.closest('[data-nav]');
-            if (btn) navigateTo(btn.getAttribute('data-nav'));
-        });
-        
-        navigateTo('home');
+        // Initialize
+        await checkSession();
+        renderMainApp();
     </script>
 </body>
 </html>
