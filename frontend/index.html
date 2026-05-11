@@ -23,14 +23,6 @@
 
         .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
 
-        /* Admin Sidebar */
-        .admin-layout { display: flex; min-height: 100vh; }
-        .admin-sidebar { width: 280px; background: #0a0a0f; border-right: 1px solid var(--border-color); padding: 24px; position: fixed; height: 100vh; overflow-y: auto; }
-        .admin-sidebar h3 { color: var(--primary-gold); margin-bottom: 24px; }
-        .admin-sidebar button { width: 100%; padding: 12px; margin-bottom: 8px; background: transparent; border: 1px solid var(--border-color); color: #fff; border-radius: 12px; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 12px; transition: 0.3s; }
-        .admin-sidebar button:hover, .admin-sidebar button.active { background: rgba(212,175,55,0.1); border-color: var(--primary-gold); color: var(--primary-gold); }
-        .admin-content { margin-left: 280px; flex: 1; padding: 32px 40px; }
-
         /* Navbar */
         .navbar { background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212,175,55,0.3); position: sticky; top: 0; z-index: 1000; padding: 16px 0; }
         .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
@@ -42,8 +34,6 @@
         /* Buttons */
         .btn { background: var(--gradient-gold); color: #000; font-weight: 700; padding: 12px 24px; border: none; border-radius: 48px; cursor: pointer; transition: 0.3s; }
         .btn-outline { background: transparent; border: 2px solid var(--primary-gold); color: var(--primary-gold); }
-        .btn-danger { background: var(--danger); color: #fff; }
-        .btn-sm { padding: 8px 16px; font-size: 12px; border-radius: 8px; cursor: pointer; background: var(--primary-gold); color: #000; border: none; }
         .btn-small { padding: 8px 16px; font-size: 12px; border-radius: 20px; cursor: pointer; background: var(--primary-gold); color: #000; border: none; margin-top: 12px; }
 
         /* Cards & Grids */
@@ -60,25 +50,12 @@
         .hero { text-align: center; padding: 60px 20px; background: radial-gradient(circle at 10% 30%, rgba(212,175,55,0.08), #0a0a0a); border-radius: 48px; margin-bottom: 40px; border: 1px solid rgba(212,175,55,0.2); }
         .hero h1 { font-size: clamp(1.8rem, 6vw, 3.5rem); font-weight: 800; margin-bottom: 20px; }
         .hero p { font-size: 1.2rem; color: #ccc; letter-spacing: 1px; }
-        .highlight { background: var(--gradient-gold); background-clip: text; -webkit-background-clip: text; color: transparent; }
 
         /* Unit Detail Modal */
         .unit-detail { max-height: 70vh; overflow-y: auto; padding-right: 10px; }
         .unit-detail h3 { color: var(--primary-gold); margin: 20px 0 10px; }
         .unit-detail ul, .unit-detail ol { margin-left: 20px; margin-bottom: 15px; }
         .unit-detail li { margin: 8px 0; color: #ccc; }
-        .unit-detail p { margin-bottom: 15px; line-height: 1.6; }
-
-        /* Tables */
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
-        th { color: var(--primary-gold); }
-        .role-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; display: inline-block; }
-        .role-admin { background: rgba(231,76,60,0.2); color: #e74c3c; }
-        .role-learner { background: rgba(52,152,219,0.2); color: #3498db; }
-        .role-driver { background: rgba(46,204,113,0.2); color: #2ecc71; }
-
-        /* Progress */
         .progress-bar { background: #2a2a2a; border-radius: 20px; height: 8px; margin: 16px 0; overflow: hidden; }
         .progress-fill { background: var(--gradient-gold); height: 100%; border-radius: 20px; width: 0%; transition: width 0.5s; }
         .unit-badge { background: var(--gradient-gold); color: #000; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; display: inline-block; margin-bottom: 12px; }
@@ -93,7 +70,7 @@
         /* Modal */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); backdrop-filter: blur(12px); z-index: 1000; justify-content: center; align-items: center; }
         .modal-content { background: var(--card-bg); border: 1px solid var(--primary-gold); border-radius: 24px; padding: 32px; max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto; }
-        .modal-content input, .modal-content select { width: 100%; padding: 12px; margin: 10px 0; background: #1a1c26; border: 1px solid #2c2f3a; border-radius: 12px; color: #fff; }
+        .modal-content input { width: 100%; padding: 12px; margin: 10px 0; background: #1a1c26; border: 1px solid #2c2f3a; border-radius: 12px; color: #fff; }
         .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--primary-gold); }
 
         /* Toast */
@@ -106,11 +83,9 @@
         .active-page { display: block; animation: fadeIn 0.4s; }
 
         @media (max-width: 768px) { 
-            .admin-sidebar { width: 80px; padding: 16px; } 
-            .admin-sidebar span { display: none; } 
-            .admin-content { margin-left: 80px; padding: 20px; } 
             .container { padding: 0 16px; }
             .nav-links button { padding: 6px 12px; font-size: 12px; }
+            .grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -123,10 +98,10 @@
             <button onclick="navigateTo('home')">Home</button>
             <button onclick="navigateTo('learner')">Learner Hub</button>
             <button onclick="navigateTo('psv')">PSV</button>
+            <button onclick="navigateTo('schoolbus')">School Bus/Van</button>
             <button onclick="navigateTo('boda')">Boda</button>
             <button onclick="navigateTo('academy')">Academy</button>
             <button onclick="navigateTo('library')">Library</button>
-            <button onclick="navigateTo('admin')">Admin</button>
             <div id="authButtons"></div>
         </div>
     </div>
@@ -157,6 +132,9 @@
 
     <div id="psv" class="page"><div class="hero"><h1>Public Service Vehicle (PSV) Professional Course</h1>
     <p>Certified Training for Professional PSV Drivers</p></div><div class="grid" id="psvGrid"></div></div>
+
+    <div id="schoolbus" class="page"><div class="hero"><h1>School Bus & Van Driver Safety Program</h1>
+    <p>Specialized Training for Safely Transporting Our Children</p></div><div class="grid" id="schoolbusGrid"></div></div>
     
     <div id="boda" class="page"><div class="hero"><h1>Boda Boda Safety & Professionalism Course</h1>
     <p>NTSA-Approved Motorcycle Safety Training</p></div><div class="grid" id="bodaGrid"></div></div>
@@ -166,30 +144,6 @@
     
     <div id="library" class="page"><div class="hero"><h1>Resource Library</h1>
     <p>Official Documents, Manuals & Reference Materials</p></div><div class="grid" id="libraryGrid"></div></div>
-
-    <div id="admin" class="page">
-        <div class="admin-layout">
-            <div class="admin-sidebar">
-                <h3>MEI ADMIN</h3>
-                <button onclick="showAdminPanel('dashboard')"><i class="fas fa-chart-line"></i> <span>Dashboard</span></button>
-                <button onclick="showAdminPanel('users')"><i class="fas fa-users"></i> <span>Users</span></button>
-                <button onclick="showAdminPanel('roles')"><i class="fas fa-shield-alt"></i> <span>Roles</span></button>
-                <button onclick="showAdminPanel('audit')"><i class="fas fa-history"></i> <span>Audit Logs</span></button>
-                <button onclick="showAdminPanel('payments')"><i class="fas fa-credit-card"></i> <span>Payments</span></button>
-                <button onclick="showAdminPanel('analytics')"><i class="fas fa-chart-bar"></i> <span>Analytics</span></button>
-                <button onclick="showAdminPanel('settings')"><i class="fas fa-cog"></i> <span>Settings</span></button>
-            </div>
-            <div class="admin-content">
-                <div id="adminDashboardPanel"><h2>Dashboard</h2><div class="stats-grid" id="adminStats"></div><div class="card"><h3>Recent Activity</h3><div id="recentActivity"></div></div></div>
-                <div id="adminUsersPanel" style="display:none;"><h2>User Management</h2><input type="text" id="userSearch" placeholder="Search users..." style="width:100%; padding:12px; margin:16px 0; background:#1a1c26; border:1px solid #333; border-radius:12px;"><div style="overflow-x:auto;"><table id="usersTable"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead><tbody id="usersTableBody"></tbody></table></div><button class="btn" style="margin-top:20px;" onclick="showAddUserModal()">+ Add User</button></div>
-                <div id="adminRolesPanel" style="display:none;"><h2>Role Management</h2><div id="rolesList"></div></div>
-                <div id="adminAuditPanel" style="display:none;"><h2>Audit Logs</h2><div id="auditLogs"></div></div>
-                <div id="adminPaymentsPanel" style="display:none;"><h2>Payment Management</h2><div class="stats-grid" id="paymentStats"></div><div id="transactionsList"></div><button class="btn" onclick="showPaymentModal()">Create Invoice</button></div>
-                <div id="adminAnalyticsPanel" style="display:none;"><h2>Analytics</h2><div class="stats-grid" id="analyticsStats"></div><div id="analyticsChart"></div></div>
-                <div id="adminSettingsPanel" style="display:none;"><h2>System Settings</h2><div class="card"><h3>2FA Settings</h3><label><input type="checkbox" id="enforce2FA"> Enforce 2FA for all users</label></div></div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <script>
@@ -234,6 +188,18 @@ const psvUnits = [
     { id: 10, title: "Defensive Driving for PSV", desc: "Advanced safety techniques for passenger vehicles", details: ["Space management", "Hazard anticipation", "Braking techniques", "Cornering safety", "Blind spot awareness"] }
 ];
 
+// School Bus/Van Driver Course Units - Specialized for Child Safety
+const schoolbusUnits = [
+    { id: 1, title: "Child Passenger Safety Fundamentals", desc: "Understanding the unique needs of child passengers", details: ["Child development stages", "Seatbelt positioning for children", "Child restraint systems", "Loading/unloading procedures", "Headcount protocols"] },
+    { id: 2, title: "School Bus/Van Pre-Trip Inspection", desc: "Comprehensive vehicle safety checks specific to school transport", details: ["Brake system inspection", "Lighting and signals", "Emergency exits", "Student seating integrity", "First aid kit verification"] },
+    { id: 3, title: "Safe Loading & Unloading Zones", desc: "Mastering the most dangerous part of school transport", details: ["School zone protocols", "Danger zone awareness (10-foot radius)", "Hand signal procedures", "Student crossing guidance", "Driver's crossview mirror use"] },
+    { id: 4, title: "Student Management & Behavior", desc: "Managing student behavior while driving", details: ["Setting expectations", "Distraction prevention", "Conflict resolution", "Special needs accommodations", "Reporting incidents"] },
+    { id: 5, title: "Route Risk Assessment", desc: "Identifying and mitigating route hazards", details: ["Route mapping", "Railroad crossing safety", "High-risk intersection identification", "Neighborhood hazard awareness", "Alternative route planning"] },
+    { id: 6, title: "Emergency Evacuation Procedures", desc: "Responding to emergencies with child passengers", details: ["Emergency exit drills", "Fire evacuation", "Accident response", "Student accountability", "Parent notification protocol"] },
+    { id: 7, title: "School Zone Driving & Compliance", desc: "Navigating school zones and traffic laws", details: ["School speed limits (25km/h)", "No-passing zones", "Stop-arm compliance", "Traffic warden communication", "Signal timing awareness"] },
+    { id: 8, title: "Communication with Parents & Schools", desc: "Professional coordination with stakeholders", details: ["Daily checklists", "Parent-teacher communication", "Late arrival procedures", "Missing child protocol", "Incident reporting"] }
+];
+
 // Boda Boda Course Units
 const bodaUnits = [
     { id: 1, title: "Motorcycle Controls & Operation", desc: "Mastering motorcycle controls and basic operation", details: ["Clutch/throttle control", "Gear shifting", "Braking system", "Balance techniques", "Starting/stopping"] },
@@ -255,6 +221,8 @@ const academyUnits = [
 const libraryResources = [
     { title: "Kenya Highway Code (Official)", type: "PDF", size: "2.4 MB", description: "Complete official NTSA highway code document" },
     { title: "NTSA Driving Test Guide", type: "PDF", size: "1.8 MB", description: "Comprehensive test preparation guide" },
+    { title: "School Bus Driver Handbook", type: "PDF", size: "3.5 MB", description: "Specialized school transport safety manual" },
+    { title: "Child Safety Transport Guidelines", type: "PDF", size: "2.1 MB", description: "NTSA guidelines for student transport" },
     { title: "Vehicle Maintenance Handbook", type: "Video", duration: "45 min", description: "Essential maintenance video tutorial" },
     { title: "PSV Driver Handbook", type: "PDF", size: "3.2 MB", description: "Professional PSV driver manual" },
     { title: "Road Signs Reference Card", type: "PDF", size: "0.5 MB", description: "Quick reference for all traffic signs" },
@@ -269,25 +237,25 @@ const questions = [
     { id: 4, text: "When should you use your hazard lights?", options: ["When parked illegally", "In heavy rain only", "When your vehicle is disabled", "When speeding"], correct: 2 },
     { id: 5, text: "What does a red traffic light mean?", options: ["Stop and wait for green", "Proceed with caution", "Slow down", "Prepare to stop"], correct: 0 },
     { id: 6, text: "What is the safe following distance in good conditions?", options: ["1 second", "2 seconds", "3 seconds", "4 seconds"], correct: 1 },
-    { id: 7, text: "What documents must a driver carry at all times?", options: ["Driving license only", "License and insurance", "License, insurance, and logbook", "License, insurance, logbook, and PSV badge"], correct: 3 },
+    { id: 7, text: "What is the speed limit in a school zone in Kenya?", options: ["15 km/h", "25 km/h", "40 km/h", "50 km/h"], correct: 1 },
     { id: 8, text: "What does a flashing amber traffic light mean?", options: ["Stop", "Go faster", "Prepare to stop", "Proceed with caution if safe"], correct: 3 },
-    { id: 9, text: "When overtaking, you should NOT:", options: ["Check mirrors", "Signal intention", "Overtake on the left", "Return to lane safely"], correct: 2 },
+    { id: 9, text: "When should a school bus activate its stop arm?", options: ["When loading students", "On highways only", "Never", "When speeding"], correct: 0 },
     { id: 10, text: "What is the penalty for driving without a valid PSV badge?", options: ["Fine only", "Imprisonment only", "Fine and/or imprisonment", "License suspension"], correct: 2 },
     { id: 11, text: "When approaching a roundabout, who has right of way?", options: ["Vehicles on the roundabout", "Vehicles entering from left", "Vehicles entering from right", "Largest vehicles"], correct: 0 },
     { id: 12, text: "What should you do if your brakes fail?", options: ["Jump out", "Use handbrake gradually", "Sound horn", "Continue driving"], correct: 1 },
     { id: 13, text: "What does a 'STOP' sign require?", options: ["Slow down", "Stop completely", "Yield", "Proceed with caution"], correct: 1 },
     { id: 14, text: "When driving in fog, you should:", options: ["Use high beams", "Use fog lights", "Drive faster", "Follow closely"], correct: 1 },
     { id: 15, text: "What is the minimum tread depth for tires in Kenya?", options: ["0.6 mm", "1.0 mm", "1.6 mm", "2.0 mm"], correct: 2 },
-    { id: 16, text: "Who is responsible for passenger safety on a PSV?", options: ["Passengers themselves", "The conductor only", "The driver", "The driver and operator"], correct: 2 },
+    { id: 16, text: "Who is responsible for student safety on a school bus?", options: ["Students themselves", "The school only", "The driver", "The driver and school"], correct: 2 },
     { id: 17, text: "What does a yellow traffic light mean?", options: ["Stop if safe", "Speed up", "Go slowly", "Park"], correct: 0 },
     { id: 18, text: "When can you use a mobile phone while driving?", options: ["Never", "Only with hands-free", "Only in traffic", "Only at night"], correct: 0 },
     { id: 19, text: "What should you check daily before driving?", options: ["Tires only", "Lights only", "Tires, lights, brakes, fluids", "Radio only"], correct: 2 },
     { id: 20, text: "What does a solid white line indicate?", options: ["No crossing", "Lane separation", "Parking", "Slow zone"], correct: 0 },
     { id: 21, text: "When should you use low beam headlights?", options: ["Always at night", "In fog only", "In city limits", "On highways only"], correct: 0 },
     { id: 22, text: "What is the penalty for drunk driving?", options: ["Fine", "License suspension", "Imprisonment", "All of the above"], correct: 3 },
-    { id: 23, text: "How often should PSV vehicles be inspected?", options: ["Monthly", "Quarterly", "Twice a year", "Annually"], correct: 1 },
+    { id: 23, text: "How often should school buses be inspected?", options: ["Monthly", "Quarterly", "Twice a year", "Annually"], correct: 1 },
     { id: 24, text: "What does a 'GIVE WAY' sign mean?", options: ["Stop", "Yield to other traffic", "Go faster", "Turn around"], correct: 1 },
-    { id: 25, text: "When parking on a hill facing uphill, you should:", options: ["Turn wheels away from curb", "Turn wheels toward curb", "Keep wheels straight", "Remove tires"], correct: 0 },
+    { id: 25, text: "The danger zone around a school bus extends how far?", options: ["5 feet", "10 feet", "15 feet", "20 feet"], correct: 1 },
     { id: 26, text: "What should you do at an uncontrolled intersection?", options: ["Speed through", "Stop completely", "Yield to right", "Sound horn"], correct: 2 },
     { id: 27, text: "What is the maximum working hours for a PSV driver in a day?", options: ["8 hours", "10 hours", "12 hours", "14 hours"], correct: 0 },
     { id: 28, text: "When should you use your horn?", options: ["To greet friends", "To warn of danger", "To show anger", "To hurry pedestrians"], correct: 1 },
@@ -297,27 +265,11 @@ const questions = [
 
 // ====================== STATE MANAGEMENT ======================
 let currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
-let userRole = currentUser?.role || 'guest';
-let auditLogs = JSON.parse(localStorage.getItem('auditLogs') || '[]');
-let transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
 let userProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
-
-let demoUsers = [
-    { id: 1, name: 'John Kamau', email: 'john@mei.com', role: 'admin', status: 'active', lastLogin: '2024-01-15' },
-    { id: 2, name: 'Mary Wanjiku', email: 'mary@mei.com', role: 'learner', status: 'active', lastLogin: '2024-01-14' },
-    { id: 3, name: 'Peter Otieno', email: 'peter@mei.com', role: 'driver', status: 'inactive', lastLogin: '2024-01-10' }
-];
-
 let currentQuestionPage = 1;
 const questionsPerPage = 5;
 
 // ====================== UTILITIES ======================
-function logAudit(userId, action, details) {
-    auditLogs.unshift({ id: Date.now(), userId, action, details: JSON.stringify(details), timestamp: new Date().toISOString() });
-    auditLogs = auditLogs.slice(0, 500);
-    localStorage.setItem('auditLogs', JSON.stringify(auditLogs));
-}
-
 function showToast(msg, type = 'info') { 
     const t = document.createElement('div'); 
     t.className = 'toast'; 
@@ -377,39 +329,22 @@ function showUnitDetail(unit, moduleType = 'learner') {
 function startUnit(unitId, moduleType) {
     closeModal();
     showToast(`Unit ${unitId} started! Complete the lessons and quiz to earn your certificate.`, 'success');
-    logAudit(currentUser?.id || 'guest', 'start_unit', { unitId, moduleType });
 }
 
 // ====================== AUTHENTICATION ======================
 function showLoginModal() { 
-    showModal(`<div class="modal-content"><span class="close-modal" onclick="closeModal()">&times;</span><h3>Login to MEI Drive Africa</h3><input type="email" id="loginEmail" placeholder="Email"><input type="password" id="loginPassword" placeholder="Password"><div style="margin:10px 0;"><label><input type="checkbox" id="rememberMe"> Remember me</label></div><button class="btn" style="width:100%" onclick="handleLogin()">Login</button><hr style="margin:16px 0;"><h4>Sign Up</h4><input type="text" id="signupName" placeholder="Full Name"><input type="email" id="signupEmail" placeholder="Email"><input type="password" id="signupPassword" placeholder="Password"><button class="btn-outline" style="width:100%" onclick="handleSignup()">Create Account</button><button class="btn-outline" style="width:100%; margin-top:8px;" onclick="showForgotPassword()">Forgot Password?</button></div>`); 
-}
-
-function showForgotPassword() { 
-    showModal(`<div class="modal-content"><h3>Reset Password</h3><input type="email" id="resetEmail" placeholder="Email"><button class="btn" onclick="sendResetLink()">Send Reset Link</button></div>`); 
-}
-
-function sendResetLink() { 
-    const email = document.getElementById('resetEmail')?.value; 
-    if (email) { 
-        showToast(`Password reset link sent to ${email}`, 'success'); 
-        logAudit('system', 'password_reset_request', { email }); 
-        closeModal(); 
-    } 
+    showModal(`<div class="modal-content"><span class="close-modal" onclick="closeModal()">&times;</span><h3>Login to MEI Drive Africa</h3><input type="email" id="loginEmail" placeholder="Email"><input type="password" id="loginPassword" placeholder="Password"><div style="margin:10px 0;"><label><input type="checkbox" id="rememberMe"> Remember me</label></div><button class="btn" style="width:100%" onclick="handleLogin()">Login</button><hr style="margin:16px 0;"><h4>Sign Up</h4><input type="text" id="signupName" placeholder="Full Name"><input type="email" id="signupEmail" placeholder="Email"><input type="password" id="signupPassword" placeholder="Password"><button class="btn-outline" style="width:100%" onclick="handleSignup()">Create Account</button></div>`); 
 }
 
 function handleLogin() {
     const email = document.getElementById('loginEmail').value;
     if (!email) { showToast('Please enter email', 'error'); return; }
-    const isAdmin = email.includes('admin');
-    currentUser = { id: 'user_' + Date.now(), email, name: email.split('@')[0], role: isAdmin ? 'admin' : 'learner' };
+    currentUser = { id: 'user_' + Date.now(), email, name: email.split('@')[0], role: 'learner' };
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    userRole = currentUser.role;
     updateAuthUI();
     closeModal();
     showToast(`Welcome ${currentUser.name}! Start your driving journey today.`, 'success');
-    logAudit(currentUser.id, 'login', { email });
-    navigateTo(currentUser.role === 'admin' ? 'admin' : 'learner');
+    navigateTo('learner');
 }
 
 function handleSignup() {
@@ -417,14 +352,12 @@ function handleSignup() {
     const email = document.getElementById('signupEmail')?.value;
     if (!name || !email) { showToast('Please fill all fields', 'error'); return; }
     showToast('Account created! Welcome to MEI Drive Africa.', 'success');
-    logAudit('system', 'signup', { email, name });
     closeModal();
 }
 
 function logout() { 
     currentUser = null; 
     localStorage.removeItem('currentUser'); 
-    userRole = 'guest'; 
     updateAuthUI(); 
     showToast('Logged out successfully', 'info'); 
     navigateTo('home'); 
@@ -440,133 +373,15 @@ function updateAuthUI() {
     }
 }
 
-// ====================== ADMIN FUNCTIONS ======================
-function showAdminPanel(panel) {
-    document.querySelectorAll('[id$="Panel"]').forEach(p => p.style.display = 'none');
-    document.getElementById(`admin${panel.charAt(0).toUpperCase() + panel.slice(1)}Panel`).style.display = 'block';
-    if (panel === 'dashboard') loadAdminDashboard();
-    if (panel === 'users') loadUsersTable();
-    if (panel === 'audit') loadAuditLogs();
-    if (panel === 'payments') loadPayments();
-    if (panel === 'analytics') loadAnalytics();
-    if (panel === 'roles') loadRoles();
-}
-
-function loadAdminDashboard() {
-    const totalStudents = 1247;
-    const activeCourses = 4;
-    const completionRate = 76;
-    document.getElementById('adminStats').innerHTML = `<div class="stat-card"><div class="stat-number">${totalStudents}</div><div>Total Students</div></div><div class="stat-card"><div class="stat-number">${activeCourses}</div><div>Active Courses</div></div><div class="stat-card"><div class="stat-number">${completionRate}%</div><div>Completion Rate</div></div><div class="stat-card"><div class="stat-number">KSH 124,500</div><div>Monthly Revenue</div></div>`;
-    document.getElementById('recentActivity').innerHTML = auditLogs.slice(0, 10).map(log => `<div style="padding:8px; border-bottom:1px solid #333;"><small>${new Date(log.timestamp).toLocaleString()}</small> - ${log.action}</div>`).join('') || '<p>No recent activity</p>';
-}
-
-function loadUsersTable() {
-    const search = document.getElementById('userSearch')?.value.toLowerCase() || '';
-    const filtered = demoUsers.filter(u => u.name.toLowerCase().includes(search) || u.email.toLowerCase().includes(search));
-    document.getElementById('usersTableBody').innerHTML = filtered.map(u => `
-        <tr>
-            <td>${u.name}</td>
-            <td>${u.email}</td>
-            <td><span class="role-badge role-${u.role}">${u.role}</span></td>
-            <td><span style="color:${u.status === 'active' ? '#2ecc71' : '#e74c3c'}">${u.status}</span></td>
-            <td><button class="btn-sm" onclick="editUser(${u.id})">Edit</button> <button class="btn-sm" style="background:#e74c3c; color:#fff;" onclick="deleteUser(${u.id})">Delete</button></td>
-        </tr>`).join('');
-}
-
-function editUser(id) {
-    const user = demoUsers.find(u => u.id === id);
-    if (!user) return;
-    showModal(`<div class="modal-content"><span class="close-modal" onclick="closeModal()">&times;</span><h3>Edit User</h3><input type="text" id="editUserName" value="${user.name}"><input type="email" id="editUserEmail" value="${user.email}"><select id="editUserRole"><option value="learner" ${user.role === 'learner' ? 'selected' : ''}>Learner</option><option value="driver" ${user.role === 'driver' ? 'selected' : ''}>Driver</option><option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Admin</option></select><select id="editUserStatus"><option value="active" ${user.status === 'active' ? 'selected' : ''}>Active</option><option value="inactive" ${user.status === 'inactive' ? 'selected' : ''}>Inactive</option></select><button class="btn" onclick="saveUserEdit(${id})">Save Changes</button></div>`);
-}
-
-function saveUserEdit(id) {
-    const user = demoUsers.find(u => u.id === id);
-    if (user) {
-        user.name = document.getElementById('editUserName').value;
-        user.email = document.getElementById('editUserEmail').value;
-        user.role = document.getElementById('editUserRole').value;
-        user.status = document.getElementById('editUserStatus').value;
-        showToast('User updated successfully', 'success');
-        loadUsersTable();
-        closeModal();
-    }
-}
-
-function showAddUserModal() { 
-    showModal(`<div class="modal-content"><span class="close-modal" onclick="closeModal()">&times;</span><h3>Add User</h3><input type="text" id="newUserName" placeholder="Full Name"><input type="email" id="newUserEmail" placeholder="Email"><select id="newUserRole"><option value="learner">Learner</option><option value="driver">Driver</option><option value="admin">Admin</option></select><button class="btn" onclick="addUser()">Create User</button></div>`); 
-}
-
-function addUser() { 
-    const name = document.getElementById('newUserName')?.value; 
-    const email = document.getElementById('newUserEmail')?.value; 
-    const role = document.getElementById('newUserRole')?.value; 
-    if (name && email) { 
-        demoUsers.push({ id: Date.now(), name, email, role, status: 'active', lastLogin: new Date().toISOString() }); 
-        showToast('User added successfully', 'success'); 
-        loadUsersTable(); 
-        closeModal(); 
-    }
-}
-
-function deleteUser(id) { 
-    if (confirm('Delete this user permanently?')) { 
-        const index = demoUsers.findIndex(u => u.id === id); 
-        if (index > -1) { 
-            demoUsers.splice(index, 1); 
-            showToast('User deleted', 'success'); 
-            loadUsersTable(); 
-        } 
-    } 
-}
-
-function loadAuditLogs() { 
-    document.getElementById('auditLogs').innerHTML = `</table><thead><tr><th>Time</th><th>User</th><th>Action</th><th>Details</th></tr></thead><tbody>${auditLogs.slice(0, 50).map(log => `<tr><td>${new Date(log.timestamp).toLocaleString()}</td><td>${log.userId}</td><td>${log.action}</td><td>${log.details}</td></tr>`).join('')}</tbody></table>`; 
-}
-
-function loadPayments() {
-    const totalRevenue = transactions.reduce((sum, t) => sum + t.amount, 0);
-    document.getElementById('paymentStats').innerHTML = `<div class="stat-card"><div class="stat-number">KSH ${totalRevenue.toLocaleString()}</div><div>Total Revenue</div></div><div class="stat-card"><div class="stat-number">${transactions.length}</div><div>Transactions</div></div>`;
-    document.getElementById('transactionsList').innerHTML = `<table><thead><tr><th>Date</th><th>User</th><th>Amount</th><th>Status</th></tr></thead><tbody>${transactions.map(t => `<tr><td>${new Date(t.date).toLocaleDateString()}</td><td>${t.user}</td><td>KSH ${t.amount}</td><td>${t.status}</td></tr>`).join('')}</tbody></table>`;
-}
-
-function showPaymentModal() { 
-    showModal(`<div class="modal-content"><span class="close-modal" onclick="closeModal()">&times;</span><h3>Create Invoice</h3><input type="text" id="invoiceUser" placeholder="User Email"><input type="number" id="invoiceAmount" placeholder="Amount (KSH)"><select id="invoiceType"><option value="course">Course Fee - KSH 2,500</option><option value="exam">Exam Fee - KSH 1,000</option><option value="certificate">Certificate - KSH 500</option></select><button class="btn" onclick="createInvoice()">Create Invoice</button></div>`); 
-}
-
-function createInvoice() { 
-    const user = document.getElementById('invoiceUser')?.value; 
-    const amount = parseInt(document.getElementById('invoiceAmount')?.value); 
-    if (user && amount) { 
-        transactions.unshift({ id: Date.now(), user, amount, status: 'pending', date: new Date().toISOString() }); 
-        localStorage.setItem('transactions', JSON.stringify(transactions)); 
-        showToast(`Invoice created for ${user}`, 'success'); 
-        closeModal(); 
-        loadPayments(); 
-    }
-}
-
-function loadAnalytics() {
-    document.getElementById('analyticsStats').innerHTML = `<div class="stat-card"><div class="stat-number">1,247</div><div>Total Enrollments</div></div><div class="stat-card"><div class="stat-number">76%</div><div>Course Completion</div></div><div class="stat-card"><div class="stat-number">4.8</div><div>Avg Rating</div></div>`;
-    document.getElementById('analyticsChart').innerHTML = `<div class="card"><h3>Monthly Enrollments 2024</h3><div style="height:200px; display:flex; align-items:flex-end; gap:15px; margin-top:20px;">${[45, 62, 78, 89, 104, 118, 135, 142, 156, 168, 175, 189].map(v => `<div style="flex:1; text-align:center;"><div style="height:${Math.min(v/2, 200)}px; background:var(--primary-gold); border-radius:8px;"></div><div style="font-size:11px; margin-top:8px;">${v}</div></div>`).join('')}</div><div style="display:flex; justify-content:space-around; margin-top:10px;"><small>Jan</small><small>Feb</small><small>Mar</small><small>Apr</small><small>May</small><small>Jun</small><small>Jul</small><small>Aug</small><small>Sep</small><small>Oct</small><small>Nov</small><small>Dec</small></div></div>`;
-}
-
-function loadRoles() {
-    document.getElementById('rolesList').innerHTML = `<div class="card"><h3><i class="fas fa-crown"></i> Administrator</h3><p>Full system access, user management, financial oversight, course creation</p></div><div class="card"><h3><i class="fas fa-truck"></i> Professional Driver</h3><p>Access to PSV courses, certification tracking, CPD points, route planning tools</p></div><div class="card"><h3><i class="fas fa-graduation-cap"></i> Learner Driver</h3><p>21-unit handbook, practice tests, progress tracking, certificate upon completion</p></div><div class="card"><h3><i class="fas fa-motorcycle"></i> Boda Rider</h3><p>Motorcycle safety course, passenger transport certification, defensive riding techniques</p></div>`;
-}
-
 // ====================== NAVIGATION & RENDERING ======================
 function navigateTo(pageId) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
     const target = document.getElementById(pageId);
     if (target) target.classList.add('active-page');
-    if (pageId === 'admin' && userRole !== 'admin') { 
-        showToast('Admin access required', 'error'); 
-        navigateTo('home'); 
-        return; 
-    }
     if (pageId === 'home') renderHomeModules();
     if (pageId === 'learner') renderLearnerUnits();
     if (pageId === 'psv') renderPSV();
+    if (pageId === 'schoolbus') renderSchoolBus();
     if (pageId === 'boda') renderBoda();
     if (pageId === 'academy') renderAcademy();
     if (pageId === 'library') renderLibrary();
@@ -574,14 +389,15 @@ function navigateTo(pageId) {
 
 function renderHomeModules() {
     document.getElementById('homeModulesGrid').innerHTML = [
-        { name: 'Learner Driver Hub', icon: 'fa-book-open', desc: '21 Units - Complete Kenya Learner Handbook' },
-        { name: 'PSV Professional Course', icon: 'fa-bus', desc: '10 Units - PSV Driver Certification' },
-        { name: 'Boda Boda Safety', icon: 'fa-motorcycle', desc: '6 Units - Motorcycle Safety Training' },
-        { name: 'Advanced Academy', icon: 'fa-chalkboard-user', desc: 'Fleet Management & Logistics' },
-        { name: 'Resource Library', icon: 'fa-database', desc: 'Official Documents & Manuals' }
+        { name: 'Learner Driver Hub', icon: 'fa-book-open', desc: '21 Units - Complete Kenya Learner Handbook', color: '#d4af37' },
+        { name: 'PSV Professional Course', icon: 'fa-bus', desc: '10 Units - PSV Driver Certification', color: '#3498db' },
+        { name: 'School Bus/Van Safety', icon: 'fa-school', desc: '8 Units - Safe Student Transport', color: '#2ecc71' },
+        { name: 'Boda Boda Safety', icon: 'fa-motorcycle', desc: '6 Units - Motorcycle Safety Training', color: '#e74c3c' },
+        { name: 'Advanced Academy', icon: 'fa-chalkboard-user', desc: 'Fleet Management & Logistics', color: '#f39c12' },
+        { name: 'Resource Library', icon: 'fa-database', desc: 'Official Documents & Manuals', color: '#9b59b6' }
     ].map(m => 
-        `<div class="card" onclick="navigateTo('${m.name.toLowerCase().replace(/ /g, '')}')">
-            <i class="fas ${m.icon}" style="font-size: 2rem; color: var(--primary-gold); margin-bottom: 15px;"></i>
+        `<div class="card" onclick="navigateTo('${m.name.toLowerCase().replace(/ /g, '').replace('/', '')}')">
+            <i class="fas ${m.icon}" style="font-size: 2rem; color: ${m.color}; margin-bottom: 15px;"></i>
             <h3>${m.name}</h3>
             <p style="color: #aaa;">${m.desc}</p>
             <button class="btn-small">Start Learning →</button>
@@ -601,7 +417,6 @@ function renderLearnerUnits() {
             <button class="btn-small">View Unit →</button>
         </div>`
     ).join('');
-    
     renderQuestions();
 }
 
@@ -650,6 +465,17 @@ function renderPSV() {
     ).join('');
 }
 
+function renderSchoolBus() { 
+    document.getElementById('schoolbusGrid').innerHTML = schoolbusUnits.map(unit => 
+        `<div class="card" onclick="showUnitDetail(${JSON.stringify(unit).replace(/"/g, '&quot;')}, 'schoolbus')">
+            <span class="unit-badge">Module ${unit.id}</span>
+            <h3>${unit.title}</h3>
+            <p style="color: #aaa; margin: 10px 0;">${unit.desc}</p>
+            <button class="btn-small">Start Module →</button>
+        </div>`
+    ).join('');
+}
+
 function renderBoda() { 
     document.getElementById('bodaGrid').innerHTML = bodaUnits.map(unit => 
         `<div class="card" onclick="showUnitDetail(${JSON.stringify(unit).replace(/"/g, '&quot;')}, 'boda')">
@@ -690,31 +516,18 @@ function init() {
     renderHomeModules();
     renderLearnerUnits();
     renderPSV();
+    renderSchoolBus();
     renderBoda();
     renderAcademy();
     renderLibrary();
-    if (document.getElementById('userSearch')) {
-        document.getElementById('userSearch').addEventListener('input', () => loadUsersTable());
-    }
-    logAudit('system', 'mei_drive_africa_initialized', { version: '3.0', modules: 'learner,psv,boda,academy,library' });
     showToast('Welcome to MEI Drive Africa - Your Path to Safe Driving!', 'success');
 }
 
 // Make functions global
 window.navigateTo = navigateTo;
-window.showAdminPanel = showAdminPanel;
 window.showLoginModal = showLoginModal;
 window.logout = logout;
 window.closeModal = closeModal;
-window.showAddUserModal = showAddUserModal;
-window.addUser = addUser;
-window.deleteUser = deleteUser;
-window.editUser = editUser;
-window.saveUserEdit = saveUserEdit;
-window.showPaymentModal = showPaymentModal;
-window.createInvoice = createInvoice;
-window.sendResetLink = sendResetLink;
-window.showForgotPassword = showForgotPassword;
 window.handleLogin = handleLogin;
 window.handleSignup = handleSignup;
 window.checkAnswer = checkAnswer;
