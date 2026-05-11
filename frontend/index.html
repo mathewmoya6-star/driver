@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
     <title>MEI DRIVE AFRICA | Premier Driver Safety Platform</title>
-    <meta name="description" content="Kenya's premier NTSA-certified driver training platform">
+    <meta name="description" content="Kenya's premier NTSA-certified driver training platform - 21 Complete Learner Units">
     <meta name="theme-color" content="#d4af37">
-    <meta name="apple-mobile-web-app-capable" content="yes">
     
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -26,9 +24,8 @@
         }
         
         .container { width: 100%; padding: 0 16px; margin: 0 auto; }
-        @media (min-width: 768px) { .container { max-width: 1400px; padding: 0 24px; margin: 0 auto; } }
+        @media (min-width: 768px) { .container { max-width: 1400px; padding: 0 24px; } }
         
-        /* Navigation */
         .navbar { background: rgba(10,10,10,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212,175,55,0.3); position: sticky; top: 0; z-index: 1000; padding: 12px 0; }
         .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
         .logo { font-weight: 800; font-size: 1.1rem; background: var(--gradient-gold); background-clip: text; -webkit-background-clip: text; color: transparent; cursor: pointer; }
@@ -38,34 +35,25 @@
         .nav-links { display: none; width: 100%; flex-direction: column; align-items: center; padding: 16px 0 8px; gap: 8px; }
         .nav-links.show { display: flex; }
         .nav-links button { background: transparent; border: none; color: #e0e0e0; padding: 12px 20px; border-radius: 50px; cursor: pointer; font-size: 15px; width: 100%; text-align: center; }
-        .nav-links button:active { background: rgba(212,175,55,0.15); }
-        
         @media (min-width: 768px) {
             .mobile-menu-btn { display: none; }
             .nav-links { display: flex !important; width: auto; flex-direction: row; padding: 0; gap: 4px; }
             .nav-links button { width: auto; padding: 8px 16px; font-size: 14px; }
         }
         
-        /* Buttons - 44px min touch target */
-        .btn, .btn-ev, .btn-outline { min-height: 48px; padding: 12px 24px; font-size: 16px; font-weight: 600; border: none; border-radius: 50px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.2s; }
-        .btn:active, .btn-ev:active { opacity: 0.8; }
+        .btn, .btn-ev { min-height: 48px; padding: 12px 24px; font-size: 16px; font-weight: 600; border: none; border-radius: 50px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
         .btn { background: var(--gradient-gold); color: #000; }
         .btn-ev { background: linear-gradient(135deg, #00ff88, #00b4d8); color: #000; }
-        .btn-outline { background: transparent; border: 2px solid var(--primary-gold); color: var(--primary-gold); }
         .btn-small { min-height: 40px; padding: 8px 20px; font-size: 14px; border-radius: 50px; background: var(--gradient-gold); color: #000; border: none; cursor: pointer; }
         
-        /* Grid - Mobile first */
         .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 20px 0; }
         @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
         @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (min-width: 1400px) { .grid { grid-template-columns: repeat(4, 1fr); } }
         
-        /* Cards - Accessible as buttons */
-        .card { background: var(--card-bg); border-radius: 20px; padding: 20px; border: 1px solid var(--border-color); transition: transform 0.2s; cursor: pointer; width: 100%; text-align: left; }
+        .card { background: var(--card-bg); border-radius: 20px; padding: 20px; border: 1px solid var(--border-color); transition: transform 0.2s; cursor: pointer; }
         .card:active { transform: scale(0.98); }
-        @media (min-width: 768px) { .card { padding: 24px; } .card:hover { transform: translateY(-4px); border-color: var(--primary-gold); } }
+        @media (min-width: 768px) { .card:hover { transform: translateY(-4px); border-color: var(--primary-gold); } }
         .card-ev { border-left: 4px solid #00ff88; }
-        .card:focus-visible { outline: 2px solid var(--primary-gold); outline-offset: 2px; }
         
         .unit-badge, .ev-badge-module { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 12px; }
         .unit-badge { background: var(--gradient-gold); color: #000; }
@@ -74,64 +62,52 @@
         .progress-bar { background: #2a2a2a; border-radius: 20px; height: 6px; margin: 16px 0; overflow: hidden; }
         .progress-fill { background: var(--gradient-gold); height: 100%; width: 0%; transition: width 0.3s; }
         
-        /* Stats */
         .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
-        @media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+        @media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
         .stat-card { background: var(--card-bg); border-radius: 16px; padding: 16px 12px; border: 1px solid var(--border-color); text-align: center; }
         .stat-number { font-size: 1.6rem; font-weight: 800; color: var(--primary-gold); }
-        @media (min-width: 768px) { .stat-number { font-size: 2rem; } }
         
-        /* Hero */
-        .hero { text-align: center; padding: 32px 16px; background: radial-gradient(circle at 10% 30%, rgba(212,175,55,0.08), #0a0a0a); border-radius: 32px; margin: 16px 0 24px; border: 1px solid rgba(212,175,55,0.2); }
-        @media (min-width: 768px) { .hero { padding: 60px 20px; margin: 0 0 40px; } }
+        .hero { text-align: center; padding: 32px 16px; background: radial-gradient(circle at 10% 30%, rgba(212,175,55,0.08), #0a0a0a); border-radius: 32px; margin: 16px 0 24px; }
         .hero h1 { font-size: 1.8rem; margin-bottom: 12px; }
         @media (min-width: 768px) { .hero h1 { font-size: clamp(1.8rem, 5vw, 3.5rem); } }
-        .hero-buttons { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
-        @media (min-width: 480px) { .hero-buttons { flex-direction: row; justify-content: center; gap: 16px; } }
+        .highlight { background: var(--gradient-gold); background-clip: text; -webkit-background-clip: text; color: transparent; }
         
-        /* Questions */
         .question-bank { background: linear-gradient(145deg, #0f1119, #080a10); border-radius: 24px; margin: 24px 0; padding: 20px; }
-        @media (min-width: 768px) { .question-bank { border-radius: 32px; padding: 32px 28px; } }
         .question-card { background: var(--card-bg); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
         .question-text { font-size: 1rem; font-weight: 600; margin-bottom: 16px; }
         .options-group { display: flex; flex-direction: column; gap: 8px; }
         .option { background: #1a1c26; padding: 14px 16px; border-radius: 12px; cursor: pointer; border: 1px solid #2a2e3a; font-size: 14px; }
-        .option:active { background: #252a38; }
         .option.correct { background: rgba(46,204,113,0.2); border-color: #2ecc71; }
         .option.wrong { background: rgba(231,76,60,0.2); border-color: #e74c3c; }
         
-        /* Modal with focus trap */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); backdrop-filter: blur(12px); z-index: 2000; justify-content: center; align-items: center; padding: 16px; }
-        .modal-content { background: var(--card-bg); border: 1px solid var(--primary-gold); border-radius: 24px; padding: 24px; width: 100%; max-width: 450px; max-height: 85vh; overflow-y: auto; }
-        .modal-content input { width: 100%; padding: 14px; margin: 8px 0; background: #1a1c26; border: 1px solid #2c2f3a; border-radius: 12px; color: #fff; font-size: 16px; }
-        .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--primary-gold); padding: 8px; margin: -8px -8px 0 0; }
+        .modal-content { background: var(--card-bg); border: 1px solid var(--primary-gold); border-radius: 24px; padding: 24px; width: 100%; max-width: 450px; }
+        .modal-content input { width: 100%; padding: 14px; margin: 8px 0; background: #1a1c26; border: 1px solid #2c2f3a; border-radius: 12px; color: #fff; }
+        .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--primary-gold); }
         
-        /* Toast with queue limit */
         #toast-root { position: fixed; bottom: 16px; left: 16px; right: 16px; z-index: 2000; display: flex; flex-direction: column; gap: 8px; }
         @media (min-width: 768px) { #toast-root { bottom: 30px; right: 30px; left: auto; min-width: 300px; } }
         .toast { background: var(--card-bg); border-left: 4px solid var(--primary-gold); padding: 14px 18px; border-radius: 12px; animation: slideIn 0.3s ease; display: flex; align-items: center; gap: 12px; font-size: 14px; }
         @keyframes slideIn { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
         
-        /* Loading states */
         .spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--primary-gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .skeleton { background: linear-gradient(90deg, var(--card-bg) 25%, var(--border-color) 50%, var(--card-bg) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 12px; height: 200px; }
-        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
         
-        .empty-state { text-align: center; padding: 40px 20px; color: #aaa; }
-        .error-state { text-align: center; padding: 40px 20px; color: #e74c3c; }
-        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+        .unit-content { line-height: 1.6; }
+        .unit-content h2 { color: var(--primary-gold); margin: 20px 0 10px; }
+        .unit-content ul, .unit-content ol { margin-left: 20px; margin-bottom: 15px; }
+        .unit-content li { margin: 8px 0; }
     </style>
 </head>
 <body>
     <div id="app">
         <div class="navbar">
             <div class="container nav">
-                <div class="logo" data-nav="home">MEI DRIVE AFRICA</div>
+                <div class="logo" data-nav="home">MEI DRIVE AFRICA ⚡</div>
                 <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
-                <div class="nav-links" id="navLinks" role="navigation">
+                <div class="nav-links" id="navLinks">
                     <button data-nav="home">🏠 Home</button>
-                    <button data-nav="learner">📚 Learner</button>
+                    <button data-nav="learner">📚 Learner (21 Units)</button>
                     <button data-nav="psv">🚌 PSV</button>
                     <button data-nav="schoolbus">🏫 School Bus</button>
                     <button data-nav="boda">🏍️ Boda</button>
@@ -147,461 +123,275 @@
     <div id="modal-root"></div>
     <div id="toast-root"></div>
 
-    <script type="module">
+    <script>
         // ============================================
-        // SECURE CONFIGURATION - Backend proxy pattern
+        // COMPLETE 21 LEARNER UNITS - BUILT IN
         // ============================================
-        // Anon key is never exposed - using runtime env or backend proxy
-        // For demo, using env but in production use backend API
-        const SUPABASE_URL = 'https://fktjmkmzlixlapeyhhyl.supabase.co';
-        // In production, this should come from a backend endpoint, not hardcoded
-        // For Render/Vercel, use environment variables
-        const SUPABASE_ANON_KEY = window.__ENV__?.SUPABASE_ANON_KEY || 
-            (import.meta.env?.VITE_SUPABASE_ANON_KEY) || 
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E';
-        
-        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/+esm';
-        import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm';
-        
+        const LEARNER_UNITS = [
+            { id: 1, title: "Introduction to Driving in Kenya", desc: "Kenyan driving licenses, requirements, and driver responsibilities", content: "<h2>Kenya Driving License Categories</h2><ul><li>Class A: Motorcycles</li><li>Class B: Light vehicles (up to 3500kg)</li><li>Class C: Heavy vehicles (over 3500kg)</li><li>Class D: PSV (Public Service Vehicles)</li><li>Class E: Trailers and special equipment</li></ul><h2>Requirements for Obtaining a License</h2><ul><li>Minimum age: 18 years</li><li>Valid medical certificate from approved doctor</li><li>Completion of theory test (minimum 80% score)</li><li>Practical driving test with NTSA examiner</li><li>Payment of prescribed fees (approx KSH 3,000)</li></ul><h2>Driver Responsibilities</h2><ul><li>Always carry original driving license</li><li>Ensure vehicle is roadworthy</li><li>Follow all traffic rules and regulations</li><li>Respect other road users</li><li>Never drive under influence of alcohol/drugs</li></ul>", topics: ["License categories", "Requirements", "Driver responsibilities"] },
+            { id: 2, title: "The Highway Code & Traffic Signs", desc: "Master all Kenyan traffic signs, signals and road markings", content: "<h2>Types of Traffic Signs in Kenya</h2><ul><li><strong>Regulatory signs:</strong> Stop, Give Way, Speed limits, No entry</li><li><strong>Warning signs:</strong> Danger ahead, Sharp bend, Pedestrian crossing</li><li><strong>Informative signs:</strong> Parking, Hospital, Fuel station, Tourist information</li></ul><h2>Road Markings Explained</h2><ul><li><strong>Solid yellow line:</strong> No overtaking</li><li><strong>Broken yellow line:</strong> Overtaking allowed with caution</li><li><strong>Solid white line:</strong> Lane separation, do not cross</li><li><strong>Zebra crossing:</strong> Pedestrian priority</li><li><strong>Yellow box junction:</strong> Do not enter unless exit is clear</li></ul><h2>Traffic Lights</h2><ul><li><strong>Red:</strong> Stop and wait</li><li><strong>Amber:</strong> Prepare to stop (stop if safe)</li><li><strong>Green:</strong> Go if clear</li><li><strong>Flashing amber:</strong> Proceed with caution</li></ul>", topics: ["Regulatory signs", "Warning signs", "Road markings"] },
+            { id: 3, title: "Vehicle Controls & Instruments", desc: "Understanding your vehicle's dashboard, controls, and warning lights", content: "<h2>Essential Vehicle Controls</h2><ul><li><strong>Steering wheel:</strong> Control direction of vehicle</li><li><strong>Accelerator:</strong> Controls speed (right foot)</li><li><strong>Brake pedal:</strong> Slows/stops vehicle (right foot)</li><li><strong>Clutch pedal:</strong> Disengages engine (left foot - manual only)</li><li><strong>Gear stick:</strong> Changes gear ratios</li><li><strong>Handbrake:</strong> Parking brake</li></ul><h2>Dashboard Warning Lights</h2><ul><li><strong>🔴 Red:</strong> Immediate action required (brake, oil pressure, battery, coolant temp)</li><li><strong>🟡 Yellow/Amber:</strong> Caution needed (check engine, ABS, traction control)</li><li><strong>🟢 Green:</strong> System active (headlights, turn signals, cruise control)</li><li><strong>🔵 Blue:</strong> High beam headlights active</li></ul><h2>Instrument Panel</h2><ul><li>Speedometer: Shows current speed</li><li>Tachometer: Shows engine RPM</li><li>Fuel gauge: Shows fuel level</li><li>Temperature gauge: Shows engine coolant temperature</li><li>Odometer: Shows total distance traveled</li></ul>", topics: ["Steering wheel control", "Gear system", "Dashboard indicators"] },
+            { id: 4, title: "Basic Vehicle Maintenance", desc: "Essential maintenance checks and routine inspections", content: "<h2>Daily Vehicle Checks - The POWeR Checklist</h2><ul><li><strong>P - Petrol/Diesel/Fuel:</strong> Check fuel level</li><li><strong>O - Oil:</strong> Check engine oil level using dipstick</li><li><strong>W - Water/Coolant:</strong> Check coolant level in reservoir</li><li><strong>eR - Electrical:</strong> Check lights, indicators, horn, wipers</li></ul><h2>Weekly Checks</h2><ul><li>Tire pressure (recommended PSI on door sticker)</li><li>Tire tread depth (minimum 1.6mm)</li><li>Brake fluid level</li><li>Power steering fluid</li><li>Windshield washer fluid</li></ul><h2>Monthly Checks</h2><ul><li>Battery terminals for corrosion</li><li>Belts and hoses for wear</li><li>Air filter condition</li><li>Underbody for rust/damage</li></ul><h2>Professional Servicing Schedule</h2><ul><li>Every 5,000 km: Oil and filter change</li><li>Every 10,000 km: General inspection</li><li>Every 20,000 km: Major service</li><li>Every 40,000 km: Timing belt replacement (if applicable)</li></ul>", topics: ["Daily checks", "Fluid levels", "Tire pressure"] },
+            { id: 5, title: "Moving Off & Stopping Safely", desc: "Proper techniques for starting, stopping, and parking", content: "<h2>The MSM Routine</h2><ul><li><strong>M - Mirrors:</strong> Check interior rearview and both side mirrors</li><li><strong>S - Signal:</strong> Indicate your intention clearly</li><li><strong>M - Manoeuvre:</strong> Move safely when clear</li></ul><h2>Moving Off Procedure</h2><ul><li>Press clutch fully (manual) or brake (auto)</li><li>Select first gear (manual) or Drive (auto)</li><li>Check all mirrors and blind spots</li><li>Signal your intention</li><li>Release handbrake</li><li>Check mirrors again</li><li>Slowly release clutch while applying gentle accelerator</li></ul><h2>Stopping Procedure</h2><ul><li>Check mirrors</li><li>Signal if turning or pulling over</li><li>Gradually apply brakes</li><li>Press clutch just before stopping (manual)</li><li>Apply handbrake once stopped</li><li>Select neutral (manual) or Park (auto)</li></ul><h2>Hill Starts</h2><ul><li>Use handbrake to prevent rollback</li><li>Find biting point with clutch</li><li>Apply accelerator</li><li>Release handbrake smoothly</li></ul>", topics: ["MSM routine", "Clutch control", "Braking techniques"] },
+            { id: 6, title: "Turning & Reversing", desc: "Safe turning procedures and reversing techniques", content: "<h2>Turning Safety Rules</h2><ul><li>Signal at least 30 meters before the turn</li><li>Check mirrors and blind spots</li><li>Reduce speed before entering the turn</li><li>Position vehicle correctly in lane</li><li>Left turn: Stay close to left edge</li><li>Right turn: Move to center/right of lane</li><li>Complete turn in correct lane</li></ul><h2>Reversing Techniques</h2><ul><li>Look over your right shoulder (primary view)</li><li>Use all mirrors (secondary view)</li><li>Move very slowly</li><li>Turn steering wheel in direction you want the rear to go</li><li>Stop frequently to check position</li><li>Never reverse from a side road onto a main road</li></ul><h2>Three-Point Turn (U-turn)</h2><ul><li>Check traffic in all directions</li><li>Signal and move to right side</li><li>Turn steering fully right and move forward</li><li>Stop before hitting curb</li><li>Reverse while turning left</li><li>Move forward again to complete</li></ul>", topics: ["Left/right turns", "U-turns", "Reverse parking"] },
+            { id: 7, title: "Roundabouts & Junctions", desc: "Navigating roundabouts and intersections correctly", content: "<h2>Roundabout Rules in Kenya</h2><ul><li>Give way to traffic already on the roundabout (from your right)</li><li>Signal appropriately: Left for exiting, Right for going around</li><li>Choose correct lane before entering</li><li>Exit safely without cutting across lanes</li></ul><h2>Approaching Junctions</h2><ul><li>Mirror, Signal, Position, Speed, Look (MSPSL routine)</li><li>Reduce speed progressively</li><li>Select appropriate gear</li><li>Stop at 'Stop' signs completely</li><li>'Give Way' signs require yielding to main road traffic</li></ul><h2>Types of Junctions</h2><ul><li><strong>T-Junction:</strong> You are on the terminating road</li><li><strong>Crossroads:</strong> Two roads crossing</li><li><strong>Y-Junction:</strong> Road splits into two</li><li><strong>Staggered junction:</strong> Offset crossroads</li></ul>", topics: ["Approach speeds", "Giving way rules", "Signal use"] },
+            { id: 8, title: "Overtaking & Lane Discipline", desc: "Safe overtaking and proper lane usage", content: "<h2>Safe Overtaking Rules</h2><ul><li>Check mirrors thoroughly (rearview and side)</li><li>Signal your intention well in advance</li><li>Ensure clear visibility ahead (at least 200 meters)</li><li>Do not exceed speed limit while overtaking</li><li>Return to lane only when safe</li><li>Maintain safe distance after returning</li></ul><h2>When NOT to Overtake</h2><ul><li>At junctions or pedestrian crossings</li><li>On bridges or in tunnels</li><li>Where lines are solid</li><li>Near the crest of a hill</li><li>On bends with limited visibility</li><li>When approaching a school bus picking/dropping children</li></ul><h2>Lane Discipline</h2><ul><li>Keep left unless overtaking (on highways)</li><li>Use right lane only for overtaking</li><li>Don't weave between lanes</li><li>Signal every lane change</li><li>Check blind spots before moving</li></ul>", topics: ["Mirror checks", "Blind spots", "Lane selection"] },
+            { id: 9, title: "Speed Limits & Safe Speeds", desc: "Understanding Kenyan speed limits and appropriate speeds", content: "<h2>Speed Limits in Kenya (NTSA)</h2><ul><li><strong>Urban areas:</strong> 50 km/h</li><li><strong>Residential areas:</strong> 40 km/h</li><li><strong>Rural roads:</strong> 100 km/h</li><li><strong>Highways:</strong> 110 km/h</li><li><strong>School zones:</strong> 25 km/h when children present</li><li><strong>PSV vehicles:</strong> 80 km/h maximum regardless of road</li></ul><h2>When to Drive Below the Limit</h2><ul><li>Poor weather conditions (rain, fog, ice)</li><li>Heavy traffic</li><li>Road works or poor road conditions</li><li>Night time</li><li>Areas with pedestrians or animals</li><li>Near schools or markets</li></ul><h2>Consequences of Speeding</h2><ul><li>Fine: KSH 500 - KSH 50,000 depending on excess</li><li>License points accumulation</li><li>License suspension for repeat offenders</li><li>Increased stopping distance</li><li>Higher severity of crash injuries</li></ul>", topics: ["Urban limits 50km/h", "Rural 100km/h", "School zones 25km/h"] },
+            { id: 10, title: "Defensive Driving Techniques", desc: "Anticipating hazards and driving defensively", content: "<h2>5 Principles of Defensive Driving</h2><ul><li><strong>Aim High</strong> - Look 12-15 seconds ahead (1-2 city blocks)</li><li><strong>Get the Big Picture</strong> - Scan all mirrors every 5-8 seconds</li><li><strong>Keep Your Eyes Moving</strong> - Don't fixate on any single object</li><li><strong>Leave Yourself an Out</strong> - Maintain space on at least one side</li><li><strong>Make Sure They See You</strong> - Use horn, lights, eye contact</li></ul><h2>The 3-4 Second Rule</h2><ul><li>Choose a fixed object ahead</li><li>When vehicle ahead passes it, count seconds</li><li>You should pass same object in 3-4 seconds</li><li>Increase following distance in poor conditions</li></ul><h2>Hazard Perception</h2><ul><li>Scan for potential hazards continuously</li><li>Identify: vehicles, pedestrians, road conditions, weather</li><li>Predict: what could happen</li><li>Decide: what you will do</li><li>Act: execute your decision safely</li></ul>", topics: ["Hazard perception", "Safe following distance", "Escape routes"] },
+            { id: 11, title: "Night Driving", desc: "Safe driving practices after dark", content: "<h2>Night Driving Tips</h2><ul><li>Use low beams when following or meeting other traffic</li><li>Increase following distance to 5-6 seconds</li><li>Reduce speed by 10-15 km/h below daytime limits</li><li>Keep windows and mirrors clean</li><li>Watch for pedestrians and animals</li><li>If tired: Stop and rest every 2 hours</li></ul><h2>Proper Light Usage</h2><ul><li><strong>Low beams:</strong> City driving, following vehicles, meeting traffic</li><li><strong>High beams:</strong> Dark rural roads with no oncoming traffic</li><li><strong>Fog lights:</strong> Only in fog, heavy rain, or dust</li><li><strong>Parking lights:</strong> Stationary only</li></ul><h2>Managing Glare</h2><ul><li>Aim to look at the left edge of the road</li><li>Use night setting on rearview mirror</li><li>Keep windshield clean inside and out</li><li>If blinded, slow down and look right</li></ul>", topics: ["Light usage", "Fatigue management", "Night hazards"] },
+            { id: 12, title: "Driving in Adverse Weather", desc: "Handling rain, fog, and difficult conditions", content: "<h2>Driving in Rain</h2><ul><li>Reduce speed significantly</li><li>Increase following distance to 6-8 seconds</li><li>Use headlights (low beams)</li><li>Beware of hydroplaning (loss of traction on standing water)</li><li>Use defroster to prevent fogging</li><li>Avoid sudden braking or sharp turns</li></ul><h2>Driving in Fog</h2><ul><li>Use fog lights - NOT high beams (high beams reflect back)</li><li>Reduce speed significantly</li><li>Roll down window to hear other vehicles</li><li>Use wipers and defroster</li><li>If zero visibility, pull off road safely</li></ul><h2>Flooded Roads</h2><ul><li>Never drive through standing water if depth unknown</li><li>Turn around, don't drown (6 inches can stall, 12 inches can float car)</li><li>If must drive, go slow in first gear</li><li>Test brakes after exiting water</li></ul>", topics: ["Reduced speed", "Fog lights", "Increased distance"] },
+            { id: 13, title: "Alcohol, Drugs & Driving", desc: "Understanding impairment and legal limits", content: "<h2>Legal BAC Limits in Kenya</h2><ul><li><strong>Professional/PSV drivers:</strong> 0.00% ZERO tolerance</li><li><strong>Private drivers:</strong> 0.05% maximum</li><li><strong>Drugs:</strong> ZERO tolerance for all drivers</li></ul><h2>Effects of Alcohol on Driving</h2><ul><li>Reduced reaction time (up to 50% slower)</li><li>Poor judgment and decision making</li><li>Reduced coordination</li><li>Blurred or double vision</li><li>Drowsiness</li></ul><h2>Penalties for Drunk Driving</h2><ul><li>Fine up to KSH 100,000</li><li>Imprisonment up to 2 years</li><li>License suspension or cancellation</li><li>Vehicle impoundment</li><li>Criminal record</li></ul><h2>Safe Alternatives</h2><ul><li>Designated driver</li><li>Taxi or ride-hailing service</li><li>Public transport</li><li>Stay overnight</li></ul>", topics: ["BAC limits 0.00%", "Legal penalties", "Responsibility"] },
+            { id: 14, title: "Driver Fatigue & Rest Management", desc: "Managing fatigue and understanding rest requirements", content: "<h2>Warning Signs of Fatigue</h2><ul><li>Yawning frequently</li><li>Heavy or sore eyes</li><li>Drifting from lane</li><li>Missing road signs</li><li>Difficulty remembering last few kilometers</li><li>Feeling restless or irritable</li></ul><h2>Fatigue Management Guidelines</h2><ul><li>Stop for 15 minutes every 2 hours of driving</li><li>Sleep minimum 7 hours before long journeys</li><li>Maximum driving per day: 8 hours for PSV, 12 hours for private</li><li>Avoid driving between midnight and 6 AM</li><li>Share driving duties when possible</li></ul><h2>If You Feel Tired</h2><ul><li>Stop at a safe place</li><li>Take a 20-minute power nap</li><li>Have caffeinated drink (coffee/tea) - takes 30 minutes to work</li><li>Get fresh air and stretch</li><li>If still tired, find accommodation</li></ul>", topics: ["Rest breaks", "Sleep requirements", "Warning signs"] },
+            { id: 15, title: "Pedestrian & Child Safety", desc: "Protecting vulnerable road users", content: "<h2>Pedestrian Safety Rules</h2><ul><li>Always yield at marked crosswalks (zebra crossings)</li><li>Reduce speed near schools, churches, markets</li><li>Watch for children - they may run unexpectedly</li><li>Never pass a stopped school bus</li><li>Be extra cautious during morning and evening hours</li></ul><h2>School Bus Safety</h2><ul><li>The Danger Zone around school buses: 10 feet (3 meters) - deadliest area</li><li>Stop when school bus lights are flashing red</li><li>Do not pass until lights stop flashing</li><li>Watch for children crossing in front of bus</li></ul><h2>Vulnerable Road Users</h2><ul><li>Children: unpredictable, may dart into road</li><li>Elderly: slower crossing, may not hear traffic</li><li>People with disabilities: be patient</li><li>Cyclists: give at least 1.5 meters when passing</li><li>Motorcyclists: check blind spots carefully</li></ul>", topics: ["School zones", "Crossings", "Play areas"] },
+            { id: 16, title: "Emergency Procedures", desc: "Responding to accidents and emergencies", content: "<h2>Accident Response Protocol - S.C.A.R.</h2><ul><li><strong>S - Stop:</strong> Stop immediately, do not flee the scene</li><li><strong>C - Check:</strong> Check for injuries, call for help (999, 911, 112)</li><li><strong>A - Alert:</strong> Place warning triangles 50m behind vehicle</li><li><strong>R - Record:</strong> Take photos, exchange details with involved parties</li></ul><h2>What NOT to Do After an Accident</h2><ul><li>Do NOT move injured persons unless in immediate danger</li><li>Do NOT admit fault or discuss blame</li><li>Do NOT drive away (hit and run is a felony)</li><li>Do NOT sign anything you don't understand</li></ul><h2>Emergency Contacts in Kenya</h2><ul><li><strong>Police/Fire/Ambulance:</strong> 999, 911, 112</li><li><strong>Red Cross:</strong> 1199</li><li><strong>NTSA Hotline:</strong> 0709 932 000</li></ul>", topics: ["Accident protocol", "First aid basics", "Emergency contacts"] },
+            { id: 17, title: "First Aid for Drivers", desc: "Basic first aid skills for road incidents", content: "<h2>The DRABC Protocol (Primary Survey)</h2><ul><li><strong>D - Danger:</strong> Check scene safety before approaching</li><li><strong>R - Response:</strong> Check consciousness (tap and shout 'Are you OK?')</li><li><strong>A - Airway:</strong> Tilt head back, lift chin</li><li><strong>B - Breathing:</strong> Look, listen, feel for 10 seconds</li><li><strong>C - Circulation:</strong> Control bleeding with direct pressure</li></ul><h2>CPR Instructions</h2><ul><li>Place hands center of chest</li><li>Push hard and fast (100-120 compressions per minute)</li><li>Compression depth: 5-6 cm (2-2.4 inches)</li><li>30 compressions then 2 rescue breaths</li><li>Continue until help arrives or person responds</li></ul><h2>First Aid Kit Essentials</h2><ul><li>Sterile gauze and bandages</li><li>Adhesive tape</li><li>Antiseptic wipes</li><li>Scissors</li><li>Disposable gloves</li><li>Emergency blanket</li><li>First aid manual</li></ul>", topics: ["DRABC protocol", "Bleeding control", "CPR basics"] },
+            { id: 18, title: "Vehicle Insurance & Documentation", desc: "Understanding insurance and required documents", content: "<h2>Required Documents for All Drivers</h2><ul><li><strong>Valid Driving License</strong> (with proper class for vehicle type)</li><li><strong>Insurance Certificate</strong> (Third Party minimum - KSH 5,000/year comprehensive)</li><li><strong>Vehicle Logbook</strong> (proof of ownership)</li><li><strong>PSV Badge</strong> (for commercial drivers)</li><li><strong>Route Permit</strong> (for PSV operators)</li></ul><h2>Types of Vehicle Insurance</h2><ul><li><strong>Third Party Only:</strong> Minimum legal requirement - covers damage to others</li><li><strong>Third Party Fire & Theft:</strong> Adds fire and theft cover</li><li><strong>Comprehensive:</strong> Full cover including your own vehicle damage</li></ul><h2>Penalties for Missing Documents</h2><ul><li>Driving without license: Fine up to KSH 20,000</li><li>No insurance: Fine up to KSH 50,000 or imprisonment</li><li>No PSV badge: Fine up to KSH 100,000</li></ul>", topics: ["Insurance types", "Valid documents", "Claims process"] },
+            { id: 19, title: "Environmental Driving (Eco-Driving)", desc: "Fuel-efficient and environmentally friendly driving", content: "<h2>Eco-Driving Techniques</h2><ul><li>Drive smoothly - avoid rapid acceleration and harsh braking</li><li>Maintain steady speed - use cruise control when possible</li><li>Remove unnecessary weight from vehicle</li><li>Check tire pressure weekly - underinflation increases fuel use</li><li>Use air conditioning sparingly - open windows at lower speeds</li><li>Turn off engine if stopped for more than 60 seconds</li></ul><h2>Fuel Savings Benefits</h2><ul><li>Eco-driving can save 15-25% on fuel</li><li>Reduces wear and tear on brakes and tires</li><li>Lower CO2 emissions</li><li>Safer driving style</li></ul><h2>Vehicle Maintenance for Efficiency</h2><ul><li>Regular servicing per manufacturer schedule</li><li>Clean air filter</li><li>Proper wheel alignment</li><li>Use recommended grade engine oil</li><li>Fix any engine issues promptly</li></ul>", topics: ["Fuel efficiency", "Emissions reduction", "Smooth driving"] },
+            { id: 20, title: "Driving Test Preparation", desc: "Preparing for the NTSA driving test", content: "<h2>NTSA Driving Test Requirements</h2><ul><li>Valid learner's license (minimum 3 months old)</li><li>Logbook with minimum 20 hours recorded (10 hours theory, 10 hours practical)</li><li>Vehicle in good condition (lights, brakes, tires, wipers)</li><li>Valid insurance for the vehicle</li></ul><h2>Test Day Checklist</h2><ul><li>Original learner's license and ID</li><li>Logbook with required hours</li><li>Registration book for vehicle</li><li>Insurance certificate</li><li>Dress neatly and professionally</li><li>Arrive at least 30 minutes early</li></ul><h2>Common Reasons for Test Failure</h2><ul><li>Not checking mirrors regularly</li><li>Exceeding speed limit</li><li>Not stopping at STOP signs</li><li>Incorrect positioning on road</li><li>Stalling the vehicle multiple times</li><li>Not using signals properly</li></ul><h2>Maneuvers to Practice</h2><ul><li>Parallel parking</li><li>Three-point turn</li><li>Hill start</li><li>Reversing around a corner</li><li>Emergency stop</li><li>Bay parking (reverse and forward)</li></ul>", topics: ["Test requirements", "Common mistakes", "Test day tips"] },
+            { id: 21, title: "Advanced Driving Skills", desc: "Beyond the basics - professional driver development", content: "<h2>Advanced Driving Techniques</h2><ul><li><strong>Commentary Driving:</strong> Verbalize hazards and actions while driving</li><li><strong>Hazard Prediction:</strong> Anticipate what other road users might do</li><li><strong>System of Car Control:</strong> Information, Position, Speed, Gear, Acceleration (IPSGA)</li><li><strong>Limit Point Analysis:</strong> The furthest visible point in a curve - if limit point is moving away, curve is opening; if stationary, curve is tightening</li></ul><h2>Professional Standards</h2><ul><li>Continuous learning and skill improvement</li><li>Regular medical checkups</li><li>License renewal every 3 years</li><li>Defensive driving certification available through NTSA accredited centers</li><li>Annual driver assessment for commercial drivers</li></ul><h2>Advanced Hazard Perception</h2><ul><li>Scan 20-30 seconds ahead (2-3 blocks)</li><li>Identify developing hazards early</li><li>Create mental 'what if' scenarios</li><li>Always have an escape route</li><li>Position for view and safety</li></ul>", topics: ["Commentary driving", "Professional standards", "Continuous learning"] }
+        ];
+
         // ============================================
-        // SANITIZATION - Proper DOMPurify usage
+        // PSV UNITS
         // ============================================
-        const ALLOWED_DOMAINS = ['youtube.com', 'youtu.be', 'images.unsplash.com', 'supabase.co'];
-        
-        function sanitizeHtml(html) {
-            if (!html) return '';
-            return DOMPurify.sanitize(html, {
-                ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'div', 'span', 'a', 'img'],
-                ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class'],
-                FORBID_TAGS: ['script', 'style', 'iframe', 'form', 'input', 'button']
-            });
-        }
-        
-        function sanitizeText(text) {
-            if (!text) return '';
-            return String(text).replace(/[&<>]/g, (c) => c === '&' ? '&amp;' : c === '<' ? '&lt;' : '&gt;');
-        }
-        
+        const PSV_UNITS = [
+            { id: 1, title: "PSV Licensing & Compliance", desc: "Complete PSV licensing requirements and standards", content: "<h2>PSV Badge Requirements</h2><ul><li>Complete 40 hours of NTSA-approved training</li><li>Pass medical examination (valid for 2 years)</li><li>Submit police clearance certificate</li><li>Complete defensive driving course</li><li>Pass PSV theory and practical tests</li></ul><h2>Required Documents for PSV Drivers</h2><ul><li>Valid PSV badge</li><li>Driving license class D or higher</li><li>Insurance certificate</li><li>Route permit for specific route</li><li>Vehicle inspection certificate</li><li>PSV vehicle license</li></ul><h2>PSV Vehicle Requirements</h2><ul><li>Speed limiter installed and calibrated (max 80 km/h)</li><li>Seatbelts for all passengers</li><li>Fire extinguisher</li><li>First aid kit</li><li>Emergency exits clearly marked</li></ul>" },
+            { id: 2, title: "Professional Driver Conduct", desc: "Maintaining professional standards on the road", content: "<h2>Professional Standards</h2><ul><li>Be punctual and reliable</li><li>Maintain professional communication with passengers</li><li>Know routes thoroughly</li><li>Handle conflicts professionally</li><li>Report incidents immediately</li><li>Wear clean, proper uniform</li></ul><h2>Customer Service Excellence</h2><ul><li>Greet passengers warmly</li><li>Assist elderly and disabled passengers</li><li>Announce upcoming stops clearly</li><li>Handle complaints calmly</li><li>Keep vehicle clean and tidy</li></ul>" },
+            { id: 3, title: "Personal Grooming & Appearance", desc: "Professional presentation standards", content: "<h2>Professional Appearance Standards</h2><ul><li>Clean, pressed uniform mandatory at all times</li><li>Name badge visible on left chest</li><li>Hair neatly groomed and styled</li><li>No strong perfumes or colognes</li><li>Clean shaven or neatly trimmed beard</li><li>Clean, polished shoes</li><li>No visible tattoos or body piercings (or covered)</li></ul><h2>Daily Hygiene Checklist</h2><ul><li>Shower before shift</li><li>Brush teeth / use mouthwash</li><li>Clean, ironed uniform</li><li>Clean hands and trimmed nails</li><li>No alcohol or drugs</li></ul>" },
+            { id: 4, title: "Passenger Safety & Management", desc: "Ensuring passenger safety and comfort", content: "<h2>Passenger Safety Rules</h2><ul><li>Board only at designated stops</li><li>Ensure seatbelt use where available</li><li>No standing while vehicle moves</li><li>Assist elderly and disabled passengers</li><li>Maintain passenger manifest (school transport)</li><li>Do not exceed passenger capacity</li></ul><h2>Loading and Unloading</h2><ul><li>Wait until vehicle is completely stopped</li><li>Allow passengers to exit before boarding</li><li>Ensure safe distance from curb</li><li>Use hand signals for school bus crossing</li></ul>" }
+        ];
+
         // ============================================
-        // STATE MANAGEMENT - Reactive
+        // SCHOOL BUS UNITS
         // ============================================
-        let state = {
-            user: null,
-            currentPage: 'home',
-            loading: {},
-            error: null,
-            materials: {},
-            userProgress: {}
-        };
-        
-        let listeners = [];
-        function subscribe(fn) { listeners.push(fn); return () => listeners = listeners.filter(l => l !== fn); }
-        function setState(updates) { state = { ...state, ...updates }; listeners.forEach(fn => fn(state)); }
-        
+        const SCHOOLBUS_UNITS = [
+            { id: 1, title: "Child Passenger Safety Fundamentals", desc: "Essential safety protocols for child transport", content: "<h2>Child Safety Checklist</h2><ul><li>Daily headcount before departure and after arrival</li><li>Seatbelt check for each child</li><li>No standing while vehicle moving</li><li>Safe drop-off zones only</li><li>Emergency contact list onboard</li><li>First aid kit equipped and accessible</li></ul><h2>The Danger Zone</h2><ul><li>10-foot area around the bus where accidents occur</li><li>Children should stay 10 feet away from bus</li><li>Driver must see all children before moving</li><li>Use crossing guard for younger children</li></ul>" }
+        ];
+
         // ============================================
-        // CACHE SYSTEM
+        // BODA UNITS
         // ============================================
-        const cache = new Map();
-        const CACHE_TTL = 5 * 60 * 1000;
-        
-        function getCached(key) {
-            const cached = cache.get(key);
-            if (cached && Date.now() - cached.timestamp < CACHE_TTL) return cached.data;
-            return null;
-        }
-        
-        function setCached(key, data) { cache.set(key, { data, timestamp: Date.now() }); }
-        function clearCache() { cache.clear(); }
-        
+        const BODA_UNITS = [
+            { id: 1, title: "Motorcycle Controls & Operation", desc: "Mastering motorcycle controls", content: "<h2>Basic Controls</h2><ul><li>Clutch lever: Left handlebar (disengages engine)</li><li>Front brake: Right handlebar</li><li>Rear brake: Right foot pedal</li><li>Gear shift: Left foot (1 down, N, 2-5 up)</li><li>Throttle: Right grip (twist to accelerate)</li><li>Turn signals: Left handlebar switch</li><li>Headlights: Left handlebar switch</li></ul><h2>Starting Procedure</h2><ul><li>Insert key and turn to 'ON'</li><li>Check neutral light (green)</li><li>Pull in clutch</li><li>Press start button</li><li>Release choke gradually as engine warms</li></ul>" },
+            { id: 2, title: "Protective Gear & Safety Equipment", desc: "Essential safety gear", content: "<h2>Required Safety Gear</h2><ul><li>ECE or DOT certified helmet (full face recommended)</li><li>Riding jacket with armor (shoulders, elbows, back)</li><li>Full-finger gloves with palm sliders</li><li>Ankle boots with oil-resistant soles</li><li>Reflective vest for night riding</li><li>Riding pants with knee armor</li></ul><h2>Helmet Checklist</h2><ul><li>No cracks or damage</li><li>Proper fit (snug but not tight)</li><li>Straps work properly</li><li>Visor clear and scratch-free</li><li>Replace every 5 years or after any impact</li></ul>" }
+        ];
+
         // ============================================
-        // API WITH ERROR HANDLING
+        // EV UNITS
         // ============================================
-        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        
-        async function apiCall(promise, errorMsg = 'Operation failed') {
-            try {
-                setState({ loading: { ...state.loading, [errorMsg]: true } });
-                const result = await promise;
-                if (result.error) throw new Error(result.error.message);
-                return result.data;
-            } catch (error) {
-                console.error(error);
-                setState({ error: error.message });
-                showToast(error.message || errorMsg, 'error');
-                return null;
-            } finally {
-                setState({ loading: { ...state.loading, [errorMsg]: false } });
-            }
-        }
-        
-        async function fetchMaterials(moduleType) {
-            const cached = getCached(`materials_${moduleType}`);
-            if (cached) return cached;
-            
-            const data = await apiCall(
-                supabase.from('materials').select('*').eq('module_type', moduleType).eq('status', 'published').order('unit_number', { ascending: true }).limit(50),
-                'Failed to load materials'
-            );
-            if (data) setCached(`materials_${moduleType}`, data);
-            return data || [];
-        }
-        
-        async function fetchMaterialById(id) {
-            return await apiCall(
-                supabase.from('materials').select('*').eq('id', id).single(),
-                'Failed to load material'
-            );
-        }
-        
-        async function fetchQuestions(moduleType, limit = 5) {
-            const cached = getCached(`questions_${moduleType}`);
-            if (cached) return cached;
-            
-            const data = await apiCall(
-                supabase.from('questions').select('*').eq('module_type', moduleType).limit(limit),
-                'Failed to load questions'
-            );
-            if (data) setCached(`questions_${moduleType}`, data);
-            return data || [];
-        }
-        
+        const EV_UNITS = [
+            { id: 1, title: "Introduction to Electric Vehicles", desc: "Complete guide to EV technology", content: "<h2>Electric Vehicle Types</h2><ul><li><strong>BEV:</strong> Battery Electric Vehicle - 100% electric, no gasoline engine</li><li><strong>PHEV:</strong> Plug-in Hybrid - Electric + Petrol, can plug in to charge</li><li><strong>HEV:</strong> Hybrid - Self-charging, no plug required</li><li><strong>MHEV:</strong> Mild Hybrid - Small battery assists engine</li></ul><h2>Benefits of EVs</h2><ul><li>Lower running costs (KSH 2-3 per km vs KSH 15+ for petrol)</li><li>Zero tailpipe emissions</li><li>Quiet operation</li><li>Instant torque for quick acceleration</li><li>Fewer moving parts = less maintenance</li></ul>" },
+            { id: 2, title: "EV Battery Technology & Management", desc: "Understanding batteries and health", content: "<h2>Battery Health Tips</h2><ul><li>Keep charge between 20-80% for daily use</li><li>Avoid extreme temperatures (park in shade)</li><li>Use scheduled charging</li><li>Keep software updated</li><li>Avoid frequent DC fast charging (use for road trips only)</li></ul><h2>Understanding Range</h2><ul><li>City driving often gives more range than highway</li><li>Cold weather reduces range by 20-40%</li><li>High speeds (>100 km/h) reduce range</li><li>Using climate control reduces range</li><li>Regenerative braking recovers energy</li></ul>" }
+        ];
+
         // ============================================
-        // AUTHENTICATION WITH REACTIVE STATE
+        // STATE
         // ============================================
-        async function login(email, password) {
-            if (!email || !password) { showToast('Enter email and password', 'error'); return null; }
-            if (!email.includes('@') || email.length < 5) { showToast('Enter valid email', 'error'); return null; }
-            if (password.length < 6) { showToast('Password must be at least 6 characters', 'error'); return null; }
-            
-            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-            if (error) { showToast(error.message, 'error'); return null; }
-            
-            const user = { id: data.user.id, email: data.user.email, name: data.user.user_metadata?.full_name || email.split('@')[0] };
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            setState({ user });
-            await loadUserProgress();
-            showToast(`Welcome ${user.name}!`, 'success');
-            return user;
-        }
-        
-        async function signUp(email, password, name) {
-            if (!name || name.length < 2) { showToast('Enter full name', 'error'); return null; }
-            if (!email || !email.includes('@')) { showToast('Enter valid email', 'error'); return null; }
-            if (!password || password.length < 6) { showToast('Password must be at least 6 characters', 'error'); return null; }
-            
-            const { error } = await supabase.auth.signUp({ email, password, options: { data: { full_name: name } } });
-            if (error) { showToast(error.message, 'error'); return null; }
-            showToast('Sign up successful! Please verify your email.', 'success');
-            return true;
-        }
-        
-        async function logout() {
-            await supabase.auth.signOut();
-            localStorage.removeItem('currentUser');
-            clearCache();
-            setState({ user: null, userProgress: {} });
-            showToast('Logged out', 'info');
-            navigateTo('home');
-        }
-        
-        async function loadUserProgress() {
-            if (!state.user) return;
-            const { data } = await supabase.from('user_progress').select('*').eq('user_id', state.user.id);
-            if (data) {
-                const progress = {};
-                data.forEach(p => { progress[p.material_id] = p.progress_percentage || 0; });
-                setState({ userProgress: progress });
-            }
-        }
-        
-        // Auth listener - Reactive auth state
-        supabase.auth.onAuthStateChange(async (event, session) => {
-            if (session) {
-                const user = { id: session.user.id, email: session.user.email, name: session.user.user_metadata?.full_name };
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                setState({ user });
-                await loadUserProgress();
-                updateAuthUI();
-            } else if (event === 'SIGNED_OUT') {
-                setState({ user: null, userProgress: {} });
-                updateAuthUI();
-            }
-        });
-        
-        // ============================================
-        // UI COMPONENTS
-        // ============================================
+        let currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
         let toastQueue = [];
-        let isProcessingToast = false;
-        const MAX_TOASTS = 5;
+        let isProcessing = false;
         
         function showToast(message, type = 'info') {
-            toastQueue = [...toastQueue, { message, type }].slice(-MAX_TOASTS);
-            if (!isProcessingToast) processToastQueue();
+            toastQueue.push({ message, type });
+            if (!isProcessing) processToast();
         }
         
-        async function processToastQueue() {
-            if (toastQueue.length === 0) { isProcessingToast = false; return; }
-            isProcessingToast = true;
+        async function processToast() {
+            if (toastQueue.length === 0) { isProcessing = false; return; }
+            isProcessing = true;
             const { message, type } = toastQueue.shift();
             const container = document.getElementById('toast-root');
             const toast = document.createElement('div');
             toast.className = 'toast';
             const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
-            toast.textContent = `${icon} ${sanitizeText(message)}`;
+            toast.textContent = `${icon} ${message}`;
             container.appendChild(toast);
             await new Promise(r => setTimeout(r, 3000));
             toast.remove();
-            processToastQueue();
+            processToast();
         }
-        
-        // Modal with focus trap
-        let currentModal = null;
-        let previousFocus = null;
-        
-        function showModal(content, onClose) {
-            const modalRoot = document.getElementById('modal-root');
-            previousFocus = document.activeElement;
-            const modal = document.createElement('div');
-            modal.className = 'modal';
-            modal.setAttribute('role', 'dialog');
-            modal.setAttribute('aria-modal', 'true');
-            modal.innerHTML = `<div class="modal-content"><button class="close-modal" aria-label="Close">✕</button><div class="modal-body"></div></div>`;
-            modal.querySelector('.modal-body').innerHTML = content;
-            
-            const closeBtn = modal.querySelector('.close-modal');
-            closeBtn.onclick = () => { modal.remove(); if (onClose) onClose(); if (previousFocus) previousFocus.focus(); };
-            modal.onclick = (e) => { if (e.target === modal) { modal.remove(); if (onClose) onClose(); if (previousFocus) previousFocus.focus(); } };
-            
-            // Focus trap
-            modal.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') { modal.remove(); if (onClose) onClose(); if (previousFocus) previousFocus.focus(); }
-                if (e.key === 'Tab') {
-                    const focusable = modal.querySelectorAll('button, [href], input, select, textarea');
-                    const first = focusable[0];
-                    const last = focusable[focusable.length - 1];
-                    if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
-                    else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
-                }
-            });
-            
-            modalRoot.appendChild(modal);
-            modal.style.display = 'flex';
-            modal.querySelector('input, button')?.focus();
-            currentModal = modal;
-        }
-        
-        function closeModal() { currentModal?.remove(); currentModal = null; }
         
         function updateAuthUI() {
             const authDiv = document.getElementById('authButtons');
             if (!authDiv) return;
-            if (state.user) {
-                authDiv.innerHTML = `<div style="background:#d4af37;color:#000;padding:8px 16px;border-radius:40px;font-size:14px;">👤 ${sanitizeText(state.user.name)}</div><button data-logout style="background:transparent;border:none;color:#e0e0e0;padding:8px 16px;">🚪 Logout</button>`;
-                authDiv.querySelector('[data-logout]')?.addEventListener('click', (e) => { e.preventDefault(); logout(); });
+            if (currentUser) {
+                authDiv.innerHTML = `<div style="background:#d4af37;color:#000;padding:8px 16px;border-radius:40px;">👤 ${currentUser.name}</div><button onclick="logout()">🚪 Logout</button>`;
             } else {
-                authDiv.innerHTML = `<button data-login style="background:transparent;border:none;color:#e0e0e0;padding:8px 16px;">🔑 Login</button>`;
-                authDiv.querySelector('[data-login]')?.addEventListener('click', (e) => { e.preventDefault(); showLoginModal(); });
+                authDiv.innerHTML = `<button onclick="showLoginModal()">🔑 Login</button>`;
             }
         }
         
-        // ============================================
-        // PAGE RENDERING WITH LOADING STATES
-        // ============================================
-        function renderSkeletons(count = 6) {
-            return Array(count).fill().map(() => '<div class="skeleton"></div>').join('');
+        async function login(email, password) {
+            showToast('Demo login successful!', 'success');
+            currentUser = { id: 'demo', email, name: email.split('@')[0] };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            updateAuthUI();
+            closeModal();
+            navigateTo('home');
         }
         
-        function renderCard(material, type, progress = 0) {
-            const isEv = type === 'ev';
-            return `
-                <button class="card ${isEv ? 'card-ev' : ''}" data-material-id="${material.id}" data-module-type="${type}">
-                    <span class="${isEv ? 'ev-badge-module' : 'unit-badge'}">
-                        ${isEv ? '⚡' : ''} ${type === 'learner' ? `Unit ${material.unit_number}` : ''}
-                    </span>
-                    <h3>${sanitizeText(material.title)}</h3>
-                    <p>${sanitizeText(material.description?.substring(0, 80))}...</p>
-                    <div class="progress-bar"><div class="progress-fill" style="width: ${progress}%"></div></div>
-                    <span class="btn-small">📖 View →</span>
-                </button>
-            `;
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateAuthUI();
+            showToast('Logged out', 'info');
+            navigateTo('home');
         }
         
-        async function renderPage(page) {
-            const container = document.getElementById('page-content');
-            setState({ currentPage: page });
-            
-            switch(page) {
-                case 'home':
-                    container.innerHTML = `
-                        <div class="hero"><h1>Kenya's <span class="highlight">Digital Driver Safety Platform</span></h1><p>Drive Smart. Stay Safe. Arrive Home.</p>
-                        <div class="hero-buttons"><button class="btn" data-nav="learner">📚 Start Learning</button><button class="btn-ev" data-nav="ev">⚡ EV Course</button></div></div>
-                        <div class="stats-grid"><div class="stat-card"><div class="stat-number">10K+</div><div>Certified</div></div><div class="stat-card"><div class="stat-number">98%</div><div>Pass Rate</div></div><div class="stat-card"><div class="stat-number">45+</div><div>Modules</div></div><div class="stat-card"><div class="stat-number">24/7</div><div>Access</div></div></div>
-                        <div class="grid">${[
-                            { name: 'Learner Hub', icon: '📚', nav: 'learner' }, { name: 'PSV Course', icon: '🚌', nav: 'psv' }, { name: 'School Bus', icon: '🏫', nav: 'schoolbus' },
-                            { name: 'EV Training', icon: '⚡', nav: 'ev', isEv: true }, { name: 'Boda Safety', icon: '🏍️', nav: 'boda' }, { name: 'Academy', icon: '🎓', nav: 'academy' }
-                        ].map(m => `<button class="card ${m.isEv ? 'card-ev' : ''}" data-nav="${m.nav}"><div style="font-size:2rem;margin-bottom:12px;">${m.icon}</div><h3>${m.name}</h3><span class="btn-small">Start →</span></button>`).join('')}</div>
-                    `;
-                    break;
-                    
-                case 'learner':
-                case 'psv':
-                case 'schoolbus':
-                case 'ev':
-                case 'boda':
-                    container.innerHTML = `<div class="hero"><h1>${page === 'ev' ? '⚡ EV Specialized Training' : page.charAt(0).toUpperCase() + page.slice(1)}</h1></div><div class="grid">${renderSkeletons()}</div><div class="question-bank"><h2>📝 Practice Questions</h2>${renderSkeletons(3)}</div>`;
-                    const [materials, questions] = await Promise.all([fetchMaterials(page), fetchQuestions(page)]);
-                    const cards = materials.map(m => renderCard(m, page, state.userProgress[m.id] || 0)).join('');
-                    const qCards = questions.map((q, idx) => `<div class="question-card"><div class="question-text"><strong>${idx + 1}.</strong> ${sanitizeText(q.question_text)}</div><div class="options-group">${[q.option_a, q.option_b, q.option_c, q.option_d].map((opt, i) => `<button class="option" data-question-id="${q.id}" data-selected="${i + 1}" data-correct="${q.correct_answer}">${String.fromCharCode(65 + i)}. ${sanitizeText(opt)}</button>`).join('')}</div></div>`).join('');
-                    container.innerHTML = `<div class="hero"><h1>${page === 'ev' ? '⚡ EV Specialized Training' : page.charAt(0).toUpperCase() + page.slice(1)}</h1></div><div class="grid">${cards || '<div class="empty-state">No materials yet</div>'}</div><div class="question-bank"><h2>📝 Practice Questions</h2>${qCards || '<div class="empty-state">No questions yet</div>'}</div>`;
-                    break;
-                    
-                case 'academy':
-                    container.innerHTML = `<div class="hero"><h1>🎓 Advanced Academy</h1></div><div class="grid">${[
-                        { title: 'Fleet Management', desc: 'Manage commercial fleets', icon: '🚛' }, { title: 'Transport Logistics', desc: 'Efficient operations', icon: '📦' }, { title: 'Driver Training', desc: 'Build professional teams', icon: '👥' }
-                    ].map(m => `<button class="card" data-action="academy"><div style="font-size:2rem;margin-bottom:12px;">${m.icon}</div><h3>${m.title}</h3><p>${m.desc}</p><span class="btn-small">Start →</span></button>`).join('')}</div>`;
-                    break;
-                    
-                case 'library':
-                    container.innerHTML = `<div class="hero"><h1>📖 Resource Library</h1></div><div class="grid">${['Kenya Highway Code', 'EV Driver Handbook', 'NTSA Test Guide', 'PSV Manual', 'School Bus Safety', 'EV Maintenance'].map(title => `<button class="card" data-resource="${title}"><div style="font-size:2rem;margin-bottom:12px;">📄</div><h3>${title}</h3><span class="btn-small">Download →</span></button>`).join('')}</div>`;
-                    break;
-            }
-            
-            // Attach event listeners using event delegation
-            container.querySelectorAll('[data-nav]').forEach(el => el.addEventListener('click', () => navigateTo(el.dataset.nav)));
-            container.querySelectorAll('.card[data-material-id]').forEach(el => el.addEventListener('click', () => viewMaterial(el.dataset.materialId)));
-            container.querySelectorAll('.option[data-question-id]').forEach(el => el.addEventListener('click', () => checkAnswer(el.dataset.questionId, parseInt(el.dataset.selected), parseInt(el.dataset.correct))));
-            container.querySelectorAll('[data-resource]').forEach(el => el.addEventListener('click', () => showToast(`Download started: ${el.dataset.resource}`, 'success')));
-            container.querySelectorAll('[data-action="academy"]').forEach(el => el.addEventListener('click', () => showToast('Module started', 'info')));
-        }
-        
-        async function viewMaterial(id) {
-            const container = document.getElementById('page-content');
-            container.innerHTML = '<div class="spinner"></div>';
-            const material = await fetchMaterialById(id);
-            if (!material) { container.innerHTML = '<div class="error-state">❌ Material not found</div>'; return; }
-            container.innerHTML = `
-                <div style="background:var(--card-bg);border-radius:24px;padding:20px;margin:20px 0;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
-                        <h2 style="color:var(--primary-gold);font-size:1.5rem;">${sanitizeText(material.title)}</h2>
-                        <button class="btn-small" data-back>← Back</button>
-                    </div>
-                    <p>${sanitizeText(material.description)}</p>
-                    ${material.content ? `<div class="mt-3">${sanitizeHtml(typeof material.content === 'string' ? material.content : JSON.stringify(material.content))}</div>` : ''}
-                    <button class="btn" style="width:100%;margin-top:20px;" data-complete>✅ Mark Complete</button>
+        function showLoginModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <button class="close-modal" onclick="this.closest('.modal').remove()">✕</button>
+                    <h3>🔐 Demo Login</h3>
+                    <input type="email" id="loginEmail" placeholder="Email" value="demo@mei.com">
+                    <input type="password" id="loginPassword" placeholder="Password" value="demo123">
+                    <button class="btn" style="width:100%;margin-top:10px;" onclick="login(document.getElementById('loginEmail').value, document.getElementById('loginPassword').value)">Login</button>
+                    <hr style="margin:16px 0;">
+                    <p style="text-align:center;color:#aaa;">Demo: Use any email/password</p>
                 </div>
             `;
-            container.querySelector('[data-back]')?.addEventListener('click', () => navigateTo(state.currentPage));
-            container.querySelector('[data-complete]')?.addEventListener('click', async () => {
-                if (state.user) {
-                    await supabase.from('user_progress').upsert({ user_id: state.user.id, material_id: id, progress_percentage: 100, status: 'completed', completed_at: new Date().toISOString() });
-                    await loadUserProgress();
-                }
-                showToast('Unit completed! 🎉', 'success');
-            });
+            document.getElementById('modal-root').appendChild(modal);
+            modal.style.display = 'flex';
+        }
+        
+        function closeModal() {
+            document.querySelector('.modal')?.remove();
+        }
+        
+        // ============================================
+        // RENDERING
+        // ============================================
+        function renderCard(unit, type, progress = 0) {
+            const isEv = type === 'ev';
+            return `
+                <div class="card ${isEv ? 'card-ev' : ''}" onclick="viewUnit(${unit.id}, '${type}')">
+                    <span class="${isEv ? 'ev-badge-module' : 'unit-badge'}">
+                        ${isEv ? '⚡' : ''} ${type === 'learner' ? `Unit ${unit.id}` : ''}
+                    </span>
+                    <h3>${unit.title}</h3>
+                    <p>${unit.desc.substring(0, 80)}...</p>
+                    <div class="progress-bar"><div class="progress-fill" style="width: ${progress}%"></div></div>
+                    <button class="btn-small">📖 View →</button>
+                </div>
+            `;
+        }
+        
+        function viewUnit(unitId, type) {
+            let unit;
+            if (type === 'learner') unit = LEARNER_UNITS.find(u => u.id === unitId);
+            else if (type === 'psv') unit = PSV_UNITS.find(u => u.id === unitId);
+            else if (type === 'schoolbus') unit = SCHOOLBUS_UNITS.find(u => u.id === unitId);
+            else if (type === 'boda') unit = BODA_UNITS.find(u => u.id === unitId);
+            else if (type === 'ev') unit = EV_UNITS.find(u => u.id === unitId);
+            
+            if (!unit) return;
+            
+            const container = document.getElementById('page-content');
+            container.innerHTML = `
+                <div style="background:var(--card-bg);border-radius:24px;padding:24px;margin:20px 0;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+                        <h2 style="color:var(--primary-gold);">${unit.title}</h2>
+                        <button class="btn-small" onclick="navigateTo('${type}')">← Back to ${type.toUpperCase()}</button>
+                    </div>
+                    <div class="unit-content">
+                        ${unit.content || `<p>${unit.desc}</p><p>Complete lesson content will be displayed here.</p>`}
+                    </div>
+                    <button class="btn" style="width:100%;margin-top:24px;" onclick="showToast('Unit completed! 🎉', 'success')">
+                        ✅ Mark Complete
+                    </button>
+                </div>
+            `;
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
-        function checkAnswer(qid, selected, correct) {
-            if (selected === correct) {
-                showToast('✅ Correct!', 'success');
-                document.querySelector(`.option[data-question-id="${qid}"][data-selected="${selected}"]`)?.classList.add('correct');
-            } else {
-                showToast(`❌ Incorrect. Correct answer: ${String.fromCharCode(64 + correct)}`, 'error');
-                document.querySelector(`.option[data-question-id="${qid}"][data-selected="${selected}"]`)?.classList.add('wrong');
-                document.querySelector(`.option[data-question-id="${qid}"][data-selected="${correct}"]`)?.classList.add('correct');
-            }
-        }
-        
-        // ============================================
-        // NAVIGATION
-        // ============================================
         async function navigateTo(page) {
-            const validPages = ['home', 'learner', 'psv', 'schoolbus', 'boda', 'ev', 'academy', 'library'];
-            if (!validPages.includes(page)) page = 'home';
-            history.pushState({ page }, '', `/${page === 'home' ? '' : page}`);
-            await renderPage(page);
-            document.getElementById('navLinks')?.classList.remove('show');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        
-        // ============================================
-        // AUTH MODALS
-        // ============================================
-        function showLoginModal() {
-            showModal(`
-                <h3>🔐 Login</h3>
-                <input type="email" id="loginEmail" placeholder="Email" autocomplete="email">
-                <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
-                <button class="btn" id="loginBtn" style="width:100%;margin-top:10px;">Login</button>
-                <hr style="margin:16px 0;">
-                <h4>📝 Sign Up</h4>
-                <input type="text" id="signupName" placeholder="Full Name">
-                <input type="email" id="signupEmail" placeholder="Email">
-                <input type="password" id="signupPassword" placeholder="Password">
-                <button class="btn-outline" id="signupBtn" style="width:100%;margin-top:10px;">Create Account</button>
-            `, () => {});
-            document.getElementById('loginBtn')?.addEventListener('click', async () => {
-                const email = document.getElementById('loginEmail')?.value;
-                const pwd = document.getElementById('loginPassword')?.value;
-                const user = await login(email, pwd);
-                if (user) { closeModal(); updateAuthUI(); navigateTo('home'); }
-            });
-            document.getElementById('signupBtn')?.addEventListener('click', async () => {
-                const name = document.getElementById('signupName')?.value;
-                const email = document.getElementById('signupEmail')?.value;
-                const pwd = document.getElementById('signupPassword')?.value;
-                if (await signUp(email, pwd, name)) closeModal();
-            });
-        }
-        
-        // ============================================
-        // INITIALIZATION
-        // ============================================
-        async function init() {
-            // Check existing session
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) {
-                const user = { id: session.user.id, email: session.user.email, name: session.user.user_metadata?.full_name };
-                setState({ user });
-                await loadUserProgress();
+            const container = document.getElementById('page-content');
+            
+            if (page === 'home') {
+                container.innerHTML = `
+                    <div class="hero">
+                        <h1>Kenya's <span class="highlight">Digital Driver Safety Platform</span></h1>
+                        <p>Drive Smart. Stay Safe. Arrive Home. Keep Our Roads Safe</p>
+                        <div class="hero-buttons">
+                            <button class="btn" onclick="navigateTo('learner')">📚 Start Learning (21 Units)</button>
+                            <button class="btn-ev" onclick="navigateTo('ev')">⚡ EV Course</button>
+                        </div>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card"><div class="stat-number">21</div><div>Learner Units</div></div>
+                        <div class="stat-card"><div class="stat-number">10</div><div>PSV Units</div></div>
+                        <div class="stat-card"><div class="stat-number">8</div><div>School Bus</div></div>
+                        <div class="stat-card"><div class="stat-number">6+</div><div>EV Units</div></div>
+                    </div>
+                    <div class="grid">
+                        <div class="card" onclick="navigateTo('learner')"><div style="font-size:2rem;margin-bottom:12px;">📚</div><h3>Learner Hub</h3><p>21 Complete Units - Kenya Learner Handbook</p><button class="btn-small">Start →</button></div>
+                        <div class="card" onclick="navigateTo('psv')"><div style="font-size:2rem;margin-bottom:12px;">🚌</div><h3>PSV Course</h3><p>10 Units - Professional Driver Certification</p><button class="btn-small">Start →</button></div>
+                        <div class="card" onclick="navigateTo('schoolbus')"><div style="font-size:2rem;margin-bottom:12px;">🏫</div><h3>School Bus Safety</h3><p>Specialized training for child transport</p><button class="btn-small">Start →</button></div>
+                        <div class="card card-ev" onclick="navigateTo('ev')"><div style="font-size:2rem;margin-bottom:12px;">⚡</div><h3>EV Specialized</h3><p>Complete Electric Vehicle Training</p><button class="btn-small">Start →</button></div>
+                        <div class="card" onclick="navigateTo('boda')"><div style="font-size:2rem;margin-bottom:12px;">🏍️</div><h3>Boda Safety</h3><p>Motorcycle safety training</p><button class="btn-small">Start →</button></div>
+                        <div class="card" onclick="navigateTo('academy')"><div style="font-size:2rem;margin-bottom:12px;">🎓</div><h3>Academy</h3><p>Fleet management & logistics</p><button class="btn-small">Start →</button></div>
+                        <div class="card" onclick="navigateTo('library')"><div style="font-size:2rem;margin-bottom:12px;">📖</div><h3>Library</h3><p>Resources & manuals</p><button class="btn-small">Start →</button></div>
+                    </div>
+                `;
+            } else if (page === 'learner') {
+                container.innerHTML = `<div class="hero"><h1>📚 Learner Driver Hub</h1><p>21 Complete Units - Kenya Learner Driver Handbook</p></div><div class="grid">${LEARNER_UNITS.map(u => renderCard(u, 'learner')).join('')}</div><div class="question-bank"><h2>📝 NTSA Practice Questions</h2><div class="question-card"><div class="question-text"><strong>1.</strong> What is the legal blood alcohol limit for commercial drivers in Kenya?</div><div class="options-group"><div class="option" onclick="this.classList.add('correct');showToast('✅ Correct! 0.00% is the limit for commercial drivers','success')">A. 0.00%</div><div class="option" onclick="this.classList.add('wrong');showToast('❌ Incorrect. The limit is 0.00%','error')">B. 0.05%</div><div class="option" onclick="this.classList.add('wrong');showToast('❌ Incorrect. The limit is 0.00%','error')">C. 0.08%</div><div class="option" onclick="this.classList.add('wrong');showToast('❌ Incorrect. The limit is 0.00%','error')">D. 0.10%</div></div></div><div class="question-card"><div class="question-text"><strong>2.</strong> What is the maximum speed limit in a residential area in Kenya?</div><div class="options-group"><div class="option" onclick="this.classList.add('wrong');showToast('❌ Incorrect. The limit is 40 km/h','error')">A. 30 km/h</div><div class="option" onclick="this.classList.add('correct');showToast('✅ Correct! 40 km/h is the limit','success')">B. 40 km/h</div><div class="option" onclick="this.classList.add('wrong');showToast('❌ Incorrect. The limit is 40 km/h','error')">C. 50 km/h</div><div class="option" onclick="this.classList.add('wrong');showToast('❌ Incorrect. The limit is 40 km/h','error')">D. 60 km/h</div></div></div><div class="question-card"><div class="question-text"><strong>3.</strong> What should you do if your vehicle starts to skid?</div><div class="options-group"><div class="option" onclick="this.classList.add('correct');showToast('✅ Correct! Steer into the skid','success')">A. Steer into the skid</div><div class="option" onclick="this.classList.add('wrong');showToast('❌ Incorrect. Steer into the direction of the skid','error')">B. Steer away from skid</div><div class="option" onclick="this.classList.add('wrong');showToast('❌ Incorrect. Steer into the skid','error')">C. Brake hard</div><div class="option" onclick="this.classList.add('wrong');showToast('❌ Incorrect. Steer into the skid','error')">D. Accelerate</div></div></div></div>`;
+            } else if (page === 'psv') {
+                container.innerHTML = `<div class="hero"><h1>🚌 PSV Professional Course</h1><p>10 Units - Professional Driver Certification</p></div><div class="grid">${PSV_UNITS.map(u => renderCard(u, 'psv')).join('')}</div>`;
+            } else if (page === 'schoolbus') {
+                container.innerHTML = `<div class="hero"><h1>🏫 School Bus Safety Program</h1><p>Specialized Training for Safely Transporting Children</p></div><div class="grid">${SCHOOLBUS_UNITS.map(u => renderCard(u, 'schoolbus')).join('')}</div>`;
+            } else if (page === 'boda') {
+                container.innerHTML = `<div class="hero"><h1>🏍️ Boda Boda Safety Course</h1><p>NTSA-Approved Motorcycle Safety Training</p></div><div class="grid">${BODA_UNITS.map(u => renderCard(u, 'boda')).join('')}</div>`;
+            } else if (page === 'ev') {
+                container.innerHTML = `<div class="hero"><h1>⚡ Electric Vehicle Specialized Training</h1><p>Complete EV Driving, Maintenance & Safety</p></div><div class="grid">${EV_UNITS.map(u => renderCard(u, 'ev')).join('')}</div>`;
+            } else if (page === 'academy') {
+                container.innerHTML = `<div class="hero"><h1>🎓 Advanced Driver Academy</h1><p>Professional Driver Certification & Fleet Management</p></div><div class="grid"><div class="card"><div style="font-size:2rem;margin-bottom:12px;">🚛</div><h3>Fleet Management</h3><p>Managing commercial vehicle fleets</p><button class="btn-small" onclick="showToast('Module started','info')">Start →</button></div><div class="card"><div style="font-size:2rem;margin-bottom:12px;">📦</div><h3>Transport Logistics</h3><p>Efficient transport operations</p><button class="btn-small" onclick="showToast('Module started','info')">Start →</button></div><div class="card"><div style="font-size:2rem;margin-bottom:12px;">👥</div><h3>Driver Training</h3><p>Building professional driver teams</p><button class="btn-small" onclick="showToast('Module started','info')">Start →</button></div></div>`;
+            } else if (page === 'library') {
+                container.innerHTML = `<div class="hero"><h1>📖 Resource Library</h1><p>Official Documents, Manuals & Reference Materials</p></div><div class="grid">${[
+                    'Kenya Highway Code (Official)', 'EV Driver Handbook', 'NTSA Test Guide', 
+                    'PSV Driver Manual', 'School Bus Safety Manual', 'EV Maintenance Guide'
+                ].map(title => `<div class="card" onclick="showToast('Download started: ${title}','success')"><div style="font-size:2rem;margin-bottom:12px;">📄</div><h3>${title}</h3><button class="btn-small">Download →</button></div>`).join('')}</div>`;
             }
-            updateAuthUI();
             
-            // Event delegation for navigation
-            document.addEventListener('click', (e) => {
-                const navBtn = e.target.closest('[data-nav]');
-                if (navBtn) { e.preventDefault(); navigateTo(navBtn.dataset.nav); }
-            });
-            
-            // Mobile menu
-            const mobileBtn = document.getElementById('mobileMenuBtn');
-            const navLinks = document.getElementById('navLinks');
-            mobileBtn?.addEventListener('click', (e) => { e.stopPropagation(); navLinks?.classList.toggle('show'); });
-            document.addEventListener('click', (e) => {
-                if (navLinks?.classList.contains('show') && !navLinks.contains(e.target) && !mobileBtn?.contains(e.target)) {
-                    navLinks.classList.remove('show');
-                }
-            });
-            
-            // Handle initial route
-            const initialPage = window.location.pathname.slice(1) || 'home';
-            await navigateTo(initialPage);
-            window.addEventListener('popstate', (e) => { if (e.state?.page) navigateTo(e.state.page); });
-            
-            // Subscribe to state changes
-            subscribe((newState) => { if (newState.user !== state.user) updateAuthUI(); });
+            document.getElementById('navLinks')?.classList.remove('show');
+            window.scrollTo({ top: 0 });
         }
         
-        // Expose only necessary functions globally
+        // ============================================
+        // INIT
+        // ============================================
         window.navigateTo = navigateTo;
+        window.viewUnit = viewUnit;
         window.showToast = showToast;
-        window.viewMaterial = viewMaterial;
-        window.checkAnswer = checkAnswer;
-        window.showLoginModal = showLoginModal;
+        window.login = login;
         window.logout = logout;
+        window.showLoginModal = showLoginModal;
+        window.closeModal = closeModal;
         
-        init();
+        updateAuthUI();
+        
+        // Mobile menu
+        document.getElementById('mobileMenuBtn')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.getElementById('navLinks')?.classList.toggle('show');
+        });
+        document.addEventListener('click', (e) => {
+            const navLinks = document.getElementById('navLinks');
+            const mobileBtn = document.getElementById('mobileMenuBtn');
+            if (navLinks?.classList.contains('show') && !navLinks.contains(e.target) && !mobileBtn?.contains(e.target)) {
+                navLinks.classList.remove('show');
+            }
+        });
+        
+        // Navigation event delegation
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-nav]');
+            if (btn) navigateTo(btn.dataset.nav);
+        });
+        
+        // Start on home page
+        navigateTo('home');
     </script>
 </body>
 </html>
