@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
     <title>MEI DRIVE AFRICA | Premier Driver Safety Platform</title>
-    <meta name="description" content="Kenya's premier NTSA-certified driver training platform - 21 Learner Units, PSV, Boda, EV, and 1000+ NTSA Practice Questions">
+    <meta name="description" content="Kenya's premier NTSA-certified driver training platform">
     <meta name="theme-color" content="#d4af37">
     
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🚗%3C/text%3E%3C/svg%3E">
@@ -45,7 +45,6 @@
         .btn { background: var(--gradient-gold); color: #000; }
         .btn-ev { background: linear-gradient(135deg, #00ff88, #00b4d8); color: #000; }
         .btn-small { min-height: 40px; padding: 8px 20px; font-size: 14px; border-radius: 50px; background: var(--gradient-gold); color: #000; border: none; cursor: pointer; }
-        .btn:disabled, .btn-ev:disabled { opacity: 0.5; cursor: not-allowed; }
         
         .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 20px 0; }
         @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
@@ -137,48 +136,53 @@
 </head>
 <body>
     <div id="app">
-        <!-- Dynamic content will be loaded here -->
+        <div class="navbar">
+            <div class="container nav">
+                <div class="logo" data-nav="home">MEI DRIVE AFRICA ⚡</div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
+                <div class="nav-links" id="navLinks">
+                    <button data-nav="home">🏠 Home</button>
+                    <button data-nav="learner">📚 Learner Hub</button>
+                    <button data-nav="psv">🚌 PSV</button>
+                    <button data-nav="schoolbus">🏫 School Bus</button>
+                    <button data-nav="boda">🏍️ Boda</button>
+                    <button data-nav="ev">⚡ EV</button>
+                    <button data-nav="academy">🎓 Academy</button>
+                    <button data-nav="library">📖 Library</button>
+                    <button data-nav="quiz">📝 Quiz</button>
+                    <div id="authButtons"></div>
+                </div>
+            </div>
+        </div>
+        <div class="container"><main id="page-content"><div class="spinner"></div></main></div>
     </div>
+    <div id="toast-root"></div>
 
     <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/+esm';
+        
         // ============================================
         // SUPABASE CONFIGURATION
         // ============================================
-        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/+esm';
-        
         const supabaseUrl = 'https://fktjmkmzlixlapeyhhyl.supabase.co';
         const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E';
-        
         const supabase = createClient(supabaseUrl, supabaseAnonKey);
         
         // ============================================
         // APP STATE
         // ============================================
         let currentUser = null;
-        let session = null;
-        let isLoading = false;
+        let materialsCache = {};
+        let questionsCache = {};
+        let userProgress = {};
+        let currentPage = 'home';
         
-        // Module Data
-        const LEARNER_UNITS = Array.from({ length: 21 }, (_, i) => ({ 
-            id: i+1, 
-            title: `Unit ${i+1}: ${i===0?"Introduction to Driving":i===1?"Highway Code":i===2?"Vehicle Controls":i===3?"Maintenance":i===4?"Moving Off":"Driving Skills"}`, 
-            desc: "Essential driving knowledge and skills for Kenyan roads",
-            content: "<h2>Learning Unit</h2><p>Complete training content for professional driving in Kenya.</p><ul><li>Learn essential driving techniques</li><li>Understand road safety rules</li><li>Master defensive driving skills</li></ul>"
-        }));
-        const PSV_UNITS = Array.from({ length: 10 }, (_, i) => ({ id: i+1, title: `PSV Module ${i+1}`, desc: "Professional PSV driver training", content: "<h2>PSV Training</h2><p>Professional Public Service Vehicle driver training.</p>" }));
-        const SCHOOLBUS_UNITS = Array.from({ length: 6 }, (_, i) => ({ id: i+1, title: `School Bus Safety ${i+1}`, desc: "Child transport safety", content: "<h2>School Bus Safety</h2><p>Specialized training for transporting children safely.</p>" }));
-        const BODA_UNITS = Array.from({ length: 12 }, (_, i) => ({ id: i+1, title: `Boda Module ${i+1}`, desc: "Motorcycle safety training", content: "<h2>Boda Training</h2><p>Complete motorcycle safety and operations training.</p>" }));
-        const EV_UNITS = Array.from({ length: 8 }, (_, i) => ({ id: i+1, title: `EV Module ${i+1}`, desc: "Electric vehicle training", content: "<h2>EV Training</h2><p>Electric vehicle driving, maintenance and safety.</p>" }));
-        const ACADEMY_UNITS = Array.from({ length: 6 }, (_, i) => ({ id: i+1, title: `Academy Module ${i+1}`, desc: "Professional development", content: "<h2>Academy Training</h2><p>Advanced professional driver development.</p>" }));
+        // Quiz state
+        let currentQuizPage = 1;
+        let quizAnswers = {};
+        const questionsPerPage = 5;
         
-        const NTSA_QUESTIONS = Array.from({ length: 50 }, (_, i) => ({ 
-            id: i+1, 
-            text: `NTSA Practice Question ${i+1}: What is the safe following distance in good conditions?`, 
-            options: ["2 seconds", "3 seconds", "4 seconds", "5 seconds"], 
-            correct: 1, 
-            explanation: "The 3-second rule is recommended for safe following distance under normal conditions."
-        }));
-        
+        // Toast
         let toastQueue = [];
         let isProcessingToast = false;
         
@@ -191,7 +195,7 @@
             if (toastQueue.length === 0) { isProcessingToast = false; return; }
             isProcessingToast = true;
             const { message, type } = toastQueue.shift();
-            const container = document.getElementById('toast-root') || document.body;
+            const container = document.getElementById('toast-root');
             const toast = document.createElement('div');
             toast.className = 'toast';
             const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
@@ -203,49 +207,252 @@
         }
         
         // ============================================
-        // AUTHENTICATION
+        // DATA FETCHING FROM SUPABASE
         // ============================================
-        async function signUp(email, password, name) {
-            if (!name || name.length < 2) { showToast('Please enter your full name', 'error'); return null; }
-            if (!email || !email.includes('@')) { showToast('Please enter a valid email', 'error'); return null; }
-            if (!password || password.length < 6) { showToast('Password must be at least 6 characters', 'error'); return null; }
+        
+        // Fetch materials by module type
+        async function fetchMaterials(moduleType) {
+            if (materialsCache[moduleType]) {
+                return materialsCache[moduleType];
+            }
             
             try {
-                const { data, error } = await supabase.auth.signUp({
-                    email: email.trim(),
-                    password: password,
-                    options: { data: { full_name: name.trim() } }
-                });
+                const { data, error } = await supabase
+                    .from('materials')
+                    .select('*')
+                    .eq('module_type', moduleType)
+                    .eq('status', 'published')
+                    .order('unit_number', { ascending: true });
+                
                 if (error) throw error;
-                showToast('Account created! Please check your email for verification.', 'success');
-                return data;
+                
+                materialsCache[moduleType] = data || [];
+                return data || [];
+            } catch (error) {
+                console.error(`Error fetching ${moduleType}:`, error);
+                // Fallback data if Supabase is empty
+                return getFallbackMaterials(moduleType);
+            }
+        }
+        
+        // Fetch questions by module type
+        async function fetchQuestions(moduleType, limit = 20) {
+            if (questionsCache[moduleType]) {
+                return questionsCache[moduleType];
+            }
+            
+            try {
+                const { data, error } = await supabase
+                    .from('questions')
+                    .select('*')
+                    .eq('module_type', moduleType)
+                    .limit(limit);
+                
+                if (error) throw error;
+                
+                questionsCache[moduleType] = data || [];
+                return data || [];
+            } catch (error) {
+                console.error(`Error fetching questions:`, error);
+                return getFallbackQuestions();
+            }
+        }
+        
+        // Fetch user progress
+        async function fetchUserProgress() {
+            if (!currentUser) return {};
+            
+            try {
+                const { data, error } = await supabase
+                    .from('user_progress')
+                    .select('*')
+                    .eq('user_id', currentUser.id);
+                
+                if (error) throw error;
+                
+                const progress = {};
+                if (data) {
+                    data.forEach(p => {
+                        progress[p.material_id] = p.progress_percentage || 0;
+                    });
+                }
+                userProgress = progress;
+                return progress;
+            } catch (error) {
+                console.error('Error fetching progress:', error);
+                return {};
+            }
+        }
+        
+        // Update progress
+        async function updateProgress(materialId, progress) {
+            if (!currentUser) {
+                showToast('Please login to track progress', 'error');
+                return false;
+            }
+            
+            try {
+                const { error } = await supabase
+                    .from('user_progress')
+                    .upsert({
+                        user_id: currentUser.id,
+                        material_id: materialId,
+                        progress_percentage: progress,
+                        status: progress === 100 ? 'completed' : 'in_progress',
+                        last_accessed_at: new Date().toISOString(),
+                        completed_at: progress === 100 ? new Date().toISOString() : null
+                    });
+                
+                if (error) throw error;
+                
+                userProgress[materialId] = progress;
+                showToast(progress === 100 ? 'Unit completed! 🎉' : 'Progress saved', 'success');
+                return true;
+            } catch (error) {
+                console.error('Error updating progress:', error);
+                showToast('Error saving progress', 'error');
+                return false;
+            }
+        }
+        
+        // ============================================
+        // FALLBACK DATA (if Supabase is empty)
+        // ============================================
+        function getFallbackMaterials(moduleType) {
+            const fallback = {
+                learner: Array.from({ length: 21 }, (_, i) => ({
+                    id: i + 1,
+                    title: `Unit ${i + 1}: ${getUnitTitle(i)}`,
+                    description: `Complete training for ${getUnitTitle(i).toLowerCase()}`,
+                    content: `<h2>${getUnitTitle(i)}</h2><p>This is comprehensive training material for ${getUnitTitle(i).toLowerCase()}.</p><ul><li>Learn essential skills</li><li>Understand key concepts</li><li>Practice with examples</li></ul>`,
+                    module_type: 'learner',
+                    unit_number: i + 1,
+                    difficulty: i < 7 ? 'beginner' : i < 14 ? 'intermediate' : 'advanced',
+                    image_url: null,
+                    video_url: null,
+                    estimated_minutes: 45
+                })),
+                psv: Array.from({ length: 10 }, (_, i) => ({
+                    id: 100 + i,
+                    title: `PSV Module ${i + 1}: ${getPSVTitle(i)}`,
+                    description: `Professional PSV driver training for ${getPSVTitle(i).toLowerCase()}`,
+                    content: `<h2>${getPSVTitle(i)}</h2><p>Professional training for PSV drivers.</p><ul><li>Safety standards</li><li>Customer service</li><li>Regulatory compliance</li></ul>`,
+                    module_type: 'psv',
+                    unit_number: i + 1,
+                    difficulty: 'intermediate'
+                })),
+                ev: Array.from({ length: 8 }, (_, i) => ({
+                    id: 200 + i,
+                    title: `EV Module ${i + 1}: ${getEVTitle(i)}`,
+                    description: `Electric vehicle training for ${getEVTitle(i).toLowerCase()}`,
+                    content: `<h2>${getEVTitle(i)}</h2><p>Complete electric vehicle training.</p><ul><li>Battery technology</li><li>Charging infrastructure</li><li>Safety protocols</li></ul>`,
+                    module_type: 'ev',
+                    unit_number: i + 1,
+                    difficulty: 'intermediate'
+                })),
+                boda: Array.from({ length: 12 }, (_, i) => ({
+                    id: 300 + i,
+                    title: `Boda Module ${i + 1}: ${getBodaTitle(i)}`,
+                    description: `Motorcycle safety training for ${getBodaTitle(i).toLowerCase()}`,
+                    content: `<h2>${getBodaTitle(i)}</h2><p>Complete boda boda safety training.</p><ul><li>Protective gear</li><li>Defensive riding</li><li>Passenger safety</li></ul>`,
+                    module_type: 'boda',
+                    unit_number: i + 1,
+                    difficulty: 'beginner'
+                })),
+                schoolbus: Array.from({ length: 6 }, (_, i) => ({
+                    id: 400 + i,
+                    title: `School Bus Safety ${i + 1}: ${getSchoolBusTitle(i)}`,
+                    description: `Child transport safety training`,
+                    content: `<h2>${getSchoolBusTitle(i)}</h2><p>Specialized training for school bus drivers.</p><ul><li>Child safety protocols</li><li>Emergency procedures</li><li>Parent communication</li></ul>`,
+                    module_type: 'schoolbus',
+                    unit_number: i + 1,
+                    difficulty: 'intermediate'
+                })),
+                academy: Array.from({ length: 6 }, (_, i) => ({
+                    id: 500 + i,
+                    title: `Academy Module ${i + 1}: ${getAcademyTitle(i)}`,
+                    description: `Professional development training`,
+                    content: `<h2>${getAcademyTitle(i)}</h2><p>Advanced professional driver development.</p><ul><li>Fleet management</li><li>Logistics planning</li><li>Leadership skills</li></ul>`,
+                    module_type: 'academy',
+                    unit_number: i + 1,
+                    difficulty: 'advanced'
+                }))
+            };
+            return fallback[moduleType] || [];
+        }
+        
+        function getUnitTitle(i) {
+            const titles = ['Introduction to Driving', 'Highway Code', 'Vehicle Controls', 'Maintenance', 'Moving Off', 'Turning & Reversing', 'Roundabouts', 'Overtaking', 'Speed Limits', 'Defensive Driving', 'Night Driving', 'Adverse Weather', 'Alcohol & Drugs', 'Fatigue Management', 'Pedestrian Safety', 'Emergency Procedures', 'First Aid', 'Insurance', 'Eco Driving', 'Test Preparation', 'Advanced Skills'];
+            return titles[i] || `Driving Unit ${i + 1}`;
+        }
+        
+        function getPSVTitle(i) {
+            const titles = ['Licensing & Compliance', 'Professional Conduct', 'Personal Grooming', 'Passenger Safety', 'Vehicle Inspections', 'Route Planning', 'Fare Management', 'Emergency Response', 'Conflict Resolution', 'Defensive Driving'];
+            return titles[i] || `PSV Module ${i + 1}`;
+        }
+        
+        function getEVTitle(i) {
+            const titles = ['Introduction to EVs', 'Battery Technology', 'Charging Infrastructure', 'Maintenance', 'Safety Protocols', 'Range Management', 'Commercial Use', 'Regulations'];
+            return titles[i] || `EV Module ${i + 1}`;
+        }
+        
+        function getBodaTitle(i) {
+            const titles = ['Controls & Operation', 'Protective Gear', 'Professionalism', 'Drug Prevention', 'Customer Service', 'Crime Prevention', 'Know Your Passenger', 'Night Riding', 'Entrepreneurship', 'Defensive Riding', 'Maintenance', 'Alcohol Awareness'];
+            return titles[i] || `Boda Module ${i + 1}`;
+        }
+        
+        function getSchoolBusTitle(i) {
+            const titles = ['Child Safety', 'Pre-Trip Inspection', 'Loading & Unloading', 'Behavior Management', 'Emergency Evacuation', 'Communication'];
+            return titles[i] || `School Bus Module ${i + 1}`;
+        }
+        
+        function getAcademyTitle(i) {
+            const titles = ['Fleet Management', 'Transport Logistics', 'Driver Recruitment', 'Safety Compliance', 'Financial Management', 'Technology in Transport'];
+            return titles[i] || `Academy Module ${i + 1}`;
+        }
+        
+        function getFallbackQuestions() {
+            return [
+                { id: 1, question_text: "What is the legal blood alcohol limit for commercial drivers in Kenya?", option_a: "0.00%", option_b: "0.05%", option_c: "0.08%", option_d: "0.10%", correct_answer: 1, explanation: "Commercial drivers must have 0.00% blood alcohol." },
+                { id: 2, question_text: "What is the maximum speed limit in a residential area?", option_a: "30 km/h", option_b: "40 km/h", option_c: "50 km/h", option_d: "60 km/h", correct_answer: 2, explanation: "Residential areas: 40 km/h." },
+                { id: 3, question_text: "What should you do if your vehicle starts to skid?", option_a: "Steer into the skid", option_b: "Steer away", option_c: "Brake hard", option_d: "Accelerate", correct_answer: 1, explanation: "Steer into the skid to regain control." }
+            ];
+        }
+        
+        // ============================================
+        // AUTHENTICATION
+        // ============================================
+        async function login(email, password) {
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+                
+                currentUser = {
+                    id: data.user.id,
+                    email: data.user.email,
+                    name: data.user.user_metadata?.full_name || email.split('@')[0]
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                await fetchUserProgress();
+                showToast(`Welcome ${currentUser.name}!`, 'success');
+                renderPage(currentPage);
+                updateAuthUI();
+                return currentUser;
             } catch (error) {
                 showToast(error.message, 'error');
                 return null;
             }
         }
         
-        async function login(email, password) {
-            if (!email || !password) { showToast('Please enter email and password', 'error'); return null; }
-            
+        async function signUp(email, password, name) {
             try {
-                const { data, error } = await supabase.auth.signInWithPassword({
-                    email: email.trim(),
-                    password: password
+                const { data, error } = await supabase.auth.signUp({
+                    email, password,
+                    options: { data: { full_name: name } }
                 });
                 if (error) throw error;
-                
-                currentUser = {
-                    id: data.user.id,
-                    email: data.user.email,
-                    name: data.user.user_metadata?.full_name || email.split('@')[0],
-                    role: email === 'admin@mei.com' ? 'admin' : 'user'
-                };
-                session = data.session;
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                showToast(`Welcome ${currentUser.name}!`, 'success');
-                renderMainApp();
-                return currentUser;
+                showToast('Account created! Please verify your email.', 'success');
+                return data;
             } catch (error) {
                 showToast(error.message, 'error');
                 return null;
@@ -255,151 +462,136 @@
         async function logout() {
             await supabase.auth.signOut();
             currentUser = null;
-            session = null;
             localStorage.removeItem('currentUser');
-            showToast('Logged out successfully', 'info');
-            renderMainApp();
+            userProgress = {};
+            showToast('Logged out', 'info');
+            renderPage('home');
+            updateAuthUI();
         }
         
         async function checkSession() {
             const stored = localStorage.getItem('currentUser');
             if (stored) {
                 currentUser = JSON.parse(stored);
-                const { data: { session: currentSession } } = await supabase.auth.getSession();
-                session = currentSession;
+                const { data: { session } } = await supabase.auth.getSession();
                 if (!session) {
                     localStorage.removeItem('currentUser');
                     currentUser = null;
+                } else {
+                    await fetchUserProgress();
                 }
+            }
+            updateAuthUI();
+        }
+        
+        function updateAuthUI() {
+            const authDiv = document.getElementById('authButtons');
+            if (!authDiv) return;
+            if (currentUser) {
+                authDiv.innerHTML = `<div class="profile-link" onclick="showProfileModal()">👤 ${currentUser.name}</div><button onclick="logout()">🚪 Logout</button>`;
+            } else {
+                authDiv.innerHTML = `<button onclick="showLoginModal()">🔑 Login</button><button onclick="showSignupModal()">📝 Sign Up</button>`;
             }
         }
         
         // ============================================
-        // UI COMPONENTS
+        // RENDERING FUNCTIONS
         // ============================================
-        function renderCard(unit, type) {
+        function renderCard(material, type) {
             const isEv = type === 'ev';
-            return `<div class="card ${isEv ? 'card-ev' : ''}" onclick="window.viewMaterial(${unit.id}, '${type}')">
-                <span class="${isEv ? 'ev-badge-module' : 'unit-badge'}">${isEv ? '⚡' : ''} ${type === 'learner' ? `Unit ${unit.id}` : ''}</span>
-                <h3>${unit.title}</h3>
-                <p>${unit.desc.substring(0, 80)}...</p>
-                <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+            const progress = userProgress[material.id] || 0;
+            return `<div class="card ${isEv ? 'card-ev' : ''}" onclick="viewMaterial('${material.id}', '${type}')">
+                <span class="${isEv ? 'ev-badge-module' : 'unit-badge'}">${isEv ? '⚡' : ''} ${type === 'learner' ? `Unit ${material.unit_number}` : ''}</span>
+                <h3>${escapeHtml(material.title)}</h3>
+                <p>${escapeHtml(material.description?.substring(0, 100) || '')}...</p>
+                <div class="progress-bar"><div class="progress-fill" style="width: ${progress}%"></div></div>
                 <button class="btn-small">📖 View →</button>
             </div>`;
         }
         
-        function renderNavigation() {
-            const isAdmin = currentUser?.role === 'admin';
-            return `
-                <div class="navbar">
-                    <div class="container nav">
-                        <div class="logo" data-nav="home">MEI DRIVE AFRICA ⚡</div>
-                        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
-                        <div class="nav-links" id="navLinks">
-                            <button data-nav="home">🏠 Home</button>
-                            <button data-nav="learner">📚 Learner (21)</button>
-                            <button data-nav="psv">🚌 PSV (10)</button>
-                            <button data-nav="schoolbus">🏫 School Bus (6)</button>
-                            <button data-nav="boda">🏍️ Boda (12)</button>
-                            <button data-nav="ev">⚡ EV (8)</button>
-                            <button data-nav="academy">🎓 Academy (6)</button>
-                            <button data-nav="library">📖 Library</button>
-                            <button data-nav="quiz">📝 Quiz</button>
-                            ${isAdmin ? '<button data-nav="admin">👑 Admin</button>' : ''}
-                            <div id="authButtons"></div>
-                        </div>
-                    </div>
-                </div>
-            `;
+        function escapeHtml(text) {
+            if (!text) return '';
+            return String(text).replace(/[&<>]/g, function(c) {
+                if (c === '&') return '&amp;';
+                if (c === '<') return '&lt;';
+                if (c === '>') return '&gt;';
+                return c;
+            });
         }
         
-        function renderAuthButtons() {
-            const authDiv = document.getElementById('authButtons');
-            if (!authDiv) return;
-            if (currentUser) {
-                authDiv.innerHTML = `<div class="profile-link" onclick="window.showProfileModal()">👤 ${currentUser.name}</div><button onclick="logout()">🚪 Logout</button>`;
-            } else {
-                authDiv.innerHTML = `<button onclick="window.showLoginModal()">🔑 Login</button><button onclick="window.showSignupModal()">📝 Sign Up</button>`;
+        async function renderModulePage(moduleType) {
+            const container = document.getElementById('page-content');
+            container.innerHTML = '<div class="spinner"></div>';
+            
+            const materials = await fetchMaterials(moduleType);
+            let title = moduleType.toUpperCase();
+            if (moduleType === 'learner') title = '📚 Learner Driver Hub - 21 Complete Units';
+            if (moduleType === 'psv') title = '🚌 PSV Professional Course';
+            if (moduleType === 'ev') title = '⚡ Electric Vehicle Training';
+            if (moduleType === 'boda') title = '🏍️ Boda Boda Safety Course';
+            if (moduleType === 'schoolbus') title = '🏫 School Bus Safety Program';
+            if (moduleType === 'academy') title = '🎓 Advanced Driver Academy';
+            
+            if (materials.length === 0) {
+                container.innerHTML = `<div class="hero"><h1>${title}</h1><p>No materials available yet. Check back soon!</p></div>`;
+                return;
+            }
+            
+            let cards = '';
+            for (let i = 0; i < materials.length; i++) {
+                cards += renderCard(materials[i], moduleType);
+            }
+            
+            container.innerHTML = `<div class="hero"><h1>${title}</h1></div><div class="grid">${cards}</div>`;
+            
+            // Load questions for this module if it's learner or quiz page
+            if (moduleType === 'learner') {
+                const questions = await fetchQuestions('learner', 5);
+                if (questions.length > 0) {
+                    const questionHtml = renderQuestions(questions);
+                    container.innerHTML += `<div class="question-bank"><h2>📝 Practice Questions</h2>${questionHtml}</div>`;
+                }
             }
         }
         
-        // ============================================
-        // PAGES
-        // ============================================
-        function renderHome() {
-            return `
-                <div class="hero">
-                    <h1>Kenya's <span class="highlight">Digital Driver Safety Platform</span></h1>
-                    <p>Drive Smart. Stay Safe. Arrive Home. Keep Our Roads Safe</p>
-                    <div class="hero-buttons">
-                        <button class="btn" onclick="navigateTo('learner')">📚 Start Learning (21 Units)</button>
-                        <button class="btn-ev" onclick="navigateTo('ev')">⚡ EV Course</button>
+        function renderQuestions(questions) {
+            return questions.map((q, idx) => `
+                <div class="question-card">
+                    <div class="question-text"><strong>${idx + 1}.</strong> ${escapeHtml(q.question_text)}</div>
+                    <div class="options-group">
+                        <div class="option" onclick="showToast('Check your answer!', 'info')">A. ${escapeHtml(q.option_a)}</div>
+                        <div class="option" onclick="showToast('Check your answer!', 'info')">B. ${escapeHtml(q.option_b)}</div>
+                        <div class="option" onclick="showToast('Check your answer!', 'info')">C. ${escapeHtml(q.option_c)}</div>
+                        <div class="option" onclick="showToast('Check your answer!', 'info')">D. ${escapeHtml(q.option_d)}</div>
                     </div>
                 </div>
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-number">21</div><div>Learner Units</div></div>
-                    <div class="stat-card"><div class="stat-number">10</div><div>PSV Units</div></div>
-                    <div class="stat-card"><div class="stat-number">12</div><div>Boda Units</div></div>
-                    <div class="stat-card"><div class="stat-number">8</div><div>EV Units</div></div>
-                </div>
-                <div class="grid">
-                    <div class="card" onclick="navigateTo('learner')"><div style="font-size:2rem;margin-bottom:12px;">📚</div><h3>Learner Hub</h3><p>21 Complete Units</p><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('psv')"><div style="font-size:2rem;margin-bottom:12px;">🚌</div><h3>PSV Course</h3><p>10 Units</p><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('schoolbus')"><div style="font-size:2rem;margin-bottom:12px;">🏫</div><h3>School Bus</h3><p>6 Units</p><button class="btn-small">Start →</button></div>
-                    <div class="card card-ev" onclick="navigateTo('ev')"><div style="font-size:2rem;margin-bottom:12px;">⚡</div><h3>EV Training</h3><p>8 Units</p><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('boda')"><div style="font-size:2rem;margin-bottom:12px;">🏍️</div><h3>Boda Safety</h3><p>12 Units</p><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('academy')"><div style="font-size:2rem;margin-bottom:12px;">🎓</div><h3>Academy</h3><p>6 Units</p><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('library')"><div style="font-size:2rem;margin-bottom:12px;">📖</div><h3>Library</h3><p>Resources</p><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('quiz')"><div style="font-size:2rem;margin-bottom:12px;">📝</div><h3>NTSA Quiz</h3><p>Practice Questions</p><button class="btn-small">Start →</button></div>
-                </div>
-            `;
+            `).join('');
         }
         
-        function renderModule(moduleType, units) {
-            let cards = '';
-            for (let i = 0; i < units.length; i++) cards += renderCard(units[i], moduleType);
-            return `<div class="hero"><h1>${moduleType.toUpperCase()} Training</h1><p>Complete training for professional certification</p></div><div class="grid">${cards}</div>`;
-        }
-        
-        function renderLibrary() {
-            const resources = ['Kenya Highway Code', 'EV Driver Handbook', 'NTSA Test Guide', 'PSV Manual', 'Boda Safety Guide', 'EV Maintenance Manual'];
-            return `<div class="hero"><h1>📖 Resource Library</h1><p>Official documents, manuals and reference materials</p></div><div class="grid">${resources.map(r => `<div class="card" onclick="showToast('Download started: ${r}','success')"><div style="font-size:2rem;">📄</div><h3>${r}</h3><button class="btn-small">Download →</button></div>`).join('')}</div>`;
-        }
-        
-        // Quiz functionality
-        let currentQuizPage = 1;
-        let quizAnswers = {};
-        const questionsPerPage = 5;
-        
-        function renderQuiz() {
+        async function renderQuiz() {
+            const questions = await fetchQuestions('learner', 50);
             const start = (currentQuizPage - 1) * questionsPerPage;
             const end = start + questionsPerPage;
-            const pageQuestions = NTSA_QUESTIONS.slice(start, end);
-            const totalPages = Math.ceil(NTSA_QUESTIONS.length / questionsPerPage);
+            const pageQuestions = questions.slice(start, end);
+            const totalPages = Math.ceil(questions.length / questionsPerPage);
             
             let answered = Object.keys(quizAnswers).length;
             let correct = 0;
-            for (let [id, answer] of Object.entries(quizAnswers)) {
-                const q = NTSA_QUESTIONS.find(qq => qq.id == id);
-                if (q && answer === q.correct) correct++;
-            }
             
             let html = `<div class="hero"><h1>📝 NTSA Practice Test</h1><p>Prepare with real exam questions</p></div>`;
-            html += `<div class="score-card"><h3>Your Progress</h3><div class="score">${answered}/${NTSA_QUESTIONS.length}</div><div>Score: ${correct}/${answered} (${answered ? Math.round(correct/answered*100) : 0}%)</div></div>`;
+            html += `<div class="score-card"><h3>Your Progress</h3><div class="score">${answered}/${questions.length}</div></div>`;
             
             for (let q of pageQuestions) {
                 const selected = quizAnswers[q.id];
-                html += `<div class="question-card"><div class="question-text"><strong>${q.id}.</strong> ${q.text}</div><div class="options-group">`;
-                for (let i = 0; i < q.options.length; i++) {
+                html += `<div class="question-card"><div class="question-text"><strong>${q.id}.</strong> ${escapeHtml(q.question_text)}</div><div class="options-group">`;
+                const options = [q.option_a, q.option_b, q.option_c, q.option_d];
+                for (let i = 0; i < options.length; i++) {
                     let optionClass = '';
                     if (selected !== undefined) {
-                        if (i === q.correct) optionClass = 'correct';
-                        else if (i === selected && i !== q.correct) optionClass = 'wrong';
+                        if (i + 1 === q.correct_answer) optionClass = 'correct';
+                        else if (selected === i + 1 && selected !== q.correct_answer) optionClass = 'wrong';
                     }
-                    html += `<div class="option ${optionClass}" onclick="selectAnswer(${q.id}, ${i})">${String.fromCharCode(65+i)}. ${q.options[i]}</div>`;
-                }
-                if (selected !== undefined) {
-                    html += `<div style="margin-top:12px;padding:12px;background:rgba(52,152,219,0.1);border-radius:8px;"><small>📖 ${q.explanation}</small></div>`;
+                    html += `<div class="option ${optionClass}" onclick="selectQuizAnswer(${q.id}, ${i + 1})">${String.fromCharCode(65 + i)}. ${escapeHtml(options[i])}</div>`;
                 }
                 html += `</div></div>`;
             }
@@ -409,185 +601,85 @@
                 html += `<button class="${i === currentQuizPage ? 'active' : ''}" onclick="goToQuizPage(${i})">${i}</button>`;
             }
             html += `</div>`;
-            return html;
+            
+            document.getElementById('page-content').innerHTML = html;
         }
         
-        function selectAnswer(id, answer) {
-            quizAnswers[id] = answer;
-            renderPage('quiz');
+        function renderLibrary() {
+            const resources = ['Kenya Highway Code', 'EV Driver Handbook', 'NTSA Test Guide', 'PSV Manual', 'Boda Safety Guide', 'EV Maintenance Manual'];
+            document.getElementById('page-content').innerHTML = `<div class="hero"><h1>📖 Resource Library</h1><p>Official documents and manuals</p></div><div class="grid">${resources.map(r => `<div class="card" onclick="showToast('Download started: ${r}','success')"><div style="font-size:2rem;">📄</div><h3>${r}</h3><button class="btn-small">Download →</button></div>`).join('')}</div>`;
         }
         
-        function goToQuizPage(page) {
-            currentQuizPage = page;
-            renderPage('quiz');
-        }
-        
-        // Admin Panel
-        let adminUsers = [
-            { id: 1, name: "John Kamau", email: "admin@mei.com", role: "admin", status: "active" },
-            { id: 2, name: "Mary Wanjiku", email: "mary@mei.com", role: "learner", status: "active" },
-            { id: 3, name: "Peter Otieno", email: "peter@mei.com", role: "driver", status: "inactive" }
-        ];
-        
-        function renderAdmin() {
-            const totalUsers = adminUsers.length;
-            const activeUsers = adminUsers.filter(u => u.status === 'active').length;
-            let html = `
-                <div class="admin-layout">
-                    <div class="admin-sidebar">
-                        <h3>👑 Admin Panel</h3>
-                        <button onclick="showAdminSection('dashboard')"><i class="fas fa-chart-line"></i> Dashboard</button>
-                        <button onclick="showAdminSection('users')"><i class="fas fa-users"></i> Users</button>
-                        <button onclick="showAdminSection('quizzes')"><i class="fas fa-question-circle"></i> Quizzes</button>
-                    </div>
-                    <div class="admin-content" id="adminContent">
-                        <div id="dashboardSection">
-                            <h2>Dashboard</h2>
-                            <div class="stats-grid">
-                                <div class="stat-card"><div class="stat-number">${totalUsers}</div><div>Total Users</div></div>
-                                <div class="stat-card"><div class="stat-number">${activeUsers}</div><div>Active Users</div></div>
-                                <div class="stat-card"><div class="stat-number">45</div><div>Modules</div></div>
-                                <div class="stat-card"><div class="stat-number">50</div><div>Questions</div></div>
-                            </div>
-                        </div>
-                        <div id="usersSection" style="display:none;">
-                            <h2>User Management</h2>
-                            <input type="text" class="search-input" id="userSearch" placeholder="Search users..." onkeyup="filterUsers()">
-                            <div style="overflow-x:auto;"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead><tbody id="usersTableBody">
-                                ${adminUsers.map(u => `<tr><td>${u.name}</td><td>${u.email}</td><td><span class="role-badge role-${u.role}">${u.role}</span></td><td><span style="color:${u.status === 'active' ? '#2ecc71' : '#e74c3c'}">${u.status}</span></td><td><button class="btn-sm btn-edit" onclick="editUser(${u.id})">Edit</button> <button class="btn-sm btn-delete" onclick="deleteUser(${u.id})">Delete</button></td></tr>`).join('')}
-                            </tbody></table></div>
-                            <button class="btn-add" style="margin-top:20px;padding:10px 20px;" onclick="showAddUserModal()">+ Add User</button>
-                        </div>
-                        <div id="quizzesSection" style="display:none;">
-                            <h2>Quiz Management</h2>
-                            <div class="stats-grid">
-                                <div class="stat-card"><div class="stat-number">${NTSA_QUESTIONS.length}</div><div>Total Questions</div></div>
-                                <div class="stat-card"><div class="stat-number">${Object.keys(quizAnswers).length}</div><div>Questions Answered</div></div>
-                            </div>
-                            <button class="btn" onclick="resetQuiz()">Reset Quiz Progress</button>
-                        </div>
-                    </div>
+        function renderHome() {
+            document.getElementById('page-content').innerHTML = `
+                <div class="hero"><h1>Kenya's <span class="highlight">Digital Driver Safety Platform</span></h1><p>Drive Smart. Stay Safe. Arrive Home.</p><div class="hero-buttons"><button class="btn" onclick="navigateTo('learner')">📚 Start Learning</button><button class="btn-ev" onclick="navigateTo('ev')">⚡ EV Course</button></div></div>
+                <div class="stats-grid"><div class="stat-card"><div class="stat-number">21</div><div>Learner Units</div></div><div class="stat-card"><div class="stat-number">10</div><div>PSV Units</div></div><div class="stat-card"><div class="stat-number">12</div><div>Boda Units</div></div><div class="stat-card"><div class="stat-number">8</div><div>EV Units</div></div></div>
+                <div class="grid">
+                    <div class="card" onclick="navigateTo('learner')"><div style="font-size:2rem;">📚</div><h3>Learner Hub</h3><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('psv')"><div style="font-size:2rem;">🚌</div><h3>PSV Course</h3><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('schoolbus')"><div style="font-size:2rem;">🏫</div><h3>School Bus</h3><button class="btn-small">Start →</button></div>
+                    <div class="card card-ev" onclick="navigateTo('ev')"><div style="font-size:2rem;">⚡</div><h3>EV Training</h3><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('boda')"><div style="font-size:2rem;">🏍️</div><h3>Boda Safety</h3><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('academy')"><div style="font-size:2rem;">🎓</div><h3>Academy</h3><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('library')"><div style="font-size:2rem;">📖</div><h3>Library</h3><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('quiz')"><div style="font-size:2rem;">📝</div><h3>NTSA Quiz</h3><button class="btn-small">Start →</button></div>
                 </div>
             `;
-            return html;
         }
-        
-        window.showAdminSection = function(section) {
-            document.getElementById('dashboardSection').style.display = 'none';
-            document.getElementById('usersSection').style.display = 'none';
-            document.getElementById('quizzesSection').style.display = 'none';
-            document.getElementById(`${section}Section`).style.display = 'block';
-        };
-        
-        window.filterUsers = function() {
-            const searchTerm = document.getElementById('userSearch')?.value?.toLowerCase() || '';
-            const filtered = adminUsers.filter(u => u.name.toLowerCase().includes(searchTerm) || u.email.toLowerCase().includes(searchTerm));
-            const tbody = document.getElementById('usersTableBody');
-            if (tbody) {
-                tbody.innerHTML = filtered.map(u => `<tr><td>${u.name}</td><td>${u.email}</td><td><span class="role-badge role-${u.role}">${u.role}</span></td><td><span style="color:${u.status === 'active' ? '#2ecc71' : '#e74c3c'}">${u.status}</span></td><td><button class="btn-sm btn-edit" onclick="editUser(${u.id})">Edit</button> <button class="btn-sm btn-delete" onclick="deleteUser(${u.id})">Delete</button></td></tr>`).join('');
-            }
-        };
-        
-        window.editUser = function(id) {
-            const user = adminUsers.find(u => u.id === id);
-            const newName = prompt('Edit name:', user.name);
-            const newRole = prompt('Edit role (admin/learner/driver):', user.role);
-            if (newName) user.name = newName;
-            if (newRole) user.role = newRole;
-            filterUsers();
-            showToast('User updated', 'success');
-        };
-        
-        window.deleteUser = function(id) {
-            if (confirm('Delete this user?')) {
-                adminUsers = adminUsers.filter(u => u.id !== id);
-                filterUsers();
-                showToast('User deleted', 'success');
-            }
-        };
-        
-        window.showAddUserModal = function() {
-            const name = prompt('Enter name:');
-            const email = prompt('Enter email:');
-            if (name && email) {
-                adminUsers.push({ id: Date.now(), name, email, role: 'learner', status: 'active' });
-                filterUsers();
-                showToast('User added', 'success');
-            }
-        };
-        
-        window.resetQuiz = function() {
-            quizAnswers = {};
-            currentQuizPage = 1;
-            renderPage('quiz');
-            showToast('Quiz progress reset', 'success');
-        };
         
         // Material viewer
-        window.viewMaterial = function(id, type) {
-            let unit;
-            if (type === 'learner') unit = LEARNER_UNITS.find(u => u.id === id);
-            else if (type === 'psv') unit = PSV_UNITS.find(u => u.id === id);
-            else if (type === 'schoolbus') unit = SCHOOLBUS_UNITS.find(u => u.id === id);
-            else if (type === 'boda') unit = BODA_UNITS.find(u => u.id === id);
-            else if (type === 'ev') unit = EV_UNITS.find(u => u.id === id);
-            else if (type === 'academy') unit = ACADEMY_UNITS.find(u => u.id === id);
+        window.viewMaterial = async function(id, type) {
+            const materials = await fetchMaterials(type);
+            const material = materials.find(m => m.id == id);
+            if (!material) return;
             
-            if (unit) {
-                const content = document.getElementById('page-content');
-                content.innerHTML = `<div style="background:var(--card-bg);border-radius:24px;padding:24px;margin:20px 0;">
-                    <div style="display:flex;justify-content:space-between;margin-bottom:20px;"><h2 style="color:var(--primary-gold);">${unit.title}</h2><button class="btn-small" onclick="navigateTo('${type}')">← Back</button></div>
-                    <div class="unit-content">${unit.content}</div>
-                    <button class="btn" style="margin-top:20px;" onclick="showToast('Unit completed! 🎉','success')">✅ Mark Complete</button>
-                </div>`;
-                window.scrollTo({ top: 0 });
-            }
-        };
-        
-        // Page rendering
-        let currentPage = 'home';
-        
-        function renderPage(page) {
-            currentPage = page;
             const content = document.getElementById('page-content');
-            if (!content) return;
-            
-            if (page === 'home') content.innerHTML = renderHome();
-            else if (page === 'learner') content.innerHTML = renderModule('learner', LEARNER_UNITS);
-            else if (page === 'psv') content.innerHTML = renderModule('psv', PSV_UNITS);
-            else if (page === 'schoolbus') content.innerHTML = renderModule('schoolbus', SCHOOLBUS_UNITS);
-            else if (page === 'boda') content.innerHTML = renderModule('boda', BODA_UNITS);
-            else if (page === 'ev') content.innerHTML = renderModule('ev', EV_UNITS);
-            else if (page === 'academy') content.innerHTML = renderModule('academy', ACADEMY_UNITS);
-            else if (page === 'library') content.innerHTML = renderLibrary();
-            else if (page === 'quiz') content.innerHTML = renderQuiz();
-            else if (page === 'admin') {
-                if (currentUser?.role === 'admin') content.innerHTML = renderAdmin();
-                else { showToast('Admin access required', 'error'); navigateTo('home'); }
-            }
-        }
-        
-        window.navigateTo = function(page) {
-            renderPage(page);
-            const navLinks = document.getElementById('navLinks');
-            if (navLinks) navLinks.classList.remove('show');
+            const progress = userProgress[material.id] || 0;
+            content.innerHTML = `<div style="background:var(--card-bg);border-radius:24px;padding:24px;margin:20px 0;">
+                <div style="display:flex;justify-content:space-between;margin-bottom:20px;"><h2 style="color:var(--primary-gold);">${escapeHtml(material.title)}</h2><button class="btn-small" onclick="navigateTo('${type}')">← Back</button></div>
+                <div class="unit-content">${material.content || `<p>${escapeHtml(material.description)}</p>`}</div>
+                <div class="progress-bar mt-3"><div class="progress-fill" style="width: ${progress}%"></div></div>
+                <button class="btn" style="margin-top:20px;" onclick="updateProgress('${material.id}', 100)">✅ Mark Complete</button>
+            </div>`;
             window.scrollTo({ top: 0 });
         };
         
-        window.selectAnswer = selectAnswer;
-        window.goToQuizPage = goToQuizPage;
+        // Quiz functions
+        window.selectQuizAnswer = function(id, answer) {
+            quizAnswers[id] = answer;
+            renderQuiz();
+        };
+        
+        window.goToQuizPage = function(page) {
+            currentQuizPage = page;
+            renderQuiz();
+        };
+        
+        // Navigation
+        window.navigateTo = async function(page) {
+            currentPage = page;
+            const container = document.getElementById('page-content');
+            container.innerHTML = '<div class="spinner"></div>';
+            
+            if (page === 'home') renderHome();
+            else if (page === 'library') renderLibrary();
+            else if (page === 'quiz') await renderQuiz();
+            else await renderModulePage(page);
+            
+            document.getElementById('navLinks')?.classList.remove('show');
+            window.scrollTo({ top: 0 });
+        };
         
         // Auth modals
         function showLoginModal() {
             const modal = document.createElement('div');
             modal.className = 'modal';
             modal.innerHTML = `<div class="modal-content"><button class="close-modal" onclick="this.closest('.modal').remove()">✕</button>
-                <h3>🔐 Login to MEI Drive Africa</h3>
-                <input type="email" id="loginEmail" placeholder="Email" autocomplete="email">
-                <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
-                <button class="btn" style="width:100%;margin-top:10px;" onclick="window.doLogin()">Login</button>
-                <hr style="margin:16px 0;">
-                <p style="text-align:center;color:#aaa;">Don't have an account? <a href="#" onclick="closeModal();showSignupModal()">Sign Up</a></p>
+                <h3>🔐 Login</h3>
+                <input type="email" id="loginEmail" placeholder="Email">
+                <input type="password" id="loginPassword" placeholder="Password">
+                <button class="btn" style="width:100%;margin-top:10px;" onclick="doLogin()">Login</button>
+                <hr><p style="text-align:center;">New user? <a href="#" onclick="closeModal();showSignupModal()">Sign Up</a></p>
             </div>`;
             document.body.appendChild(modal);
             modal.style.display = 'flex';
@@ -597,13 +689,12 @@
             const modal = document.createElement('div');
             modal.className = 'modal';
             modal.innerHTML = `<div class="modal-content"><button class="close-modal" onclick="this.closest('.modal').remove()">✕</button>
-                <h3>📝 Create Account</h3>
+                <h3>📝 Sign Up</h3>
                 <input type="text" id="signupName" placeholder="Full Name">
                 <input type="email" id="signupEmail" placeholder="Email">
-                <input type="password" id="signupPassword" placeholder="Password (min 6 characters)">
-                <button class="btn" style="width:100%;margin-top:10px;" onclick="window.doSignup()">Sign Up</button>
-                <hr style="margin:16px 0;">
-                <p style="text-align:center;color:#aaa;">Already have an account? <a href="#" onclick="closeModal();showLoginModal()">Login</a></p>
+                <input type="password" id="signupPassword" placeholder="Password (min 6)">
+                <button class="btn" style="width:100%;margin-top:10px;" onclick="doSignup()">Sign Up</button>
+                <hr><p style="text-align:center;">Already have an account? <a href="#" onclick="closeModal();showLoginModal()">Login</a></p>
             </div>`;
             document.body.appendChild(modal);
             modal.style.display = 'flex';
@@ -611,73 +702,61 @@
         
         window.doLogin = async function() {
             const email = document.getElementById('loginEmail')?.value;
-            const password = document.getElementById('loginPassword')?.value;
-            await login(email, password);
+            const pwd = document.getElementById('loginPassword')?.value;
+            await login(email, pwd);
             closeModal();
         };
         
         window.doSignup = async function() {
             const name = document.getElementById('signupName')?.value;
             const email = document.getElementById('signupEmail')?.value;
-            const password = document.getElementById('signupPassword')?.value;
-            await signUp(email, password, name);
+            const pwd = document.getElementById('signupPassword')?.value;
+            await signUp(email, pwd, name);
             closeModal();
         };
         
         window.showProfileModal = function() {
-            showModal(`<h3>👤 Profile</h3><p><strong>Name:</strong> ${currentUser?.name}</p><p><strong>Email:</strong> ${currentUser?.email}</p><p><strong>Role:</strong> ${currentUser?.role || 'User'}</p><button class="btn" style="width:100%;margin-top:15px;" onclick="closeModal()">Close</button>`);
-        };
-        
-        function showModal(content) {
             const modal = document.createElement('div');
             modal.className = 'modal';
-            modal.innerHTML = `<div class="modal-content"><button class="close-modal" onclick="this.closest('.modal').remove()">✕</button>${content}</div>`;
+            modal.innerHTML = `<div class="modal-content"><button class="close-modal" onclick="this.closest('.modal').remove()">✕</button>
+                <h3>👤 Profile</h3>
+                <p><strong>Name:</strong> ${currentUser?.name}</p>
+                <p><strong>Email:</strong> ${currentUser?.email}</p>
+                <button class="btn" style="margin-top:15px;" onclick="closeModal()">Close</button>
+            </div>`;
             document.body.appendChild(modal);
             modal.style.display = 'flex';
-        }
+        };
         
         function closeModal() {
             const modal = document.querySelector('.modal');
             if (modal) modal.remove();
         }
         
-        // Make functions globally available
+        window.closeModal = closeModal;
         window.showLoginModal = showLoginModal;
         window.showSignupModal = showSignupModal;
-        window.closeModal = closeModal;
         window.logout = logout;
-        window.showToast = showToast;
+        window.updateProgress = updateProgress;
         
-        // Render main app
-        async function renderMainApp() {
-            document.getElementById('app').innerHTML = `
-                ${renderNavigation()}
-                <div class="container"><main id="page-content"><div class="spinner"></div></main></div>
-                <div id="toast-root"></div>
-            `;
-            renderAuthButtons();
-            
-            // Event listeners
-            document.getElementById('mobileMenuBtn')?.addEventListener('click', function(e) {
-                e.stopPropagation();
-                document.getElementById('navLinks')?.classList.toggle('show');
-            });
-            document.addEventListener('click', function(e) {
-                const btn = e.target.closest('[data-nav]');
-                if (btn) navigateTo(btn.getAttribute('data-nav'));
-                const navLinks = document.getElementById('navLinks');
-                const mobileBtn = document.getElementById('mobileMenuBtn');
-                if (navLinks?.classList.contains('show') && !navLinks.contains(e.target) && mobileBtn && !mobileBtn.contains(e.target)) {
-                    navLinks.classList.remove('show');
-                }
-            });
-            
-            renderPage('home');
-        }
+        // Mobile menu
+        document.getElementById('mobileMenuBtn')?.addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.getElementById('navLinks')?.classList.toggle('show');
+        });
+        document.addEventListener('click', function(e) {
+            const btn = e.target.closest('[data-nav]');
+            if (btn) navigateTo(btn.getAttribute('data-nav'));
+            const navLinks = document.getElementById('navLinks');
+            const mobileBtn = document.getElementById('mobileMenuBtn');
+            if (navLinks?.classList.contains('show') && !navLinks.contains(e.target) && mobileBtn && !mobileBtn.contains(e.target)) {
+                navLinks.classList.remove('show');
+            }
+        });
         
         // Initialize
         await checkSession();
-        renderMainApp();
+        navigateTo('home');
     </script>
 </body>
 </html>
