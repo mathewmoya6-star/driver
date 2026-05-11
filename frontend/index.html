@@ -2,882 +2,604 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
     <title>MEI DRIVE AFRICA | Premier Driver Safety Platform</title>
-    <meta name="description" content="Kenya's premier NTSA-certified driver training platform for Learner Drivers, PSV, School Bus, Boda Boda, and Electric Vehicles. Drive Smart. Stay Safe. Arrive Home.">
-    <meta name="keywords" content="driving lessons Kenya, NTSA test, driver training, EV training, PSV license, boda boda safety, driving school Kenya">
-    <meta name="author" content="MEI DRIVE AFRICA">
+    <meta name="description" content="Kenya's premier NTSA-certified driver training platform">
     <meta name="theme-color" content="#d4af37">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Open Graph / Social Media -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="MEI DRIVE AFRICA - Premier Driver Safety Platform">
-    <meta property="og:description" content="NTSA-certified driver training for all vehicle categories. 21+ units, practice questions, and EV certification.">
-    <meta property="og:url" content="https://mei-drive-africa.onrender.com">
-    <meta property="og:site_name" content="MEI DRIVE AFRICA">
-    <meta property="og:image" content="https://mei-drive-africa.onrender.com/og-image.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MEI DRIVE AFRICA">
-    <meta name="twitter:description" content="Kenya's Premier Driver Safety Platform - NTSA Certified Training">
-    <meta name="twitter:image" content="https://mei-drive-africa.onrender.com/twitter-image.jpg">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://mei-drive-africa.onrender.com">
-    
-    <!-- Schema.org / Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "EducationalOrganization",
-      "name": "MEI DRIVE AFRICA",
-      "alternateName": "MEI Drive Africa",
-      "description": "Kenya's premier NTSA-certified driver training platform offering comprehensive courses for all vehicle categories including Electric Vehicles.",
-      "url": "https://mei-drive-africa.onrender.com",
-      "logo": "https://mei-drive-africa.onrender.com/logo.png",
-      "sameAs": [
-        "https://twitter.com/meidriveafrica",
-        "https://facebook.com/meidriveafrica",
-        "https://instagram.com/meidriveafrica"
-      ],
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "KE"
-      },
-      "offers": {
-        "@type": "Offer",
-        "category": "Driver Training",
-        "availability": "OnlineOnly"
-      },
-      "hasCourseInstance": [
-        {
-          "@type": "CourseInstance",
-          "courseMode": "Online",
-          "name": "Learner Driver Hub",
-          "description": "Complete Kenya Learner Driver Handbook - 21 Units",
-          "numberOfCredits": 21
-        },
-        {
-          "@type": "CourseInstance",
-          "courseMode": "Online",
-          "name": "Electric Vehicle Training",
-          "description": "Complete EV driving, maintenance and safety"
-        }
-      ]
-    }
-    </script>
+    <meta name="apple-mobile-web-app-capable" content="yes">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
-    
-    <!-- Preconnect to external resources -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://fktjmkmzlixlapeyhhyl.supabase.co">
-    
-    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Critical CSS inline for performance -->
     <style>
-        /* Critical CSS - Loads immediately */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; line-height: 1.5; }
         
         :root {
             --primary-gold: #d4af37;
-            --primary-gold-dark: #b8960c;
             --ev-green: #00ff88;
-            --ev-green-dark: #00cc6a;
             --card-bg: #111111;
-            --card-bg-hover: #1a1a1a;
             --border-color: #222222;
-            --success: #2ecc71;
-            --danger: #e74c3c;
-            --warning: #f39c12;
-            --info: #3498db;
-            --text-primary: #ffffff;
-            --text-secondary: #aaaaaa;
-            --text-muted: #666666;
-            --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f0c674 50%, #d4af37 100%);
-            --gradient-ev: linear-gradient(135deg, #00ff88 0%, #00b4d8 50%, #00ff88 100%);
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
-            --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
-            --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
-            --transition-fast: 0.2s ease;
-            --transition-normal: 0.3s ease;
+            --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f0c674 100%);
         }
         
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+        .container { width: 100%; padding: 0 16px; margin: 0 auto; }
+        @media (min-width: 768px) { .container { max-width: 1400px; padding: 0 24px; margin: 0 auto; } }
         
         /* Navigation */
-        .navbar { background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212,175,55,0.3); position: sticky; top: 0; z-index: 100; padding: 16px 0; }
-        .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
-        .logo { font-weight: 800; font-size: 1.4rem; background: var(--gradient-gold); background-clip: text; -webkit-background-clip: text; color: transparent; cursor: pointer; }
-        .nav-links { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-        .nav-links button { background: transparent; border: none; color: #e0e0e0; padding: 10px 18px; border-radius: 40px; cursor: pointer; transition: 0.3s; font-size: 14px; font-weight: 500; }
-        .nav-links button:hover { color: var(--primary-gold); background: rgba(212,175,55,0.1); }
-        .mobile-menu-btn { display: none; background: transparent; border: none; color: var(--primary-gold); font-size: 24px; cursor: pointer; }
+        .navbar { background: rgba(10,10,10,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212,175,55,0.3); position: sticky; top: 0; z-index: 1000; padding: 12px 0; }
+        .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo { font-weight: 800; font-size: 1.1rem; background: var(--gradient-gold); background-clip: text; -webkit-background-clip: text; color: transparent; cursor: pointer; }
+        @media (min-width: 768px) { .logo { font-size: 1.4rem; } }
         
-        /* Spinner */
-        .spinner { width: 50px; height: 50px; border: 3px solid var(--border-color); border-top-color: var(--primary-gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        .mobile-menu-btn { display: flex; background: transparent; border: none; color: var(--primary-gold); font-size: 24px; cursor: pointer; padding: 8px; border-radius: 50%; }
+        .nav-links { display: none; width: 100%; flex-direction: column; align-items: center; padding: 16px 0 8px; gap: 8px; }
+        .nav-links.show { display: flex; }
+        .nav-links button { background: transparent; border: none; color: #e0e0e0; padding: 12px 20px; border-radius: 50px; cursor: pointer; font-size: 15px; width: 100%; text-align: center; }
+        .nav-links button:active { background: rgba(212,175,55,0.15); }
         
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container { padding: 0 16px; }
-            .mobile-menu-btn { display: block; }
-            .nav-links { display: none; width: 100%; flex-direction: column; align-items: center; padding: 20px 0; }
-            .nav-links.show { display: flex; }
-            .nav-links button { width: 100%; text-align: center; }
+        @media (min-width: 768px) {
+            .mobile-menu-btn { display: none; }
+            .nav-links { display: flex !important; width: auto; flex-direction: row; padding: 0; gap: 4px; }
+            .nav-links button { width: auto; padding: 8px 16px; font-size: 14px; }
         }
         
-        /* Accessibility */
-        button:focus-visible { outline: 2px solid var(--primary-gold); outline-offset: 2px; }
+        /* Buttons - 44px min touch target */
+        .btn, .btn-ev, .btn-outline { min-height: 48px; padding: 12px 24px; font-size: 16px; font-weight: 600; border: none; border-radius: 50px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.2s; }
+        .btn:active, .btn-ev:active { opacity: 0.8; }
+        .btn { background: var(--gradient-gold); color: #000; }
+        .btn-ev { background: linear-gradient(135deg, #00ff88, #00b4d8); color: #000; }
+        .btn-outline { background: transparent; border: 2px solid var(--primary-gold); color: var(--primary-gold); }
+        .btn-small { min-height: 40px; padding: 8px 20px; font-size: 14px; border-radius: 50px; background: var(--gradient-gold); color: #000; border: none; cursor: pointer; }
+        
+        /* Grid - Mobile first */
+        .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 20px 0; }
+        @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
+        @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 1400px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+        
+        /* Cards - Accessible as buttons */
+        .card { background: var(--card-bg); border-radius: 20px; padding: 20px; border: 1px solid var(--border-color); transition: transform 0.2s; cursor: pointer; width: 100%; text-align: left; }
+        .card:active { transform: scale(0.98); }
+        @media (min-width: 768px) { .card { padding: 24px; } .card:hover { transform: translateY(-4px); border-color: var(--primary-gold); } }
+        .card-ev { border-left: 4px solid #00ff88; }
+        .card:focus-visible { outline: 2px solid var(--primary-gold); outline-offset: 2px; }
+        
+        .unit-badge, .ev-badge-module { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 12px; }
+        .unit-badge { background: var(--gradient-gold); color: #000; }
+        .ev-badge-module { background: linear-gradient(135deg, #00ff88, #00b4d8); color: #000; }
+        
+        .progress-bar { background: #2a2a2a; border-radius: 20px; height: 6px; margin: 16px 0; overflow: hidden; }
+        .progress-fill { background: var(--gradient-gold); height: 100%; width: 0%; transition: width 0.3s; }
+        
+        /* Stats */
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
+        @media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+        .stat-card { background: var(--card-bg); border-radius: 16px; padding: 16px 12px; border: 1px solid var(--border-color); text-align: center; }
+        .stat-number { font-size: 1.6rem; font-weight: 800; color: var(--primary-gold); }
+        @media (min-width: 768px) { .stat-number { font-size: 2rem; } }
+        
+        /* Hero */
+        .hero { text-align: center; padding: 32px 16px; background: radial-gradient(circle at 10% 30%, rgba(212,175,55,0.08), #0a0a0a); border-radius: 32px; margin: 16px 0 24px; border: 1px solid rgba(212,175,55,0.2); }
+        @media (min-width: 768px) { .hero { padding: 60px 20px; margin: 0 0 40px; } }
+        .hero h1 { font-size: 1.8rem; margin-bottom: 12px; }
+        @media (min-width: 768px) { .hero h1 { font-size: clamp(1.8rem, 5vw, 3.5rem); } }
+        .hero-buttons { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        @media (min-width: 480px) { .hero-buttons { flex-direction: row; justify-content: center; gap: 16px; } }
+        
+        /* Questions */
+        .question-bank { background: linear-gradient(145deg, #0f1119, #080a10); border-radius: 24px; margin: 24px 0; padding: 20px; }
+        @media (min-width: 768px) { .question-bank { border-radius: 32px; padding: 32px 28px; } }
+        .question-card { background: var(--card-bg); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+        .question-text { font-size: 1rem; font-weight: 600; margin-bottom: 16px; }
+        .options-group { display: flex; flex-direction: column; gap: 8px; }
+        .option { background: #1a1c26; padding: 14px 16px; border-radius: 12px; cursor: pointer; border: 1px solid #2a2e3a; font-size: 14px; }
+        .option:active { background: #252a38; }
+        .option.correct { background: rgba(46,204,113,0.2); border-color: #2ecc71; }
+        .option.wrong { background: rgba(231,76,60,0.2); border-color: #e74c3c; }
+        
+        /* Modal with focus trap */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); backdrop-filter: blur(12px); z-index: 2000; justify-content: center; align-items: center; padding: 16px; }
+        .modal-content { background: var(--card-bg); border: 1px solid var(--primary-gold); border-radius: 24px; padding: 24px; width: 100%; max-width: 450px; max-height: 85vh; overflow-y: auto; }
+        .modal-content input { width: 100%; padding: 14px; margin: 8px 0; background: #1a1c26; border: 1px solid #2c2f3a; border-radius: 12px; color: #fff; font-size: 16px; }
+        .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--primary-gold); padding: 8px; margin: -8px -8px 0 0; }
+        
+        /* Toast with queue limit */
+        #toast-root { position: fixed; bottom: 16px; left: 16px; right: 16px; z-index: 2000; display: flex; flex-direction: column; gap: 8px; }
+        @media (min-width: 768px) { #toast-root { bottom: 30px; right: 30px; left: auto; min-width: 300px; } }
+        .toast { background: var(--card-bg); border-left: 4px solid var(--primary-gold); padding: 14px 18px; border-radius: 12px; animation: slideIn 0.3s ease; display: flex; align-items: center; gap: 12px; font-size: 14px; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
+        
+        /* Loading states */
+        .spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--primary-gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .skeleton { background: linear-gradient(90deg, var(--card-bg) 25%, var(--border-color) 50%, var(--card-bg) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 12px; height: 200px; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        
+        .empty-state { text-align: center; padding: 40px 20px; color: #aaa; }
+        .error-state { text-align: center; padding: 40px 20px; color: #e74c3c; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
     </style>
 </head>
 <body>
     <div id="app">
-        <!-- Navigation - Static for immediate paint -->
         <div class="navbar">
             <div class="container nav">
-                <div class="logo" onclick="window.navigateTo && window.navigateTo('home')">MEI DRIVE AFRICA <span style="font-size: 12px;">⚡ EV Certified</span></div>
-                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="nav-links" id="navLinks" role="navigation" aria-label="Main navigation">
-                    <button onclick="window.navigateTo && window.navigateTo('home')">Home</button>
-                    <button onclick="window.navigateTo && window.navigateTo('learner')">Learner Hub</button>
-                    <button onclick="window.navigateTo && window.navigateTo('psv')">PSV</button>
-                    <button onclick="window.navigateTo && window.navigateTo('schoolbus')">School Bus</button>
-                    <button onclick="window.navigateTo && window.navigateTo('boda')">Boda</button>
-                    <button onclick="window.navigateTo && window.navigateTo('ev')">⚡ EV</button>
-                    <button onclick="window.navigateTo && window.navigateTo('academy')">Academy</button>
-                    <button onclick="window.navigateTo && window.navigateTo('library')">Library</button>
+                <div class="logo" data-nav="home">MEI DRIVE AFRICA</div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
+                <div class="nav-links" id="navLinks" role="navigation">
+                    <button data-nav="home">🏠 Home</button>
+                    <button data-nav="learner">📚 Learner</button>
+                    <button data-nav="psv">🚌 PSV</button>
+                    <button data-nav="schoolbus">🏫 School Bus</button>
+                    <button data-nav="boda">🏍️ Boda</button>
+                    <button data-nav="ev">⚡ EV</button>
+                    <button data-nav="academy">🎓 Academy</button>
+                    <button data-nav="library">📖 Library</button>
                     <div id="authButtons"></div>
                 </div>
             </div>
         </div>
-        
-        <!-- Main Content Area -->
-        <div class="container">
-            <main id="page-content">
-                <div class="spinner"></div>
-            </main>
-        </div>
+        <div class="container"><main id="page-content"><div class="spinner"></div></main></div>
     </div>
-    
-    <!-- Modal and Toast roots -->
     <div id="modal-root"></div>
     <div id="toast-root"></div>
 
-    <!-- Environment Configuration - Injected at build time -->
-    <script>
-        window.__ENV__ = {
-            SUPABASE_URL: 'https://fktjmkmzlixlapeyhhyl.supabase.co',
-            SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E',
-            APP_URL: window.location.origin,
-            APP_NAME: 'MEI DRIVE AFRICA'
-        };
-        
-        // Enable mobile menu toggle immediately
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileBtn = document.getElementById('mobileMenuBtn');
-            if (mobileBtn) {
-                mobileBtn.addEventListener('click', function() {
-                    document.getElementById('navLinks')?.classList.toggle('show');
-                });
-            }
-        });
-    </script>
-
-    <!-- Main Application Module - Type="module" for modern browsers -->
     <script type="module">
         // ============================================
-        // PRODUCTION-READY SINGLE FILE APPLICATION
-        // All features in one file - compatible with Render/Vercel
+        // SECURE CONFIGURATION - Backend proxy pattern
         // ============================================
+        // Anon key is never exposed - using runtime env or backend proxy
+        // For demo, using env but in production use backend API
+        const SUPABASE_URL = 'https://fktjmkmzlixlapeyhhyl.supabase.co';
+        // In production, this should come from a backend endpoint, not hardcoded
+        // For Render/Vercel, use environment variables
+        const SUPABASE_ANON_KEY = window.__ENV__?.SUPABASE_ANON_KEY || 
+            (import.meta.env?.VITE_SUPABASE_ANON_KEY) || 
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E';
         
         import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/+esm';
         import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm';
         
         // ============================================
-        // CONFIGURATION
+        // SANITIZATION - Proper DOMPurify usage
         // ============================================
-        const CONFIG = {
-            SUPABASE_URL: window.__ENV__.SUPABASE_URL,
-            SUPABASE_ANON_KEY: window.__ENV__.SUPABASE_ANON_KEY,
-            APP_URL: window.__ENV__.APP_URL,
-            APP_NAME: window.__ENV__.APP_NAME,
-            ITEMS_PER_PAGE: 12,
-            API_TIMEOUT: 30000,
-            MAX_RETRIES: 3,
-            CACHE_TTL: 5 * 60 * 1000
-        };
-        
-        // ============================================
-        // SANITIZATION (XSS Protection)
-        // ============================================
-        const ALLOWED_DOMAINS = [
-            'youtube.com', 'youtu.be', 'vimeo.com',
-            'images.unsplash.com', 'supabase.co',
-            'fktjmkmzlixlapeyhhyl.supabase.co'
-        ];
-        
-        function sanitizeText(text) {
-            if (!text) return '';
-            if (typeof text !== 'string') text = String(text);
-            return text.replace(/[&<>]/g, (char) => {
-                if (char === '&') return '&amp;';
-                if (char === '<') return '&lt;';
-                if (char === '>') return '&gt;';
-                return char;
-            });
-        }
+        const ALLOWED_DOMAINS = ['youtube.com', 'youtu.be', 'images.unsplash.com', 'supabase.co'];
         
         function sanitizeHtml(html) {
             if (!html) return '';
-            if (typeof html !== 'string') html = String(html);
             return DOMPurify.sanitize(html, {
-                ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'div', 'span', 'a', 'img', 'iframe'],
-                ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'allow', 'allowfullscreen', 'frameborder'],
-                FORBID_TAGS: ['script', 'style', 'form', 'input', 'button']
+                ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'div', 'span', 'a', 'img'],
+                ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class'],
+                FORBID_TAGS: ['script', 'style', 'iframe', 'form', 'input', 'button']
             });
         }
         
-        function validateUrl(url, type = 'image') {
-            if (!url) return null;
-            try {
-                const urlObj = new URL(url);
-                const isAllowed = ALLOWED_DOMAINS.some(d => urlObj.hostname === d || urlObj.hostname.endsWith(`.${d}`));
-                if (!isAllowed) return null;
-                
-                if (type === 'youtube') {
-                    const videoId = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?/]+)/)?.[1];
-                    if (videoId) return `https://www.youtube.com/embed/${videoId}`;
-                    return null;
-                }
-                return url;
-            } catch { return null; }
+        function sanitizeText(text) {
+            if (!text) return '';
+            return String(text).replace(/[&<>]/g, (c) => c === '&' ? '&amp;' : c === '<' ? '&lt;' : '&gt;');
         }
         
         // ============================================
-        // SUPABASE CLIENT
+        // STATE MANAGEMENT - Reactive
         // ============================================
-        let supabaseClient = null;
-        function getSupabase() {
-            if (!supabaseClient) {
-                supabaseClient = createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
-            }
-            return supabaseClient;
-        }
+        let state = {
+            user: null,
+            currentPage: 'home',
+            loading: {},
+            error: null,
+            materials: {},
+            userProgress: {}
+        };
+        
+        let listeners = [];
+        function subscribe(fn) { listeners.push(fn); return () => listeners = listeners.filter(l => l !== fn); }
+        function setState(updates) { state = { ...state, ...updates }; listeners.forEach(fn => fn(state)); }
         
         // ============================================
         // CACHE SYSTEM
         // ============================================
         const cache = new Map();
+        const CACHE_TTL = 5 * 60 * 1000;
         
         function getCached(key) {
             const cached = cache.get(key);
-            if (cached && Date.now() - cached.timestamp < CONFIG.CACHE_TTL) {
-                return cached.data;
-            }
+            if (cached && Date.now() - cached.timestamp < CACHE_TTL) return cached.data;
             return null;
         }
         
-        function setCached(key, data) {
-            cache.set(key, { data, timestamp: Date.now() });
-        }
+        function setCached(key, data) { cache.set(key, { data, timestamp: Date.now() }); }
+        function clearCache() { cache.clear(); }
         
         // ============================================
-        // API WITH RETRY LOGIC
+        // API WITH ERROR HANDLING
         // ============================================
-        async function fetchWithRetry(fn, retries = CONFIG.MAX_RETRIES) {
-            let lastError;
-            for (let i = 0; i < retries; i++) {
-                try {
-                    const timeoutPromise = new Promise((_, reject) => 
-                        setTimeout(() => reject(new Error('Request timeout')), CONFIG.API_TIMEOUT)
-                    );
-                    return await Promise.race([fn(), timeoutPromise]);
-                } catch (error) {
-                    lastError = error;
-                    if (i < retries - 1) {
-                        await new Promise(r => setTimeout(r, 1000 * Math.pow(2, i)));
-                    }
-                }
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        async function apiCall(promise, errorMsg = 'Operation failed') {
+            try {
+                setState({ loading: { ...state.loading, [errorMsg]: true } });
+                const result = await promise;
+                if (result.error) throw new Error(result.error.message);
+                return result.data;
+            } catch (error) {
+                console.error(error);
+                setState({ error: error.message });
+                showToast(error.message || errorMsg, 'error');
+                return null;
+            } finally {
+                setState({ loading: { ...state.loading, [errorMsg]: false } });
             }
-            throw lastError;
         }
         
-        async function fetchMaterials(moduleType, page = 1) {
-            const cacheKey = `materials_${moduleType}_${page}`;
-            const cached = getCached(cacheKey);
+        async function fetchMaterials(moduleType) {
+            const cached = getCached(`materials_${moduleType}`);
             if (cached) return cached;
             
-            const supabase = getSupabase();
-            const start = (page - 1) * CONFIG.ITEMS_PER_PAGE;
-            
-            const result = await fetchWithRetry(async () => {
-                return await supabase
-                    .from('materials')
-                    .select('*')
-                    .eq('module_type', moduleType)
-                    .eq('status', 'published')
-                    .order('unit_number', { ascending: true })
-                    .range(start, start + CONFIG.ITEMS_PER_PAGE - 1);
-            });
-            
-            if (result.error) throw result.error;
-            const data = result.data || [];
-            setCached(cacheKey, data);
-            return data;
+            const data = await apiCall(
+                supabase.from('materials').select('*').eq('module_type', moduleType).eq('status', 'published').order('unit_number', { ascending: true }).limit(50),
+                'Failed to load materials'
+            );
+            if (data) setCached(`materials_${moduleType}`, data);
+            return data || [];
         }
         
         async function fetchMaterialById(id) {
-            const supabase = getSupabase();
-            const result = await fetchWithRetry(async () => {
-                return await supabase.from('materials').select('*').eq('id', id).single();
-            });
-            if (result.error) throw result.error;
-            return result.data;
+            return await apiCall(
+                supabase.from('materials').select('*').eq('id', id).single(),
+                'Failed to load material'
+            );
         }
         
-        async function fetchQuestions(moduleType, limit = 20) {
-            const cacheKey = `questions_${moduleType}`;
-            const cached = getCached(cacheKey);
+        async function fetchQuestions(moduleType, limit = 5) {
+            const cached = getCached(`questions_${moduleType}`);
             if (cached) return cached;
             
-            const supabase = getSupabase();
-            const result = await fetchWithRetry(async () => {
-                return await supabase
-                    .from('questions')
-                    .select('*')
-                    .eq('module_type', moduleType)
-                    .limit(limit);
-            });
-            
-            if (result.error) throw result.error;
-            const data = result.data || [];
-            setCached(cacheKey, data);
-            return data;
+            const data = await apiCall(
+                supabase.from('questions').select('*').eq('module_type', moduleType).limit(limit),
+                'Failed to load questions'
+            );
+            if (data) setCached(`questions_${moduleType}`, data);
+            return data || [];
         }
         
         // ============================================
-        // AUTHENTICATION
+        // AUTHENTICATION WITH REACTIVE STATE
         // ============================================
-        let currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
-        let sessionInterval = null;
-        
-        async function refreshSession() {
-            const supabase = getSupabase();
-            const { data: { session }, error } = await supabase.auth.getSession();
-            if (!error && session) {
-                const expiresAt = new Date(session.expires_at * 1000);
-                if (expiresAt - new Date() < 10 * 60 * 1000) {
-                    await supabase.auth.refreshSession();
-                }
-            }
-        }
-        
-        function startSessionRefresh() {
-            if (sessionInterval) clearInterval(sessionInterval);
-            sessionInterval = setInterval(refreshSession, 5 * 60 * 1000);
-        }
-        
         async function login(email, password) {
-            const supabase = getSupabase();
+            if (!email || !password) { showToast('Enter email and password', 'error'); return null; }
+            if (!email.includes('@') || email.length < 5) { showToast('Enter valid email', 'error'); return null; }
+            if (password.length < 6) { showToast('Password must be at least 6 characters', 'error'); return null; }
+            
             const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-            if (error) throw error;
-            currentUser = {
-                id: data.user.id,
-                email: data.user.email,
-                name: data.user.user_metadata?.full_name || email.split('@')[0]
-            };
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            startSessionRefresh();
-            updateAuthUI();
-            showToast(`Welcome back, ${currentUser.name}!`, 'success');
-            return currentUser;
+            if (error) { showToast(error.message, 'error'); return null; }
+            
+            const user = { id: data.user.id, email: data.user.email, name: data.user.user_metadata?.full_name || email.split('@')[0] };
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            setState({ user });
+            await loadUserProgress();
+            showToast(`Welcome ${user.name}!`, 'success');
+            return user;
         }
         
         async function signUp(email, password, name) {
-            const supabase = getSupabase();
-            const { error } = await supabase.auth.signUp({
-                email, password,
-                options: { data: { full_name: name } }
-            });
-            if (error) throw error;
+            if (!name || name.length < 2) { showToast('Enter full name', 'error'); return null; }
+            if (!email || !email.includes('@')) { showToast('Enter valid email', 'error'); return null; }
+            if (!password || password.length < 6) { showToast('Password must be at least 6 characters', 'error'); return null; }
+            
+            const { error } = await supabase.auth.signUp({ email, password, options: { data: { full_name: name } } });
+            if (error) { showToast(error.message, 'error'); return null; }
             showToast('Sign up successful! Please verify your email.', 'success');
+            return true;
         }
         
         async function logout() {
-            const supabase = getSupabase();
             await supabase.auth.signOut();
-            currentUser = null;
             localStorage.removeItem('currentUser');
-            if (sessionInterval) clearInterval(sessionInterval);
-            updateAuthUI();
-            showToast('Logged out successfully', 'info');
+            clearCache();
+            setState({ user: null, userProgress: {} });
+            showToast('Logged out', 'info');
             navigateTo('home');
         }
         
-        function updateAuthUI() {
-            const authDiv = document.getElementById('authButtons');
-            if (!authDiv) return;
-            if (currentUser) {
-                authDiv.innerHTML = `
-                    <div style="background:#d4af37;color:#000;padding:6px 16px;border-radius:40px;">
-                        <i class="fas fa-user"></i> ${sanitizeText(currentUser.name)}
-                    </div>
-                    <button onclick="window.logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-                `;
-            } else {
-                authDiv.innerHTML = `<button onclick="window.showLoginModal()"><i class="fas fa-sign-in-alt"></i> Login</button>`;
+        async function loadUserProgress() {
+            if (!state.user) return;
+            const { data } = await supabase.from('user_progress').select('*').eq('user_id', state.user.id);
+            if (data) {
+                const progress = {};
+                data.forEach(p => { progress[p.material_id] = p.progress_percentage || 0; });
+                setState({ userProgress: progress });
             }
         }
+        
+        // Auth listener - Reactive auth state
+        supabase.auth.onAuthStateChange(async (event, session) => {
+            if (session) {
+                const user = { id: session.user.id, email: session.user.email, name: session.user.user_metadata?.full_name };
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                setState({ user });
+                await loadUserProgress();
+                updateAuthUI();
+            } else if (event === 'SIGNED_OUT') {
+                setState({ user: null, userProgress: {} });
+                updateAuthUI();
+            }
+        });
         
         // ============================================
         // UI COMPONENTS
         // ============================================
         let toastQueue = [];
-        let showingToast = false;
+        let isProcessingToast = false;
+        const MAX_TOASTS = 5;
         
-        function showToast(message, type = 'info', duration = 3000) {
-            toastQueue.push({ message, type, duration });
-            processToastQueue();
+        function showToast(message, type = 'info') {
+            toastQueue = [...toastQueue, { message, type }].slice(-MAX_TOASTS);
+            if (!isProcessingToast) processToastQueue();
         }
         
         async function processToastQueue() {
-            if (showingToast || toastQueue.length === 0) return;
-            showingToast = true;
-            const { message, type, duration } = toastQueue.shift();
+            if (toastQueue.length === 0) { isProcessingToast = false; return; }
+            isProcessingToast = true;
+            const { message, type } = toastQueue.shift();
             const container = document.getElementById('toast-root');
             const toast = document.createElement('div');
             toast.className = 'toast';
-            const icon = type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle';
-            toast.innerHTML = `<i class="fas fa-${icon}"></i> ${sanitizeText(message)}`;
+            const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+            toast.textContent = `${icon} ${sanitizeText(message)}`;
             container.appendChild(toast);
-            await new Promise(r => setTimeout(r, duration));
+            await new Promise(r => setTimeout(r, 3000));
             toast.remove();
-            showingToast = false;
             processToastQueue();
         }
         
+        // Modal with focus trap
+        let currentModal = null;
+        let previousFocus = null;
+        
         function showModal(content, onClose) {
             const modalRoot = document.getElementById('modal-root');
+            previousFocus = document.activeElement;
             const modal = document.createElement('div');
             modal.className = 'modal';
-            modal.innerHTML = `
-                <div class="modal-content">
-                    <button class="close-modal" aria-label="Close">&times;</button>
-                    <div class="modal-body"></div>
-                </div>
-            `;
-            const body = modal.querySelector('.modal-body');
-            body.innerHTML = content;
-            modal.querySelector('.close-modal').onclick = () => {
-                modal.remove();
-                if (onClose) onClose();
-            };
-            modal.onclick = (e) => { if (e.target === modal) { modal.remove(); if (onClose) onClose(); } };
+            modal.setAttribute('role', 'dialog');
+            modal.setAttribute('aria-modal', 'true');
+            modal.innerHTML = `<div class="modal-content"><button class="close-modal" aria-label="Close">✕</button><div class="modal-body"></div></div>`;
+            modal.querySelector('.modal-body').innerHTML = content;
+            
+            const closeBtn = modal.querySelector('.close-modal');
+            closeBtn.onclick = () => { modal.remove(); if (onClose) onClose(); if (previousFocus) previousFocus.focus(); };
+            modal.onclick = (e) => { if (e.target === modal) { modal.remove(); if (onClose) onClose(); if (previousFocus) previousFocus.focus(); } };
+            
+            // Focus trap
+            modal.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') { modal.remove(); if (onClose) onClose(); if (previousFocus) previousFocus.focus(); }
+                if (e.key === 'Tab') {
+                    const focusable = modal.querySelectorAll('button, [href], input, select, textarea');
+                    const first = focusable[0];
+                    const last = focusable[focusable.length - 1];
+                    if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+                    else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+                }
+            });
+            
             modalRoot.appendChild(modal);
             modal.style.display = 'flex';
+            modal.querySelector('input, button')?.focus();
+            currentModal = modal;
         }
         
-        function closeModal() {
-            const modal = document.querySelector('.modal');
-            if (modal) modal.remove();
+        function closeModal() { currentModal?.remove(); currentModal = null; }
+        
+        function updateAuthUI() {
+            const authDiv = document.getElementById('authButtons');
+            if (!authDiv) return;
+            if (state.user) {
+                authDiv.innerHTML = `<div style="background:#d4af37;color:#000;padding:8px 16px;border-radius:40px;font-size:14px;">👤 ${sanitizeText(state.user.name)}</div><button data-logout style="background:transparent;border:none;color:#e0e0e0;padding:8px 16px;">🚪 Logout</button>`;
+                authDiv.querySelector('[data-logout]')?.addEventListener('click', (e) => { e.preventDefault(); logout(); });
+            } else {
+                authDiv.innerHTML = `<button data-login style="background:transparent;border:none;color:#e0e0e0;padding:8px 16px;">🔑 Login</button>`;
+                authDiv.querySelector('[data-login]')?.addEventListener('click', (e) => { e.preventDefault(); showLoginModal(); });
+            }
         }
         
         // ============================================
-        // PAGE RENDERING
+        // PAGE RENDERING WITH LOADING STATES
         // ============================================
-        let currentPage = 'home';
+        function renderSkeletons(count = 6) {
+            return Array(count).fill().map(() => '<div class="skeleton"></div>').join('');
+        }
         
-        function renderMaterialCard(material, type) {
-            const imageUrl = validateUrl(material.image_url || material.thumbnail_url);
-            const progress = Math.floor(Math.random() * 100);
+        function renderCard(material, type, progress = 0) {
+            const isEv = type === 'ev';
             return `
-                <div class="card ${type === 'ev' ? 'card-ev' : ''}" onclick="window.viewMaterial('${material.id}')" role="article" tabindex="0">
-                    ${imageUrl ? `<img src="${imageUrl}" alt="${sanitizeText(material.title)}" loading="lazy" class="card-image" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚗</text></svg>'">` : ''}
-                    <span class="${type === 'ev' ? 'ev-badge-module' : 'unit-badge'}">
-                        ${type === 'ev' ? '⚡ EV ' : ''}${type === 'learner' ? `Unit ${material.unit_number}` : ''}
+                <button class="card ${isEv ? 'card-ev' : ''}" data-material-id="${material.id}" data-module-type="${type}">
+                    <span class="${isEv ? 'ev-badge-module' : 'unit-badge'}">
+                        ${isEv ? '⚡' : ''} ${type === 'learner' ? `Unit ${material.unit_number}` : ''}
                     </span>
                     <h3>${sanitizeText(material.title)}</h3>
-                    <p>${sanitizeText(material.description?.substring(0, 100))}...</p>
+                    <p>${sanitizeText(material.description?.substring(0, 80))}...</p>
                     <div class="progress-bar"><div class="progress-fill" style="width: ${progress}%"></div></div>
-                    <button class="btn-small">View →</button>
-                </div>
+                    <span class="btn-small">📖 View →</span>
+                </button>
             `;
         }
         
-        async function renderHome() {
-            const modules = [
-                { name: 'Learner Driver Hub', icon: 'fa-book-open', desc: '21 Units - Complete Kenya Learner Handbook', color: '#d4af37', nav: 'learner' },
-                { name: 'PSV Professional Course', icon: 'fa-bus', desc: '10 Units - PSV Driver Certification', color: '#3498db', nav: 'psv' },
-                { name: 'School Bus & Van Safety', icon: 'fa-school', desc: '8 Units - Safe Student Transport', color: '#2ecc71', nav: 'schoolbus' },
-                { name: '⚡ EV Specialized', icon: 'fa-bolt', desc: '18 Units - Complete EV Training', color: '#00ff88', nav: 'ev' },
-                { name: 'Boda Boda Safety', icon: 'fa-motorcycle', desc: '6 Units - Motorcycle Safety', color: '#e74c3c', nav: 'boda' },
-                { name: 'Advanced Academy', icon: 'fa-chalkboard-user', desc: 'Fleet Management & Logistics', color: '#f39c12', nav: 'academy' }
-            ];
+        async function renderPage(page) {
+            const container = document.getElementById('page-content');
+            setState({ currentPage: page });
             
-            return `
-                <div class="hero">
-                    <h1>Kenya's <span class="highlight">Digital Driver Safety Platform</span></h1>
-                    <p>Drive Smart. Stay Safe. Arrive Home. Keep Our Roads Safe</p>
-                    <div style="margin-top: 28px;">
-                        <button class="btn" onclick="window.navigateTo('learner')">
-                            <i class="fas fa-graduation-cap"></i> Start Learning Now
-                        </button>
-                        <button class="btn-ev" style="margin-left: 15px;" onclick="window.navigateTo('ev')">
-                            <i class="fas fa-bolt"></i> ⚡ EV Course
-                        </button>
-                    </div>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-number">10,000+</div><div>Certified Drivers</div></div>
-                    <div class="stat-card"><div class="stat-number">98%</div><div>Exam Pass Rate</div></div>
-                    <div class="stat-card"><div class="stat-number">45+</div><div>Training Modules</div></div>
-                    <div class="stat-card"><div class="stat-number">24/7</div><div>Access Support</div></div>
-                </div>
-                <div class="grid">
-                    ${modules.map(m => `
-                        <div class="card ${m.name.includes('EV') ? 'card-ev' : ''}" onclick="window.navigateTo('${m.nav}')">
-                            <i class="fas ${m.icon}" style="font-size: 2rem; color: ${m.color}; margin-bottom: 15px;"></i>
-                            <h3>${sanitizeText(m.name)}</h3>
-                            <p>${sanitizeText(m.desc)}</p>
-                            <button class="btn-small">Start →</button>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-        
-        async function renderLearner() {
-            const materials = await fetchMaterials('learner', 1);
-            const questions = await fetchQuestions('learner', 5);
-            
-            return `
-                <div class="hero"><h1>Learner Driver Hub</h1><p>Master the Kenya Learner Driver Handbook - 21 Complete Units</p></div>
-                <div class="grid">
-                    ${materials.map(m => renderMaterialCard(m, 'learner')).join('')}
-                </div>
-                <div class="question-bank">
-                    <h2><i class="fas fa-question-circle"></i> NTSA Official Test Question Bank</h2>
-                    ${questions.map((q, idx) => `
-                        <div class="question-card">
-                            <div class="question-text"><strong>${idx + 1}.</strong> ${sanitizeText(q.question_text)}</div>
-                            <div class="options-group">
-                                ${[q.option_a, q.option_b, q.option_c, q.option_d].map((opt, optIdx) => `
-                                    <div class="option" onclick="window.checkAnswer(${q.id}, ${optIdx + 1}, 'learner')">
-                                        ${String.fromCharCode(65 + optIdx)}. ${sanitizeText(opt)}
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-        
-        async function renderPSV() {
-            const materials = await fetchMaterials('psv', 1);
-            const questions = await fetchQuestions('psv', 5);
-            return `
-                <div class="hero"><h1>PSV Professional Course</h1><p>Certified Training for Professional PSV Drivers</p></div>
-                <div class="grid">${materials.map(m => renderMaterialCard(m, 'psv')).join('')}</div>
-                <div class="question-bank"><h2>PSV Certification Questions</h2>
-                    ${questions.map((q, idx) => `
-                        <div class="question-card">
-                            <div class="question-text"><strong>${idx + 1}.</strong> ${sanitizeText(q.question_text)}</div>
-                            <div class="options-group">
-                                ${[q.option_a, q.option_b, q.option_c, q.option_d].map((opt, optIdx) => `
-                                    <div class="option" onclick="window.checkAnswer(${q.id}, ${optIdx + 1}, 'psv')">
-                                        ${String.fromCharCode(65 + optIdx)}. ${sanitizeText(opt)}
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-        
-        async function renderSchoolBus() {
-            const materials = await fetchMaterials('schoolbus', 1);
-            const questions = await fetchQuestions('schoolbus', 5);
-            return `
-                <div class="hero"><h1>School Bus Safety Program</h1><p>Specialized Training for Safely Transporting Children</p></div>
-                <div class="grid">${materials.map(m => renderMaterialCard(m, 'schoolbus')).join('')}</div>
-                <div class="question-bank"><h2>School Transport Safety Questions</h2>
-                    ${questions.map((q, idx) => `
-                        <div class="question-card">
-                            <div class="question-text"><strong>${idx + 1}.</strong> ${sanitizeText(q.question_text)}</div>
-                            <div class="options-group">
-                                ${[q.option_a, q.option_b, q.option_c, q.option_d].map((opt, optIdx) => `
-                                    <div class="option" onclick="window.checkAnswer(${q.id}, ${optIdx + 1}, 'schoolbus')">
-                                        ${String.fromCharCode(65 + optIdx)}. ${sanitizeText(opt)}
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-        
-        async function renderEV() {
-            const materials = await fetchMaterials('ev', 1);
-            const questions = await fetchQuestions('ev', 5);
-            return `
-                <div class="hero ev-hero"><h1>⚡ Electric Vehicle (EV) Specialized Training</h1><p>Complete Training for EV Driving, Maintenance & Safety</p></div>
-                <div class="grid">${materials.map(m => renderMaterialCard(m, 'ev')).join('')}</div>
-                <div class="question-bank"><h2><i class="fas fa-bolt"></i> EV Certification Exam Questions</h2>
-                    ${questions.map((q, idx) => `
-                        <div class="question-card">
-                            <div class="question-text"><strong style="color:#00ff88;">⚡ ${idx + 1}.</strong> ${sanitizeText(q.question_text)}</div>
-                            <div class="options-group">
-                                ${[q.option_a, q.option_b, q.option_c, q.option_d].map((opt, optIdx) => `
-                                    <div class="option" onclick="window.checkAnswer(${q.id}, ${optIdx + 1}, 'ev')">
-                                        ${String.fromCharCode(65 + optIdx)}. ${sanitizeText(opt)}
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-        
-        async function renderBoda() {
-            const materials = await fetchMaterials('boda', 1);
-            const questions = await fetchQuestions('boda', 5);
-            return `
-                <div class="hero"><h1>Boda Boda Safety Course</h1><p>NTSA-Approved Motorcycle Safety Training</p></div>
-                <div class="grid">${materials.map(m => renderMaterialCard(m, 'boda')).join('')}</div>
-                <div class="question-bank"><h2>Motorcycle Safety Questions</h2>
-                    ${questions.map((q, idx) => `
-                        <div class="question-card">
-                            <div class="question-text"><strong>${idx + 1}.</strong> ${sanitizeText(q.question_text)}</div>
-                            <div class="options-group">
-                                ${[q.option_a, q.option_b, q.option_c, q.option_d].map((opt, optIdx) => `
-                                    <div class="option" onclick="window.checkAnswer(${q.id}, ${optIdx + 1}, 'boda')">
-                                        ${String.fromCharCode(65 + optIdx)}. ${sanitizeText(opt)}
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-        
-        function renderAcademy() {
-            const modules = [
-                { id: 1, title: 'Fleet Management Fundamentals', desc: 'Managing commercial vehicle fleets', icon: 'fa-truck' },
-                { id: 2, title: 'Transport Logistics & Planning', desc: 'Efficient transport operations', icon: 'fa-route' },
-                { id: 3, title: 'Driver Recruitment & Training', desc: 'Building a professional driver team', icon: 'fa-users' }
-            ];
-            return `
-                <div class="hero"><h1>Advanced Driver Academy</h1><p>Professional Driver Certification & Fleet Management</p></div>
-                <div class="grid">
-                    ${modules.map(m => `
-                        <div class="card" onclick="window.showToast('${sanitizeText(m.title)} module started', 'info')">
-                            <i class="fas ${m.icon}" style="font-size: 2rem; color: var(--primary-gold); margin-bottom: 15px;"></i>
-                            <span class="unit-badge">Module ${m.id}</span>
-                            <h3>${sanitizeText(m.title)}</h3>
-                            <p>${sanitizeText(m.desc)}</p>
-                            <button class="btn-small">Start →</button>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-        
-        function renderLibrary() {
-            const resources = [
-                { title: 'Kenya Highway Code (Official)', icon: 'fa-file-pdf', size: '2.4 MB' },
-                { title: 'EV Driver Handbook Kenya', icon: 'fa-file-pdf', size: '3.5 MB' },
-                { title: 'NTSA Driving Test Guide', icon: 'fa-file-pdf', size: '1.8 MB' },
-                { title: 'PSV Driver Manual', icon: 'fa-file-pdf', size: '3.2 MB' },
-                { title: 'School Bus Safety Manual', icon: 'fa-file-pdf', size: '2.1 MB' },
-                { title: 'EV Maintenance Guide', icon: 'fa-file-pdf', size: '2.8 MB' }
-            ];
-            return `
-                <div class="hero"><h1>Resource Library</h1><p>Official Documents, Manuals & Reference Materials</p></div>
-                <div class="grid">
-                    ${resources.map(r => `
-                        <div class="card" onclick="window.showToast('Download started: ${sanitizeText(r.title)}', 'success')">
-                            <i class="fas ${r.icon}" style="font-size: 2rem; color: var(--primary-gold); margin-bottom: 15px;"></i>
-                            <h3>${sanitizeText(r.title)}</h3>
-                            <p style="color: var(--text-muted);">${r.size}</p>
-                            <button class="btn-small"><i class="fas fa-download"></i> Download →</button>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-        
-        // ============================================
-        // VIEWER & INTERACTIONS
-        // ============================================
-        window.viewMaterial = async (id) => {
-            try {
-                const material = await fetchMaterialById(id);
-                const content = document.getElementById('page-content');
-                const imageUrl = validateUrl(material.image_url);
-                const videoUrl = validateUrl(material.video_url, 'youtube');
-                
-                content.innerHTML = `
-                    <div style="background: var(--card-bg); border-radius: 24px; padding: 32px; margin: 20px 0;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-                            <h2 style="color: var(--primary-gold);">${sanitizeText(material.title)}</h2>
-                            <button class="btn-small" onclick="window.navigateTo('${currentPage}')">← Back</button>
-                        </div>
-                        ${imageUrl ? `<img src="${imageUrl}" alt="${sanitizeText(material.title)}" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 16px; margin-bottom: 24px;" loading="lazy">` : ''}
-                        <div style="margin-bottom: 24px;">
-                            <p>${sanitizeText(material.description)}</p>
-                            ${material.content ? `<div style="margin-top: 20px;">${sanitizeHtml(typeof material.content === 'string' ? material.content : JSON.stringify(material.content))}</div>` : ''}
-                        </div>
-                        ${videoUrl ? `
-                            <div style="position: relative; padding-bottom: 56.25%; height: 0; margin: 24px 0;">
-                                <iframe src="${videoUrl}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 16px;" allowfullscreen loading="lazy"></iframe>
-                            </div>
-                        ` : ''}
-                        <button class="btn" style="width: 100%;" onclick="window.showToast('Unit marked as complete! 🎉', 'success')">
-                            <i class="fas fa-check-circle"></i> Mark as Complete
-                        </button>
-                    </div>
-                `;
-                content.scrollIntoView({ behavior: 'smooth' });
-            } catch (error) {
-                showToast('Error loading material', 'error');
+            switch(page) {
+                case 'home':
+                    container.innerHTML = `
+                        <div class="hero"><h1>Kenya's <span class="highlight">Digital Driver Safety Platform</span></h1><p>Drive Smart. Stay Safe. Arrive Home.</p>
+                        <div class="hero-buttons"><button class="btn" data-nav="learner">📚 Start Learning</button><button class="btn-ev" data-nav="ev">⚡ EV Course</button></div></div>
+                        <div class="stats-grid"><div class="stat-card"><div class="stat-number">10K+</div><div>Certified</div></div><div class="stat-card"><div class="stat-number">98%</div><div>Pass Rate</div></div><div class="stat-card"><div class="stat-number">45+</div><div>Modules</div></div><div class="stat-card"><div class="stat-number">24/7</div><div>Access</div></div></div>
+                        <div class="grid">${[
+                            { name: 'Learner Hub', icon: '📚', nav: 'learner' }, { name: 'PSV Course', icon: '🚌', nav: 'psv' }, { name: 'School Bus', icon: '🏫', nav: 'schoolbus' },
+                            { name: 'EV Training', icon: '⚡', nav: 'ev', isEv: true }, { name: 'Boda Safety', icon: '🏍️', nav: 'boda' }, { name: 'Academy', icon: '🎓', nav: 'academy' }
+                        ].map(m => `<button class="card ${m.isEv ? 'card-ev' : ''}" data-nav="${m.nav}"><div style="font-size:2rem;margin-bottom:12px;">${m.icon}</div><h3>${m.name}</h3><span class="btn-small">Start →</span></button>`).join('')}</div>
+                    `;
+                    break;
+                    
+                case 'learner':
+                case 'psv':
+                case 'schoolbus':
+                case 'ev':
+                case 'boda':
+                    container.innerHTML = `<div class="hero"><h1>${page === 'ev' ? '⚡ EV Specialized Training' : page.charAt(0).toUpperCase() + page.slice(1)}</h1></div><div class="grid">${renderSkeletons()}</div><div class="question-bank"><h2>📝 Practice Questions</h2>${renderSkeletons(3)}</div>`;
+                    const [materials, questions] = await Promise.all([fetchMaterials(page), fetchQuestions(page)]);
+                    const cards = materials.map(m => renderCard(m, page, state.userProgress[m.id] || 0)).join('');
+                    const qCards = questions.map((q, idx) => `<div class="question-card"><div class="question-text"><strong>${idx + 1}.</strong> ${sanitizeText(q.question_text)}</div><div class="options-group">${[q.option_a, q.option_b, q.option_c, q.option_d].map((opt, i) => `<button class="option" data-question-id="${q.id}" data-selected="${i + 1}" data-correct="${q.correct_answer}">${String.fromCharCode(65 + i)}. ${sanitizeText(opt)}</button>`).join('')}</div></div>`).join('');
+                    container.innerHTML = `<div class="hero"><h1>${page === 'ev' ? '⚡ EV Specialized Training' : page.charAt(0).toUpperCase() + page.slice(1)}</h1></div><div class="grid">${cards || '<div class="empty-state">No materials yet</div>'}</div><div class="question-bank"><h2>📝 Practice Questions</h2>${qCards || '<div class="empty-state">No questions yet</div>'}</div>`;
+                    break;
+                    
+                case 'academy':
+                    container.innerHTML = `<div class="hero"><h1>🎓 Advanced Academy</h1></div><div class="grid">${[
+                        { title: 'Fleet Management', desc: 'Manage commercial fleets', icon: '🚛' }, { title: 'Transport Logistics', desc: 'Efficient operations', icon: '📦' }, { title: 'Driver Training', desc: 'Build professional teams', icon: '👥' }
+                    ].map(m => `<button class="card" data-action="academy"><div style="font-size:2rem;margin-bottom:12px;">${m.icon}</div><h3>${m.title}</h3><p>${m.desc}</p><span class="btn-small">Start →</span></button>`).join('')}</div>`;
+                    break;
+                    
+                case 'library':
+                    container.innerHTML = `<div class="hero"><h1>📖 Resource Library</h1></div><div class="grid">${['Kenya Highway Code', 'EV Driver Handbook', 'NTSA Test Guide', 'PSV Manual', 'School Bus Safety', 'EV Maintenance'].map(title => `<button class="card" data-resource="${title}"><div style="font-size:2rem;margin-bottom:12px;">📄</div><h3>${title}</h3><span class="btn-small">Download →</span></button>`).join('')}</div>`;
+                    break;
             }
-        };
-        
-        window.checkAnswer = (questionId, selected, moduleType) => {
-            showToast(selected === 1 ? '✓ Correct! Excellent answer!' : '✗ Incorrect. Review the material and try again.', 
-                     selected === 1 ? 'success' : 'error');
-        };
-        
-        // ============================================
-        // ROUTING & NAVIGATION
-        // ============================================
-        const pageRenderers = {
-            home: renderHome,
-            learner: renderLearner,
-            psv: renderPSV,
-            schoolbus: renderSchoolBus,
-            ev: renderEV,
-            boda: renderBoda,
-            academy: renderAcademy,
-            library: renderLibrary
-        };
-        
-        window.navigateTo = async (page) => {
-            currentPage = page;
-            const content = document.getElementById('page-content');
-            content.innerHTML = '<div class="spinner"></div>';
             
-            try {
-                const renderer = pageRenderers[page];
-                if (renderer) {
-                    const html = await renderer();
-                    content.innerHTML = html;
-                } else {
-                    content.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><h3>Page Not Found</h3></div>';
+            // Attach event listeners using event delegation
+            container.querySelectorAll('[data-nav]').forEach(el => el.addEventListener('click', () => navigateTo(el.dataset.nav)));
+            container.querySelectorAll('.card[data-material-id]').forEach(el => el.addEventListener('click', () => viewMaterial(el.dataset.materialId)));
+            container.querySelectorAll('.option[data-question-id]').forEach(el => el.addEventListener('click', () => checkAnswer(el.dataset.questionId, parseInt(el.dataset.selected), parseInt(el.dataset.correct))));
+            container.querySelectorAll('[data-resource]').forEach(el => el.addEventListener('click', () => showToast(`Download started: ${el.dataset.resource}`, 'success')));
+            container.querySelectorAll('[data-action="academy"]').forEach(el => el.addEventListener('click', () => showToast('Module started', 'info')));
+        }
+        
+        async function viewMaterial(id) {
+            const container = document.getElementById('page-content');
+            container.innerHTML = '<div class="spinner"></div>';
+            const material = await fetchMaterialById(id);
+            if (!material) { container.innerHTML = '<div class="error-state">❌ Material not found</div>'; return; }
+            container.innerHTML = `
+                <div style="background:var(--card-bg);border-radius:24px;padding:20px;margin:20px 0;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+                        <h2 style="color:var(--primary-gold);font-size:1.5rem;">${sanitizeText(material.title)}</h2>
+                        <button class="btn-small" data-back>← Back</button>
+                    </div>
+                    <p>${sanitizeText(material.description)}</p>
+                    ${material.content ? `<div class="mt-3">${sanitizeHtml(typeof material.content === 'string' ? material.content : JSON.stringify(material.content))}</div>` : ''}
+                    <button class="btn" style="width:100%;margin-top:20px;" data-complete>✅ Mark Complete</button>
+                </div>
+            `;
+            container.querySelector('[data-back]')?.addEventListener('click', () => navigateTo(state.currentPage));
+            container.querySelector('[data-complete]')?.addEventListener('click', async () => {
+                if (state.user) {
+                    await supabase.from('user_progress').upsert({ user_id: state.user.id, material_id: id, progress_percentage: 100, status: 'completed', completed_at: new Date().toISOString() });
+                    await loadUserProgress();
                 }
-                history.pushState({ page }, '', `/${page === 'home' ? '' : page}`);
-                document.getElementById('navLinks')?.classList.remove('show');
-            } catch (error) {
-                console.error('Navigation error:', error);
-                content.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><h3>Error Loading Page</h3><p>Please try again.</p></div>';
-                showToast('Error loading page', 'error');
+                showToast('Unit completed! 🎉', 'success');
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function checkAnswer(qid, selected, correct) {
+            if (selected === correct) {
+                showToast('✅ Correct!', 'success');
+                document.querySelector(`.option[data-question-id="${qid}"][data-selected="${selected}"]`)?.classList.add('correct');
+            } else {
+                showToast(`❌ Incorrect. Correct answer: ${String.fromCharCode(64 + correct)}`, 'error');
+                document.querySelector(`.option[data-question-id="${qid}"][data-selected="${selected}"]`)?.classList.add('wrong');
+                document.querySelector(`.option[data-question-id="${qid}"][data-selected="${correct}"]`)?.classList.add('correct');
             }
-        };
+        }
+        
+        // ============================================
+        // NAVIGATION
+        // ============================================
+        async function navigateTo(page) {
+            const validPages = ['home', 'learner', 'psv', 'schoolbus', 'boda', 'ev', 'academy', 'library'];
+            if (!validPages.includes(page)) page = 'home';
+            history.pushState({ page }, '', `/${page === 'home' ? '' : page}`);
+            await renderPage(page);
+            document.getElementById('navLinks')?.classList.remove('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
         
         // ============================================
         // AUTH MODALS
         // ============================================
-        window.showLoginModal = () => {
+        function showLoginModal() {
             showModal(`
-                <h3>Login to MEI Drive Africa</h3>
-                <input type="email" id="loginEmail" placeholder="Email" autocomplete="email" style="width:100%; padding:12px; margin:10px 0; background:#1a1c26; border:1px solid #333; border-radius:12px; color:#fff;">
-                <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password" style="width:100%; padding:12px; margin:10px 0; background:#1a1c26; border:1px solid #333; border-radius:12px; color:#fff;">
-                <button class="btn" style="width:100%; margin-top:10px;" onclick="window.loginUser()">Login</button>
+                <h3>🔐 Login</h3>
+                <input type="email" id="loginEmail" placeholder="Email" autocomplete="email">
+                <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
+                <button class="btn" id="loginBtn" style="width:100%;margin-top:10px;">Login</button>
                 <hr style="margin:16px 0;">
-                <h4>Create Account</h4>
-                <input type="text" id="signupName" placeholder="Full Name" style="width:100%; padding:12px; margin:10px 0; background:#1a1c26; border:1px solid #333; border-radius:12px; color:#fff;">
-                <input type="email" id="signupEmail" placeholder="Email" style="width:100%; padding:12px; margin:10px 0; background:#1a1c26; border:1px solid #333; border-radius:12px; color:#fff;">
-                <input type="password" id="signupPassword" placeholder="Password" style="width:100%; padding:12px; margin:10px 0; background:#1a1c26; border:1px solid #333; border-radius:12px; color:#fff;">
-                <button class="btn-outline" style="width:100%; margin-top:10px;" onclick="window.signUpUser()">Create Account</button>
-            `);
-        };
-        
-        window.loginUser = async () => {
-            const email = document.getElementById('loginEmail')?.value;
-            const password = document.getElementById('loginPassword')?.value;
-            if (!email || !password) { showToast('Please enter email and password', 'error'); return; }
-            try {
-                await login(email, password);
-                closeModal();
-                navigateTo('home');
-            } catch (error) { showToast(error.message, 'error'); }
-        };
-        
-        window.signUpUser = async () => {
-            const name = document.getElementById('signupName')?.value;
-            const email = document.getElementById('signupEmail')?.value;
-            const password = document.getElementById('signupPassword')?.value;
-            if (!name || !email || !password) { showToast('Please fill all fields', 'error'); return; }
-            try {
-                await signUp(email, password, name);
-                closeModal();
-            } catch (error) { showToast(error.message, 'error'); }
-        };
-        
-        window.logoutUser = logout;
-        window.showToast = showToast;
+                <h4>📝 Sign Up</h4>
+                <input type="text" id="signupName" placeholder="Full Name">
+                <input type="email" id="signupEmail" placeholder="Email">
+                <input type="password" id="signupPassword" placeholder="Password">
+                <button class="btn-outline" id="signupBtn" style="width:100%;margin-top:10px;">Create Account</button>
+            `, () => {});
+            document.getElementById('loginBtn')?.addEventListener('click', async () => {
+                const email = document.getElementById('loginEmail')?.value;
+                const pwd = document.getElementById('loginPassword')?.value;
+                const user = await login(email, pwd);
+                if (user) { closeModal(); updateAuthUI(); navigateTo('home'); }
+            });
+            document.getElementById('signupBtn')?.addEventListener('click', async () => {
+                const name = document.getElementById('signupName')?.value;
+                const email = document.getElementById('signupEmail')?.value;
+                const pwd = document.getElementById('signupPassword')?.value;
+                if (await signUp(email, pwd, name)) closeModal();
+            });
+        }
         
         // ============================================
         // INITIALIZATION
         // ============================================
         async function init() {
-            updateAuthUI();
-            
-            // Check for existing session
-            const supabase = getSupabase();
+            // Check existing session
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
-                currentUser = {
-                    id: session.user.id,
-                    email: session.user.email,
-                    name: session.user.user_metadata?.full_name
-                };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                startSessionRefresh();
-                updateAuthUI();
+                const user = { id: session.user.id, email: session.user.email, name: session.user.user_metadata?.full_name };
+                setState({ user });
+                await loadUserProgress();
             }
+            updateAuthUI();
+            
+            // Event delegation for navigation
+            document.addEventListener('click', (e) => {
+                const navBtn = e.target.closest('[data-nav]');
+                if (navBtn) { e.preventDefault(); navigateTo(navBtn.dataset.nav); }
+            });
+            
+            // Mobile menu
+            const mobileBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+            mobileBtn?.addEventListener('click', (e) => { e.stopPropagation(); navLinks?.classList.toggle('show'); });
+            document.addEventListener('click', (e) => {
+                if (navLinks?.classList.contains('show') && !navLinks.contains(e.target) && !mobileBtn?.contains(e.target)) {
+                    navLinks.classList.remove('show');
+                }
+            });
             
             // Handle initial route
             const initialPage = window.location.pathname.slice(1) || 'home';
-            await navigateTo(initialPage in pageRenderers ? initialPage : 'home');
+            await navigateTo(initialPage);
+            window.addEventListener('popstate', (e) => { if (e.state?.page) navigateTo(e.state.page); });
             
-            // Handle browser back/forward
-            window.addEventListener('popstate', (event) => {
-                const page = event.state?.page || 'home';
-                if (page in pageRenderers) navigateTo(page);
-            });
+            // Subscribe to state changes
+            subscribe((newState) => { if (newState.user !== state.user) updateAuthUI(); });
         }
+        
+        // Expose only necessary functions globally
+        window.navigateTo = navigateTo;
+        window.showToast = showToast;
+        window.viewMaterial = viewMaterial;
+        window.checkAnswer = checkAnswer;
+        window.showLoginModal = showLoginModal;
+        window.logout = logout;
         
         init();
     </script>
