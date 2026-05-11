@@ -1,1 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>MEI DRIVE AFRICA | Premier Driver Safety Platform</title>
+    <meta name="description" content="Kenya's premier NTSA-certified driver training platform - 21 Complete Learner Units">
+    <meta name="theme-color" content="#d4af37">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🚗%3C/text%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; line-height: 1.5; }
+        
+        :root {
+            --primary-gold: #d4af37;
+            --ev-green: #00ff88;
+            --card-bg: #111111;
+            --border-color: #222222;
+            --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f0c674 100%);
+        }
+        
+        .container { width: 100%; padding: 0 16px; margin: 0 auto; }
+        @media (min-width: 768px) { .container { max-width: 1400px; padding: 0 24px; } }
+        
+        .navbar { background: rgba(10,10,10,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212,175,55,0.3); position: sticky; top: 0; z-index: 1000; padding: 12px 0; }
+        .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo { font-weight: 800; font-size: 1.1rem; background: var(--gradient-gold); background-clip: text; -webkit-background-clip: text; color: transparent; cursor: pointer; }
+        @media (min-width: 768px) { .logo { font-size: 1.4rem; } }
+        
+        .mobile-menu-btn { display: flex; background: transparent; border: none; color: var(--primary-gold); font-size: 24px; cursor: pointer; padding: 8px; border-radius: 50%; }
+        .nav-links { display: none; width: 100%; flex-direction: column; align-items: center; padding: 16px 0 8px; gap: 8px; }
+        .nav-links.show { display: flex; }
+        .nav-links button { background: transparent; border: none; color: #e0e0e0; padding: 12px 20px; border-radius: 50px; cursor: pointer; font-size: 15px; width: 100%; text-align: center; }
+        @media (min-width: 768px) {
+            .mobile-menu-btn { display: none; }
+            .nav-links { display: flex !important; width: auto; flex-direction: row; padding: 0; gap: 4px; }
+            .nav-links button { width: auto; padding: 8px 16px; font-size: 14px; }
+        }
+        
+        .btn, .btn-ev { min-height: 48px; padding: 12px 24px; font-size: 16px; font-weight: 600; border: none; border-radius: 50px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn { background: var(--gradient-gold); color: #000; }
+        .btn-ev { background: linear-gradient(135deg, #00ff88, #00b4d8); color: #000; }
+        .btn-small { min-height: 40px; padding: 8px 20px; font-size: 14px; border-radius: 50px; background: var(--gradient-gold); color: #000; border: none; cursor: pointer; }
+        
+        .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 20px 0; }
+        @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
+        @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+        
+        .card { background: var(--card-bg); border-radius: 20px; padding: 20px; border: 1px solid var(--border-color); transition: transform 0.2s; cursor: pointer; }
+        .card:active { transform: scale(0.98); }
+        @media (min-width: 768px) { .card:hover { transform: translateY(-4px); border-color: var(--primary-gold); } }
+        .card-ev { border-left: 4px solid #00ff88; }
+        
+        .unit-badge, .ev-badge-module { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 12px; }
+        .unit-badge { background: var(--gradient-gold); color: #000; }
+        .ev-badge-module { background: linear-gradient(135deg, #00ff88, #00b4d8); color: #000; }
+        
+        .progress-bar { background: #2a2a2a; border-radius: 20px; height: 6px; margin: 16px 0; overflow: hidden; }
+        .progress-fill { background: var(--gradient-gold); height: 100%; width: 0%; transition: width 0.3s; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
+        @media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+        .stat-card { background: var(--card-bg); border-radius: 16px; padding: 16px 12px; border: 1px solid var(--border-color); text-align: center; }
+        .stat-number { font-size: 1.6rem; font-weight: 800; color: var(--primary-gold); }
+        
+        .hero { text-align: center; padding: 32px 16px; background: radial-gradient(circle at 10% 30%, rgba(212,175,55,0.08), #0a0a0a); border-radius: 32px; margin: 16px 0 24px; }
+        .hero h1 { font-size: 1.8rem; margin-bottom: 12px; }
+        @media (min-width: 768px) { .hero h1 { font-size: clamp(1.8rem, 5vw, 3.5rem); } }
+        .highlight { background: var(--gradient-gold); background-clip: text; -webkit-background-clip: text; color: transparent; }
+        
+        .question-bank { background: linear-gradient(145deg, #0f1119, #080a10); border-radius: 24px; margin: 24px 0; padding: 20px; }
+        .question-card { background: var(--card-bg); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+        .question-text { font-size: 1rem; font-weight: 600; margin-bottom: 16px; }
+        .options-group { display: flex; flex-direction: column; gap: 8px; }
+        .option { background: #1a1c26; padding: 14px 16px; border-radius: 12px; cursor: pointer; border: 1px solid #2a2e3a; font-size: 14px; }
+        .option.correct { background: rgba(46,204,113,0.2); border-color: #2ecc71; }
+        .option.wrong { background: rgba(231,76,60,0.2); border-color: #e74c3c; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); backdrop-filter: blur(12px); z-index: 2000; justify-content: center; align-items: center; padding: 16px; }
+        .modal-content { background: var(--card-bg); border: 1px solid var(--primary-gold); border-radius: 24px; padding: 24px; width: 100%; max-width: 450px; }
+        .modal-content input { width: 100%; padding: 14px; margin: 8px 0; background: #1a1c26; border: 1px solid #2c2f3a; border-radius: 12px; color: #fff; }
+        .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--primary-gold); }
+        
+        #toast-root { position: fixed; bottom: 16px; left: 16px; right: 16px; z-index: 2000; display: flex; flex-direction: column; gap: 8px; }
+        @media (min-width: 768px) { #toast-root { bottom: 30px; right: 30px; left: auto; min-width: 300px; } }
+        .toast { background: var(--card-bg); border-left: 4px solid var(--primary-gold); padding: 14px 18px; border-radius: 12px; animation: slideIn 0.3s ease; display: flex; align-items: center; gap: 12px; font-size: 14px; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
+        
+        .spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--primary-gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .unit-content { line-height: 1.6; }
+        .unit-content h2 { color: var(--primary-gold); margin: 20px 0 10px; }
+        .unit-content ul, .unit-content ol { margin-left: 20px; margin-bottom: 15px; }
+        .unit-content li { margin: 8px 0; }
+        
+        .hero-buttons { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; justify-content: center; align-items: center; }
+        @media (min-width: 480px) { .hero-buttons { flex-direction: row; } }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="navbar">
+            <div class="container nav">
+                <div class="logo" data-nav="home">MEI DRIVE AFRICA ⚡</div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
+                <div class="nav-links" id="navLinks">
+                    <button data-nav="home">🏠 Home</button>
+                    <button data-nav="learner">📚 Learner (21 Units)</button>
+                    <button data-nav="psv">🚌 PSV</button>
+                    <button data-nav="schoolbus">🏫 School Bus</button>
+                    <button data-nav="boda">🏍️ Boda</button>
+                    <button data-nav="ev">⚡ EV</button>
+                    <button data-nav="academy">🎓 Academy</button>
+                    <button data-nav="library">📖 Library</button>
+                    <div id="authButtons"></div>
+                </div>
+            </div>
+        </div>
+        <div class="container"><main id="page-content"><div class="spinner"></div></main></div>
+    </div>
+    <div id="modal-root"></div>
+    <div id="toast-root"></div>
 
+    <script>
+        // ============================================
+        // COMPLETE 21 LEARNER UNITS - BUILT IN
+        // ============================================
+        const LEARNER_UNITS = [
+            { id: 1, title: "Introduction to Driving in Kenya", desc: "Kenyan driving licenses, requirements, and driver responsibilities", content: "<h2>Kenya Driving License Categories</h2><ul><li>Class A: Motorcycles</li><li>Class B: Light vehicles</li><li>Class C: Heavy vehicles</li><li>Class D: PSV</li><li>Class E: Trailers</li></ul><h2>Requirements</h2><ul><li>Minimum age: 18 years</li><li>Medical certificate</li><li>Theory test (80% pass)</li><li>Practical driving test</li></ul>" },
+            { id: 2, title: "The Highway Code & Traffic Signs", desc: "Master all Kenyan traffic signs", content: "<h2>Traffic Signs</h2><ul><li>Regulatory: Stop, Give Way, Speed limits</li><li>Warning: Danger ahead, Sharp bend</li><li>Informative: Parking, Hospital</li></ul><h2>Road Markings</h2><ul><li>Solid yellow: No overtaking</li><li>Broken yellow: Overtaking allowed</li><li>Zebra crossing: Pedestrian priority</li></ul>" },
+            { id: 3, title: "Vehicle Controls & Instruments", desc: "Dashboard, controls, warning lights", content: "<h2>Controls</h2><ul><li>Steering wheel</li><li>Accelerator (right foot)</li><li>Brake pedal (right foot)</li><li>Clutch (left foot - manual)</li><li>Gear stick</li><li>Handbrake</li></ul><h2>Warning Lights</h2><ul><li>Red: Stop immediately</li><li>Yellow: Caution</li><li>Green: System active</li></ul>" },
+            { id: 4, title: "Basic Vehicle Maintenance", desc: "Essential maintenance checks", content: "<h2>Daily Checks - POWeR</h2><ul><li>P - Petrol/Fuel level</li><li>O - Oil level</li><li>W - Water/Coolant</li><li>eR - Electrical (lights, indicators)</li></ul><h2>Weekly Checks</h2><ul><li>Tire pressure</li><li>Brake fluid</li><li>Windshield washer</li></ul>" },
+            { id: 5, title: "Moving Off & Stopping Safely", desc: "Starting, stopping, parking", content: "<h2>MSM Routine</h2><ul><li>M - Mirrors</li><li>S - Signal</li><li>M - Manoeuvre</li></ul><h2>Hill Starts</h2><ul><li>Use handbrake</li><li>Find biting point</li><li>Release handbrake smoothly</li></ul>" },
+            { id: 6, title: "Turning & Reversing", desc: "Safe turning and reversing", content: "<h2>Turning</h2><ul><li>Signal 30m before turn</li><li>Check mirrors</li><li>Reduce speed</li><li>Position correctly</li></ul><h2>Reversing</h2><ul><li>Look over shoulder</li><li>Use mirrors</li><li>Move slowly</li></ul>" },
+            { id: 7, title: "Roundabouts & Junctions", desc: "Navigating roundabouts", content: "<h2>Roundabout Rules</h2><ul><li>Give way to right</li><li>Signal appropriately</li><li>Choose correct lane</li></ul><h2>Junctions</h2><ul><li>T-Junction</li><li>Crossroads</li><li>Give Way vs Stop</li></ul>" },
+            { id: 8, title: "Overtaking & Lane Discipline", desc: "Safe overtaking", content: "<h2>Overtaking Rules</h2><ul><li>Check mirrors</li><li>Signal intention</li><li>Ensure clear visibility</li><li>Return safely</li></ul><h2>No Overtaking Zones</h2><ul><li>Solid lines</li><li>Bridges</li><li>Bends</li><li>Near schools</li></ul>" },
+            { id: 9, title: "Speed Limits & Safe Speeds", desc: "Kenyan speed limits", content: "<h2>Speed Limits</h2><ul><li>Urban: 50 km/h</li><li>Residential: 40 km/h</li><li>Rural: 100 km/h</li><li>Highway: 110 km/h</li><li>School zone: 25 km/h</li><li>PSV: 80 km/h max</li></ul>" },
+            { id: 10, title: "Defensive Driving", desc: "Anticipating hazards", content: "<h2>5 Principles</h2><ul><li>Aim High - Look ahead</li><li>Get the Big Picture</li><li>Keep Eyes Moving</li><li>Leave an Out</li><li>Make Sure They See You</li></ul><h2>Following Distance</h2><ul><li>3-4 seconds rule</li></ul>" },
+            { id: 11, title: "Night Driving", desc: "Driving after dark", content: "<h2>Night Tips</h2><ul><li>Use low beams in traffic</li><li>Increase following distance</li><li>Reduce speed</li><li>Watch for pedestrians</li><li>Stop if tired</li></ul>" },
+            { id: 12, title: "Adverse Weather Driving", desc: "Rain, fog conditions", content: "<h2>Rain Driving</h2><ul><li>Reduce speed</li><li>Increase distance to 6-8 seconds</li><li>Use headlights</li><li>Avoid sudden braking</li></ul><h2>Fog Driving</h2><ul><li>Use fog lights</li><li>Reduce speed significantly</li><li>NO high beams</li></ul>" },
+            { id: 13, title: "Alcohol, Drugs & Driving", desc: "Impairment and law", content: "<h2>Legal Limits</h2><ul><li>PSV drivers: 0.00%</li><li>Private drivers: 0.05%</li><li>Drugs: ZERO tolerance</li></ul><h2>Penalties</h2><ul><li>Fine up to KSH 100,000</li><li>Imprisonment up to 2 years</li><li>License suspension</li></ul>" },
+            { id: 14, title: "Driver Fatigue", desc: "Managing tiredness", content: "<h2>Warning Signs</h2><ul><li>Yawning</li><li>Heavy eyes</li><li>Drifting from lane</li></ul><h2>Management</h2><ul><li>Stop every 2 hours</li><li>Sleep 7+ hours</li><li>Max 8 hours driving/day (PSV)</li></ul>" },
+            { id: 15, title: "Pedestrian & Child Safety", desc: "Protecting vulnerable users", content: "<h2>Pedestrian Rules</h2><ul><li>Yield at crosswalks</li><li>Reduce speed near schools</li><li>Never pass stopped school bus</li></ul><h2>Danger Zone</h2><ul><li>10 feet around school bus</li><li>Most dangerous area</li></ul>" },
+            { id: 16, title: "Emergency Procedures", desc: "Accident response", content: "<h2>SCAR Protocol</h2><ul><li>S - Stop</li><li>C - Check for injuries</li><li>A - Alert (warning triangles)</li><li>R - Record (photos, details)</li></ul><h2>Emergency Numbers</h2><ul><li>999, 911, 112</li><li>Red Cross: 1199</li></ul>" },
+            { id: 17, title: "First Aid for Drivers", desc: "Basic first aid", content: "<h2>DRABC Protocol</h2><ul><li>D - Danger</li><li>R - Response</li><li>A - Airway</li><li>B - Breathing</li><li>C - Circulation</li></ul><h2>CPR</h2><ul><li>30 compressions</li><li>2 rescue breaths</li><li>100-120 compressions/min</li></ul>" },
+            { id: 18, title: "Insurance & Documentation", desc: "Required documents", content: "<h2>Required Documents</h2><ul><li>Valid driving license</li><li>Insurance certificate</li><li>Vehicle logbook</li><li>PSV badge (commercial)</li></ul><h2>Insurance Types</h2><ul><li>Third Party Only</li><li>Third Party Fire & Theft</li><li>Comprehensive</li></ul>" },
+            { id: 19, title: "Environmental Driving", desc: "Eco-driving", content: "<h2>Eco-Driving Tips</h2><ul><li>Smooth acceleration</li><li>Steady speed</li><li>Remove excess weight</li><li>Check tire pressure</li><li>Turn off engine if stopped >60 sec</li></ul><h2>Savings</h2><ul><li>15-25% fuel savings</li><li>Lower emissions</li></ul>" },
+            { id: 20, title: "Driving Test Preparation", desc: "NTSA test prep", content: "<h2>Requirements</h2><ul><li>Valid learner license (3+ months)</li><li>Logbook with 20+ hours</li><li>Vehicle in good condition</li></ul><h2>Common Failures</h2><ul><li>Not checking mirrors</li><li>Speeding</li><li>Not stopping at STOP signs</li><li>Stalling</li></ul>" },
+            { id: 21, title: "Advanced Driving Skills", desc: "Professional development", content: "<h2>Advanced Techniques</h2><ul><li>Commentary driving</li><li>Hazard prediction</li><li>IPSGA system</li><li>Limit point analysis</li></ul><h2>Professional Standards</h2><ul><li>Continuous learning</li><li>License renewal every 3 years</li></ul>" }
+        ];
+
+        const PSV_UNITS = [
+            { id: 1, title: "PSV Licensing & Compliance", desc: "PSV licensing requirements", content: "<h2>PSV Badge Requirements</h2><ul><li>40 hours NTSA training</li><li>Medical exam</li><li>Police clearance</li><li>Defensive driving course</li><li>Pass theory and practical tests</li></ul>" },
+            { id: 2, title: "Professional Driver Conduct", desc: "Professional standards", content: "<h2>Standards</h2><ul><li>Be punctual</li><li>Professional communication</li><li>Know routes</li><li>Handle conflicts professionally</li><li>Wear proper uniform</li></ul>" },
+            { id: 3, title: "Personal Grooming", desc: "Appearance standards", content: "<h2>Appearance Standards</h2><ul><li>Clean pressed uniform</li><li>Name badge visible</li><li>Neat hair</li><li>Clean shaven/trimmed beard</li><li>Clean polished shoes</li></ul>" },
+            { id: 4, title: "Passenger Safety", desc: "Safety management", content: "<h2>Safety Rules</h2><ul><li>Board at designated stops</li><li>Seatbelt enforcement</li><li>No standing while moving</li><li>Assist elderly/disabled</li><li>Don't exceed capacity</li></ul>" }
+        ];
+
+        const SCHOOLBUS_UNITS = [
+            { id: 1, title: "Child Passenger Safety", desc: "Child safety protocols", content: "<h2>Safety Checklist</h2><ul><li>Daily headcount</li><li>Seatbelt check</li><li>No standing</li><li>Safe drop-off zones</li><li>Emergency contacts onboard</li></ul><h2>Danger Zone</h2><ul><li>10-foot area around bus</li><li>Most dangerous area</li><li>Driver must see all children</li></ul>" }
+        ];
+
+        const BODA_UNITS = [
+            { id: 1, title: "Motorcycle Controls", desc: "Basic controls", content: "<h2>Controls</h2><ul><li>Clutch: Left handlebar</li><li>Front brake: Right handlebar</li><li>Rear brake: Right foot</li><li>Gear shift: Left foot</li><li>Throttle: Right grip</li></ul>" },
+            { id: 2, title: "Protective Gear", desc: "Safety equipment", content: "<h2>Required Gear</h2><ul><li>ECE/DOT helmet</li><li>Riding jacket with armor</li><li>Full-finger gloves</li><li>Ankle boots</li><li>Reflective vest for night</li></ul>" }
+        ];
+
+        const EV_UNITS = [
+            { id: 1, title: "Introduction to EVs", desc: "EV technology", content: "<h2>EV Types</h2><ul><li>BEV: 100% electric</li><li>PHEV: Plug-in hybrid</li><li>HEV: Self-charging hybrid</li></ul><h2>Benefits</h2><ul><li>Lower running costs (KSH 2-3/km)</li><li>Zero emissions</li><li>Quiet operation</li><li>Instant torque</li><li>Less maintenance</li></ul>" },
+            { id: 2, title: "EV Battery Management", desc: "Battery care", content: "<h2>Battery Health</h2><ul><li>Keep charge 20-80%</li><li>Avoid extreme temperatures</li><li>Avoid frequent DC fast charging</li></ul><h2>Range Factors</h2><ul><li>Cold weather reduces range 20-40%</li><li>High speed reduces range</li><li>Climate control uses energy</li></ul>" }
+        ];
+
+        let currentUser = null;
+        let toastQueue = [];
+        let isProcessing = false;
+        
+        function showToast(message, type) {
+            toastQueue.push({ message, type: type || 'info' });
+            if (!isProcessing) processToast();
+        }
+        
+        async function processToast() {
+            if (toastQueue.length === 0) { isProcessing = false; return; }
+            isProcessing = true;
+            const { message, type } = toastQueue.shift();
+            const container = document.getElementById('toast-root');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+            toast.textContent = icon + ' ' + message;
+            container.appendChild(toast);
+            await new Promise(r => setTimeout(r, 3000));
+            toast.remove();
+            processToast();
+        }
+        
+        function updateAuthUI() {
+            const authDiv = document.getElementById('authButtons');
+            if (!authDiv) return;
+            if (currentUser) {
+                authDiv.innerHTML = '<div style="background:#d4af37;color:#000;padding:8px 16px;border-radius:40px;">👤 ' + currentUser.name + '</div><button onclick="logout()">🚪 Logout</button>';
+            } else {
+                authDiv.innerHTML = '<button onclick="showLoginModal()">🔑 Login</button>';
+            }
+        }
+        
+        function login(email, password) {
+            showToast('Demo login successful!', 'success');
+            currentUser = { id: 'demo', email: email, name: email.split('@')[0] };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            updateAuthUI();
+            closeModal();
+            navigateTo('home');
+        }
+        
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateAuthUI();
+            showToast('Logged out', 'info');
+            navigateTo('home');
+        }
+        
+        function showLoginModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = '<div class="modal-content"><button class="close-modal" onclick="this.closest(\'.modal\').remove()">✕</button><h3>🔐 Demo Login</h3><input type="email" id="loginEmail" placeholder="Email" value="demo@mei.com"><input type="password" id="loginPassword" placeholder="Password" value="demo123"><button class="btn" style="width:100%;margin-top:10px;" onclick="login(document.getElementById(\'loginEmail\').value, document.getElementById(\'loginPassword\').value)">Login</button><hr style="margin:16px 0;"><p style="text-align:center;color:#aaa;">Demo: Use any email/password</p></div>';
+            document.getElementById('modal-root').appendChild(modal);
+            modal.style.display = 'flex';
+        }
+        
+        function closeModal() {
+            const modal = document.querySelector('.modal');
+            if (modal) modal.remove();
+        }
+        
+        function renderCard(unit, type) {
+            const isEv = type === 'ev';
+            return '<div class="card ' + (isEv ? 'card-ev' : '') + '" onclick="viewUnit(' + unit.id + ', \'' + type + '\')"><span class="' + (isEv ? 'ev-badge-module' : 'unit-badge') + '">' + (isEv ? '⚡' : '') + ' ' + (type === 'learner' ? 'Unit ' + unit.id : '') + '</span><h3>' + unit.title + '</h3><p>' + unit.desc.substring(0, 80) + '...</p><div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div><button class="btn-small">📖 View →</button></div>';
+        }
+        
+        function viewUnit(unitId, type) {
+            let unit;
+            if (type === 'learner') unit = LEARNER_UNITS.find(u => u.id === unitId);
+            else if (type === 'psv') unit = PSV_UNITS.find(u => u.id === unitId);
+            else if (type === 'schoolbus') unit = SCHOOLBUS_UNITS.find(u => u.id === unitId);
+            else if (type === 'boda') unit = BODA_UNITS.find(u => u.id === unitId);
+            else if (type === 'ev') unit = EV_UNITS.find(u => u.id === unitId);
+            
+            if (!unit) return;
+            
+            const container = document.getElementById('page-content');
+            container.innerHTML = '<div style="background:var(--card-bg);border-radius:24px;padding:24px;margin:20px 0;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px;"><h2 style="color:var(--primary-gold);">' + unit.title + '</h2><button class="btn-small" onclick="navigateTo(\'' + type + '\')">← Back to ' + type.toUpperCase() + '</button></div><div class="unit-content">' + (unit.content || '<p>' + unit.desc + '</p>') + '</div><button class="btn" style="width:100%;margin-top:24px;" onclick="showToast(\'Unit completed! 🎉\', \'success\')">✅ Mark Complete</button></div>';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function navigateTo(page) {
+            const container = document.getElementById('page-content');
+            
+            if (page === 'home') {
+                container.innerHTML = '<div class="hero"><h1>Kenya\'s <span class="highlight">Digital Driver Safety Platform</span></h1><p>Drive Smart. Stay Safe. Arrive Home.</p><div class="hero-buttons"><button class="btn" onclick="navigateTo(\'learner\')">📚 Start Learning (21 Units)</button><button class="btn-ev" onclick="navigateTo(\'ev\')">⚡ EV Course</button></div></div><div class="stats-grid"><div class="stat-card"><div class="stat-number">21</div><div>Learner Units</div></div><div class="stat-card"><div class="stat-number">4</div><div>PSV Units</div></div><div class="stat-card"><div class="stat-number">1</div><div>School Bus</div></div><div class="stat-card"><div class="stat-number">2</div><div>EV Units</div></div></div><div class="grid"><div class="card" onclick="navigateTo(\'learner\')"><div style="font-size:2rem;margin-bottom:12px;">📚</div><h3>Learner Hub</h3><p>21 Complete Units</p><button class="btn-small">Start →</button></div><div class="card" onclick="navigateTo(\'psv\')"><div style="font-size:2rem;margin-bottom:12px;">🚌</div><h3>PSV Course</h3><p>Professional Certification</p><button class="btn-small">Start →</button></div><div class="card" onclick="navigateTo(\'schoolbus\')"><div style="font-size:2rem;margin-bottom:12px;">🏫</div><h3>School Bus Safety</h3><p>Child Transport Safety</p><button class="btn-small">Start →</button></div><div class="card card-ev" onclick="navigateTo(\'ev\')"><div style="font-size:2rem;margin-bottom:12px;">⚡</div><h3>EV Specialized</h3><p>Electric Vehicle Training</p><button class="btn-small">Start →</button></div><div class="card" onclick="navigateTo(\'boda\')"><div style="font-size:2rem;margin-bottom:12px;">🏍️</div><h3>Boda Safety</h3><p>Motorcycle Training</p><button class="btn-small">Start →</button></div><div class="card" onclick="navigateTo(\'academy\')"><div style="font-size:2rem;margin-bottom:12px;">🎓</div><h3>Academy</h3><p>Fleet Management</p><button class="btn-small">Start →</button></div><div class="card" onclick="navigateTo(\'library\')"><div style="font-size:2rem;margin-bottom:12px;">📖</div><h3>Library</h3><p>Resources & Manuals</p><button class="btn-small">Start →</button></div></div>';
+            } else if (page === 'learner') {
+                let cards = '';
+                for (let i = 0; i < LEARNER_UNITS.length; i++) {
+                    cards += renderCard(LEARNER_UNITS[i], 'learner');
+                }
+                container.innerHTML = '<div class="hero"><h1>📚 Learner Driver Hub</h1><p>21 Complete Units - Kenya Learner Handbook</p></div><div class="grid">' + cards + '</div><div class="question-bank"><h2>📝 NTSA Practice Questions</h2><div class="question-card"><div class="question-text"><strong>1.</strong> What is the legal blood alcohol limit for commercial drivers in Kenya?</div><div class="options-group"><div class="option" onclick="this.classList.add(\'correct\');showToast(\'✅ Correct! 0.00% is the limit\',\'success\')">A. 0.00%</div><div class="option" onclick="this.classList.add(\'wrong\');showToast(\'❌ Incorrect. The limit is 0.00%\',\'error\')">B. 0.05%</div><div class="option" onclick="this.classList.add(\'wrong\');showToast(\'❌ Incorrect. The limit is 0.00%\',\'error\')">C. 0.08%</div><div class="option" onclick="this.classList.add(\'wrong\');showToast(\'❌ Incorrect. The limit is 0.00%\',\'error\')">D. 0.10%</div></div></div><div class="question-card"><div class="question-text"><strong>2.</strong> What is the maximum speed limit in a residential area in Kenya?</div><div class="options-group"><div class="option" onclick="this.classList.add(\'wrong\');showToast(\'❌ Incorrect. The limit is 40 km/h\',\'error\')">A. 30 km/h</div><div class="option" onclick="this.classList.add(\'correct\');showToast(\'✅ Correct! 40 km/h is the limit\',\'success\')">B. 40 km/h</div><div class="option" onclick="this.classList.add(\'wrong\');showToast(\'❌ Incorrect. The limit is 40 km/h\',\'error\')">C. 50 km/h</div><div class="option" onclick="this.classList.add(\'wrong\');showToast(\'❌ Incorrect. The limit is 40 km/h\',\'error\')">D. 60 km/h</div></div></div></div>';
+            } else if (page === 'psv') {
+                let cards = '';
+                for (let i = 0; i < PSV_UNITS.length; i++) {
+                    cards += renderCard(PSV_UNITS[i], 'psv');
+                }
+                container.innerHTML = '<div class="hero"><h1>🚌 PSV Professional Course</h1><p>Professional Driver Certification</p></div><div class="grid">' + cards + '</div>';
+            } else if (page === 'schoolbus') {
+                let cards = '';
+                for (let i = 0; i < SCHOOLBUS_UNITS.length; i++) {
+                    cards += renderCard(SCHOOLBUS_UNITS[i], 'schoolbus');
+                }
+                container.innerHTML = '<div class="hero"><h1>🏫 School Bus Safety Program</h1><p>Specialized Training for Child Transport</p></div><div class="grid">' + cards + '</div>';
+            } else if (page === 'boda') {
+                let cards = '';
+                for (let i = 0; i < BODA_UNITS.length; i++) {
+                    cards += renderCard(BODA_UNITS[i], 'boda');
+                }
+                container.innerHTML = '<div class="hero"><h1>🏍️ Boda Boda Safety Course</h1><p>Motorcycle Safety Training</p></div><div class="grid">' + cards + '</div>';
+            } else if (page === 'ev') {
+                let cards = '';
+                for (let i = 0; i < EV_UNITS.length; i++) {
+                    cards += renderCard(EV_UNITS[i], 'ev');
+                }
+                container.innerHTML = '<div class="hero"><h1>⚡ Electric Vehicle Specialized Training</h1><p>Complete EV Training</p></div><div class="grid">' + cards + '</div>';
+            } else if (page === 'academy') {
+                container.innerHTML = '<div class="hero"><h1>🎓 Advanced Driver Academy</h1><p>Professional Development</p></div><div class="grid"><div class="card" onclick="showToast(\'Module started\',\'info\')"><div style="font-size:2rem;margin-bottom:12px;">🚛</div><h3>Fleet Management</h3><button class="btn-small">Start →</button></div><div class="card" onclick="showToast(\'Module started\',\'info\')"><div style="font-size:2rem;margin-bottom:12px;">📦</div><h3>Transport Logistics</h3><button class="btn-small">Start →</button></div><div class="card" onclick="showToast(\'Module started\',\'info\')"><div style="font-size:2rem;margin-bottom:12px;">👥</div><h3>Driver Training</h3><button class="btn-small">Start →</button></div></div>';
+            } else if (page === 'library') {
+                container.innerHTML = '<div class="hero"><h1>📖 Resource Library</h1><p>Official Documents & Manuals</p></div><div class="grid"><div class="card" onclick="showToast(\'Download started: Kenya Highway Code\',\'success\')"><div style="font-size:2rem;margin-bottom:12px;">📄</div><h3>Kenya Highway Code</h3><button class="btn-small">Download →</button></div><div class="card" onclick="showToast(\'Download started: EV Driver Handbook\',\'success\')"><div style="font-size:2rem;margin-bottom:12px;">📄</div><h3>EV Driver Handbook</h3><button class="btn-small">Download →</button></div><div class="card" onclick="showToast(\'Download started: NTSA Test Guide\',\'success\')"><div style="font-size:2rem;margin-bottom:12px;">📄</div><h3>NTSA Test Guide</h3><button class="btn-small">Download →</button></div><div class="card" onclick="showToast(\'Download started: PSV Driver Manual\',\'success\')"><div style="font-size:2rem;margin-bottom:12px;">📄</div><h3>PSV Driver Manual</h3><button class="btn-small">Download →</button></div></div>';
+            }
+            
+            const navLinks = document.getElementById('navLinks');
+            if (navLinks) navLinks.classList.remove('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        window.navigateTo = navigateTo;
+        window.viewUnit = viewUnit;
+        window.showToast = showToast;
+        window.login = login;
+        window.logout = logout;
+        window.showLoginModal = showLoginModal;
+        window.closeModal = closeModal;
+        
+        updateAuthUI();
+        
+        // Mobile menu
+        document.getElementById('mobileMenuBtn')?.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const navLinks = document.getElementById('navLinks');
+            if (navLinks) navLinks.classList.toggle('show');
+        });
+        document.addEventListener('click', function(e) {
+            const navLinks = document.getElementById('navLinks');
+            const mobileBtn = document.getElementById('mobileMenuBtn');
+            if (navLinks && navLinks.classList.contains('show') && !navLinks.contains(e.target) && mobileBtn && !mobileBtn.contains(e.target)) {
+                navLinks.classList.remove('show');
+            }
+        });
+        
+        // Navigation event delegation
+        document.addEventListener('click', function(e) {
+            const btn = e.target.closest('[data-nav]');
+            if (btn) navigateTo(btn.getAttribute('data-nav'));
+        });
+        
+        // Start on home page
+        navigateTo('home');
+    </script>
+</body>
+</html>
