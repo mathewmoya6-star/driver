@@ -1,21 +1,20 @@
 {
   "name": "mei-drive-africa",
-  "version": "1.0.0",
-  "description": "Kenya's Premier Driver Safety Platform",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
-    "start": "npx serve . -l 8080",
-    "dev": "npx live-server --port=3000",
-    "seed": "node scripts/seed-database.js",
-    "upload-images": "python upload_media.py",
-    "build": "echo 'Static site - no build needed'"
+    "dev": "node server.js",
+    "start": "node server.js",
+    "build": "echo 'Static site ready'"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.39.0"
-  },
-  "devDependencies": {
-    "live-server": "^1.2.2",
-    "serve": "^14.2.0",
-    "sharp": "^0.33.0"
+    "@supabase/supabase-js": "^2.39.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "express-rate-limit": "^7.1.5",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.3.1"
   }
 }
