@@ -1,29 +1,59 @@
-const API_URL = "https://YOUR-RENDER-BACKEND.onrender.com";
+<script type="module">
+import { supabase } from "./supabase.js";
 
-async function login() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
+window.login = async function () {
   try {
-    const res = await fetch(`${API_URL}/api/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
-    });
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-    const data = await res.json();
-
-    if (!res.ok) {
-      alert(data.error || "Login failed");
-      return;
+    if (!email || !password) {
+      return alert("Enter email and password");
     }
 
-    localStorage.setItem("token", data.session.access_token);
-    localStorage.setItem("user", JSON.stringify(data.user));
+    // LOGIN
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
 
-    window.location.href = "/dashboard.html";
+    if (error) {
+      console.log(error);
+      return alert(error.message);
+    }
+
+    console.log("LOGIN SUCCESS:", data);
+
+    const user = data.user;
+
+    // LOAD PROFILE
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+
+    console.log("PROFILE:", profile);
+    console.log("PROFILE ERROR:", profileError);
+
+    if (profileError || !profile) {
+      return alert("Profile not found");
+    }
+
+    // ADMIN CHECK
+    if (profile.role !== "admin") {
+      await supabase.auth.signOut();
+      return alert("Access denied. Not admin.");
+    }
+
+    // SAVE SESSION
+    localStorage.setItem("admin_user", JSON.stringify(profile));
+
+    // REDIRECT
+    window.location.href = "admin-dashboard.html";
 
   } catch (err) {
-    alert("Server unreachable");
+    console.log(err);
+    alert("Something went wrong");
   }
-}
+};
+</script>
