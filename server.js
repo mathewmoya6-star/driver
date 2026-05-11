@@ -1,26 +1,57 @@
-const express = require("express");
-const cors = require("cors");
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import dotenv from 'dotenv';
+import materialsRouter from './api/materials.js';
+import progressRouter from './api/progress.js';
+import adminRouter from './api/admin.js';
+import { authLimiter } from './api/middleware/rateLimit.js';
+
+dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.use(cors());
-app.use(express.json());
+// Security middleware
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "https://images.unsplash.com", "https://*.supabase.co"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      connectSrc: ["'self'", "https://*.supabase.co"]
+    }
+  }
+}));
 
-// ROUTES
-app.use("/api/auth", require("./routes/auth.routes"));
-app.use("/api", require("./routes/me.routes"));
-app.use("/api", require("./routes/admin.routes"));
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production' 
+    ? ['https://mei-drive-africa.onrender.com', 'https://mei-drive-africa.vercel.app']
+    : '*',
+  credentials: true
+}));
 
-app.get("/", (req, res) => {
-  res.json({ message: "MEI DRIVE AFRICA API RUNNING" });
+app.use(express.json({ limit: '10mb' }));
+app.use(express.static('public'));
+
+// Routes
+app.use('/api/materials', materialsRouter);
+app.use('/api/progress', progressRouter);
+app.use('/api/admin', adminRouter);
+
+// Health check
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'healthy', timestamp: new Date().toISOString() });
 });
 
-// ONLY RUN LOCALLY / RENDER
-if (require.main === module) {
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    console.log("Server running on", PORT);
-  });
-}
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Something went wrong!' });
+});
 
-module.exports = app;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
