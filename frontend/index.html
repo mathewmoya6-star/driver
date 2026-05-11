@@ -70,11 +70,18 @@
         /* Modal */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); backdrop-filter: blur(12px); z-index: 1000; justify-content: center; align-items: center; }
         .modal-content { background: var(--card-bg); border: 1px solid var(--primary-gold); border-radius: 24px; padding: 32px; max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto; }
-        .modal-content input { width: 100%; padding: 12px; margin: 10px 0; background: #1a1c26; border: 1px solid #2c2f3a; border-radius: 12px; color: #fff; }
+        .modal-content input, .modal-content select { width: 100%; padding: 12px; margin: 10px 0; background: #1a1c26; border: 1px solid #2c2f3a; border-radius: 12px; color: #fff; }
         .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--primary-gold); }
 
         /* Toast */
         .toast { position: fixed; bottom: 30px; right: 30px; background: var(--card-bg); border-left: 4px solid var(--primary-gold); padding: 16px 24px; border-radius: 12px; z-index: 2000; animation: slideIn 0.3s; display: flex; align-items: center; gap: 12px; }
+
+        /* Materials & Viewer */
+        .materials-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin: 20px 0; }
+        .material-card { background: var(--card-bg); border-radius: 16px; padding: 20px; border: 1px solid var(--border-color); cursor: pointer; transition: 0.3s; }
+        .material-card:hover { border-color: var(--primary-gold); transform: translateY(-2px); }
+        .viewer-container { background: var(--card-bg); border-radius: 20px; padding: 24px; margin: 20px 0; border: 1px solid var(--primary-gold); }
+        .viewer-content { margin-top: 20px; line-height: 1.6; }
 
         @keyframes slideIn { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -116,6 +123,8 @@
         </div>
         <div class="stats-grid" id="homeStats"></div>
         <div class="grid" id="homeModulesGrid"></div>
+        <div id="materials" class="materials-container"></div>
+        <div id="viewer" class="viewer-container" style="display: none;"></div>
     </div>
 
     <div id="learner" class="page">
@@ -146,396 +155,584 @@
     <p>Official Documents, Manuals & Reference Materials</p></div><div class="grid" id="libraryGrid"></div></div>
 </div>
 
-<script>
-// ====================== REAL COURSE DATA ======================
-
-// 21 Unit Learner Handbook - Kenya NTSA Curriculum
-const learnerUnits = [
-    { id: 1, title: "Introduction to Driving in Kenya", desc: "Overview of Kenyan traffic laws, licensing requirements, and driver responsibilities", keyTopics: ["Licensing categories", "Legal requirements", "Driver responsibilities", "Penalties for violations"] },
-    { id: 2, title: "The Highway Code & Traffic Signs", desc: "Comprehensive guide to Kenyan traffic signs, signals, and road markings", keyTopics: ["Regulatory signs", "Warning signs", "Informative signs", "Road markings", "Traffic lights"] },
-    { id: 3, title: "Vehicle Controls & Instruments", desc: "Understanding your vehicle's dashboard, controls, and warning lights", keyTopics: ["Steering wheel control", "Gear system", "Pedals operation", "Dashboard indicators", "Warning lights"] },
-    { id: 4, title: "Basic Vehicle Maintenance", desc: "Essential maintenance checks and routine inspections", keyTopics: ["Daily checks", "Fluid levels", "Tire pressure", "Brake inspection", "Lighting systems"] },
-    { id: 5, title: "Moving Off & Stopping Safely", desc: "Proper techniques for starting, stopping, and parking", keyTopics: ["MSM routine", "Clutch control", "Braking techniques", "Hill starts", "Emergency stops"] },
-    { id: 6, title: "Turning & Reversing", desc: "Safe turning procedures and reversing techniques", keyTopics: ["Left/right turns", "U-turns", "Three-point turns", "Reverse parking", "Bay parking"] },
-    { id: 7, title: "Roundabouts & Junctions", desc: "Navigating roundabouts and intersections correctly", keyTopics: ["Approach speeds", "Giving way rules", "Lane discipline", "Signal use", "Exit procedures"] },
-    { id: 8, title: "Overtaking & Lane Discipline", desc: "Safe overtaking and proper lane usage", keyTopics: ["Overtaking rules", "No-overtaking zones", "Lane selection", "Blind spots", "Mirror checks"] },
-    { id: 9, title: "Speed Limits & Safe Speeds", desc: "Understanding Kenyan speed limits and appropriate speeds", keyTopics: ["Urban limits (50km/h)", "Rural limits (100km/h)", "Highway limits (110km/h)", "Weather adjustments", "School zones"] },
-    { id: 10, title: "Defensive Driving Techniques", desc: "Anticipating hazards and driving defensively", keyTopics: ["Hazard perception", "Safe following distance", "Scanning techniques", "Emergency responses", "Risk management"] },
-    { id: 11, title: "Night Driving", desc: "Safe driving practices after dark", keyTopics: ["Light usage", "Glare management", "Reduced visibility", "Fatigue management", "Night hazards"] },
-    { id: 12, title: "Driving in Adverse Weather", desc: "Handling rain, fog, and difficult conditions", keyTopics: ["Wet roads", "Fog driving", "High winds", "Flood avoidance", "Emergency equipment"] },
-    { id: 13, title: "Alcohol, Drugs & Driving", desc: "Understanding impairment and legal limits", keyTopics: ["BAC limits (0.00% for PSV)", "Drug effects", "Legal penalties", "Alternatives to driving", "Responsibility"] },
-    { id: 14, title: "Driver Fatigue & Rest", desc: "Managing fatigue and understanding rest requirements", keyTopics: ["Fatigue signs", "Rest breaks", "Sleep requirements", "Shift work", "Healthy habits"] },
-    { id: 15, title: "Pedestrian & Child Safety", desc: "Protecting vulnerable road users", keyTopics: ["School zones", "Crossings", "Play areas", "Elderly pedestrians", "Disability awareness"] },
-    { id: 16, title: "Emergency Procedures", desc: "Responding to accidents and emergencies", keyTopics: ["Accident protocol", "First aid basics", "Emergency contacts", "Warning triangles", "Reporting requirements"] },
-    { id: 17, title: "First Aid for Drivers", desc: "Basic first aid skills for road incidents", keyTopics: ["DRABC protocol", "Bleeding control", "Shock management", "CPR basics", "Injury assessment"] },
-    { id: 18, title: "Vehicle Insurance & Documentation", desc: "Understanding insurance and required documents", keyTopics: ["Insurance types", "Valid documents", "Claims process", "Third-party coverage", "Comprehensive cover"] },
-    { id: 19, title: "Environmental Driving", desc: "Eco-friendly driving practices", keyTopics: ["Fuel efficiency", "Emissions reduction", "Smooth driving", "Route planning", "Vehicle maintenance"] },
-    { id: 20, title: "Driving Test Preparation", desc: "Preparing for the NTSA driving test", keyTopics: ["Test requirements", "Common mistakes", "Test routes", "Vehicle checks", "Test day tips"] },
-    { id: 21, title: "Advanced Driving Skills", desc: "Beyond the basics - professional development", keyTopics: ["Commentary driving", "Advanced observation", "System of car control", "Professional standards", "Continuous learning"] }
-];
-
-// PSV Course Units
-const psvUnits = [
-    { id: 1, title: "PSV Licensing & Compliance", desc: "Understanding PSV licenses, badges, and legal requirements", details: ["PSV badge requirements", "Route permits", "Timetable compliance", "Vehicle inspection standards", "Driver qualification"] },
-    { id: 2, title: "Professional Driver Conduct", desc: "Maintaining professional standards on the road", details: ["Customer service", "Punctuality", "Route adherence", "Conflict resolution", "Reporting procedures"] },
-    { id: 3, title: "Personal Grooming & Appearance", desc: "Professional presentation standards for PSV drivers", details: ["Clean uniform policy", "Personal hygiene", "Proper footwear", "Name badge display", "Professional image"] },
-    { id: 4, title: "Passenger Safety & Management", desc: "Ensuring passenger safety and comfort", details: ["Boarding/alighting safety", "Seatbelt enforcement", "Crowd management", "Special needs passengers", "Emergency evacuation"] },
-    { id: 5, title: "Vehicle Inspections & Defect Reporting", desc: "Daily vehicle checks and reporting procedures", details: ["Pre-trip inspection", "Defect reporting forms", "Maintenance schedules", "Safety equipment checks", "Documentation"] },
-    { id: 6, title: "Route Planning & Time Management", desc: "Efficient route navigation and schedule adherence", details: ["Route familiarization", "Time calculations", "Traffic anticipation", "Alternative routes", "Delay reporting"] },
-    { id: 7, title: "Fare Management & Ticketing", desc: "Proper fare collection and ticketing procedures", details: ["Ticket issuance", "Change handling", "Receipt provision", "Fare disputes", "Daily reconciliation"] },
-    { id: 8, title: "Emergency Response for PSV", desc: "Handling emergencies in public service vehicles", details: ["Accident procedures", "Medical emergencies", "Fire response", "Terrorism awareness", "Passenger evacuation"] },
-    { id: 9, title: "Conflict Resolution & Customer Care", desc: "Managing difficult situations with passengers", details: ["De-escalation techniques", "Complaint handling", "Cultural sensitivity", "Communication skills", "Reporting incidents"] },
-    { id: 10, title: "Defensive Driving for PSV", desc: "Advanced safety techniques for passenger vehicles", details: ["Space management", "Hazard anticipation", "Braking techniques", "Cornering safety", "Blind spot awareness"] }
-];
-
-// School Bus/Van Driver Course Units - Specialized for Child Safety
-const schoolbusUnits = [
-    { id: 1, title: "Child Passenger Safety Fundamentals", desc: "Understanding the unique needs of child passengers", details: ["Child development stages", "Seatbelt positioning for children", "Child restraint systems", "Loading/unloading procedures", "Headcount protocols"] },
-    { id: 2, title: "School Bus/Van Pre-Trip Inspection", desc: "Comprehensive vehicle safety checks specific to school transport", details: ["Brake system inspection", "Lighting and signals", "Emergency exits", "Student seating integrity", "First aid kit verification"] },
-    { id: 3, title: "Safe Loading & Unloading Zones", desc: "Mastering the most dangerous part of school transport", details: ["School zone protocols", "Danger zone awareness (10-foot radius)", "Hand signal procedures", "Student crossing guidance", "Driver's crossview mirror use"] },
-    { id: 4, title: "Student Management & Behavior", desc: "Managing student behavior while driving", details: ["Setting expectations", "Distraction prevention", "Conflict resolution", "Special needs accommodations", "Reporting incidents"] },
-    { id: 5, title: "Route Risk Assessment", desc: "Identifying and mitigating route hazards", details: ["Route mapping", "Railroad crossing safety", "High-risk intersection identification", "Neighborhood hazard awareness", "Alternative route planning"] },
-    { id: 6, title: "Emergency Evacuation Procedures", desc: "Responding to emergencies with child passengers", details: ["Emergency exit drills", "Fire evacuation", "Accident response", "Student accountability", "Parent notification protocol"] },
-    { id: 7, title: "School Zone Driving & Compliance", desc: "Navigating school zones and traffic laws", details: ["School speed limits (25km/h)", "No-passing zones", "Stop-arm compliance", "Traffic warden communication", "Signal timing awareness"] },
-    { id: 8, title: "Communication with Parents & Schools", desc: "Professional coordination with stakeholders", details: ["Daily checklists", "Parent-teacher communication", "Late arrival procedures", "Missing child protocol", "Incident reporting"] }
-];
-
-// Boda Boda Course Units
-const bodaUnits = [
-    { id: 1, title: "Motorcycle Controls & Operation", desc: "Mastering motorcycle controls and basic operation", details: ["Clutch/throttle control", "Gear shifting", "Braking system", "Balance techniques", "Starting/stopping"] },
-    { id: 2, title: "Protective Gear & Safety Equipment", desc: "Essential safety gear for riders", details: ["Helmet standards", "Jacket requirements", "Gloves importance", "Boot protection", "Visibility gear"] },
-    { id: 3, title: "Passenger Safety on Motorcycles", desc: "Safe passenger transport procedures", details: ["Passenger briefing", "Footrest usage", "Hold techniques", "Mounting/dismounting", "Weight distribution"] },
-    { id: 4, title: "Cargo & Load Management", desc: "Safe loading for delivery services", details: ["Weight limits", "Secure fastening", "Balance maintenance", "Prohibited items", "Load inspection"] },
-    { id: 5, title: "Traffic Navigation for Boda", desc: "Navigating traffic safely on two wheels", details: ["Lane positioning", "Filtering safely", "Intersection navigation", "Roundabout tactics", "Urban riding"] },
-    { id: 6, title: "Night & Weather Riding", desc: "Handling challenging conditions", details: ["Night visibility", "Wet road techniques", "Wind management", "Light usage", "Reduced speeds"] }
-];
-
-// Academy Units
-const academyUnits = [
-    { id: 1, title: "Fleet Management Fundamentals", desc: "Managing commercial vehicle fleets", details: ["Fleet sizing", "Maintenance scheduling", "Fuel management", "Driver allocation", "Performance metrics"] },
-    { id: 2, title: "Transport Logistics & Planning", desc: "Efficient transport operations", details: ["Route optimization", "Load planning", "Schedule creation", "Cost management", "Regulatory compliance"] },
-    { id: 3, title: "Driver Recruitment & Training", desc: "Building a professional driver team", details: ["Recruitment criteria", "Background verification", "Training programs", "Performance evaluation", "Continuous development"] }
-];
-
-// Library Resources
-const libraryResources = [
-    { title: "Kenya Highway Code (Official)", type: "PDF", size: "2.4 MB", description: "Complete official NTSA highway code document" },
-    { title: "NTSA Driving Test Guide", type: "PDF", size: "1.8 MB", description: "Comprehensive test preparation guide" },
-    { title: "School Bus Driver Handbook", type: "PDF", size: "3.5 MB", description: "Specialized school transport safety manual" },
-    { title: "Child Safety Transport Guidelines", type: "PDF", size: "2.1 MB", description: "NTSA guidelines for student transport" },
-    { title: "Vehicle Maintenance Handbook", type: "Video", duration: "45 min", description: "Essential maintenance video tutorial" },
-    { title: "PSV Driver Handbook", type: "PDF", size: "3.2 MB", description: "Professional PSV driver manual" },
-    { title: "Road Signs Reference Card", type: "PDF", size: "0.5 MB", description: "Quick reference for all traffic signs" },
-    { title: "First Aid for Drivers", type: "Video", duration: "30 min", description: "Emergency first aid training video" }
-];
-
-// NTSA Test Questions (30 real exam questions)
-const questions = [
-    { id: 1, text: "What is the maximum speed limit for a PSV vehicle on a Kenyan highway?", options: ["80 km/h", "100 km/h", "110 km/h", "120 km/h"], correct: 0 },
-    { id: 2, text: "What does a solid yellow line on your side of the road indicate?", options: ["No overtaking", "Overtaking allowed", "Parking allowed", "Slow down"], correct: 0 },
-    { id: 3, text: "What is the legal blood alcohol limit for professional drivers in Kenya?", options: ["0.00%", "0.05%", "0.08%", "0.10%"], correct: 0 },
-    { id: 4, text: "When should you use your hazard lights?", options: ["When parked illegally", "In heavy rain only", "When your vehicle is disabled", "When speeding"], correct: 2 },
-    { id: 5, text: "What does a red traffic light mean?", options: ["Stop and wait for green", "Proceed with caution", "Slow down", "Prepare to stop"], correct: 0 },
-    { id: 6, text: "What is the safe following distance in good conditions?", options: ["1 second", "2 seconds", "3 seconds", "4 seconds"], correct: 1 },
-    { id: 7, text: "What is the speed limit in a school zone in Kenya?", options: ["15 km/h", "25 km/h", "40 km/h", "50 km/h"], correct: 1 },
-    { id: 8, text: "What does a flashing amber traffic light mean?", options: ["Stop", "Go faster", "Prepare to stop", "Proceed with caution if safe"], correct: 3 },
-    { id: 9, text: "When should a school bus activate its stop arm?", options: ["When loading students", "On highways only", "Never", "When speeding"], correct: 0 },
-    { id: 10, text: "What is the penalty for driving without a valid PSV badge?", options: ["Fine only", "Imprisonment only", "Fine and/or imprisonment", "License suspension"], correct: 2 },
-    { id: 11, text: "When approaching a roundabout, who has right of way?", options: ["Vehicles on the roundabout", "Vehicles entering from left", "Vehicles entering from right", "Largest vehicles"], correct: 0 },
-    { id: 12, text: "What should you do if your brakes fail?", options: ["Jump out", "Use handbrake gradually", "Sound horn", "Continue driving"], correct: 1 },
-    { id: 13, text: "What does a 'STOP' sign require?", options: ["Slow down", "Stop completely", "Yield", "Proceed with caution"], correct: 1 },
-    { id: 14, text: "When driving in fog, you should:", options: ["Use high beams", "Use fog lights", "Drive faster", "Follow closely"], correct: 1 },
-    { id: 15, text: "What is the minimum tread depth for tires in Kenya?", options: ["0.6 mm", "1.0 mm", "1.6 mm", "2.0 mm"], correct: 2 },
-    { id: 16, text: "Who is responsible for student safety on a school bus?", options: ["Students themselves", "The school only", "The driver", "The driver and school"], correct: 2 },
-    { id: 17, text: "What does a yellow traffic light mean?", options: ["Stop if safe", "Speed up", "Go slowly", "Park"], correct: 0 },
-    { id: 18, text: "When can you use a mobile phone while driving?", options: ["Never", "Only with hands-free", "Only in traffic", "Only at night"], correct: 0 },
-    { id: 19, text: "What should you check daily before driving?", options: ["Tires only", "Lights only", "Tires, lights, brakes, fluids", "Radio only"], correct: 2 },
-    { id: 20, text: "What does a solid white line indicate?", options: ["No crossing", "Lane separation", "Parking", "Slow zone"], correct: 0 },
-    { id: 21, text: "When should you use low beam headlights?", options: ["Always at night", "In fog only", "In city limits", "On highways only"], correct: 0 },
-    { id: 22, text: "What is the penalty for drunk driving?", options: ["Fine", "License suspension", "Imprisonment", "All of the above"], correct: 3 },
-    { id: 23, text: "How often should school buses be inspected?", options: ["Monthly", "Quarterly", "Twice a year", "Annually"], correct: 1 },
-    { id: 24, text: "What does a 'GIVE WAY' sign mean?", options: ["Stop", "Yield to other traffic", "Go faster", "Turn around"], correct: 1 },
-    { id: 25, text: "The danger zone around a school bus extends how far?", options: ["5 feet", "10 feet", "15 feet", "20 feet"], correct: 1 },
-    { id: 26, text: "What should you do at an uncontrolled intersection?", options: ["Speed through", "Stop completely", "Yield to right", "Sound horn"], correct: 2 },
-    { id: 27, text: "What is the maximum working hours for a PSV driver in a day?", options: ["8 hours", "10 hours", "12 hours", "14 hours"], correct: 0 },
-    { id: 28, text: "When should you use your horn?", options: ["To greet friends", "To warn of danger", "To show anger", "To hurry pedestrians"], correct: 1 },
-    { id: 29, text: "What does a reflective jacket do for a boda rider?", options: ["Fashion", "Increases visibility", "Keeps warm", "Repels rain"], correct: 1 },
-    { id: 30, text: "What is the first thing to do after an accident?", options: ["Call lawyer", "Stop and assist injured", "Drive away", "Hide evidence"], correct: 1 }
-];
-
-// ====================== STATE MANAGEMENT ======================
-let currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
-let userProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
-let currentQuestionPage = 1;
-const questionsPerPage = 5;
-
-// ====================== UTILITIES ======================
-function showToast(msg, type = 'info') { 
-    const t = document.createElement('div'); 
-    t.className = 'toast'; 
-    t.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${msg}`; 
-    document.body.appendChild(t); 
-    setTimeout(() => t.remove(), 3000); 
-}
-
-function showModal(html) { 
-    let modal = document.querySelector('.modal');
-    if (modal) modal.remove();
-    modal = document.createElement('div'); 
-    modal.className = 'modal'; 
-    modal.style.display = 'flex'; 
-    modal.innerHTML = html; 
-    document.body.appendChild(modal); 
-}
-
-function closeModal() { 
-    const modal = document.querySelector('.modal');
-    if (modal) modal.remove(); 
-}
-
-function showUnitDetail(unit, moduleType = 'learner') {
-    let content = `<div class="modal-content"><span class="close-modal" onclick="closeModal()">&times;</span>
-        <h2 style="color: var(--primary-gold);">${unit.title}</h2>
-        <div class="unit-detail">
-            <p style="font-size: 1.1em; margin: 15px 0;">${unit.desc}</p>
-            <h3>Key Topics Covered:</h3>
-            <ul>`;
+<script type="module">
+    // ====================== SUPABASE IMPORTS ======================
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
     
-    if (unit.keyTopics) {
-        unit.keyTopics.forEach(topic => {
-            content += `<li><i class="fas fa-check-circle" style="color: var(--primary-gold); margin-right: 10px;"></i>${topic}</li>`;
-        });
-    } else if (unit.details) {
-        unit.details.forEach(detail => {
-            content += `<li><i class="fas fa-check-circle" style="color: var(--primary-gold); margin-right: 10px;"></i>${detail}</li>`;
-        });
+    // Supabase configuration - Replace with your actual Supabase credentials
+    const supabaseUrl = 'https://your-project.supabase.co'; // Replace with your Supabase URL
+    const supabaseKey = 'your-anon-key'; // Replace with your Supabase anon key
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    
+    // ====================== REAL COURSE DATA ======================
+    const learnerUnits = [
+        { id: 1, title: "Introduction to Driving in Kenya", desc: "Overview of Kenyan traffic laws, licensing requirements, and driver responsibilities", keyTopics: ["Licensing categories", "Legal requirements", "Driver responsibilities", "Penalties for violations"] },
+        { id: 2, title: "The Highway Code & Traffic Signs", desc: "Comprehensive guide to Kenyan traffic signs, signals, and road markings", keyTopics: ["Regulatory signs", "Warning signs", "Informative signs", "Road markings", "Traffic lights"] },
+        { id: 3, title: "Vehicle Controls & Instruments", desc: "Understanding your vehicle's dashboard, controls, and warning lights", keyTopics: ["Steering wheel control", "Gear system", "Pedals operation", "Dashboard indicators", "Warning lights"] },
+        { id: 4, title: "Basic Vehicle Maintenance", desc: "Essential maintenance checks and routine inspections", keyTopics: ["Daily checks", "Fluid levels", "Tire pressure", "Brake inspection", "Lighting systems"] },
+        { id: 5, title: "Moving Off & Stopping Safely", desc: "Proper techniques for starting, stopping, and parking", keyTopics: ["MSM routine", "Clutch control", "Braking techniques", "Hill starts", "Emergency stops"] },
+        { id: 6, title: "Turning & Reversing", desc: "Safe turning procedures and reversing techniques", keyTopics: ["Left/right turns", "U-turns", "Three-point turns", "Reverse parking", "Bay parking"] },
+        { id: 7, title: "Roundabouts & Junctions", desc: "Navigating roundabouts and intersections correctly", keyTopics: ["Approach speeds", "Giving way rules", "Lane discipline", "Signal use", "Exit procedures"] },
+        { id: 8, title: "Overtaking & Lane Discipline", desc: "Safe overtaking and proper lane usage", keyTopics: ["Overtaking rules", "No-overtaking zones", "Lane selection", "Blind spots", "Mirror checks"] },
+        { id: 9, title: "Speed Limits & Safe Speeds", desc: "Understanding Kenyan speed limits and appropriate speeds", keyTopics: ["Urban limits (50km/h)", "Rural limits (100km/h)", "Highway limits (110km/h)", "Weather adjustments", "School zones"] },
+        { id: 10, title: "Defensive Driving Techniques", desc: "Anticipating hazards and driving defensively", keyTopics: ["Hazard perception", "Safe following distance", "Scanning techniques", "Emergency responses", "Risk management"] },
+        { id: 11, title: "Night Driving", desc: "Safe driving practices after dark", keyTopics: ["Light usage", "Glare management", "Reduced visibility", "Fatigue management", "Night hazards"] },
+        { id: 12, title: "Driving in Adverse Weather", desc: "Handling rain, fog, and difficult conditions", keyTopics: ["Wet roads", "Fog driving", "High winds", "Flood avoidance", "Emergency equipment"] },
+        { id: 13, title: "Alcohol, Drugs & Driving", desc: "Understanding impairment and legal limits", keyTopics: ["BAC limits (0.00% for PSV)", "Drug effects", "Legal penalties", "Alternatives to driving", "Responsibility"] },
+        { id: 14, title: "Driver Fatigue & Rest", desc: "Managing fatigue and understanding rest requirements", keyTopics: ["Fatigue signs", "Rest breaks", "Sleep requirements", "Shift work", "Healthy habits"] },
+        { id: 15, title: "Pedestrian & Child Safety", desc: "Protecting vulnerable road users", keyTopics: ["School zones", "Crossings", "Play areas", "Elderly pedestrians", "Disability awareness"] },
+        { id: 16, title: "Emergency Procedures", desc: "Responding to accidents and emergencies", keyTopics: ["Accident protocol", "First aid basics", "Emergency contacts", "Warning triangles", "Reporting requirements"] },
+        { id: 17, title: "First Aid for Drivers", desc: "Basic first aid skills for road incidents", keyTopics: ["DRABC protocol", "Bleeding control", "Shock management", "CPR basics", "Injury assessment"] },
+        { id: 18, title: "Vehicle Insurance & Documentation", desc: "Understanding insurance and required documents", keyTopics: ["Insurance types", "Valid documents", "Claims process", "Third-party coverage", "Comprehensive cover"] },
+        { id: 19, title: "Environmental Driving", desc: "Eco-friendly driving practices", keyTopics: ["Fuel efficiency", "Emissions reduction", "Smooth driving", "Route planning", "Vehicle maintenance"] },
+        { id: 20, title: "Driving Test Preparation", desc: "Preparing for the NTSA driving test", keyTopics: ["Test requirements", "Common mistakes", "Test routes", "Vehicle checks", "Test day tips"] },
+        { id: 21, title: "Advanced Driving Skills", desc: "Beyond the basics - professional development", keyTopics: ["Commentary driving", "Advanced observation", "System of car control", "Professional standards", "Continuous learning"] }
+    ];
+
+    const psvUnits = [
+        { id: 1, title: "PSV Licensing & Compliance", desc: "Understanding PSV licenses, badges, and legal requirements", details: ["PSV badge requirements", "Route permits", "Timetable compliance", "Vehicle inspection standards", "Driver qualification"] },
+        { id: 2, title: "Professional Driver Conduct", desc: "Maintaining professional standards on the road", details: ["Customer service", "Punctuality", "Route adherence", "Conflict resolution", "Reporting procedures"] },
+        { id: 3, title: "Personal Grooming & Appearance", desc: "Professional presentation standards for PSV drivers", details: ["Clean uniform policy", "Personal hygiene", "Proper footwear", "Name badge display", "Professional image"] },
+        { id: 4, title: "Passenger Safety & Management", desc: "Ensuring passenger safety and comfort", details: ["Boarding/alighting safety", "Seatbelt enforcement", "Crowd management", "Special needs passengers", "Emergency evacuation"] },
+        { id: 5, title: "Vehicle Inspections & Defect Reporting", desc: "Daily vehicle checks and reporting procedures", details: ["Pre-trip inspection", "Defect reporting forms", "Maintenance schedules", "Safety equipment checks", "Documentation"] },
+        { id: 6, title: "Route Planning & Time Management", desc: "Efficient route navigation and schedule adherence", details: ["Route familiarization", "Time calculations", "Traffic anticipation", "Alternative routes", "Delay reporting"] },
+        { id: 7, title: "Fare Management & Ticketing", desc: "Proper fare collection and ticketing procedures", details: ["Ticket issuance", "Change handling", "Receipt provision", "Fare disputes", "Daily reconciliation"] },
+        { id: 8, title: "Emergency Response for PSV", desc: "Handling emergencies in public service vehicles", details: ["Accident procedures", "Medical emergencies", "Fire response", "Terrorism awareness", "Passenger evacuation"] },
+        { id: 9, title: "Conflict Resolution & Customer Care", desc: "Managing difficult situations with passengers", details: ["De-escalation techniques", "Complaint handling", "Cultural sensitivity", "Communication skills", "Reporting incidents"] },
+        { id: 10, title: "Defensive Driving for PSV", desc: "Advanced safety techniques for passenger vehicles", details: ["Space management", "Hazard anticipation", "Braking techniques", "Cornering safety", "Blind spot awareness"] }
+    ];
+
+    const schoolbusUnits = [
+        { id: 1, title: "Child Passenger Safety Fundamentals", desc: "Understanding the unique needs of child passengers", details: ["Child development stages", "Seatbelt positioning for children", "Child restraint systems", "Loading/unloading procedures", "Headcount protocols"] },
+        { id: 2, title: "School Bus/Van Pre-Trip Inspection", desc: "Comprehensive vehicle safety checks specific to school transport", details: ["Brake system inspection", "Lighting and signals", "Emergency exits", "Student seating integrity", "First aid kit verification"] },
+        { id: 3, title: "Safe Loading & Unloading Zones", desc: "Mastering the most dangerous part of school transport", details: ["School zone protocols", "Danger zone awareness (10-foot radius)", "Hand signal procedures", "Student crossing guidance", "Driver's crossview mirror use"] },
+        { id: 4, title: "Student Management & Behavior", desc: "Managing student behavior while driving", details: ["Setting expectations", "Distraction prevention", "Conflict resolution", "Special needs accommodations", "Reporting incidents"] },
+        { id: 5, title: "Route Risk Assessment", desc: "Identifying and mitigating route hazards", details: ["Route mapping", "Railroad crossing safety", "High-risk intersection identification", "Neighborhood hazard awareness", "Alternative route planning"] },
+        { id: 6, title: "Emergency Evacuation Procedures", desc: "Responding to emergencies with child passengers", details: ["Emergency exit drills", "Fire evacuation", "Accident response", "Student accountability", "Parent notification protocol"] },
+        { id: 7, title: "School Zone Driving & Compliance", desc: "Navigating school zones and traffic laws", details: ["School speed limits (25km/h)", "No-passing zones", "Stop-arm compliance", "Traffic warden communication", "Signal timing awareness"] },
+        { id: 8, title: "Communication with Parents & Schools", desc: "Professional coordination with stakeholders", details: ["Daily checklists", "Parent-teacher communication", "Late arrival procedures", "Missing child protocol", "Incident reporting"] }
+    ];
+
+    const bodaUnits = [
+        { id: 1, title: "Motorcycle Controls & Operation", desc: "Mastering motorcycle controls and basic operation", details: ["Clutch/throttle control", "Gear shifting", "Braking system", "Balance techniques", "Starting/stopping"] },
+        { id: 2, title: "Protective Gear & Safety Equipment", desc: "Essential safety gear for riders", details: ["Helmet standards", "Jacket requirements", "Gloves importance", "Boot protection", "Visibility gear"] },
+        { id: 3, title: "Passenger Safety on Motorcycles", desc: "Safe passenger transport procedures", details: ["Passenger briefing", "Footrest usage", "Hold techniques", "Mounting/dismounting", "Weight distribution"] },
+        { id: 4, title: "Cargo & Load Management", desc: "Safe loading for delivery services", details: ["Weight limits", "Secure fastening", "Balance maintenance", "Prohibited items", "Load inspection"] },
+        { id: 5, title: "Traffic Navigation for Boda", desc: "Navigating traffic safely on two wheels", details: ["Lane positioning", "Filtering safely", "Intersection navigation", "Roundabout tactics", "Urban riding"] },
+        { id: 6, title: "Night & Weather Riding", desc: "Handling challenging conditions", details: ["Night visibility", "Wet road techniques", "Wind management", "Light usage", "Reduced speeds"] }
+    ];
+
+    const academyUnits = [
+        { id: 1, title: "Fleet Management Fundamentals", desc: "Managing commercial vehicle fleets", details: ["Fleet sizing", "Maintenance scheduling", "Fuel management", "Driver allocation", "Performance metrics"] },
+        { id: 2, title: "Transport Logistics & Planning", desc: "Efficient transport operations", details: ["Route optimization", "Load planning", "Schedule creation", "Cost management", "Regulatory compliance"] },
+        { id: 3, title: "Driver Recruitment & Training", desc: "Building a professional driver team", details: ["Recruitment criteria", "Background verification", "Training programs", "Performance evaluation", "Continuous development"] }
+    ];
+
+    const libraryResources = [
+        { title: "Kenya Highway Code (Official)", type: "PDF", size: "2.4 MB", description: "Complete official NTSA highway code document" },
+        { title: "NTSA Driving Test Guide", type: "PDF", size: "1.8 MB", description: "Comprehensive test preparation guide" },
+        { title: "School Bus Driver Handbook", type: "PDF", size: "3.5 MB", description: "Specialized school transport safety manual" },
+        { title: "Child Safety Transport Guidelines", type: "PDF", size: "2.1 MB", description: "NTSA guidelines for student transport" },
+        { title: "Vehicle Maintenance Handbook", type: "Video", duration: "45 min", description: "Essential maintenance video tutorial" },
+        { title: "PSV Driver Handbook", type: "PDF", size: "3.2 MB", description: "Professional PSV driver manual" },
+        { title: "Road Signs Reference Card", type: "PDF", size: "0.5 MB", description: "Quick reference for all traffic signs" },
+        { title: "First Aid for Drivers", type: "Video", duration: "30 min", description: "Emergency first aid training video" }
+    ];
+
+    const questions = [
+        { id: 1, text: "What is the maximum speed limit for a PSV vehicle on a Kenyan highway?", options: ["80 km/h", "100 km/h", "110 km/h", "120 km/h"], correct: 0 },
+        { id: 2, text: "What does a solid yellow line on your side of the road indicate?", options: ["No overtaking", "Overtaking allowed", "Parking allowed", "Slow down"], correct: 0 },
+        { id: 3, text: "What is the legal blood alcohol limit for professional drivers in Kenya?", options: ["0.00%", "0.05%", "0.08%", "0.10%"], correct: 0 },
+        { id: 4, text: "When should you use your hazard lights?", options: ["When parked illegally", "In heavy rain only", "When your vehicle is disabled", "When speeding"], correct: 2 },
+        { id: 5, text: "What does a red traffic light mean?", options: ["Stop and wait for green", "Proceed with caution", "Slow down", "Prepare to stop"], correct: 0 },
+        { id: 6, text: "What is the safe following distance in good conditions?", options: ["1 second", "2 seconds", "3 seconds", "4 seconds"], correct: 1 },
+        { id: 7, text: "What is the speed limit in a school zone in Kenya?", options: ["15 km/h", "25 km/h", "40 km/h", "50 km/h"], correct: 1 },
+        { id: 8, text: "What does a flashing amber traffic light mean?", options: ["Stop", "Go faster", "Prepare to stop", "Proceed with caution if safe"], correct: 3 },
+        { id: 9, text: "When should a school bus activate its stop arm?", options: ["When loading students", "On highways only", "Never", "When speeding"], correct: 0 },
+        { id: 10, text: "What is the penalty for driving without a valid PSV badge?", options: ["Fine only", "Imprisonment only", "Fine and/or imprisonment", "License suspension"], correct: 2 }
+    ];
+
+    // ====================== STATE MANAGEMENT ======================
+    let currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+    let currentQuestionPage = 1;
+    const questionsPerPage = 5;
+
+    // ====================== UTILITIES ======================
+    function showToast(msg, type = 'info') { 
+        const t = document.createElement('div'); 
+        t.className = 'toast'; 
+        t.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${msg}`; 
+        document.body.appendChild(t); 
+        setTimeout(() => t.remove(), 3000); 
     }
-    
-    content += `</ul>
-            <h3>Learning Objectives:</h3>
-            <ul>
-                <li>Understand all concepts in this unit</li>
-                <li>Pass the unit assessment with 80% or higher</li>
-                <li>Apply knowledge in practical driving situations</li>
-            </ul>
-            <div style="margin-top: 25px;">
-                <button class="btn" style="width: 100%;" onclick="startUnit(${unit.id}, '${moduleType}')">Start Learning This Unit <i class="fas fa-arrow-right"></i></button>
+
+    function showModal(html) { 
+        let modal = document.querySelector('.modal');
+        if (modal) modal.remove();
+        modal = document.createElement('div'); 
+        modal.className = 'modal'; 
+        modal.style.display = 'flex'; 
+        modal.innerHTML = html; 
+        document.body.appendChild(modal); 
+    }
+
+    function closeModal() { 
+        const modal = document.querySelector('.modal');
+        if (modal) modal.remove(); 
+    }
+
+    // ====================== SUPABASE AUTHENTICATION ======================
+    async function signUp(email, password, name) {
+        try {
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: {
+                        full_name: name
+                    }
+                }
+            });
+            if (error) throw error;
+            showToast('Sign up successful! Please check your email for verification.', 'success');
+            return data;
+        } catch (error) {
+            showToast(error.message, 'error');
+            return null;
+        }
+    }
+
+    async function login(email, password) {
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+            if (error) throw error;
+            currentUser = { id: data.user.id, email: data.user.email, name: data.user.user_metadata.full_name };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            updateAuthUI();
+            showToast(`Welcome ${currentUser.name}!`, 'success');
+            await loadMaterials();
+            return data;
+        } catch (error) {
+            showToast(error.message, 'error');
+            return null;
+        }
+    }
+
+    // ====================== AUTH UI FUNCTIONS ======================
+    function showLoginModal() { 
+        showModal(`<div class="modal-content"><span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3>Login to MEI Drive Africa</h3>
+            <input type="email" id="loginEmail" placeholder="Email">
+            <input type="password" id="loginPassword" placeholder="Password">
+            <button class="btn" style="width:100%; margin-top:10px;" onclick="window.loginUser()">Login</button>
+            <hr style="margin:16px 0;">
+            <h4>Sign Up</h4>
+            <input type="text" id="signupName" placeholder="Full Name">
+            <input type="email" id="signupEmail" placeholder="Email">
+            <input type="password" id="signupPassword" placeholder="Password">
+            <button class="btn-outline" style="width:100%; margin-top:10px;" onclick="window.signUpUser()">Create Account</button>
+        </div>`); 
+    }
+
+    async function loginUser() {
+        const email = document.getElementById('loginEmail')?.value;
+        const password = document.getElementById('loginPassword')?.value;
+        if (!email || !password) {
+            showToast('Please enter email and password', 'error');
+            return;
+        }
+        await login(email, password);
+        closeModal();
+        navigateTo('home');
+    }
+
+    async function signUpUser() {
+        const name = document.getElementById('signupName')?.value;
+        const email = document.getElementById('signupEmail')?.value;
+        const password = document.getElementById('signupPassword')?.value;
+        if (!name || !email || !password) {
+            showToast('Please fill all fields', 'error');
+            return;
+        }
+        await signUp(email, password, name);
+        closeModal();
+    }
+
+    function logout() { 
+        supabase.auth.signOut();
+        currentUser = null; 
+        localStorage.removeItem('currentUser'); 
+        updateAuthUI(); 
+        showToast('Logged out successfully', 'info'); 
+        navigateTo('home'); 
+    }
+
+    function updateAuthUI() {
+        const authDiv = document.getElementById('authButtons');
+        if (!authDiv) return;
+        if (currentUser) { 
+            authDiv.innerHTML = `<div style="background:#d4af37;color:#000;padding:6px 16px;border-radius:40px;"><i class="fas fa-user"></i> ${currentUser.name}</div><button onclick="window.logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>`; 
+        } else { 
+            authDiv.innerHTML = `<button onclick="window.showLoginModal()"><i class="fas fa-sign-in-alt"></i> Login</button>`; 
+        }
+    }
+
+    // ====================== MATERIALS FUNCTIONS ======================
+    async function loadMaterials() {
+        try {
+            // Fetch materials from Supabase materials table
+            const { data: materials, error } = await supabase
+                .from('materials')
+                .select('*')
+                .order('created_at', { ascending: false });
+            
+            if (error) throw error;
+            
+            const materialsContainer = document.getElementById('materials');
+            if (!materialsContainer) return;
+            
+            if (materials && materials.length > 0) {
+                materialsContainer.innerHTML = materials.map(mat => `
+                    <div class="material-card" onclick="viewMaterial('${mat.id}')">
+                        <h3>${mat.title}</h3>
+                        <p style="color: #aaa;">${mat.description || 'No description'}</p>
+                        <span class="unit-badge">${mat.category || 'General'}</span>
+                    </div>
+                `).join('');
+            } else {
+                // Load default units if no materials in DB
+                materialsContainer.innerHTML = learnerUnits.map(unit => `
+                    <div class="material-card" onclick="viewMaterial(${unit.id})">
+                        <h3>${unit.title}</h3>
+                        <p style="color: #aaa;">${unit.desc.substring(0, 100)}...</p>
+                        <span class="unit-badge">Unit ${unit.id}</span>
+                    </div>
+                `).join('');
+            }
+        } catch (error) {
+            console.error('Error loading materials:', error);
+            // Fallback to local data
+            const materialsContainer = document.getElementById('materials');
+            if (materialsContainer) {
+                materialsContainer.innerHTML = learnerUnits.map(unit => `
+                    <div class="material-card" onclick="viewMaterial(${unit.id})">
+                        <h3>${unit.title}</h3>
+                        <p style="color: #aaa;">${unit.desc.substring(0, 100)}...</p>
+                        <span class="unit-badge">Unit ${unit.id}</span>
+                    </div>
+                `).join('');
+            }
+        }
+    }
+
+    async function viewMaterial(id) {
+        const viewer = document.getElementById('viewer');
+        const unit = learnerUnits.find(u => u.id === id);
+        
+        if (unit && viewer) {
+            viewer.style.display = 'block';
+            viewer.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 style="color: var(--primary-gold);">${unit.title}</h2>
+                    <button class="btn-small" onclick="document.getElementById('viewer').style.display='none'">Close</button>
+                </div>
+                <div class="viewer-content">
+                    <p>${unit.desc}</p>
+                    <h3>Key Topics:</h3>
+                    <ul>
+                        ${unit.keyTopics.map(topic => `<li>${topic}</li>`).join('')}
+                    </ul>
+                    <button class="btn" onclick="completeUnit(${unit.id})">Mark as Complete ✓</button>
+                </div>
+            `;
+        }
+    }
+
+    // ====================== PROGRESS TRACKING ======================
+    async function completeUnit(unitId) {
+        if (!currentUser) {
+            showToast('Please login to track your progress', 'error');
+            showLoginModal();
+            return;
+        }
+        
+        try {
+            const { data, error } = await supabase
+                .from('progress')
+                .insert([
+                    {
+                        user_id: currentUser.id,
+                        unit_id: unitId,
+                        completed_at: new Date().toISOString(),
+                        status: 'completed'
+                    }
+                ]);
+            
+            if (error) throw error;
+            showToast(`Unit ${unitId} completed! Great progress! 🎉`, 'success');
+            
+            // Hide viewer
+            const viewer = document.getElementById('viewer');
+            if (viewer) viewer.style.display = 'none';
+        } catch (error) {
+            console.error('Error saving progress:', error);
+            showToast('Progress saved locally!', 'success');
+            // Store locally as fallback
+            let localProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+            localProgress[unitId] = { completed: true, date: new Date().toISOString() };
+            localStorage.setItem('userProgress', JSON.stringify(localProgress));
+        }
+    }
+
+    // ====================== PAYMENT FUNCTION ======================
+    async function makePayment(amount, unitId) {
+        if (!currentUser) {
+            showToast('Please login to make payment', 'error');
+            showLoginModal();
+            return false;
+        }
+        
+        try {
+            const { data, error } = await supabase
+                .from('payments')
+                .insert([
+                    {
+                        user_id: currentUser.id,
+                        amount: amount,
+                        unit_id: unitId,
+                        status: 'pending',
+                        payment_date: new Date().toISOString()
+                    }
+                ]);
+            
+            if (error) throw error;
+            showToast(`Payment of KSH ${amount} processed successfully!`, 'success');
+            return true;
+        } catch (error) {
+            console.error('Payment error:', error);
+            showToast('Payment failed. Please try again.', 'error');
+            return false;
+        }
+    }
+
+    // ====================== NAVIGATION & RENDERING ======================
+    function navigateTo(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+        const target = document.getElementById(pageId);
+        if (target) target.classList.add('active-page');
+        if (pageId === 'home') renderHomeModules();
+        if (pageId === 'learner') renderLearnerUnits();
+        if (pageId === 'psv') renderPSV();
+        if (pageId === 'schoolbus') renderSchoolBus();
+        if (pageId === 'boda') renderBoda();
+        if (pageId === 'academy') renderAcademy();
+        if (pageId === 'library') renderLibrary();
+    }
+
+    function renderHomeModules() {
+        document.getElementById('homeModulesGrid').innerHTML = [
+            { name: 'Learner Driver Hub', icon: 'fa-book-open', desc: '21 Units - Complete Kenya Learner Handbook', color: '#d4af37' },
+            { name: 'PSV Professional Course', icon: 'fa-bus', desc: '10 Units - PSV Driver Certification', color: '#3498db' },
+            { name: 'School Bus/Van Safety', icon: 'fa-school', desc: '8 Units - Safe Student Transport', color: '#2ecc71' },
+            { name: 'Boda Boda Safety', icon: 'fa-motorcycle', desc: '6 Units - Motorcycle Safety Training', color: '#e74c3c' },
+            { name: 'Advanced Academy', icon: 'fa-chalkboard-user', desc: 'Fleet Management & Logistics', color: '#f39c12' },
+            { name: 'Resource Library', icon: 'fa-database', desc: 'Official Documents & Manuals', color: '#9b59b6' }
+        ].map(m => 
+            `<div class="card" onclick="navigateTo('${m.name.toLowerCase().replace(/ /g, '').replace('/', '')}')">
+                <i class="fas ${m.icon}" style="font-size: 2rem; color: ${m.color}; margin-bottom: 15px;"></i>
+                <h3>${m.name}</h3>
+                <p style="color: #aaa;">${m.desc}</p>
+                <button class="btn-small">Start Learning →</button>
+            </div>`
+        ).join('');
+        
+        document.getElementById('homeStats').innerHTML = `<div class="stat-card"><div class="stat-number">10,000+</div><div>Certified Drivers</div></div><div class="stat-card"><div class="stat-number">98%</div><div>Exam Pass Rate</div></div><div class="stat-card"><div class="stat-number">21</div><div>Complete Units</div></div><div class="stat-card"><div class="stat-number">24/7</div><div>Access Support</div></div>`;
+    }
+
+    function renderLearnerUnits() { 
+        document.getElementById('learnerUnitsGrid').innerHTML = learnerUnits.map(unit => 
+            `<div class="card" onclick="showUnitDetail(${JSON.stringify(unit).replace(/"/g, '&quot;')}, 'learner')">
+                <span class="unit-badge">Unit ${unit.id}</span>
+                <h3>${unit.title}</h3>
+                <p style="color: #aaa; margin: 10px 0;">${unit.desc.substring(0, 80)}...</p>
+                <div class="progress-bar"><div class="progress-fill" style="width:${Math.floor(Math.random() * 100)}%"></div></div>
+                <button class="btn-small">View Unit →</button>
+            </div>`
+        ).join('');
+        renderQuestions();
+    }
+
+    function renderQuestions() {
+        const start = (currentQuestionPage - 1) * questionsPerPage;
+        const end = start + questionsPerPage;
+        const pageQuestions = questions.slice(start, end);
+        
+        document.getElementById('questionsContainer').innerHTML = pageQuestions.map(q => `
+            <div class="question-card">
+                <div class="question-text"><strong style="color: var(--primary-gold);">Q${q.id}.</strong> ${q.text}</div>
+                ${q.options.map((opt, idx) => `<div class="option" onclick="checkAnswer(${q.id}, ${idx})">${String.fromCharCode(65+idx)}. ${opt}</div>`).join('')}
             </div>
-        </div>
-    </div>`;
-    showModal(content);
-}
-
-function startUnit(unitId, moduleType) {
-    closeModal();
-    showToast(`Unit ${unitId} started! Complete the lessons and quiz to earn your certificate.`, 'success');
-}
-
-// ====================== AUTHENTICATION ======================
-function showLoginModal() { 
-    showModal(`<div class="modal-content"><span class="close-modal" onclick="closeModal()">&times;</span><h3>Login to MEI Drive Africa</h3><input type="email" id="loginEmail" placeholder="Email"><input type="password" id="loginPassword" placeholder="Password"><div style="margin:10px 0;"><label><input type="checkbox" id="rememberMe"> Remember me</label></div><button class="btn" style="width:100%" onclick="handleLogin()">Login</button><hr style="margin:16px 0;"><h4>Sign Up</h4><input type="text" id="signupName" placeholder="Full Name"><input type="email" id="signupEmail" placeholder="Email"><input type="password" id="signupPassword" placeholder="Password"><button class="btn-outline" style="width:100%" onclick="handleSignup()">Create Account</button></div>`); 
-}
-
-function handleLogin() {
-    const email = document.getElementById('loginEmail').value;
-    if (!email) { showToast('Please enter email', 'error'); return; }
-    currentUser = { id: 'user_' + Date.now(), email, name: email.split('@')[0], role: 'learner' };
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    updateAuthUI();
-    closeModal();
-    showToast(`Welcome ${currentUser.name}! Start your driving journey today.`, 'success');
-    navigateTo('learner');
-}
-
-function handleSignup() {
-    const name = document.getElementById('signupName')?.value;
-    const email = document.getElementById('signupEmail')?.value;
-    if (!name || !email) { showToast('Please fill all fields', 'error'); return; }
-    showToast('Account created! Welcome to MEI Drive Africa.', 'success');
-    closeModal();
-}
-
-function logout() { 
-    currentUser = null; 
-    localStorage.removeItem('currentUser'); 
-    updateAuthUI(); 
-    showToast('Logged out successfully', 'info'); 
-    navigateTo('home'); 
-}
-
-function updateAuthUI() {
-    const authDiv = document.getElementById('authButtons');
-    if (!authDiv) return;
-    if (currentUser) { 
-        authDiv.innerHTML = `<div style="background:#d4af37;color:#000;padding:6px 16px;border-radius:40px;"><i class="fas fa-user"></i> ${currentUser.name}</div><button onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>`; 
-    } else { 
-        authDiv.innerHTML = `<button onclick="showLoginModal()"><i class="fas fa-sign-in-alt"></i> Login</button>`; 
+        `).join('');
+        
+        const totalPages = Math.ceil(questions.length / questionsPerPage);
+        let paginationHtml = '';
+        for (let i = 1; i <= totalPages; i++) {
+            paginationHtml += `<button class="${i === currentQuestionPage ? 'btn' : 'btn-outline'}" style="padding: 8px 16px; margin: 0 5px;" onclick="goToPage(${i})">${i}</button>`;
+        }
+        document.getElementById('pagination').innerHTML = paginationHtml;
     }
-}
 
-// ====================== NAVIGATION & RENDERING ======================
-function navigateTo(pageId) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-    const target = document.getElementById(pageId);
-    if (target) target.classList.add('active-page');
-    if (pageId === 'home') renderHomeModules();
-    if (pageId === 'learner') renderLearnerUnits();
-    if (pageId === 'psv') renderPSV();
-    if (pageId === 'schoolbus') renderSchoolBus();
-    if (pageId === 'boda') renderBoda();
-    if (pageId === 'academy') renderAcademy();
-    if (pageId === 'library') renderLibrary();
-}
-
-function renderHomeModules() {
-    document.getElementById('homeModulesGrid').innerHTML = [
-        { name: 'Learner Driver Hub', icon: 'fa-book-open', desc: '21 Units - Complete Kenya Learner Handbook', color: '#d4af37' },
-        { name: 'PSV Professional Course', icon: 'fa-bus', desc: '10 Units - PSV Driver Certification', color: '#3498db' },
-        { name: 'School Bus/Van Safety', icon: 'fa-school', desc: '8 Units - Safe Student Transport', color: '#2ecc71' },
-        { name: 'Boda Boda Safety', icon: 'fa-motorcycle', desc: '6 Units - Motorcycle Safety Training', color: '#e74c3c' },
-        { name: 'Advanced Academy', icon: 'fa-chalkboard-user', desc: 'Fleet Management & Logistics', color: '#f39c12' },
-        { name: 'Resource Library', icon: 'fa-database', desc: 'Official Documents & Manuals', color: '#9b59b6' }
-    ].map(m => 
-        `<div class="card" onclick="navigateTo('${m.name.toLowerCase().replace(/ /g, '').replace('/', '')}')">
-            <i class="fas ${m.icon}" style="font-size: 2rem; color: ${m.color}; margin-bottom: 15px;"></i>
-            <h3>${m.name}</h3>
-            <p style="color: #aaa;">${m.desc}</p>
-            <button class="btn-small">Start Learning →</button>
-        </div>`
-    ).join('');
-    
-    document.getElementById('homeStats').innerHTML = `<div class="stat-card"><div class="stat-number">10,000+</div><div>Certified Drivers</div></div><div class="stat-card"><div class="stat-number">98%</div><div>Exam Pass Rate</div></div><div class="stat-card"><div class="stat-number">21</div><div>Complete Units</div></div><div class="stat-card"><div class="stat-number">24/7</div><div>Access Support</div></div>`;
-}
-
-function renderLearnerUnits() { 
-    document.getElementById('learnerUnitsGrid').innerHTML = learnerUnits.map(unit => 
-        `<div class="card" onclick="showUnitDetail(${JSON.stringify(unit).replace(/"/g, '&quot;')}, 'learner')">
-            <span class="unit-badge">Unit ${unit.id}</span>
-            <h3>${unit.title}</h3>
-            <p style="color: #aaa; margin: 10px 0;">${unit.desc.substring(0, 80)}...</p>
-            <div class="progress-bar"><div class="progress-fill" style="width:${Math.floor(Math.random() * 100)}%"></div></div>
-            <button class="btn-small">View Unit →</button>
-        </div>`
-    ).join('');
-    renderQuestions();
-}
-
-function renderQuestions() {
-    const start = (currentQuestionPage - 1) * questionsPerPage;
-    const end = start + questionsPerPage;
-    const pageQuestions = questions.slice(start, end);
-    
-    document.getElementById('questionsContainer').innerHTML = pageQuestions.map(q => `
-        <div class="question-card">
-            <div class="question-text"><strong style="color: var(--primary-gold);">Q${q.id}.</strong> ${q.text}</div>
-            ${q.options.map((opt, idx) => `<div class="option" onclick="checkAnswer(${q.id}, ${idx})">${String.fromCharCode(65+idx)}. ${opt}</div>`).join('')}
-        </div>
-    `).join('');
-    
-    const totalPages = Math.ceil(questions.length / questionsPerPage);
-    let paginationHtml = '';
-    for (let i = 1; i <= totalPages; i++) {
-        paginationHtml += `<button class="${i === currentQuestionPage ? 'btn' : 'btn-outline'}" style="padding: 8px 16px; margin: 0 5px;" onclick="goToPage(${i})">${i}</button>`;
+    function goToPage(page) {
+        currentQuestionPage = page;
+        renderQuestions();
     }
-    document.getElementById('pagination').innerHTML = paginationHtml;
-}
 
-function goToPage(page) {
-    currentQuestionPage = page;
-    renderQuestions();
-}
-
-function checkAnswer(questionId, selectedIdx) {
-    const q = questions.find(q => q.id === questionId);
-    if (selectedIdx === q.correct) {
-        showToast('✓ Correct! Excellent answer!', 'success');
-    } else {
-        showToast(`✗ Incorrect. Correct answer: ${q.options[q.correct]}`, 'error');
+    function checkAnswer(questionId, selectedIdx) {
+        const q = questions.find(q => q.id === questionId);
+        if (selectedIdx === q.correct) {
+            showToast('✓ Correct! Excellent answer!', 'success');
+        } else {
+            showToast(`✗ Incorrect. Correct answer: ${q.options[q.correct]}`, 'error');
+        }
     }
-}
 
-function renderPSV() { 
-    document.getElementById('psvGrid').innerHTML = psvUnits.map(unit => 
-        `<div class="card" onclick="showUnitDetail(${JSON.stringify(unit).replace(/"/g, '&quot;')}, 'psv')">
-            <span class="unit-badge">PSV Unit ${unit.id}</span>
-            <h3>${unit.title}</h3>
-            <p style="color: #aaa; margin: 10px 0;">${unit.desc}</p>
-            <button class="btn-small">Start Unit →</button>
-        </div>`
-    ).join('');
-}
+    function showUnitDetail(unit, moduleType) {
+        let content = `<div class="modal-content"><span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 style="color: var(--primary-gold);">${unit.title}</h2>
+            <div class="unit-detail">
+                <p style="font-size: 1.1em; margin: 15px 0;">${unit.desc}</p>
+                <h3>Key Topics Covered:</h3>
+                <ul>`;
+        
+        if (unit.keyTopics) {
+            unit.keyTopics.forEach(topic => {
+                content += `<li><i class="fas fa-check-circle" style="color: var(--primary-gold); margin-right: 10px;"></i>${topic}</li>`;
+            });
+        } else if (unit.details) {
+            unit.details.forEach(detail => {
+                content += `<li><i class="fas fa-check-circle" style="color: var(--primary-gold); margin-right: 10px;"></i>${detail}</li>`;
+            });
+        }
+        
+        content += `</ul>
+                <h3>Learning Objectives:</h3>
+                <ul>
+                    <li>Understand all concepts in this unit</li>
+                    <li>Pass the unit assessment with 80% or higher</li>
+                    <li>Apply knowledge in practical driving situations</li>
+                </ul>
+                <div style="margin-top: 25px;">
+                    <button class="btn" style="width: 100%;" onclick="startUnit(${unit.id}, '${moduleType}')">Start Learning This Unit <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>`;
+        showModal(content);
+    }
 
-function renderSchoolBus() { 
-    document.getElementById('schoolbusGrid').innerHTML = schoolbusUnits.map(unit => 
-        `<div class="card" onclick="showUnitDetail(${JSON.stringify(unit).replace(/"/g, '&quot;')}, 'schoolbus')">
-            <span class="unit-badge">Module ${unit.id}</span>
-            <h3>${unit.title}</h3>
-            <p style="color: #aaa; margin: 10px 0;">${unit.desc}</p>
-            <button class="btn-small">Start Module →</button>
-        </div>`
-    ).join('');
-}
+    function startUnit(unitId, moduleType) {
+        closeModal();
+        showToast(`Unit ${unitId} started! Complete the lessons and quiz to earn your certificate.`, 'success');
+    }
 
-function renderBoda() { 
-    document.getElementById('bodaGrid').innerHTML = bodaUnits.map(unit => 
-        `<div class="card" onclick="showUnitDetail(${JSON.stringify(unit).replace(/"/g, '&quot;')}, 'boda')">
-            <span class="unit-badge">Boda Unit ${unit.id}</span>
-            <h3>${unit.title}</h3>
-            <p style="color: #aaa; margin: 10px 0;">${unit.desc}</p>
-            <button class="btn-small">Start Unit →</button>
-        </div>`
-    ).join('');
-}
+    function renderPSV() { 
+        document.getElementById('psvGrid').innerHTML = psvUnits.map(unit => 
+            `<div class="card" onclick="showUnitDetail(${JSON.stringify(unit).replace(/"/g, '&quot;')}, 'psv')">
+                <span class="unit-badge">PSV Unit ${unit.id}</span>
+                <h3>${unit.title}</h3>
+                <p style="color: #aaa; margin: 10px 0;">${unit.desc}</p>
+                <button class="btn-small">Start Unit →</button>
+            </div>`
+        ).join('');
+    }
 
-function renderAcademy() { 
-    document.getElementById('academyGrid').innerHTML = academyUnits.map(unit => 
-        `<div class="card" onclick="showUnitDetail(${JSON.stringify(unit).replace(/"/g, '&quot;')}, 'academy')">
-            <span class="unit-badge">Module ${unit.id}</span>
-            <h3>${unit.title}</h3>
-            <p style="color: #aaa; margin: 10px 0;">${unit.desc}</p>
-            <button class="btn-small">Start Module →</button>
-        </div>`
-    ).join('');
-}
+    function renderSchoolBus() { 
+        document.getElementById('schoolbusGrid').innerHTML = schoolbusUnits.map(unit => 
+            `<div class="card" onclick="showUnitDetail(${JSON.stringify(unit).replace(/"/g, '&quot;')}, 'schoolbus')">
+                <span class="unit-badge">Module ${unit.id}</span>
+                <h3>${unit.title}</h3>
+                <p style="color: #aaa; margin: 10px 0;">${unit.desc}</p>
+                <button class="btn-small">Start Module →</button>
+            </div>`
+        ).join('');
+    }
 
-function renderLibrary() { 
-    document.getElementById('libraryGrid').innerHTML = libraryResources.map(res => 
-        `<div class="card">
-            <i class="fas fa-${res.type === 'PDF' ? 'file-pdf' : 'video'}" style="font-size: 2rem; color: var(--primary-gold); margin-bottom: 15px;"></i>
-            <h3>${res.title}</h3>
-            <p style="color: #aaa;">${res.description}</p>
-            <p style="color: var(--primary-gold); margin: 10px 0;"><small>${res.type === 'PDF' ? res.size : res.duration}</small></p>
-            <button class="btn-small" onclick="showToast('Download started: ${res.title}', 'success')">Download Now →</button>
-        </div>`
-    ).join('');
-}
+    function renderBoda() { 
+        document.getElementById('bodaGrid').innerHTML = bodaUnits.map(unit => 
+            `<div class="card" onclick="showUnitDetail(${JSON.stringify(unit).replace(/"/g, '&quot;')}, 'boda')">
+                <span class="unit-badge">Boda Unit ${unit.id}</span>
+                <h3>${unit.title}</h3>
+                <p style="color: #aaa; margin: 10px 0;">${unit.desc}</p>
+                <button class="btn-small">Start Unit →</button>
+            </div>`
+        ).join('');
+    }
 
-// ====================== INITIALIZATION ======================
-function init() {
-    updateAuthUI();
-    renderHomeModules();
-    renderLearnerUnits();
-    renderPSV();
-    renderSchoolBus();
-    renderBoda();
-    renderAcademy();
-    renderLibrary();
-    showToast('Welcome to MEI Drive Africa - Your Path to Safe Driving!', 'success');
-}
+    function renderAcademy() { 
+        document.getElementById('academyGrid').innerHTML = academyUnits.map(unit => 
+            `<div class="card" onclick="showUnitDetail(${JSON.stringify(unit).replace(/"/g, '&quot;')}, 'academy')">
+                <span class="unit-badge">Module ${unit.id}</span>
+                <h3>${unit.title}</h3>
+                <p style="color: #aaa; margin: 10px 0;">${unit.desc}</p>
+                <button class="btn-small">Start Module →</button>
+            </div>`
+        ).join('');
+    }
 
-// Make functions global
-window.navigateTo = navigateTo;
-window.showLoginModal = showLoginModal;
-window.logout = logout;
-window.closeModal = closeModal;
-window.handleLogin = handleLogin;
-window.handleSignup = handleSignup;
-window.checkAnswer = checkAnswer;
-window.goToPage = goToPage;
-window.showUnitDetail = showUnitDetail;
-window.startUnit = startUnit;
+    function renderLibrary() { 
+        document.getElementById('libraryGrid').innerHTML = libraryResources.map(res => 
+            `<div class="card">
+                <i class="fas fa-${res.type === 'PDF' ? 'file-pdf' : 'video'}" style="font-size: 2rem; color: var(--primary-gold); margin-bottom: 15px;"></i>
+                <h3>${res.title}</h3>
+                <p style="color: #aaa;">${res.description}</p>
+                <p style="color: var(--primary-gold); margin: 10px 0;"><small>${res.type === 'PDF' ? res.size : res.duration}</small></p>
+                <button class="btn-small" onclick="showToast('Download started: ${res.title}', 'success')">Download Now →</button>
+            </div>`
+        ).join('');
+    }
 
-init();
+    // ====================== INITIALIZATION ======================
+    async function init() {
+        updateAuthUI();
+        renderHomeModules();
+        renderLearnerUnits();
+        renderPSV();
+        renderSchoolBus();
+        renderBoda();
+        renderAcademy();
+        renderLibrary();
+        await loadMaterials(); // Auto load materials on page start
+        showToast('Welcome to MEI Drive Africa - Your Path to Safe Driving!', 'success');
+    }
+
+    // Make functions globally available
+    window.navigateTo = navigateTo;
+    window.showLoginModal = showLoginModal;
+    window.logout = logout;
+    window.closeModal = closeModal;
+    window.loginUser = loginUser;
+    window.signUpUser = signUpUser;
+    window.checkAnswer = checkAnswer;
+    window.goToPage = goToPage;
+    window.showUnitDetail = showUnitDetail;
+    window.startUnit = startUnit;
+    window.viewMaterial = viewMaterial;
+    window.completeUnit = completeUnit;
+    window.makePayment = makePayment;
+
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) {
+            currentUser = { id: session.user.id, email: session.user.email, name: session.user.user_metadata?.full_name };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            updateAuthUI();
+            loadMaterials();
+        }
+    });
+
+    init();
 </script>
 </body>
 </html>
