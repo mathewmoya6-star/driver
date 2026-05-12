@@ -325,69 +325,13 @@
             color: #0B0F19;
         }
 
-        /* Auth Section - Touch Optimized */
-        .auth-section {
-            background: linear-gradient(135deg, #0F1622, #0B0F19);
-            border-radius: 28px;
-            padding: 40px 24px;
-            margin: 40px 0;
-            border: 1px solid rgba(0, 208, 132, 0.2);
-        }
-
-        .auth-box {
-            max-width: 480px;
-            margin: 0 auto;
-        }
-
-        .auth-box h2 {
-            text-align: center;
-            margin-bottom: 24px;
-            color: var(--accent);
-            font-size: 1.5rem;
-        }
-
-        .input-group {
-            margin-bottom: 16px;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 14px 18px;
-            border-radius: 14px;
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            color: var(--text-primary);
-            font-size: 1rem;
-            transition: var(--transition);
-            min-height: 52px;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-glow);
-        }
-
-        .input-group input::placeholder {
-            color: var(--text-muted);
-        }
-
-        /* Quiz Panel */
+        /* Quiz Panel - No Timer */
         .quiz-panel {
             background: var(--bg-card);
             border-radius: 24px;
             padding: 24px;
             margin: 32px 0;
             border: 1px solid var(--border);
-        }
-
-        .quiz-timer {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--accent);
-            text-align: center;
-            margin-bottom: 20px;
-            font-family: monospace;
         }
 
         .question-card {
@@ -501,18 +445,6 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
-        /* Logged In User Indicator */
-        .user-greeting {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(0, 208, 132, 0.1);
-            padding: 8px 16px;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            color: var(--accent);
-        }
-
         /* Responsive Design - Touch First */
         @media (max-width: 1024px) {
             .container { padding: 0 16px; }
@@ -542,13 +474,9 @@
             .hero-btns button { width: 100%; max-width: 280px; justify-content: center; }
             .section-title { font-size: 1.3rem; margin-bottom: 20px; }
             .course-grid { grid-template-columns: 1fr; gap: 16px; }
-            .auth-section { padding: 28px 20px; margin: 32px 0; }
-            .auth-box h2 { font-size: 1.3rem; }
             .quiz-panel { padding: 18px; }
-            .quiz-timer { font-size: 1.3rem; }
             .question-card { padding: 18px; }
             .btn-primary, .btn-secondary { padding: 12px 20px; font-size: 0.9rem; min-height: 48px; }
-            .input-group input { padding: 12px 16px; min-height: 48px; }
         }
 
         @media (max-width: 480px) {
@@ -557,11 +485,6 @@
             .card-img { height: 140px; font-size: 3rem; }
             .modal-content { padding: 20px; }
             .option { padding: 12px 14px; font-size: 0.85rem; }
-        }
-
-        /* Large screens */
-        @media (min-width: 1400px) {
-            .container { padding: 0 40px; }
         }
     </style>
 </head>
@@ -573,10 +496,8 @@
         <div class="logo" onclick="scrollToSection('home')">MEI <span>DRIVE AFRICA</span></div>
         <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
         <div class="nav-links" id="navLinks">
-            <button onclick="scrollToSection('courses')">📚 Learning</button>
+            <button onclick="scrollToSection('courses')">📚 Learning Programme</button>
             <button onclick="scrollToSection('quiz-section')">📝 Quiz</button>
-            <button id="authNavBtn" onclick="scrollToSection('auth-section')">🔐 Login</button>
-            <button id="logoutBtn" style="display:none;" onclick="logoutUser()">🚪 Logout</button>
         </div>
     </div>
 </nav>
@@ -587,7 +508,7 @@
     <p>Drive Smart. Stay Safe. Arrive Home. Keep Our Roads Safe.</p>
     <div class="hero-btns">
         <button class="btn-primary" onclick="scrollToSection('courses')"><i class="fas fa-graduation-cap"></i> Explore Courses</button>
-        <button class="btn-secondary" onclick="scrollToSection('auth-section')"><i class="fas fa-user-plus"></i> Get Started</button>
+        <button class="btn-secondary" onclick="scrollToSection('quiz-section')"><i class="fas fa-question-circle"></i> Practice Quiz</button>
     </div>
 </section>
 
@@ -602,38 +523,9 @@
         <div class="course-grid" id="courseGrid"></div>
     </div>
 
-    <!-- Authentication Section -->
-    <div class="auth-section" id="auth-section">
-        <div class="auth-box">
-            <h2><i class="fas fa-user-graduate"></i> Student Portal</h2>
-            <div class="input-group">
-                <input type="email" id="loginEmail" placeholder="Email address" inputmode="email" autocomplete="email">
-            </div>
-            <div class="input-group">
-                <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
-            </div>
-            <button class="btn-primary" style="width:100%;" onclick="loginUser()">Sign In</button>
-            
-            <div style="text-align: center; margin: 20px 0; color: var(--text-muted);">— or —</div>
-            
-            <div class="input-group">
-                <input type="text" id="signupName" placeholder="Full name" autocomplete="name">
-            </div>
-            <div class="input-group">
-                <input type="email" id="signupEmail" placeholder="Email address" inputmode="email" autocomplete="email">
-            </div>
-            <div class="input-group">
-                <input type="password" id="signupPassword" placeholder="Create password (min. 6 characters)" autocomplete="new-password">
-            </div>
-            <button class="btn-secondary" style="width:100%;" onclick="registerUser()">Create Free Account</button>
-            <div id="authMessage" style="text-align:center; margin-top:16px; color:var(--accent); font-size:0.8rem;"></div>
-        </div>
-    </div>
-
-    <!-- Quiz Section -->
+    <!-- Quiz Section (No Timer) -->
     <div id="quiz-section">
         <div class="quiz-panel">
-            <div class="quiz-timer" id="quizTimer">⏱️ 05:00</div>
             <div id="quizContainer"></div>
         </div>
     </div>
@@ -658,19 +550,6 @@
 
 <script>
     // ============================================
-    // SUPABASE CONFIGURATION
-    // ============================================
-    const SUPABASE_URL = "https://fktjmkmzlixlapeyhhyl.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E";
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    // ============================================
-    // APP STATE
-    // ============================================
-    let currentUser = null;
-    let currentQuiz = { questions: [], currentIndex: 0, score: 0, timer: null, timeLeft: 300 };
-
-    // ============================================
     // COURSES DATA
     // ============================================
     const coursesData = [
@@ -690,6 +569,11 @@
         { id: 4, text: "What does the 2-second rule help maintain?", options: ["Fuel economy", "Safe following distance", "Engine temperature", "Tyre pressure"], correct: 1, explanation: "The 2-second rule ensures adequate stopping distance." },
         { id: 5, text: "When driving in heavy rain, you should:", options: ["Use high beams", "Increase speed", "Reduce speed", "Brake suddenly"], correct: 2, explanation: "Reduce speed to prevent hydroplaning and maintain control." }
     ];
+
+    // ============================================
+    // APP STATE
+    // ============================================
+    let currentQuiz = { questions: [], currentIndex: 0, score: 0 };
 
     // ============================================
     // RENDER FUNCTIONS
@@ -723,75 +607,13 @@
     }
 
     // ============================================
-    // AUTHENTICATION
-    // ============================================
-    async function registerUser() {
-        const name = document.getElementById('signupName')?.value;
-        const email = document.getElementById('signupEmail')?.value;
-        const password = document.getElementById('signupPassword')?.value;
-
-        if (!email || !password || password.length < 6) {
-            showToast("Password must be at least 6 characters", "error");
-            return;
-        }
-
-        const { error } = await supabase.auth.signUp({
-            email,
-            password,
-            options: { data: { full_name: name || email.split('@')[0] } }
-        });
-
-        if (error) { showToast(error.message, "error"); return; }
-        showToast("Account created! Please verify your email.", "success");
-        document.getElementById('signupName').value = '';
-        document.getElementById('signupEmail').value = '';
-        document.getElementById('signupPassword').value = '';
-    }
-
-    async function loginUser() {
-        const email = document.getElementById('loginEmail')?.value;
-        const password = document.getElementById('loginPassword')?.value;
-
-        if (!email || !password) {
-            showToast("Enter email and password", "error");
-            return;
-        }
-
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) { showToast(error.message, "error"); return; }
-
-        currentUser = data.user;
-        localStorage.setItem('mei_user', JSON.stringify({ id: currentUser.id, email: currentUser.email }));
-
-        document.getElementById('auth-section').style.display = 'none';
-        document.getElementById('authNavBtn').style.display = 'none';
-        document.getElementById('logoutBtn').style.display = 'inline-block';
-
-        showToast(`Welcome ${currentUser.email.split('@')[0]}!`, "success");
-    }
-
-    async function logoutUser() {
-        await supabase.auth.signOut();
-        currentUser = null;
-        localStorage.removeItem('mei_user');
-
-        document.getElementById('auth-section').style.display = 'block';
-        document.getElementById('authNavBtn').style.display = 'inline-block';
-        document.getElementById('logoutBtn').style.display = 'none';
-
-        showToast("Logged out successfully", "info");
-    }
-
-    // ============================================
-    // QUIZ SYSTEM
+    // QUIZ SYSTEM (No Timer)
     // ============================================
     function initQuiz() {
         currentQuiz.questions = [...questionBank];
         currentQuiz.currentIndex = 0;
         currentQuiz.score = 0;
-        currentQuiz.timeLeft = 300;
         renderQuizQuestion();
-        startQuizTimer();
     }
 
     function renderQuizQuestion() {
@@ -836,26 +658,6 @@
         renderQuizQuestion();
     };
 
-    function startQuizTimer() {
-        if (currentQuiz.timer) clearInterval(currentQuiz.timer);
-        currentQuiz.timer = setInterval(() => {
-            if (currentQuiz.timeLeft <= 0) {
-                clearInterval(currentQuiz.timer);
-                document.getElementById('quizContainer').innerHTML = `
-                    <div class="question-card" style="text-align:center;">
-                        <h3>⏰ Time's Up!</h3>
-                        <button class="btn-primary" onclick="initQuiz()">Try Again</button>
-                    </div>
-                `;
-                return;
-            }
-            currentQuiz.timeLeft--;
-            const mins = Math.floor(currentQuiz.timeLeft / 60);
-            const secs = currentQuiz.timeLeft % 60;
-            document.getElementById('quizTimer').innerHTML = `⏱️ ${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }, 1000);
-    }
-
     // ============================================
     // UTILITY FUNCTIONS
     // ============================================
@@ -872,19 +674,6 @@
         toast.innerHTML = `${icon} ${message}`;
         container.appendChild(toast);
         setTimeout(() => toast.remove(), 3000);
-    }
-
-    async function checkSession() {
-        const stored = localStorage.getItem('mei_user');
-        if (stored) {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) {
-                currentUser = session.user;
-                document.getElementById('auth-section').style.display = 'none';
-                document.getElementById('authNavBtn').style.display = 'none';
-                document.getElementById('logoutBtn').style.display = 'inline-block';
-            }
-        }
     }
 
     // Mobile Menu Toggle
@@ -918,15 +707,12 @@
     window.viewLesson = viewLesson;
     window.closeLessonModal = closeLessonModal;
     window.scrollToSection = scrollToSection;
-    window.loginUser = loginUser;
-    window.registerUser = registerUser;
-    window.logoutUser = logoutUser;
     window.initQuiz = initQuiz;
     window.answerQuestion = answerQuestion;
+    window.showToast = showToast;
 
     // Initialize
     renderCourseGrid();
-    checkSession();
     initQuiz();
 </script>
 </body>
