@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
     <title>MEI DRIVE AFRICA | Premier Driver Safety Platform</title>
     <meta name="description" content="Kenya's NTSA-certified digital driving academy - Complete driver training, PSV, Boda, EV professional courses">
     <meta name="theme-color" content="#00d084">
@@ -12,7 +12,6 @@
     <meta property="og:title" content="MEI DRIVE AFRICA - Driver Safety Platform">
     <meta property="og:description" content="NTSA-certified driving courses, practice tests, and professional certification">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://meidriveafrica.com/og-image.jpg">
     
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -68,7 +67,6 @@
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-secondary); border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent-dark); }
 
         /* Selection */
         ::selection { background: var(--accent); color: #0B0F19; }
@@ -77,9 +75,9 @@
            TYPOGRAPHY
         ============================================ */
         h1, h2, h3, h4, h5, h6 { font-weight: 700; line-height: 1.2; }
-        h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
-        h2 { font-size: clamp(1.5rem, 4vw, 2rem); }
-        h3 { font-size: 1.25rem; }
+        h1 { font-size: clamp(1.8rem, 5vw, 3.5rem); }
+        h2 { font-size: clamp(1.3rem, 4vw, 2rem); }
+        h3 { font-size: 1.2rem; }
         
         a { text-decoration: none; color: inherit; }
         
@@ -89,10 +87,10 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 20px;
         }
 
-        /* Navigation */
+        /* Navigation - Touch Optimized */
         .navbar {
             background: rgba(11, 15, 25, 0.95);
             backdrop-filter: blur(12px);
@@ -100,8 +98,7 @@
             top: 0;
             z-index: 1000;
             border-bottom: 1px solid rgba(0, 208, 132, 0.2);
-            padding: 16px 0;
-            transition: var(--transition);
+            padding: 12px 0;
         }
 
         .nav-container {
@@ -111,11 +108,11 @@
             flex-wrap: wrap;
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 20px;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 800;
             background: linear-gradient(135deg, var(--accent), var(--accent-light));
             -webkit-background-clip: text;
@@ -123,13 +120,17 @@
             color: transparent;
             cursor: pointer;
             letter-spacing: -0.5px;
+            padding: 8px 0;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
         }
 
-        .logo span { color: var(--text-primary); background: none; -webkit-background-clip: unset; }
+        .logo span { color: var(--text-primary); background: none; }
 
         .nav-links {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             align-items: center;
             flex-wrap: wrap;
         }
@@ -138,23 +139,18 @@
             background: transparent;
             border: none;
             color: var(--text-secondary);
-            padding: 8px 18px;
+            padding: 10px 16px;
             border-radius: 40px;
             cursor: pointer;
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             transition: var(--transition);
+            min-height: 44px;
+            min-width: 44px;
         }
 
-        .nav-links button:hover {
-            background: rgba(0, 208, 132, 0.1);
-            color: var(--accent);
-            transform: translateY(-1px);
-        }
-
-        .admin-link {
-            background: rgba(0, 208, 132, 0.1);
-            color: var(--accent) !important;
+        .nav-links button:active {
+            transform: scale(0.96);
         }
 
         .mobile-menu-btn {
@@ -164,13 +160,15 @@
             color: var(--accent);
             font-size: 24px;
             cursor: pointer;
-            padding: 8px;
+            padding: 12px;
+            min-height: 48px;
+            min-width: 48px;
         }
 
-        /* Hero Section */
+        /* Hero Section - Touch Optimized */
         .hero {
             background: linear-gradient(135deg, #071120 0%, #0A1628 100%);
-            padding: 80px 24px;
+            padding: 60px 20px;
             text-align: center;
             border-bottom: 2px solid var(--accent);
             position: relative;
@@ -189,7 +187,7 @@
         }
 
         .hero h1 {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             background: linear-gradient(135deg, #FFFFFF, var(--accent));
             -webkit-background-clip: text;
             background-clip: text;
@@ -200,40 +198,41 @@
             color: var(--text-secondary);
             max-width: 700px;
             margin: 0 auto;
-            font-size: 1.2rem;
+            font-size: 1rem;
             line-height: 1.6;
         }
 
         .hero-btns {
-            margin-top: 32px;
+            margin-top: 28px;
             display: flex;
-            gap: 16px;
+            gap: 14px;
             justify-content: center;
             flex-wrap: wrap;
         }
 
-        /* Buttons */
+        /* Buttons - Touch Optimized */
         .btn-primary, .btn-secondary, .btn-outline {
-            padding: 14px 32px;
+            padding: 14px 28px;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
             transition: var(--transition);
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             border: none;
+            min-height: 52px;
+        }
+
+        .btn-primary:active, .btn-secondary:active {
+            transform: scale(0.97);
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--accent), var(--accent-dark));
             color: #0B0F19;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 208, 132, 0.3);
         }
 
         .btn-secondary {
@@ -242,28 +241,19 @@
             border: 1px solid var(--accent);
         }
 
-        .btn-secondary:hover {
-            background: rgba(0, 208, 132, 0.1);
-            transform: translateY(-2px);
-        }
-
         .btn-outline {
             background: transparent;
             border: 1px solid var(--border-light);
             color: var(--text-secondary);
-            padding: 10px 20px;
-            font-size: 0.9rem;
-        }
-
-        .btn-outline:hover {
-            border-color: var(--accent);
-            color: var(--accent);
+            padding: 10px 18px;
+            font-size: 0.85rem;
+            min-height: 44px;
         }
 
         /* Section Styles */
         .section-title {
-            font-size: 2rem;
-            margin-bottom: 32px;
+            font-size: 1.6rem;
+            margin-bottom: 28px;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -272,15 +262,14 @@
             padding-left: 20px;
         }
 
-        /* Course Grid */
+        /* Course Grid - Touch Cards */
         .course-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 28px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
             margin: 32px 0;
         }
 
-        /* Cards */
         .card {
             background: var(--bg-card);
             border-radius: 20px;
@@ -288,38 +277,38 @@
             border: 1px solid var(--border);
             transition: var(--transition);
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .card:hover {
-            transform: translateY(-6px);
-            border-color: var(--accent);
-            box-shadow: var(--shadow-glow);
+        .card:active {
+            transform: scale(0.98);
         }
 
         .card-img {
             width: 100%;
-            height: 180px;
+            height: 170px;
             background: linear-gradient(135deg, #0f1a2c, #0a1020);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
+            font-size: 3.5rem;
         }
 
         .card-content {
-            padding: 24px;
+            padding: 20px;
         }
 
         .card h3 {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             color: var(--accent);
+            font-size: 1.15rem;
         }
 
         .card p {
             color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 16px;
+            font-size: 0.85rem;
         }
 
         .badge {
@@ -336,12 +325,12 @@
             color: #0B0F19;
         }
 
-        /* Auth Section */
+        /* Auth Section - Touch Optimized */
         .auth-section {
             background: linear-gradient(135deg, #0F1622, #0B0F19);
             border-radius: 28px;
-            padding: 48px;
-            margin: 48px 0;
+            padding: 40px 24px;
+            margin: 40px 0;
             border: 1px solid rgba(0, 208, 132, 0.2);
         }
 
@@ -352,23 +341,25 @@
 
         .auth-box h2 {
             text-align: center;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             color: var(--accent);
+            font-size: 1.5rem;
         }
 
         .input-group {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .input-group input {
             width: 100%;
             padding: 14px 18px;
-            border-radius: 12px;
+            border-radius: 14px;
             border: 1px solid var(--border);
             background: var(--bg-card);
             color: var(--text-primary);
             font-size: 1rem;
             transition: var(--transition);
+            min-height: 52px;
         }
 
         .input-group input:focus {
@@ -385,65 +376,55 @@
         .quiz-panel {
             background: var(--bg-card);
             border-radius: 24px;
-            padding: 32px;
+            padding: 24px;
             margin: 32px 0;
             border: 1px solid var(--border);
         }
 
         .quiz-timer {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--accent);
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             font-family: monospace;
         }
 
         .question-card {
             background: var(--bg-secondary);
             border-radius: 20px;
-            padding: 28px;
-            margin-bottom: 24px;
+            padding: 24px;
+            margin-bottom: 20px;
             border: 1px solid var(--border);
         }
 
         .question-text {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             line-height: 1.5;
         }
 
         .options-group {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .option {
             background: var(--bg-card);
-            padding: 14px 20px;
-            border-radius: 12px;
+            padding: 14px 18px;
+            border-radius: 14px;
             cursor: pointer;
             border: 1px solid var(--border);
             transition: var(--transition);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            min-height: 52px;
         }
 
-        .option:hover {
+        .option:active {
+            transform: scale(0.98);
             background: var(--bg-hover);
-            border-color: var(--accent);
-            transform: translateX(4px);
-        }
-
-        .option.correct {
-            background: rgba(0, 208, 132, 0.15);
-            border-color: var(--accent);
-        }
-
-        .option.wrong {
-            background: rgba(239, 68, 68, 0.15);
-            border-color: var(--error);
         }
 
         /* Modal */
@@ -459,14 +440,14 @@
             z-index: 2000;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 16px;
         }
 
         .modal-content {
             background: var(--bg-card);
             border: 1px solid var(--accent);
             border-radius: 28px;
-            padding: 32px;
+            padding: 28px;
             max-width: 700px;
             width: 100%;
             max-height: 85vh;
@@ -478,45 +459,41 @@
             font-size: 28px;
             cursor: pointer;
             color: var(--accent);
-            transition: var(--transition);
+            padding: 8px;
+            min-width: 44px;
+            text-align: center;
         }
-
-        .close-modal:hover { opacity: 0.7; }
-
-        .modal-content h2 { color: var(--accent); margin-bottom: 20px; }
-        .modal-content p { margin-bottom: 16px; line-height: 1.7; }
-        .modal-content ul { margin-left: 20px; margin-bottom: 16px; }
-        .modal-content li { margin: 8px 0; }
 
         /* Footer */
         footer {
             text-align: center;
-            padding: 40px 24px;
+            padding: 32px 20px;
             color: var(--text-muted);
             border-top: 1px solid var(--border);
-            margin-top: 48px;
-            font-size: 0.85rem;
+            margin-top: 40px;
+            font-size: 0.8rem;
         }
 
         /* Toast Notifications */
         .toast-container {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
             z-index: 9999;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .toast {
             background: var(--bg-card);
             border-left: 3px solid var(--accent);
-            padding: 14px 20px;
+            padding: 14px 18px;
             border-radius: 12px;
             animation: slideIn 0.3s ease;
             box-shadow: var(--shadow-md);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         @keyframes slideIn {
@@ -524,24 +501,23 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
-        /* Loading Spinner */
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--border);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 40px auto;
+        /* Logged In User Indicator */
+        .user-greeting {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 208, 132, 0.1);
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            color: var(--accent);
         }
 
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Responsive Design */
+        /* Responsive Design - Touch First */
         @media (max-width: 1024px) {
-            .container { padding: 0 20px; }
-            .hero { padding: 60px 20px; }
-            .course-grid { gap: 20px; }
+            .container { padding: 0 16px; }
+            .hero { padding: 50px 16px; }
+            .course-grid { gap: 18px; }
         }
 
         @media (max-width: 768px) {
@@ -550,27 +526,42 @@
                 display: none;
                 width: 100%;
                 flex-direction: column;
-                margin-top: 16px;
-                gap: 8px;
+                margin-top: 12px;
+                gap: 6px;
             }
             .nav-links.show { display: flex; }
-            .nav-links button { width: 100%; text-align: center; padding: 12px; }
-            .hero { padding: 50px 16px; }
-            .hero p { font-size: 1rem; }
-            .hero-btns { flex-direction: column; align-items: center; }
+            .nav-links button { 
+                width: 100%; 
+                text-align: center; 
+                padding: 14px;
+                font-size: 1rem;
+            }
+            .hero { padding: 40px 16px; }
+            .hero p { font-size: 0.95rem; }
+            .hero-btns { flex-direction: column; align-items: center; gap: 12px; }
             .hero-btns button { width: 100%; max-width: 280px; justify-content: center; }
-            .section-title { font-size: 1.5rem; }
-            .course-grid { grid-template-columns: 1fr; }
-            .auth-section { padding: 32px 20px; margin: 32px 0; }
-            .quiz-panel { padding: 20px; }
-            .quiz-timer { font-size: 1.4rem; }
-            .question-card { padding: 20px; }
+            .section-title { font-size: 1.3rem; margin-bottom: 20px; }
+            .course-grid { grid-template-columns: 1fr; gap: 16px; }
+            .auth-section { padding: 28px 20px; margin: 32px 0; }
+            .auth-box h2 { font-size: 1.3rem; }
+            .quiz-panel { padding: 18px; }
+            .quiz-timer { font-size: 1.3rem; }
+            .question-card { padding: 18px; }
+            .btn-primary, .btn-secondary { padding: 12px 20px; font-size: 0.9rem; min-height: 48px; }
+            .input-group input { padding: 12px 16px; min-height: 48px; }
         }
 
         @media (max-width: 480px) {
-            .container { padding: 0 16px; }
-            .card-content { padding: 18px; }
-            .btn-primary, .btn-secondary { padding: 12px 24px; font-size: 0.9rem; }
+            .container { padding: 0 12px; }
+            .card-content { padding: 16px; }
+            .card-img { height: 140px; font-size: 3rem; }
+            .modal-content { padding: 20px; }
+            .option { padding: 12px 14px; font-size: 0.85rem; }
+        }
+
+        /* Large screens */
+        @media (min-width: 1400px) {
+            .container { padding: 0 40px; }
         }
     </style>
 </head>
@@ -580,13 +571,12 @@
 <nav class="navbar">
     <div class="nav-container">
         <div class="logo" onclick="scrollToSection('home')">MEI <span>DRIVE AFRICA</span></div>
-        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
         <div class="nav-links" id="navLinks">
-            <button onclick="scrollToSection('courses')">Learning</button>
-            <button onclick="scrollToSection('quiz-section')">Quiz</button>
-            <button onclick="window.location.href='admin.html'" class="admin-link">Admin Portal</button>
-            <button id="authNavBtn" onclick="scrollToSection('auth-section')">Login</button>
-            <button id="logoutBtn" style="display:none;" onclick="logoutUser()">Logout</button>
+            <button onclick="scrollToSection('courses')">📚 Learning</button>
+            <button onclick="scrollToSection('quiz-section')">📝 Quiz</button>
+            <button id="authNavBtn" onclick="scrollToSection('auth-section')">🔐 Login</button>
+            <button id="logoutBtn" style="display:none;" onclick="logoutUser()">🚪 Logout</button>
         </div>
     </div>
 </nav>
@@ -615,28 +605,28 @@
     <!-- Authentication Section -->
     <div class="auth-section" id="auth-section">
         <div class="auth-box">
-            <h2><i class="fas fa-lock"></i> Student Portal</h2>
+            <h2><i class="fas fa-user-graduate"></i> Student Portal</h2>
             <div class="input-group">
-                <input type="email" id="loginEmail" placeholder="Email address">
+                <input type="email" id="loginEmail" placeholder="Email address" inputmode="email" autocomplete="email">
             </div>
             <div class="input-group">
-                <input type="password" id="loginPassword" placeholder="Password">
+                <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
             </div>
             <button class="btn-primary" style="width:100%;" onclick="loginUser()">Sign In</button>
             
-            <div style="text-align: center; margin: 20px 0; color: var(--text-muted);">or</div>
+            <div style="text-align: center; margin: 20px 0; color: var(--text-muted);">— or —</div>
             
             <div class="input-group">
-                <input type="text" id="signupName" placeholder="Full name">
+                <input type="text" id="signupName" placeholder="Full name" autocomplete="name">
             </div>
             <div class="input-group">
-                <input type="email" id="signupEmail" placeholder="Email address">
+                <input type="email" id="signupEmail" placeholder="Email address" inputmode="email" autocomplete="email">
             </div>
             <div class="input-group">
-                <input type="password" id="signupPassword" placeholder="Create password (min. 6 characters)">
+                <input type="password" id="signupPassword" placeholder="Create password (min. 6 characters)" autocomplete="new-password">
             </div>
             <button class="btn-secondary" style="width:100%;" onclick="registerUser()">Create Free Account</button>
-            <div id="authMessage" style="text-align:center; margin-top:16px; color:var(--accent); font-size:0.85rem;"></div>
+            <div id="authMessage" style="text-align:center; margin-top:16px; color:var(--accent); font-size:0.8rem;"></div>
         </div>
     </div>
 
@@ -652,7 +642,7 @@
 <!-- Footer -->
 <footer>
     <p>© 2026 Meidriveafrica • All Rights Reserved</p>
-    <p style="margin-top: 8px; font-size: 0.75rem;">NTSA-Certified Digital Driving Academy</p>
+    <p style="margin-top: 6px; font-size: 0.7rem;">NTSA-Certified Digital Driving Academy</p>
 </footer>
 
 <!-- Toast Container -->
@@ -686,17 +676,19 @@
     const coursesData = [
         { id: 1, title: "Digital Safety Library", description: "Complete NTSA manuals, road safety guides, emergency response protocols, first aid procedures, and defensive driving handbooks.", icon: "📚", content: "<h2>Digital Safety Library</h2><p>Access comprehensive safety manuals including: Kenya Highway Code, Defensive Driving Handbook, First Aid Guide, Emergency Response Protocols, Vehicle Inspection Checklists, and NTSA Regulations.</p><ul><li>Kenya Highway Code (Official)</li><li>Defensive Driving Techniques</li><li>First Aid & CPR Guide</li><li>Emergency Response Procedures</li><li>Vehicle Safety Checklists</li></ul>" },
         { id: 2, title: "NTSA Quiz Bank", description: "1000+ real NTSA-style questions, CBT mock exams, timed tests with instant scoring and detailed explanations.", icon: "📝", content: "<h2>NTSA Practice Questions</h2><p>Complete question bank covering all exam topics with detailed explanations for each answer.</p><ul><li>Road Signs & Markings</li><li>Highway Code Rules</li><li>Vehicle Controls</li><li>Defensive Driving</li><li>PSV Operations</li><li>Boda Safety</li><li>EV Technology</li></ul>" },
-        { id: 3, title: "Learner Driver Hub", description: "Complete 21-unit NTSA syllabus covering road signs, vehicle controls, roundabouts, defensive driving, and emergency procedures.", icon: "🚗", content: "<h2>Learner Driver Hub - 21 Complete Units</h2><p><strong>Unit 1:</strong> Introduction to Driving in Kenya<br><strong>Unit 2:</strong> Highway Code & Traffic Signs<br><strong>Unit 3:</strong> Vehicle Controls & Dashboard<br><strong>Unit 4:</strong> Basic Vehicle Maintenance<br><strong>Unit 5:</strong> Moving Off & Stopping Safely<br><strong>Unit 6:</strong> Turning & Reversing<br><strong>Unit 7:</strong> Roundabouts & Junctions<br><strong>Unit 8:</strong> Overtaking & Lane Discipline<br><strong>Unit 9:</strong> Speed Limits & Safe Speeds<br><strong>Unit 10:</strong> Defensive Driving<br><strong>Unit 11:</strong> Night Driving<br><strong>Unit 12:</strong> Adverse Weather Driving<br><strong>Unit 13:</strong> Alcohol, Drugs & Driving<br><strong>Unit 14:</strong> Driver Fatigue Management<br><strong>Unit 15:</strong> Pedestrian & Child Safety<br><strong>Unit 16:</strong> Emergency Procedures<br><strong>Unit 17:</strong> First Aid for Drivers<br><strong>Unit 18:</strong> Insurance & Documentation<br><strong>Unit 19:</strong> Environmental Driving<br><strong>Unit 20:</strong> NTSA Test Preparation<br><strong>Unit 21:</strong> Advanced Driving Skills</p>" },
-        { id: 4, title: "PSV Professional Academy", description: "Professional matatu, bus, and PSV driver training focusing on discipline, passenger safety, and NTSA compliance.", icon: "🚌", content: "<h2>PSV Professional Academy</h2><p>Complete training for public service vehicle operators.</p><ul><li>PSV Licensing & Compliance</li><li>Professional Driver Conduct</li><li>Personal Grooming & Image</li><li>Passenger Management & Safety</li><li>Defensive PSV Driving</li><li>Route Management</li><li>Vehicle Care & Daily Inspection</li><li>Emergency Response</li></ul>" },
-        { id: 5, title: "Boda Boda Safety Course", description: "Motorcycle safety training covering protective gear, defensive riding techniques, passenger handling, and professional rider discipline.", icon: "🏍️", content: "<h2>Boda Boda Safety Course</h2><p>Comprehensive training for motorcycle riders.</p><ul><li>Motorcycle Controls & Operation</li><li>Protective Gear & Safety Equipment</li><li>Professionalism & Customer Service</li><li>Drug & Alcohol Prevention</li><li>Crime Prevention & Security</li><li>Night Riding Techniques</li><li>Entrepreneurship & Business Skills</li><li>Defensive Riding Mastery</li><li>Motorcycle Maintenance</li><li>Alcohol Awareness</li></ul>" },
-        { id: 6, title: "Electric Vehicle Training", description: "Modern EV driving techniques, regenerative braking systems, battery management, charging infrastructure, and safety protocols.", icon: "🔋", content: "<h2>Electric Vehicle Training</h2><p>Complete education for electric vehicle operation.</p><ul><li>Introduction to EV Technology</li><li>Battery Systems & Management</li><li>Regenerative Braking</li><li>Charging Infrastructure</li><li>EV Safety & Fire Prevention</li><li>Eco-Driving & Energy Efficiency</li><li>EV Fleet Operations</li><li>EV Laws & Compliance in Kenya</li></ul>" }
+        { id: 3, title: "Learner Driver Hub", description: "Complete 21-unit NTSA syllabus covering road signs, vehicle controls, roundabouts, defensive driving, and emergency procedures.", icon: "🚗", content: "<h2>Learner Driver Hub - 21 Complete Units</h2><p><strong>Units 1-21:</strong> Complete NTSA driving syllabus including Introduction, Highway Code, Vehicle Controls, Maintenance, Moving Off, Turning, Roundabouts, Overtaking, Speed Limits, Defensive Driving, Night Driving, Weather, Alcohol & Drugs, Fatigue, Pedestrian Safety, Emergencies, First Aid, Insurance, Eco Driving, Test Prep, and Advanced Skills.</p>" },
+        { id: 4, title: "PSV Professional Academy", description: "Professional matatu, bus, and PSV driver training focusing on discipline, passenger safety, and NTSA compliance.", icon: "🚌", content: "<h2>PSV Professional Academy</h2><p>Complete training for public service vehicle operators.</p><ul><li>PSV Licensing & Compliance</li><li>Professional Driver Conduct</li><li>Passenger Management & Safety</li><li>Defensive PSV Driving</li><li>Route Management</li><li>Vehicle Care & Daily Inspection</li><li>Emergency Response</li></ul>" },
+        { id: 5, title: "Boda Boda Safety Course", description: "Motorcycle safety training covering protective gear, defensive riding techniques, passenger handling, and professional rider discipline.", icon: "🏍️", content: "<h2>Boda Boda Safety Course</h2><p>Comprehensive training for motorcycle riders.</p><ul><li>Motorcycle Controls & Operation</li><li>Protective Gear & Safety Equipment</li><li>Professionalism & Customer Service</li><li>Drug & Alcohol Prevention</li><li>Night Riding Techniques</li><li>Defensive Riding Mastery</li><li>Motorcycle Maintenance</li></ul>" },
+        { id: 6, title: "Electric Vehicle Training", description: "Modern EV driving techniques, regenerative braking systems, battery management, charging infrastructure, and safety protocols.", icon: "🔋", content: "<h2>Electric Vehicle Training</h2><p>Complete education for electric vehicle operation.</p><ul><li>Introduction to EV Technology</li><li>Battery Systems & Management</li><li>Regenerative Braking</li><li>Charging Infrastructure</li><li>EV Safety & Fire Prevention</li><li>Eco-Driving & Energy Efficiency</li><li>EV Laws & Compliance in Kenya</li></ul>" }
     ];
 
     // Question Bank
     const questionBank = [
         { id: 1, text: "What is the maximum speed limit for a PSV vehicle in Kenya?", options: ["100 km/h", "80 km/h", "110 km/h", "50 km/h"], correct: 1, explanation: "PSV vehicles are legally limited to 80 km/h for passenger safety." },
         { id: 2, text: "What does the 'STOP' sign require drivers to do?", options: ["Slow down and proceed", "Come to a complete halt", "Give way to right", "Sound horn"], correct: 1, explanation: "A STOP sign requires a complete halt at the designated line." },
-        { id: 3, text: "What is the legal blood alcohol limit for commercial drivers in Kenya?", options: ["0.05%", "0.08%", "0.00%", "0.10%"], correct: 2, explanation: "Commercial drivers must maintain 0.00% blood alcohol concentration." }
+        { id: 3, text: "What is the legal blood alcohol limit for commercial drivers in Kenya?", options: ["0.05%", "0.08%", "0.00%", "0.10%"], correct: 2, explanation: "Commercial drivers must maintain 0.00% blood alcohol concentration." },
+        { id: 4, text: "What does the 2-second rule help maintain?", options: ["Fuel economy", "Safe following distance", "Engine temperature", "Tyre pressure"], correct: 1, explanation: "The 2-second rule ensures adequate stopping distance." },
+        { id: 5, text: "When driving in heavy rain, you should:", options: ["Use high beams", "Increase speed", "Reduce speed", "Brake suddenly"], correct: 2, explanation: "Reduce speed to prevent hydroplaning and maintain control." }
     ];
 
     // ============================================
@@ -704,6 +696,7 @@
     // ============================================
     function renderCourseGrid() {
         const grid = document.getElementById('courseGrid');
+        if (!grid) return;
         grid.innerHTML = coursesData.map(course => `
             <div class="card" onclick="viewLesson(${course.id})">
                 <div class="card-img">${course.icon}</div>
@@ -895,19 +888,30 @@
     }
 
     // Mobile Menu Toggle
-    document.getElementById('mobileMenuBtn')?.addEventListener('click', () => {
-        document.getElementById('navLinks')?.classList.toggle('show');
-    });
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    
+    if (mobileBtn) {
+        mobileBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navLinks?.classList.toggle('show');
+        });
+    }
 
     // Close mobile menu when clicking outside
     document.addEventListener('click', (e) => {
-        const navLinks = document.getElementById('navLinks');
-        const mobileBtn = document.getElementById('mobileMenuBtn');
         if (navLinks?.classList.contains('show') && 
             !navLinks.contains(e.target) && 
             mobileBtn && !mobileBtn.contains(e.target)) {
             navLinks.classList.remove('show');
         }
+    });
+
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('#navLinks button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            navLinks?.classList.remove('show');
+        });
     });
 
     // Expose global functions
