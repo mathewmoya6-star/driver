@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
     <title>MEI DRIVE AFRICA | Premier Driver Safety Platform</title>
-    <meta name="description" content="Kenya's NTSA-certified digital driving academy - Complete driver training, PSV, Boda, EV professional courses">
+    <meta name="description" content="Kenya's NTSA-certified digital driving academy">
     <meta name="theme-color" content="#00d084">
     
-    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
@@ -32,7 +29,6 @@
             --text-secondary: #A0B3D9;
             --text-muted: #6B7FA3;
             --transition: all 0.2s ease;
-            --shadow-glow: 0 0 20px rgba(0, 208, 132, 0.15);
         }
 
         ::-webkit-scrollbar { width: 6px; }
@@ -74,7 +70,6 @@
         }
         .logo span { color: var(--text-primary); background: none; }
         
-        /* Mobile Menu Button */
         .mobile-menu-btn { 
             display: none; 
             background: transparent; 
@@ -86,7 +81,6 @@
             min-height: 52px; 
             min-width: 52px; 
             border-radius: 12px;
-            transition: background 0.2s;
         }
         .mobile-menu-btn:active { background: rgba(0, 208, 132, 0.15); transform: scale(0.96); }
         
@@ -111,7 +105,7 @@
         .nav-links button:hover, .nav-links .user-badge:hover { background: rgba(0, 208, 132, 0.1); color: var(--accent); }
         .user-badge { background: rgba(0, 208, 132, 0.1); color: var(--accent) !important; }
         
-        /* Mobile Menu Overlay */
+        /* Mobile Menu Overlay & Panel */
         .mobile-overlay {
             display: none;
             position: fixed;
@@ -127,7 +121,6 @@
         }
         .mobile-overlay.active { display: block; opacity: 1; }
         
-        /* Mobile Menu Panel - Slide from Right */
         .mobile-panel {
             position: fixed;
             top: 0;
@@ -143,7 +136,6 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
             overflow-y: auto;
         }
         .mobile-panel.open { right: 0; }
@@ -158,7 +150,6 @@
             font-weight: 500;
             font-size: 1.05rem;
             text-align: left;
-            transition: background 0.2s;
             width: 100%;
             display: flex;
             align-items: center;
@@ -180,7 +171,6 @@
             min-height: 48px;
             border-radius: 50%;
         }
-        .close-mobile-btn:active { background: rgba(0, 208, 132, 0.15); }
 
         /* Hero */
         .hero { background: linear-gradient(135deg, #071120 0%, #0A1628 100%); padding: 60px 20px; text-align: center; border-bottom: 2px solid var(--accent); }
@@ -189,13 +179,10 @@
         .hero .highlight { color: var(--accent); font-weight: 700; }
         .hero-btns { margin-top: 28px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
-        /* Buttons */
         .btn-primary, .btn-secondary, .btn-outline { 
             padding: 14px 28px; border-radius: 50px; font-weight: 700; font-size: 0.95rem; 
-            cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; 
-            justify-content: center; gap: 8px; border: none; min-height: 52px; 
+            cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: none; min-height: 52px; 
         }
-        .btn-primary:active, .btn-secondary:active { transform: scale(0.97); }
         .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: #0B0F19; }
         .btn-secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
         .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); padding: 10px 18px; font-size: 0.85rem; min-height: 44px; }
@@ -203,32 +190,29 @@
         .section-title { font-size: clamp(1.3rem, 4vw, 1.6rem); margin-bottom: 28px; display: flex; align-items: center; gap: 12px; color: var(--accent); border-left: 4px solid var(--accent); padding-left: 20px; }
         
         .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin: 32px 0; }
-        .card { background: var(--bg-card); border-radius: 20px; overflow: hidden; border: 1px solid var(--border); transition: var(--transition); cursor: pointer; }
+        .card { background: var(--bg-card); border-radius: 20px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; }
         .card:active { transform: scale(0.98); }
-        .card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: var(--shadow-glow); }
         .card-img { width: 100%; height: 170px; background: linear-gradient(135deg, #0f1a2c, #0a1020); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
         .card-content { padding: 20px; }
-        .card h3 { margin-bottom: 10px; color: var(--accent); font-size: 1.15rem; }
+        .card h3 { margin-bottom: 10px; color: var(--accent); }
         .card p { color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px; font-size: 0.85rem; }
         .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; margin-bottom: 12px; }
         .badge-accent { background: var(--accent); color: #0B0F19; }
 
         /* Modals */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.96); backdrop-filter: blur(12px); z-index: 2000; justify-content: center; align-items: center; padding: 16px; }
-        .modal-content { background: var(--bg-card); border: 1px solid var(--accent); border-radius: 28px; padding: 28px; max-width: 450px; width: 100%; animation: modalFadeIn 0.3s ease; }
-        @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .modal-content { background: var(--bg-card); border: 1px solid var(--accent); border-radius: 28px; padding: 28px; max-width: 450px; width: 100%; }
         .modal-content h2 { color: var(--accent); margin-bottom: 24px; text-align: center; }
         .input-group { margin-bottom: 16px; }
         .input-group input { width: 100%; padding: 14px 18px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-secondary); color: var(--text-primary); font-size: 1rem; min-height: 52px; }
-        .input-group input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
-        .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--accent); padding: 8px; min-width: 44px; text-align: center; }
+        .input-group input:focus { outline: none; border-color: var(--accent); }
+        .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--accent); padding: 8px; min-width: 44px; }
 
-        /* Quiz */
         .quiz-panel { background: var(--bg-card); border-radius: 24px; padding: 24px; margin: 32px 0; border: 1px solid var(--border); }
-        .question-card { background: var(--bg-secondary); border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 1px solid var(--border); }
+        .question-card { background: var(--bg-secondary); border-radius: 20px; padding: 24px; margin-bottom: 20px; }
         .question-text { font-size: 1rem; font-weight: 600; margin-bottom: 18px; }
         .options-group { display: flex; flex-direction: column; gap: 10px; }
-        .option { background: var(--bg-card); padding: 14px 18px; border-radius: 14px; cursor: pointer; border: 1px solid var(--border); transition: var(--transition); min-height: 52px; }
+        .option { background: var(--bg-card); padding: 14px 18px; border-radius: 14px; cursor: pointer; border: 1px solid var(--border); min-height: 52px; }
         .option:active { transform: scale(0.98); background: var(--bg-hover); }
 
         .lesson-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.96); backdrop-filter: blur(12px); z-index: 2000; justify-content: center; align-items: center; padding: 16px; }
@@ -239,7 +223,6 @@
         .toast { background: var(--bg-card); border-left: 3px solid var(--accent); padding: 12px 18px; border-radius: 12px; animation: slideIn 0.3s ease; }
         @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .mobile-menu-btn { display: block; }
             .nav-links { display: none !important; }
@@ -247,22 +230,12 @@
             .hero-btns { flex-direction: column; align-items: center; gap: 12px; }
             .hero-btns button { width: 100%; max-width: 280px; justify-content: center; }
             .course-grid { grid-template-columns: 1fr; gap: 16px; }
-            .quiz-panel { padding: 18px; }
-            .section-title { font-size: 1.3rem; margin-bottom: 20px; }
             .container { padding: 0 16px; }
-            .modal-content { padding: 20px; margin: 16px; }
-        }
-        @media (max-width: 480px) {
-            .card-content { padding: 16px; }
-            .card-img { height: 140px; font-size: 3rem; }
-            .option { padding: 12px 14px; font-size: 0.85rem; }
-            .btn-primary, .btn-secondary { padding: 12px 20px; font-size: 0.9rem; min-height: 48px; }
         }
     </style>
 </head>
 <body>
 
-<!-- Navigation -->
 <nav class="navbar">
     <div class="nav-container">
         <div class="logo" onclick="scrollToSection('home')">MEI <span>DRIVE AFRICA</span></div>
@@ -270,12 +243,12 @@
         <div class="nav-links" id="navLinks">
             <button onclick="scrollToSection('courses')">📚 Learning Programme</button>
             <button onclick="scrollToSection('quiz-section')">📝 Quiz</button>
-            <button id="loginNavBtn" onclick="openAuthModal()">🔐 Login</button>
-            <button id="signupNavBtn" onclick="openSignupModal()">📝 Sign Up</button>
-            <div id="userMenu" style="display:none;">
+            <button id="desktopLoginBtn" onclick="openAuthModal()">🔐 Login</button>
+            <button id="desktopSignupBtn" onclick="openSignupModal()">📝 Sign Up</button>
+            <div id="desktopUserMenu" style="display:none;">
                 <div class="user-badge" onclick="openProfileModal()">
                     <i class="fas fa-user-circle"></i>
-                    <span id="userNameDisplay">User</span>
+                    <span id="desktopUserName">User</span>
                     <i class="fas fa-chevron-down"></i>
                 </div>
             </div>
@@ -283,23 +256,15 @@
     </div>
 </nav>
 
-<!-- Mobile Menu Components -->
+<!-- Dynamic Mobile Menu Panel -->
 <div class="mobile-overlay" id="mobileOverlay"></div>
 <div class="mobile-panel" id="mobilePanel">
     <button class="close-mobile-btn" id="closeMobileBtn">✕</button>
-    <button onclick="mobileNavigateTo('courses')">📚 Learning Programme</button>
-    <button onclick="mobileNavigateTo('quiz-section')">📝 Quiz</button>
-    <div id="mobileAuthSection">
-        <button onclick="mobileOpenAuth()">🔐 Login</button>
-        <button onclick="mobileOpenSignup()">📝 Sign Up</button>
-    </div>
-    <div id="mobileUserSection" style="display:none;">
-        <button onclick="mobileOpenProfile()">👤 My Profile</button>
-        <button onclick="mobileLogout()">🚪 Logout</button>
+    <div id="mobileMenuContent">
+        <!-- Dynamic content will be injected here -->
     </div>
 </div>
 
-<!-- Hero Section -->
 <section class="hero" id="home">
     <h1>MEI DRIVE AFRICA</h1>
     <p>Drive Smart. Stay Safe. Arrive Home. <span class="highlight">Pass NTSA Test As A Pro</span></p>
@@ -319,7 +284,7 @@
     </div>
 </div>
 
-<footer><p>© 2026 Meidriveafrica • All Rights Reserved</p><p style="margin-top: 6px; font-size: 0.7rem;">NTSA-Certified Digital Driving Academy</p></footer>
+<footer><p>© 2026 Meidriveafrica • All Rights Reserved</p></footer>
 
 <div class="toast-container" id="toastContainer"></div>
 
@@ -341,22 +306,112 @@
     let currentQuiz = { questions: [], currentIndex: 0, score: 0 };
 
     const coursesData = [
-        { id: 1, title: "Digital Safety Library", description: "Complete NTSA manuals, road safety guides, emergency response protocols, first aid procedures.", icon: "📚", content: "<h2>Digital Safety Library</h2><p>Kenya Highway Code, Defensive Driving, First Aid & CPR, Emergency Response.</p>" },
-        { id: 2, title: "NTSA Quiz Bank", description: "1000+ real NTSA-style questions, CBT mock exams, instant scoring.", icon: "📝", content: "<h2>NTSA Practice Questions</h2><p>Road Signs, Highway Code, Vehicle Controls, Defensive Driving, PSV, Boda, EV.</p>" },
-        { id: 3, title: "Learner Driver Hub", description: "Complete 21-unit NTSA syllabus covering all driving fundamentals.", icon: "🚗", content: "<h2>Learner Driver Hub - 21 Units</h2><p>Introduction, Highway Code, Controls, Maintenance, Moving Off, Turning, Roundabouts, Overtaking, Speed Limits, Defensive Driving, Night Driving, Weather, Alcohol & Drugs, Fatigue, Pedestrian Safety, Emergencies, First Aid, Insurance, Eco Driving, Test Prep, Advanced Skills.</p>" },
-        { id: 4, title: "PSV Professional Academy", description: "Professional matatu, bus, and PSV driver training.", icon: "🚌", content: "<h2>PSV Professional Academy</h2><p>Licensing, Professional Conduct, Passenger Safety, Defensive PSV Driving, Route Management, Vehicle Inspection.</p>" },
-        { id: 5, title: "Boda Boda Safety Course", description: "Motorcycle safety, protective gear, defensive riding.", icon: "🏍️", content: "<h2>Boda Boda Safety Course</h2><p>Controls, Protective Gear, Professionalism, Drug Prevention, Night Riding, Defensive Riding, Maintenance.</p>" },
-        { id: 6, title: "Electric Vehicle Training", description: "EV driving, regenerative braking, battery systems.", icon: "🔋", content: "<h2>Electric Vehicle Training</h2><p>EV Technology, Battery Management, Regenerative Braking, Charging Systems, EV Safety, Eco-Driving.</p>" }
+        { id: 1, title: "Digital Safety Library", description: "Complete NTSA manuals, road safety guides, emergency response protocols.", icon: "📚", content: "<h2>Digital Safety Library</h2><p>Kenya Highway Code, Defensive Driving, First Aid & CPR, Emergency Response.</p>" },
+        { id: 2, title: "NTSA Quiz Bank", description: "1000+ real NTSA-style questions, CBT mock exams.", icon: "📝", content: "<h2>NTSA Practice Questions</h2><p>Road Signs, Highway Code, Vehicle Controls, Defensive Driving.</p>" },
+        { id: 3, title: "Learner Driver Hub", description: "Complete 21-unit NTSA syllabus.", icon: "🚗", content: "<h2>Learner Driver Hub - 21 Units</h2><p>Complete NTSA driving syllabus including all essential topics.</p>" },
+        { id: 4, title: "PSV Professional Academy", description: "Professional matatu, bus, and PSV driver training.", icon: "🚌", content: "<h2>PSV Professional Academy</h2><p>Licensing, Professional Conduct, Passenger Safety, Defensive PSV Driving.</p>" },
+        { id: 5, title: "Boda Boda Safety Course", description: "Motorcycle safety, protective gear, defensive riding.", icon: "🏍️", content: "<h2>Boda Boda Safety Course</h2><p>Controls, Protective Gear, Professionalism, Defensive Riding.</p>" },
+        { id: 6, title: "Electric Vehicle Training", description: "EV driving, regenerative braking, battery systems.", icon: "🔋", content: "<h2>Electric Vehicle Training</h2><p>EV Technology, Battery Management, Regenerative Braking, Charging Systems.</p>" }
     ];
 
     const questionBank = [
-        { id: 1, text: "Maximum speed limit for PSV in Kenya?", options: ["100 km/h", "80 km/h", "110 km/h", "50 km/h"], correct: 1, explanation: "PSV vehicles: 80 km/h limit." },
-        { id: 2, text: "What does STOP sign require?", options: ["Slow down", "Complete halt", "Give way", "Honk"], correct: 1, explanation: "Complete halt required at STOP sign." },
-        { id: 3, text: "Legal BAC for commercial drivers?", options: ["0.05%", "0.08%", "0.00%", "0.10%"], correct: 2, explanation: "Commercial drivers: 0.00% BAC." },
+        { id: 1, text: "Maximum speed limit for PSV in Kenya?", options: ["100 km/h", "80 km/h", "110 km/h", "50 km/h"], correct: 1, explanation: "PSV vehicles: 80 km/h." },
+        { id: 2, text: "What does STOP sign require?", options: ["Slow down", "Complete halt", "Give way", "Honk"], correct: 1, explanation: "Complete halt required." },
+        { id: 3, text: "Legal BAC for commercial drivers?", options: ["0.05%", "0.08%", "0.00%", "0.10%"], correct: 2, explanation: "Commercial: 0.00% BAC." },
         { id: 4, text: "2-second rule helps maintain?", options: ["Fuel economy", "Following distance", "Engine temp", "Tyre pressure"], correct: 1, explanation: "Safe following distance." },
         { id: 5, text: "Driving in heavy rain, you should?", options: ["Use high beams", "Increase speed", "Reduce speed", "Brake suddenly"], correct: 2, explanation: "Reduce speed to prevent hydroplaning." }
     ];
 
+    // ============================================
+    // DYNAMIC MOBILE MENU - UPDATES BASED ON LOGIN STATUS
+    // ============================================
+    function updateMobileMenu() {
+        const container = document.getElementById('mobileMenuContent');
+        if (!container) return;
+        
+        const isLoggedIn = currentUser !== null;
+        const userName = currentUser?.user_metadata?.full_name || currentUser?.email?.split('@')[0] || 'User';
+        
+        if (isLoggedIn) {
+            // LOGGED IN MENU
+            container.innerHTML = `
+                <div style="padding: 10px 20px 20px 20px; border-bottom: 1px solid var(--border); margin-bottom: 10px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 48px; height: 48px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #0B0F19;">
+                            👤
+                        </div>
+                        <div>
+                            <strong style="font-size: 1rem;">${escapeHtml(userName)}</strong>
+                            <p style="font-size: 0.7rem; color: var(--accent); margin-top: 2px;">Logged In</p>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="mobileNavigateTo('courses')">
+                    <i class="fas fa-book-open"></i> Learning Programme
+                </button>
+                <button onclick="mobileNavigateTo('quiz-section')">
+                    <i class="fas fa-question-circle"></i> Practice Quiz
+                </button>
+                <button onclick="mobileOpenProfile()">
+                    <i class="fas fa-user-circle"></i> My Profile
+                </button>
+                <button onclick="mobileLogout()" style="color: #ff6b6b;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            `;
+        } else {
+            // LOGGED OUT MENU
+            container.innerHTML = `
+                <button onclick="mobileNavigateTo('courses')">
+                    <i class="fas fa-book-open"></i> Learning Programme
+                </button>
+                <button onclick="mobileNavigateTo('quiz-section')">
+                    <i class="fas fa-question-circle"></i> Practice Quiz
+                </button>
+                <div style="margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px;">
+                    <button onclick="mobileOpenAuth()" style="color: var(--accent);">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    <button onclick="mobileOpenSignup()">
+                        <i class="fas fa-user-plus"></i> Sign Up
+                    </button>
+                </div>
+            `;
+        }
+    }
+    
+    function escapeHtml(text) {
+        if (!text) return '';
+        return text.replace(/[&<>]/g, function(c) {
+            if (c === '&') return '&amp;';
+            if (c === '<') return '&lt;';
+            if (c === '>') return '&gt;';
+            return c;
+        });
+    }
+
+    // ============================================
+    // DESKTOP UI UPDATE
+    // ============================================
+    function updateDesktopUI() {
+        const isLoggedIn = currentUser !== null;
+        const userName = currentUser?.user_metadata?.full_name || currentUser?.email?.split('@')[0] || 'User';
+        
+        if (isLoggedIn) {
+            document.getElementById('desktopLoginBtn').style.display = 'none';
+            document.getElementById('desktopSignupBtn').style.display = 'none';
+            document.getElementById('desktopUserMenu').style.display = 'block';
+            document.getElementById('desktopUserName').innerText = userName;
+        } else {
+            document.getElementById('desktopLoginBtn').style.display = 'inline-block';
+            document.getElementById('desktopSignupBtn').style.display = 'inline-block';
+            document.getElementById('desktopUserMenu').style.display = 'none';
+        }
+    }
+
+    // ============================================
+    // RENDER FUNCTIONS
+    // ============================================
     function renderCourseGrid() {
         const grid = document.getElementById('courseGrid');
         if (!grid) return;
@@ -375,7 +430,10 @@
 
     function viewLesson(courseId) {
         const course = coursesData.find(c => c.id === courseId);
-        if (course) { document.getElementById('lessonContent').innerHTML = course.content; document.getElementById('lessonModal').style.display = 'flex'; }
+        if (course) { 
+            document.getElementById('lessonContent').innerHTML = course.content; 
+            document.getElementById('lessonModal').style.display = 'flex'; 
+        }
         closeMobileMenu();
     }
     function closeLessonModal() { document.getElementById('lessonModal').style.display = 'none'; }
@@ -390,7 +448,6 @@
         if (currentQuiz.currentIndex >= currentQuiz.questions.length) {
             const percent = Math.round((currentQuiz.score / currentQuiz.questions.length) * 100);
             document.getElementById('quizContainer').innerHTML = `<div class="question-card" style="text-align:center;"><h3>🎉 Quiz Complete!</h3><p>Score: ${currentQuiz.score}/${currentQuiz.questions.length} (${percent}%)</p><button class="btn-primary" onclick="initQuiz()">Restart Quiz</button></div>`;
-            if (percent >= 80) showToast("Excellent!", "success");
             return;
         }
         const q = currentQuiz.questions[currentQuiz.currentIndex];
@@ -424,7 +481,8 @@
         if (error) { showToast(error.message, "error"); return; }
         currentUser = data.user;
         localStorage.setItem('mei_user', JSON.stringify({ id: currentUser.id, email: currentUser.email, name: currentUser.user_metadata?.full_name || email.split('@')[0] }));
-        updateUIForLoggedInUser();
+        updateDesktopUI();
+        updateMobileMenu();
         closeLoginModal();
         showToast(`Welcome ${currentUser.email.split('@')[0]}!`, "success");
     }
@@ -432,26 +490,11 @@
         await supabase.auth.signOut();
         currentUser = null;
         localStorage.removeItem('mei_user');
-        updateUIForLoggedOutUser();
+        updateDesktopUI();
+        updateMobileMenu();
         closeProfileModal();
         closeMobileMenu();
         showToast("Logged out", "info");
-    }
-    function updateUIForLoggedInUser() {
-        document.getElementById('loginNavBtn').style.display = 'none';
-        document.getElementById('signupNavBtn').style.display = 'none';
-        document.getElementById('userMenu').style.display = 'block';
-        const name = currentUser?.user_metadata?.full_name || currentUser?.email?.split('@')[0] || 'User';
-        document.getElementById('userNameDisplay').innerText = name;
-        if (document.getElementById('mobileAuthSection')) document.getElementById('mobileAuthSection').style.display = 'none';
-        if (document.getElementById('mobileUserSection')) document.getElementById('mobileUserSection').style.display = 'flex';
-    }
-    function updateUIForLoggedOutUser() {
-        document.getElementById('loginNavBtn').style.display = 'inline-block';
-        document.getElementById('signupNavBtn').style.display = 'inline-block';
-        document.getElementById('userMenu').style.display = 'none';
-        if (document.getElementById('mobileAuthSection')) document.getElementById('mobileAuthSection').style.display = 'flex';
-        if (document.getElementById('mobileUserSection')) document.getElementById('mobileUserSection').style.display = 'none';
     }
     function openProfileModal() {
         if (!currentUser) return;
@@ -471,6 +514,7 @@
 
     // Mobile Menu Functions
     function openMobileMenu() {
+        updateMobileMenu(); // Refresh menu before opening
         document.getElementById('mobilePanel').classList.add('open');
         document.getElementById('mobileOverlay').classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -505,8 +549,13 @@
         const stored = localStorage.getItem('mei_user');
         if (stored) {
             const { data: { session } } = await supabase.auth.getSession();
-            if (session) { currentUser = session.user; updateUIForLoggedInUser(); }
-            else { localStorage.removeItem('mei_user'); }
+            if (session) { 
+                currentUser = session.user; 
+                updateDesktopUI();
+                updateMobileMenu();
+            } else { 
+                localStorage.removeItem('mei_user'); 
+            }
         }
     }
 
@@ -514,6 +563,7 @@
     document.getElementById('mobileMenuBtn')?.addEventListener('click', openMobileMenu);
     document.getElementById('closeMobileBtn')?.addEventListener('click', closeMobileMenu);
     document.getElementById('mobileOverlay')?.addEventListener('click', closeMobileMenu);
+    
     window.onclick = function(e) {
         if (e.target === document.getElementById('loginModal')) closeLoginModal();
         if (e.target === document.getElementById('signupModal')) closeSignupModal();
@@ -542,6 +592,7 @@
     renderCourseGrid();
     checkSession();
     initQuiz();
+    updateMobileMenu(); // Initial menu render
 </script>
 </body>
 </html>
