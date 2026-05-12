@@ -21,12 +21,12 @@
             --primary-dark: #00a86b;
             --primary-light: #4ade80;
             --secondary: #00ff88;
-            --dark: #0B0F19;
-            --dark-card: #121B2C;
-            --dark-hover: #1A2538;
-            --border: #1E2A3E;
+            --dark: #000000;
+            --dark-card: #0a0a0a;
+            --dark-hover: #111111;
+            --border: #1a1a1a;
             --text: #FFFFFF;
-            --text-muted: #A0B3D9;
+            --text-muted: #888888;
             --success: #2ecc71;
             --error: #e74c3c;
             --warning: #f39c12;
@@ -170,7 +170,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(11, 15, 25, 0.96);
+            background: rgba(0, 0, 0, 0.98);
             backdrop-filter: blur(12px);
             z-index: 1000;
             justify-content: center;
@@ -190,7 +190,7 @@
             width: 100%;
             padding: 12px;
             margin: 8px 0 16px;
-            background: var(--dark-hover);
+            background: #111;
             border: 1px solid var(--border);
             border-radius: 12px;
             color: var(--text);
@@ -200,7 +200,7 @@
         .toast { background: var(--dark-card); border-left: 4px solid var(--primary); padding: 14px 20px; border-radius: 12px; margin-top: 8px; animation: slideIn 0.3s ease; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         
-        .mobile-menu-btn { display: none; position: fixed; top: 16px; left: 16px; z-index: 101; background: var(--dark-card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; cursor: pointer; }
+        .mobile-menu-btn { display: none; position: fixed; top: 16px; left: 16px; z-index: 101; background: var(--dark-card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; cursor: pointer; color: var(--primary); }
         @media (max-width: 768px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.open { transform: translateX(0); }
@@ -227,6 +227,11 @@
         .price-input-container { display: flex; align-items: center; gap: 12px; margin: 16px 0; }
         .price-input-container input { flex: 1; margin: 0; }
         .module-info { margin-bottom: 16px; padding: 12px; background: rgba(0, 208, 132, 0.1); border-radius: 12px; }
+        
+        /* Custom scrollbar for black theme */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #111; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -248,7 +253,11 @@
         let pendingLockModuleId = null;
         
         async function loadData() {
-            await Promise.all([loadUsers(), loadModules(), loadQuizQuestions(), loadLibraryResources()]);
+            await loadUsers();
+            await loadModules();
+            await loadQuizQuestions();
+            await loadLibraryResources();
+            renderApp();
         }
         
         async function loadUsers() {
@@ -283,7 +292,7 @@
             for (const table of moduleTables) {
                 try {
                     const { data, error } = await supabase.from(table).select('*').eq('status', 'published');
-                    if (!error && data) {
+                    if (!error && data && data.length > 0) {
                         allModules.push(...data.map(m => ({ ...m, module_type: table.replace('_modules', '') })));
                     }
                 } catch (e) {}
@@ -512,14 +521,15 @@
                 <div class="card-header"><h2><i class="fas fa-users"></i> User Management</h2><button class="btn btn-primary" onclick="openAddUserModal()"><i class="fas fa-user-plus"></i> Add User</button></div>
                 <table class="data-table"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Progress</th><th>Actions</th></tr></thead>
                 <tbody>${users.map(user => `<tr>
-                    <td><strong>${user.name}</strong></td><td>${user.email}</td>
+                    <td><strong>${user.name}</strong></td>
+                    <td>${user.email}</td>
                     <td><span class="status-badge ${user.role === 'admin' ? 'role-admin' : 'role-user'}">${user.role === 'admin' ? 'Admin' : 'User'}</span></td>
                     <td><span class="status-badge ${user.status === 'active' ? 'status-active' : 'status-inactive'}">${user.status}</span></td>
                     <td>${user.progress || 0}%</td>
                     <td><button class="btn btn-outline btn-sm" onclick="updateUserRole(${user.id}, '${user.role === 'admin' ? 'user' : 'admin'}')">${user.role === 'admin' ? 'Demote' : 'Make Admin'}</button>
                     <button class="btn btn-outline btn-sm" onclick="updateUserStatus(${user.id}, '${user.status === 'active' ? 'inactive' : 'active'}')">${user.status === 'active' ? 'Deactivate' : 'Activate'}</button>
                     <button class="btn btn-danger btn-sm" onclick="confirmDeleteUser(${user.id})"><i class="fas fa-trash"></i></button></td>
-                </tr>`).join('')}</tbody></table></div>`;
+                </tr>`).join('')}</tbody>}</table></div>`;
         }
         
         function renderModuleManagement() {
@@ -535,7 +545,7 @@
                     <td><button class="btn btn-outline btn-sm" onclick="openEditModuleModal(${module.id})">Edit</button>
                     <button class="btn btn-${module.status === 'unlocked' ? 'danger' : 'success'} btn-sm" onclick="toggleModuleStatus(${module.id})">${module.status === 'unlocked' ? 'Lock & Set Price' : 'Unlock (FREE)'}</button>
                     <button class="btn btn-danger btn-sm" onclick="confirmDeleteModule(${module.id})"><i class="fas fa-trash"></i></button></td>
-                </tr>`).join('')}</tbody></table></div>`;
+                </tr>`).join('')}</tbody>}</table></div>`;
         }
         
         function renderQuizBank() {
@@ -587,6 +597,7 @@
                 </div>
                 <div class="main-content"><div class="top-bar"><div class="page-title"><h1>${adminView.charAt(0).toUpperCase() + adminView.slice(1)}</h1><p>Welcome back, ${currentUser.name}</p></div><div class="stats-mini"><span style="background: var(--dark-card); padding: 8px 16px; border-radius: 50px;"><i class="fas fa-users"></i> ${stats.totalUsers} Users</span></div></div>${content}</div>
                 <div id="toast-container"></div>
+                
                 <div class="modal" id="addUserModal"><div class="modal-content"><h3>Add User</h3><input type="text" id="newUserName" placeholder="Full Name"><input type="email" id="newUserEmail" placeholder="Email"><select id="newUserRole"><option value="user">User</option><option value="admin">Admin</option></select><div style="display: flex; gap: 12px;"><button class="btn btn-outline" onclick="closeModal('addUserModal')">Cancel</button><button class="btn btn-primary" onclick="submitAddUser()">Add</button></div></div></div>
                 <div class="modal" id="addModuleModal"><div class="modal-content"><h3>Add Module</h3><input type="text" id="newModuleName" placeholder="Name"><input type="number" id="newModulePrice" placeholder="Price (0 for FREE)"><input type="text" id="newModuleDuration" placeholder="Duration"><input type="number" id="newModuleTimer" placeholder="Exam Timer (min)"><input type="number" id="newModuleLessons" placeholder="Lessons"><textarea id="newModuleDescription" placeholder="Description"></textarea><div style="display: flex; gap: 12px;"><button class="btn btn-outline" onclick="closeModal('addModuleModal')">Cancel</button><button class="btn btn-primary" onclick="submitAddModule()">Add</button></div></div></div>
                 <div class="modal" id="editModuleModal"><div class="modal-content"><h3>Edit Module</h3><input type="hidden" id="editModuleId"><input type="text" id="editModuleName" placeholder="Name"><input type="number" id="editModulePrice" placeholder="Price"><input type="text" id="editModuleDuration" placeholder="Duration"><input type="number" id="editModuleTimer" placeholder="Exam Timer"><input type="number" id="editModuleLessons" placeholder="Lessons"><textarea id="editModuleDescription" placeholder="Description"></textarea><div style="display: flex; gap: 12px;"><button class="btn btn-outline" onclick="closeModal('editModuleModal')">Cancel</button><button class="btn btn-primary" onclick="submitEditModule()">Save</button></div></div></div>
@@ -618,6 +629,7 @@
         };
         window.openAddQuizModal = () => document.getElementById('addQuizModal').classList.add('active');
         window.openAddLibraryModal = () => document.getElementById('addLibraryModal').classList.add('active');
+        
         window.submitAddUser = () => {
             const name = document.getElementById('newUserName').value;
             const email = document.getElementById('newUserEmail').value;
@@ -664,6 +676,7 @@
             if (title && url) { addLibraryItem(title, type, url, size); closeModal('addLibraryModal'); }
             else showToast('Fill required fields', 'error');
         };
+        
         window.confirmDeleteUser = (id) => { pendingDelete = id; deleteType = 'user'; document.getElementById('deleteMessage').innerHTML = 'Delete this user?'; document.getElementById('deleteConfirmModal').classList.add('active'); };
         window.confirmDeleteModule = (id) => { pendingDelete = id; deleteType = 'module'; document.getElementById('deleteMessage').innerHTML = 'Delete this module?'; document.getElementById('deleteConfirmModal').classList.add('active'); };
         window.confirmDeleteBtn = () => {
