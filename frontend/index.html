@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>MEI DRIVE AFRICA | Premier Driver Training Platform</title>
-    <meta name="description" content="Kenya's premier driver training platform for learner drivers, boda boda riders, PSV operators, and fleet drivers. NTSA-certified training with 21+ units.">
+    <meta name="description" content="Kenya's premier driver training platform with NTSA-certified training, resource library, and practice quiz bank.">
     <meta name="theme-color" content="#d4af37">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -35,7 +35,7 @@
 
         body { font-family: 'Inter', sans-serif; background: var(--dark); color: var(--text); line-height: 1.5; overflow-x: hidden; }
         
-        /* Hero Section - MEI DRIVE AFRICA */
+        /* Hero Section */
         .hero-section {
             position: relative;
             min-height: 100vh;
@@ -256,6 +256,73 @@
         .progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin: 12px 0; }
         .progress-fill { height: 100%; background: var(--gradient-gold); border-radius: 3px; transition: width 0.3s; }
         
+        /* Library Styles */
+        .library-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+        
+        .resource-card {
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            background: rgba(212, 175, 55, 0.05);
+        }
+        
+        .resource-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+        
+        .resource-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .resource-type {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        
+        .resource-size {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+        
+        .download-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        
+        .download-btn:hover {
+            background: var(--primary);
+            color: #000;
+        }
+        
         /* Quiz Bank Styles */
         .quiz-bank-section {
             background: var(--dark-card);
@@ -428,6 +495,7 @@
             .learning-paths { grid-template-columns: 1fr; }
             .cta-banner { padding: 32px 20px; }
             .quiz-options { grid-template-columns: 1fr; }
+            .library-grid { grid-template-columns: 1fr; }
         }
         
         .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
@@ -443,6 +511,28 @@
         
         .trust-badge { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
         .trust-badge span { color: var(--text-muted); font-size: 0.85rem; }
+        
+        /* Category Filters */
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .filter-btn {
+            padding: 8px 20px;
+            border-radius: 50px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+        }
     </style>
 </head>
 <body>
@@ -461,6 +551,7 @@
         let currentUser = null;
         let currentView = 'dashboard';
         let userRole = 'user';
+        let currentCategory = 'all';
         
         // Quiz State
         let currentQuiz = null;
@@ -468,7 +559,23 @@
         let quizAnswers = [];
         let quizSubmitted = false;
         
-        // Modern Quiz Bank Data (NTSA Style Questions)
+        // Library Resources
+        const LIBRARY_RESOURCES = [
+            { id: 1, title: "Kenya Highway Code (Official)", type: "PDF", size: "2.4 MB", category: "Official", icon: "📘", link: "#" },
+            { id: 2, title: "NTSA Driving Test Guide", type: "PDF", size: "1.8 MB", category: "Official", icon: "📗", link: "#" },
+            { id: 3, title: "EV Driver Handbook Kenya", type: "PDF", size: "3.5 MB", category: "EV", icon: "⚡", link: "#" },
+            { id: 4, title: "EV Maintenance Guide", type: "PDF", size: "2.8 MB", category: "EV", icon: "🔧", link: "#" },
+            { id: 5, title: "PSV Driver Manual", type: "PDF", size: "3.2 MB", category: "PSV", icon: "🚌", link: "#" },
+            { id: 6, title: "School Bus Safety Manual", type: "PDF", size: "2.1 MB", category: "School", icon: "🏫", link: "#" },
+            { id: 7, title: "Boda Boda Safety Guide", type: "PDF", size: "1.5 MB", category: "Boda", icon: "🛵", link: "#" },
+            { id: 8, title: "Defensive Driving Techniques", type: "Video", duration: "45 min", category: "Techniques", icon: "🎥", link: "#" },
+            { id: 9, title: "First Aid for Drivers", type: "Video", duration: "30 min", category: "Safety", icon: "🚑", link: "#" },
+            { id: 10, title: "Road Signs Reference Card", type: "PDF", size: "0.5 MB", category: "Reference", icon: "🪧", link: "#" },
+            { id: 11, title: "Vehicle Maintenance Checklist", type: "PDF", size: "0.8 MB", category: "Maintenance", icon: "📋", link: "#" },
+            { id: 12, title: "Night Driving Safety Tips", type: "PDF", size: "1.2 MB", category: "Safety", icon: "🌙", link: "#" }
+        ];
+        
+        // Quiz Bank Data (NTSA Style Questions)
         const QUIZ_BANK = [
             { id: 1, question: "What is the minimum age for a private vehicle learner's licence in Kenya?", options: ["16 years", "17 years", "18 years", "21 years"], correct: 2, explanation: "The Traffic Act specifies 18 years as the minimum age for a private vehicle learner's licence.", category: "Licensing", difficulty: "Easy" },
             { id: 2, question: "What is the legal blood alcohol limit for a private vehicle driver in Kenya?", options: ["0.00%", "0.05%", "0.08%", "0.10%"], correct: 2, explanation: "The legal blood alcohol limit for private vehicle drivers is 0.08 g/100ml.", category: "Safety", difficulty: "Medium" },
@@ -489,7 +596,12 @@
             { id: 17, question: "What should you do if your brakes fail?", options: ["Jump out", "Pump brakes and downshift", "Turn off engine", "Accelerate"], correct: 1, explanation: "Pump the brake pedal, downshift gears, and carefully apply handbrake.", category: "Emergency", difficulty: "Hard" },
             { id: 18, question: "What does a green traffic light mean?", options: ["Stop", "Go if clear", "Prepare to stop", "Slow down"], correct: 1, explanation: "A green light means you may go if the junction is clear.", category: "Signals", difficulty: "Easy" },
             { id: 19, question: "What is the speed limit on Kenyan highways?", options: ["80 km/h", "100 km/h", "110 km/h", "120 km/h"], correct: 2, explanation: "The speed limit on supervised highways is 110 km/h.", category: "Speed Limits", difficulty: "Easy" },
-            { id: 20, question: "What does a flashing amber traffic light mean?", options: ["Go quickly", "Stop immediately", "Proceed with caution", "Prepare to go"], correct: 2, explanation: "A flashing amber light means proceed with caution if it is safe to do so.", category: "Signals", difficulty: "Medium" }
+            { id: 20, question: "What does a flashing amber traffic light mean?", options: ["Go quickly", "Stop immediately", "Proceed with caution", "Prepare to go"], correct: 2, explanation: "A flashing amber light means proceed with caution if it is safe to do so.", category: "Signals", difficulty: "Medium" },
+            { id: 21, question: "What should you do when approaching a pedestrian crossing?", options: ["Speed up", "Sound horn", "Slow down and stop if necessary", "Ignore"], correct: 2, explanation: "Slow down and be prepared to stop for pedestrians.", category: "Pedestrian Safety", difficulty: "Easy" },
+            { id: 22, question: "What does a double yellow line mean?", options: ["No parking at any time", "Parking allowed", "Loading only", "Bus stop"], correct: 0, explanation: "Double yellow lines indicate no parking at any time.", category: "Road Markings", difficulty: "Easy" },
+            { id: 23, question: "When should you use full beam headlights?", options: ["In fog", "In town", "On dark roads with no oncoming traffic", "Always"], correct: 2, explanation: "Use full beams on dark roads when there's no oncoming traffic.", category: "Lighting", difficulty: "Easy" },
+            { id: 24, question: "What is the purpose of a zebra crossing?", options: ["Cycle lane", "Pedestrian priority crossing", "Speed bump", "Loading zone"], correct: 1, explanation: "Zebra crossings give priority to pedestrians.", category: "Road Markings", difficulty: "Easy" },
+            { id: 25, question: "What does PSV stand for?", options: ["Public Service Vehicle", "Private Service Vehicle", "Passenger Safety Vehicle", "Public Safety Vehicle"], correct: 0, explanation: "PSV stands for Public Service Vehicle.", category: "Terminology", difficulty: "Easy" }
         ];
         
         // Modules Data
@@ -594,6 +706,51 @@
             showToast(`Starting ${moduleType} module! Complete lessons to earn certificate.`, 'info');
         }
         
+        function downloadResource(title) {
+            showToast(`Downloading ${title}...`, 'success');
+        }
+        
+        function filterLibrary(category) {
+            currentCategory = category;
+            renderLibrary();
+        }
+        
+        // ============================================
+        // LIBRARY RENDER
+        // ============================================
+        
+        function renderLibrary() {
+            const filtered = currentCategory === 'all' 
+                ? LIBRARY_RESOURCES 
+                : LIBRARY_RESOURCES.filter(r => r.category.toLowerCase() === currentCategory.toLowerCase());
+            
+            return `
+                <div class="section-header">
+                    <h2><i class="fas fa-book-open"></i> Resource Library</h2>
+                    <div class="category-filters">
+                        <button class="filter-btn ${currentCategory === 'all' ? 'active' : ''}" onclick="filterLibrary('all')">All</button>
+                        <button class="filter-btn ${currentCategory === 'Official' ? 'active' : ''}" onclick="filterLibrary('Official')">Official</button>
+                        <button class="filter-btn ${currentCategory === 'EV' ? 'active' : ''}" onclick="filterLibrary('EV')">EV</button>
+                        <button class="filter-btn ${currentCategory === 'PSV' ? 'active' : ''}" onclick="filterLibrary('PSV')">PSV</button>
+                        <button class="filter-btn ${currentCategory === 'Boda' ? 'active' : ''}" onclick="filterLibrary('Boda')">Boda</button>
+                        <button class="filter-btn ${currentCategory === 'Safety' ? 'active' : ''}" onclick="filterLibrary('Safety')">Safety</button>
+                    </div>
+                </div>
+                <div class="library-grid">
+                    ${filtered.map(resource => `
+                        <div class="resource-card" onclick="downloadResource('${resource.title}')">
+                            <div class="resource-icon">${resource.icon}</div>
+                            <div class="resource-type">${resource.type}</div>
+                            <div class="resource-title">${resource.title}</div>
+                            <div class="resource-size">${resource.size || resource.duration || ''}</div>
+                            <button class="download-btn"><i class="fas fa-download"></i> Download</button>
+                        </div>
+                    `).join('')}
+                </div>
+                ${filtered.length === 0 ? '<div class="empty-state">No resources found in this category.</div>' : ''}
+            `;
+        }
+        
         // ============================================
         // QUIZ FUNCTIONS
         // ============================================
@@ -664,30 +821,26 @@
         function renderQuiz() {
             if (!currentQuiz) {
                 // Show quiz launcher
+                const categories = [...new Set(QUIZ_BANK.map(q => q.category))];
                 return `
                     <div class="quiz-bank-section">
                         <div class="quiz-header">
                             <h2><i class="fas fa-brain"></i> 📝 NTSA Practice Quiz Bank</h2>
                             <div class="quiz-stats">
                                 <div class="quiz-stat"><div class="quiz-stat-value">${QUIZ_BANK.length}</div><div class="quiz-stat-label">Questions</div></div>
-                                <div class="quiz-stat"><div class="quiz-stat-value">20 min</div><div class="quiz-stat-label">Est. Time</div></div>
+                                <div class="quiz-stat"><div class="quiz-stat-value">30 min</div><div class="quiz-stat-label">Est. Time</div></div>
                                 <div class="quiz-stat"><div class="quiz-stat-value">70%</div><div class="quiz-stat-label">Pass Mark</div></div>
                             </div>
                         </div>
                         <p style="color: var(--text-muted); margin-bottom: 24px;">Test your knowledge with NTSA-style exam questions. Get instant feedback and explanations.</p>
-                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px;">
                             <button class="btn btn-primary" onclick="startQuiz()"><i class="fas fa-play"></i> Start Practice Quiz</button>
                             <button class="btn btn-outline" onclick="showToast('Coming soon: Full mock exams with timer!', 'info')"><i class="fas fa-clock"></i> Timed Mock Exam</button>
                         </div>
-                        <div style="margin-top: 24px;">
+                        <div>
                             <h3 style="margin-bottom: 16px;">📊 Quiz Categories</h3>
-                            <div style="display: flex; flex-wrap: wrap; gap: 12px;">
-                                <span style="background: rgba(212,175,55,0.1); padding: 6px 16px; border-radius: 20px;">Licensing (3)</span>
-                                <span style="background: rgba(212,175,55,0.1); padding: 6px 16px; border-radius: 20px;">Safety (4)</span>
-                                <span style="background: rgba(212,175,55,0.1); padding: 6px 16px; border-radius: 20px;">Road Markings (2)</span>
-                                <span style="background: rgba(212,175,55,0.1); padding: 6px 16px; border-radius: 20px;">Speed Limits (3)</span>
-                                <span style="background: rgba(212,175,55,0.1); padding: 6px 16px; border-radius: 20px;">Signals (3)</span>
-                                <span style="background: rgba(212,175,55,0.1); padding: 6px 16px; border-radius: 20px;">Emergency (1)</span>
+                            <div class="category-filters" style="margin-bottom: 0;">
+                                ${categories.map(cat => `<span style="background: rgba(212,175,55,0.1); padding: 6px 16px; border-radius: 20px;">${cat} (${QUIZ_BANK.filter(q => q.category === cat).length})</span>`).join('')}
                             </div>
                         </div>
                     </div>
@@ -811,12 +964,12 @@
                             <div class="path-card" onclick="viewModule('learner')">
                                 <div class="path-icon">📚</div>
                                 <div class="path-title">Learner Hub</div>
-                                <div class="path-description">Complete NTSA-approved training with 21 comprehensive units. Start from fundamentals and build confidence.</div>
+                                <div class="path-description">Complete NTSA-approved training with 21 comprehensive units.</div>
                             </div>
                             <div class="path-card" onclick="viewModule('ev')">
                                 <div class="path-icon">⚡</div>
                                 <div class="path-title">EV Drivers & Riders</div>
-                                <div class="path-description">Structured training on EV handling, regenerative braking, and charging safety.</div>
+                                <div class="path-description">Structured training on EV handling, braking, and charging safety.</div>
                             </div>
                             <div class="path-card" onclick="viewModule('boda')">
                                 <div class="path-icon">🛵</div>
@@ -876,40 +1029,22 @@
         }
         
         function renderDashboard() {
-            const totalLessons = MODULES.reduce((sum, m) => sum + m.lessons, 0);
-            const completedCount = Object.keys(completedLessons).length;
-            const progressPercent = totalLessons ? Math.round((completedCount / totalLessons) * 100) : 0;
-            
             return `
                 <div class="stats-grid">
                     <div class="stat-card"><div class="stat-info"><h3>${MODULES.length}</h3><p>Learning Paths</p></div><div class="stat-icon">🎯</div></div>
-                    <div class="stat-card"><div class="stat-info"><h3>${completedCount}</h3><p>Lessons Done</p></div><div class="stat-icon">✅</div></div>
-                    <div class="stat-card"><div class="stat-info"><h3>${progressPercent}%</h3><p>Progress</p></div><div class="stat-icon">📈</div></div>
-                    <div class="stat-card"><div class="stat-info"><h3>${Math.floor(completedCount / 10)}</h3><p>Certificates</p></div><div class="stat-icon">🎓</div></div>
+                    <div class="stat-card"><div class="stat-info"><h3>0</h3><p>Lessons Done</p></div><div class="stat-icon">✅</div></div>
+                    <div class="stat-card"><div class="stat-info"><h3>0%</h3><p>Progress</p></div><div class="stat-icon">📈</div></div>
+                    <div class="stat-card"><div class="stat-info"><h3>0</h3><p>Certificates</p></div><div class="stat-icon">🎓</div></div>
                 </div>
                 
                 ${renderQuiz()}
+                
+                ${renderLibrary()}
                 
                 <div class="cta-banner" style="padding: 32px;">
                     <h2>🎯 Continue Your Learning Journey</h2>
                     <p>Pick up where you left off and complete your training</p>
                     <button class="btn btn-primary" onclick="setView('modules')">Continue Learning →</button>
-                </div>
-                
-                <div class="section-header"><h2>📚 Recommended for You</h2></div>
-                <div class="modules-grid">
-                    ${MODULES.slice(0, 3).map(module => `
-                        <div class="module-card" onclick="viewModule('${module.type}')">
-                            <div class="module-cover"><div style="font-size: 3rem;">${module.icon}</div><div class="module-badge">FREE</div></div>
-                            <div class="module-content">
-                                <h3 class="module-title">${module.name}</h3>
-                                <p class="module-description">${module.description.substring(0, 80)}...</p>
-                                <div class="module-stats"><span><i class="fas fa-video"></i> ${module.lessons} lessons</span><span><i class="fas fa-clock"></i> ${module.hours} hours</span></div>
-                                <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
-                                <button class="btn btn-primary">Start Learning →</button>
-                            </div>
-                        </div>
-                    `).join('')}
                 </div>
             `;
         }
@@ -931,6 +1066,7 @@
                     `).join('')}
                 </div>
                 ${renderQuiz()}
+                ${renderLibrary()}
             `;
         }
         
@@ -952,12 +1088,10 @@
                 <div class="section-header"><h2>📋 User Management</h2><button class="btn btn-primary" onclick="showToast('Add user feature coming soon', 'info')"><i class="fas fa-user-plus"></i> Add User</button></div>
                 
                 <table class="user-table">
-                    <thead>
-                        <tr><th>Name</th><th>Email</th><th>Role</th><th>Progress</th><th>Actions</th></td>
-                    </thead>
+                    <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Progress</th><th>Actions</th></tr></thead>
                     <tbody>
-                        <tr><td>John Mwangi</td><td>john@example.com</td><td><span class="role-badge role-user">User</span></td><td>45%</td><td><button class="btn btn-outline" style="padding: 4px 12px; margin-right: 8px;" onclick="showToast('Promoted to Admin', 'success')">Make Admin</button><button class="btn btn-danger" style="padding: 4px 12px;" onclick="showToast('User deleted', 'success')">Delete</button></td></tr>
-                        <tr><td>Sarah Wanjiku</td><td>sarah@example.com</td><td><span class="role-badge role-user">User</span></td><td>78%</td><td><button class="btn btn-outline" style="padding: 4px 12px; margin-right: 8px;" onclick="showToast('Promoted to Admin', 'success')">Make Admin</button><button class="btn btn-danger" style="padding: 4px 12px;" onclick="showToast('User deleted', 'success')">Delete</button></td></tr>
+                        <tr><td>John Mwangi</td><td>john@example.com</td><td><span class="role-badge role-user">User</span></td><td>45%</td><td><button class="btn btn-outline" style="padding: 4px 12px;" onclick="showToast('Promoted to Admin', 'success')">Make Admin</button></td></tr>
+                        <tr><td>Sarah Wanjiku</td><td>sarah@example.com</td><td><span class="role-badge role-user">User</span></td><td>78%</td><td><button class="btn btn-outline" style="padding: 4px 12px;" onclick="showToast('Promoted to Admin', 'success')">Make Admin</button></td></tr>
                         <tr><td>Admin User</td><td>admin@meidrive.com</td><td><span class="role-badge role-admin">Admin</span></td><td>100%</td><td><button class="btn btn-outline" style="padding: 4px 12px;" disabled>Cannot modify own</button></td></tr>
                     </tbody>
                 </table>
@@ -984,8 +1118,7 @@
                         <input type="password" id="loginPassword" placeholder="Password">
                         <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px;">Demo: admin@meidrive.com / admin123</p>
                         <button class="btn btn-primary" style="width: 100%;" onclick="doLogin()">Login</button>
-                        <hr style="margin: 20px 0;">
-                        <p style="text-align: center;">New here? <a href="#" onclick="showSignupModal(); return false;">Create free account</a></p>
+                        <hr><p style="text-align: center;">New here? <a href="#" onclick="showSignupModal(); return false;">Create free account</a></p>
                     `;
                     modal.classList.add('active');
                 };
@@ -997,8 +1130,7 @@
                         <input type="email" id="signupEmail" placeholder="Email address">
                         <input type="password" id="signupPassword" placeholder="Password (min 6 characters)">
                         <button class="btn btn-primary" style="width: 100%;" onclick="doSignup()">Create Account</button>
-                        <hr style="margin: 20px 0;">
-                        <p style="text-align: center;">Already have an account? <a href="#" onclick="showLoginModal(); return false;">Login</a></p>
+                        <hr><p style="text-align: center;">Already have an account? <a href="#" onclick="showLoginModal(); return false;">Login</a></p>
                     `;
                     modal.classList.add('active');
                 };
@@ -1051,7 +1183,7 @@
         
         function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c] || c)); }
         
-        // Make functions global for onclick
+        // Make functions global
         window.toggleSidebar = () => document.getElementById('sidebar')?.classList.toggle('open');
         window.setView = setView;
         window.viewModule = viewModule;
@@ -1063,6 +1195,8 @@
         window.prevQuestion = prevQuestion;
         window.submitQuiz = submitQuiz;
         window.resetQuiz = resetQuiz;
+        window.downloadResource = downloadResource;
+        window.filterLibrary = filterLibrary;
         
         // Initialize
         checkSession();
