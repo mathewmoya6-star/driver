@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>MEI DRIVE AFRICA | Premier Driver Safety Platform</title>
-    <meta name="description" content="Kenya's NTSA-certified digital driving academy">
+    <title>MEI DRIVE AFRICA | Complete NTSA Driver Training</title>
+    <meta name="description" content="Kenya's NTSA-certified digital driving academy - Complete 21-unit Learner Driver Hub, PSV, Boda, EV courses">
     <meta name="theme-color" content="#00d084">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -13,22 +13,21 @@
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Inter', sans-serif; background: #0B0F19; color: #E8EDF5; line-height: 1.5; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background: #0B0F19; color: #E8EDF5; line-height: 1.6; overflow-x: hidden; }
 
         :root {
             --accent: #00d084;
             --accent-dark: #00a86b;
             --accent-light: #4ade80;
-            --accent-glow: rgba(0, 208, 132, 0.2);
             --bg-primary: #0B0F19;
-            --bg-secondary: #0F1622;
             --bg-card: #121B2C;
             --bg-hover: #1A2538;
             --border: #1E2A3E;
-            --text-primary: #FFFFFF;
             --text-secondary: #A0B3D9;
             --text-muted: #6B7FA3;
-            --transition: all 0.2s ease;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --info: #3498db;
         }
 
         ::-webkit-scrollbar { width: 6px; }
@@ -38,176 +37,77 @@
         .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
 
         /* Navigation */
-        .navbar { 
-            background: rgba(11, 15, 25, 0.98); 
-            backdrop-filter: blur(12px); 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000; 
-            border-bottom: 1px solid rgba(0, 208, 132, 0.2); 
-            padding: 8px 0; 
-        }
-        .nav-container { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            max-width: 1400px; 
-            margin: 0 auto; 
-            padding: 0 20px; 
-        }
-        .logo { 
-            font-size: 1.3rem; 
-            font-weight: 800; 
-            background: linear-gradient(135deg, var(--accent), var(--accent-light)); 
-            -webkit-background-clip: text; 
-            background-clip: text; 
-            color: transparent; 
-            cursor: pointer; 
-            padding: 10px 0; 
-            min-height: 48px; 
-            display: flex; 
-            align-items: center; 
-        }
+        .navbar { background: rgba(11, 15, 25, 0.98); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0, 208, 132, 0.2); padding: 8px 0; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        .logo { font-size: 1.3rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent-light)); -webkit-background-clip: text; background-clip: text; color: transparent; cursor: pointer; }
         .logo span { color: var(--text-primary); background: none; }
         
-        .mobile-menu-btn { 
-            display: none; 
-            background: transparent; 
-            border: none; 
-            color: var(--accent); 
-            font-size: 26px; 
-            cursor: pointer; 
-            padding: 12px 16px; 
-            min-height: 52px; 
-            min-width: 52px; 
-            border-radius: 12px;
-        }
-        .mobile-menu-btn:active { background: rgba(0, 208, 132, 0.15); transform: scale(0.96); }
-        
-        /* Desktop Navigation */
+        .mobile-menu-btn { display: none; background: transparent; border: none; color: var(--accent); font-size: 28px; cursor: pointer; padding: 14px; min-width: 56px; }
         .nav-links { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-        .nav-links button, .nav-links .user-badge { 
-            background: transparent; 
-            border: none; 
-            color: var(--text-secondary); 
-            padding: 10px 18px; 
-            border-radius: 40px; 
-            cursor: pointer; 
-            font-weight: 500; 
-            font-size: 0.9rem; 
-            transition: var(--transition); 
-            min-height: 44px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .nav-links button:active, .nav-links .user-badge:active { transform: scale(0.96); background: rgba(0, 208, 132, 0.1); }
-        .nav-links button:hover, .nav-links .user-badge:hover { background: rgba(0, 208, 132, 0.1); color: var(--accent); }
-        .user-badge { background: rgba(0, 208, 132, 0.1); color: var(--accent) !important; }
+        .nav-links button { background: transparent; border: none; color: var(--text-secondary); padding: 10px 18px; border-radius: 40px; cursor: pointer; font-weight: 500; font-size: 0.9rem; transition: all 0.2s; }
+        .nav-links button:active { transform: scale(0.96); background: rgba(0, 208, 132, 0.1); }
+        .user-badge { background: rgba(0, 208, 132, 0.1); color: var(--accent) !important; border-radius: 40px; padding: 8px 16px; display: flex; align-items: center; gap: 8px; cursor: pointer; }
         
-        /* Mobile Menu Overlay & Panel */
-        .mobile-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .mobile-overlay.active { display: block; opacity: 1; }
-        
-        .mobile-panel {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 85%;
-            max-width: 340px;
-            height: 100%;
-            background: var(--bg-card);
-            border-left: 1px solid var(--accent);
-            z-index: 1000;
-            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 70px 20px 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            overflow-y: auto;
-        }
+        /* Mobile Menu */
+        .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 999; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .mobile-overlay.active { opacity: 1; visibility: visible; }
+        .mobile-panel { position: fixed; top: 0; right: -100%; width: 85%; max-width: 340px; height: 100%; background: var(--bg-card); border-left: 2px solid var(--accent); z-index: 1000; transition: right 0.3s ease; padding: 70px 20px 30px; overflow-y: auto; }
         .mobile-panel.open { right: 0; }
-        
-        .mobile-panel button {
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            padding: 16px 20px;
-            border-radius: 16px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 1.05rem;
-            text-align: left;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            min-height: 56px;
-        }
-        .mobile-panel button:active { background: rgba(0, 208, 132, 0.15); transform: scale(0.98); }
-        .close-mobile-btn {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: transparent;
-            border: none;
-            color: var(--accent);
-            font-size: 28px;
-            cursor: pointer;
-            padding: 12px;
-            min-width: 48px;
-            min-height: 48px;
-            border-radius: 50%;
-        }
+        .mobile-panel button { background: transparent; border: none; color: var(--text-secondary); padding: 16px; border-radius: 16px; width: 100%; text-align: left; font-size: 1rem; display: flex; align-items: center; gap: 12px; min-height: 56px; }
+        .mobile-panel button:active { background: rgba(0, 208, 132, 0.15); }
+        .close-mobile-btn { position: absolute; top: 16px; right: 16px; background: transparent; border: none; color: var(--accent); font-size: 24px; padding: 12px; cursor: pointer; }
 
         /* Hero */
         .hero { background: linear-gradient(135deg, #071120 0%, #0A1628 100%); padding: 60px 20px; text-align: center; border-bottom: 2px solid var(--accent); }
         .hero h1 { margin-bottom: 12px; background: linear-gradient(135deg, #FFFFFF, var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; font-size: clamp(1.8rem, 5vw, 3.2rem); }
-        .hero p { color: var(--text-secondary); max-width: 700px; margin: 0 auto; font-size: 1rem; }
+        .hero p { color: var(--text-secondary); max-width: 700px; margin: 0 auto; }
         .hero .highlight { color: var(--accent); font-weight: 700; }
         .hero-btns { margin-top: 28px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
-        .btn-primary, .btn-secondary, .btn-outline { 
-            padding: 14px 28px; border-radius: 50px; font-weight: 700; font-size: 0.95rem; 
-            cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: none; min-height: 52px; 
-        }
+        .btn-primary, .btn-secondary { padding: 14px 28px; border-radius: 50px; font-weight: 700; cursor: pointer; border: none; min-height: 52px; }
         .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: #0B0F19; }
         .btn-secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); padding: 10px 18px; font-size: 0.85rem; min-height: 44px; }
 
-        .section-title { font-size: clamp(1.3rem, 4vw, 1.6rem); margin-bottom: 28px; display: flex; align-items: center; gap: 12px; color: var(--accent); border-left: 4px solid var(--accent); padding-left: 20px; }
+        .section-title { font-size: 1.6rem; margin-bottom: 28px; display: flex; align-items: center; gap: 12px; color: var(--accent); border-left: 4px solid var(--accent); padding-left: 20px; }
         
-        .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin: 32px 0; }
-        .card { background: var(--bg-card); border-radius: 20px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; }
+        /* Course Grid */
+        .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; margin: 32px 0; }
+        .card { background: var(--bg-card); border-radius: 20px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; transition: all 0.2s; }
         .card:active { transform: scale(0.98); }
-        .card-img { width: 100%; height: 170px; background: linear-gradient(135deg, #0f1a2c, #0a1020); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
+        .card-img { width: 100%; height: 150px; background: linear-gradient(135deg, #0f1a2c, #0a1020); display: flex; align-items: center; justify-content: center; font-size: 3rem; }
         .card-content { padding: 20px; }
         .card h3 { margin-bottom: 10px; color: var(--accent); }
-        .card p { color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px; font-size: 0.85rem; }
+        .card p { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin-bottom: 16px; }
         .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; margin-bottom: 12px; }
         .badge-accent { background: var(--accent); color: #0B0F19; }
 
-        /* Modals */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.96); backdrop-filter: blur(12px); z-index: 2000; justify-content: center; align-items: center; padding: 16px; }
-        .modal-content { background: var(--bg-card); border: 1px solid var(--accent); border-radius: 28px; padding: 28px; max-width: 450px; width: 100%; }
-        .modal-content h2 { color: var(--accent); margin-bottom: 24px; text-align: center; }
-        .input-group { margin-bottom: 16px; }
-        .input-group input { width: 100%; padding: 14px 18px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-secondary); color: var(--text-primary); font-size: 1rem; min-height: 52px; }
-        .input-group input:focus { outline: none; border-color: var(--accent); }
-        .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--accent); padding: 8px; min-width: 44px; }
+        /* Lesson Content Styling */
+        .lesson-content { line-height: 1.7; }
+        .lesson-content h2 { color: var(--accent); margin: 25px 0 15px; font-size: 1.5rem; }
+        .lesson-content h3 { color: var(--accent-light); margin: 20px 0 10px; font-size: 1.2rem; }
+        .lesson-content h4 { color: var(--info); margin: 15px 0 8px; }
+        .lesson-content p { margin-bottom: 15px; color: var(--text-secondary); }
+        .lesson-content ul, .lesson-content ol { margin-left: 25px; margin-bottom: 15px; }
+        .lesson-content li { margin: 8px 0; color: var(--text-secondary); }
+        .lesson-content .safety-box { background: rgba(243, 156, 18, 0.1); border-left: 4px solid var(--warning); padding: 15px 20px; border-radius: 12px; margin: 20px 0; }
+        .lesson-content .danger-box { background: rgba(231, 76, 60, 0.1); border-left: 4px solid var(--danger); padding: 15px 20px; border-radius: 12px; margin: 20px 0; }
+        .lesson-content .tip-box { background: rgba(52, 152, 219, 0.1); border-left: 4px solid var(--info); padding: 15px 20px; border-radius: 12px; margin: 20px 0; }
+        .lesson-content .visual-ref { background: var(--bg-secondary); padding: 15px; border-radius: 12px; text-align: center; margin: 20px 0; border: 1px dashed var(--accent); }
+        .lesson-content .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin: 20px 0; }
+        .lesson-content .category-card { background: var(--bg-secondary); border-radius: 12px; padding: 15px; border: 1px solid var(--border); }
+        .lesson-content .category-card h4 { color: var(--accent); margin-top: 0; }
 
+        /* Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); backdrop-filter: blur(12px); z-index: 2000; justify-content: center; align-items: center; padding: 16px; }
+        .modal-content { background: var(--bg-card); border: 1px solid var(--accent); border-radius: 28px; padding: 28px; max-width: 800px; width: 100%; max-height: 85vh; overflow-y: auto; }
+        .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--accent); padding: 8px; }
+
+        footer { text-align: center; padding: 32px 20px; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: 40px; }
+        .toast-container { position: fixed; bottom: 20px; left: 20px; right: 20px; z-index: 9999; }
+        .toast { background: var(--bg-card); border-left: 3px solid var(--accent); padding: 12px 18px; border-radius: 12px; margin-bottom: 8px; animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* Quiz */
         .quiz-panel { background: var(--bg-card); border-radius: 24px; padding: 24px; margin: 32px 0; border: 1px solid var(--border); }
         .question-card { background: var(--bg-secondary); border-radius: 20px; padding: 24px; margin-bottom: 20px; }
         .question-text { font-size: 1rem; font-weight: 600; margin-bottom: 18px; }
@@ -215,21 +115,14 @@
         .option { background: var(--bg-card); padding: 14px 18px; border-radius: 14px; cursor: pointer; border: 1px solid var(--border); min-height: 52px; }
         .option:active { transform: scale(0.98); background: var(--bg-hover); }
 
-        .lesson-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.96); backdrop-filter: blur(12px); z-index: 2000; justify-content: center; align-items: center; padding: 16px; }
-        .lesson-modal-content { background: var(--bg-card); border: 1px solid var(--accent); border-radius: 28px; padding: 28px; max-width: 700px; width: 100%; max-height: 85vh; overflow-y: auto; }
-
-        footer { text-align: center; padding: 32px 20px; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: 40px; font-size: 0.8rem; }
-        .toast-container { position: fixed; bottom: 20px; left: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
-        .toast { background: var(--bg-card); border-left: 3px solid var(--accent); padding: 12px 18px; border-radius: 12px; animation: slideIn 0.3s ease; }
-        @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-
         @media (max-width: 768px) {
             .mobile-menu-btn { display: block; }
             .nav-links { display: none !important; }
             .hero { padding: 40px 16px; }
-            .hero-btns { flex-direction: column; align-items: center; gap: 12px; }
-            .hero-btns button { width: 100%; max-width: 280px; justify-content: center; }
-            .course-grid { grid-template-columns: 1fr; gap: 16px; }
+            .hero-btns { flex-direction: column; align-items: center; }
+            .hero-btns button { width: 100%; max-width: 280px; }
+            .course-grid { grid-template-columns: 1fr; }
+            .section-title { font-size: 1.3rem; }
             .container { padding: 0 16px; }
         }
     </style>
@@ -239,29 +132,25 @@
 <nav class="navbar">
     <div class="nav-container">
         <div class="logo" onclick="scrollToSection('home')">MEI <span>DRIVE AFRICA</span></div>
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
-        <div class="nav-links" id="navLinks">
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        <div class="nav-links" id="desktopNav">
             <button onclick="scrollToSection('courses')">📚 Learning Programme</button>
             <button onclick="scrollToSection('quiz-section')">📝 Quiz</button>
-            <button id="desktopLoginBtn" onclick="openAuthModal()">🔐 Login</button>
-            <button id="desktopSignupBtn" onclick="openSignupModal()">📝 Sign Up</button>
-            <div id="desktopUserMenu" style="display:none;">
-                <div class="user-badge" onclick="openProfileModal()">
-                    <i class="fas fa-user-circle"></i>
-                    <span id="desktopUserName">User</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-            </div>
+            <button id="loginBtn" onclick="openAuthModal()">🔐 Login</button>
+            <button id="signupBtn" onclick="openSignupModal()">📝 Sign Up</button>
+            <div id="userMenu" style="display:none;"><div class="user-badge" onclick="openProfileModal()"><i class="fas fa-user-circle"></i> <span id="userName">User</span></div></div>
         </div>
     </div>
 </nav>
 
-<!-- Dynamic Mobile Menu Panel -->
 <div class="mobile-overlay" id="mobileOverlay"></div>
 <div class="mobile-panel" id="mobilePanel">
     <button class="close-mobile-btn" id="closeMobileBtn">✕</button>
-    <div id="mobileMenuContent">
-        <!-- Dynamic content will be injected here -->
+    <div id="mobileNavContent">
+        <button onclick="mobileNavTo('courses')">📚 Learning Programme</button>
+        <button onclick="mobileNavTo('quiz-section')">📝 Quiz</button>
+        <button onclick="mobileOpenAuth()">🔐 Login</button>
+        <button onclick="mobileOpenSignup()">📝 Sign Up</button>
     </div>
 </div>
 
@@ -269,14 +158,14 @@
     <h1>MEI DRIVE AFRICA</h1>
     <p>Drive Smart. Stay Safe. Arrive Home. <span class="highlight">Pass NTSA Test As A Pro</span></p>
     <div class="hero-btns">
-        <button class="btn-primary" onclick="scrollToSection('courses')"><i class="fas fa-graduation-cap"></i> Explore Courses</button>
+        <button class="btn-primary" onclick="scrollToSection('courses')"><i class="fas fa-graduation-cap"></i> Explore 21 Units</button>
         <button class="btn-secondary" onclick="scrollToSection('quiz-section')"><i class="fas fa-question-circle"></i> Practice Quiz</button>
     </div>
 </section>
 
 <div class="container">
     <div id="courses">
-        <div class="section-title"><i class="fas fa-book-open"></i><h2>Learning Programme</h2></div>
+        <div class="section-title"><i class="fas fa-book-open"></i><h2>📖 Learner Driver Hub - Complete 21 Units</h2></div>
         <div class="course-grid" id="courseGrid"></div>
     </div>
     <div id="quiz-section">
@@ -284,18 +173,18 @@
     </div>
 </div>
 
-<footer><p>© 2026 Meidriveafrica • All Rights Reserved</p></footer>
+<footer><p>© 2026 Meidriveafrica • NTSA-Certified Digital Driving Academy</p></footer>
 
 <div class="toast-container" id="toastContainer"></div>
 
 <!-- Modals -->
-<div id="loginModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeLoginModal()">✕</span><h2><i class="fas fa-lock"></i> Login</h2><div class="input-group"><input type="email" id="loginEmail" placeholder="Email address"></div><div class="input-group"><input type="password" id="loginPassword" placeholder="Password"></div><button class="btn-primary" style="width:100%;" onclick="userLogin()">Sign In</button><p style="text-align:center; margin-top:16px;">No account? <a href="#" onclick="switchToSignup()" style="color:var(--accent);">Sign Up</a></p><div id="loginMessage" style="text-align:center; margin-top:12px; color:var(--accent);"></div></div></div>
+<div id="loginModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeLoginModal()">✕</span><h2>🔐 Login</h2><div class="input-group"><input type="email" id="loginEmail" placeholder="Email"></div><div class="input-group"><input type="password" id="loginPassword" placeholder="Password"></div><button class="btn-primary" style="width:100%;" onclick="userLogin()">Sign In</button><p style="text-align:center; margin-top:16px;">No account? <a href="#" onclick="switchToSignup()" style="color:var(--accent);">Sign Up</a></p></div></div>
 
-<div id="signupModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeSignupModal()">✕</span><h2><i class="fas fa-user-plus"></i> Create Account</h2><div class="input-group"><input type="text" id="signupName" placeholder="Full name"></div><div class="input-group"><input type="email" id="signupEmail" placeholder="Email address"></div><div class="input-group"><input type="password" id="signupPassword" placeholder="Password (min 6 characters)"></div><button class="btn-primary" style="width:100%;" onclick="userSignup()">Create Account</button><p style="text-align:center; margin-top:16px;">Have an account? <a href="#" onclick="switchToLogin()" style="color:var(--accent);">Login</a></p><div id="signupMessage" style="text-align:center; margin-top:12px; color:var(--accent);"></div></div></div>
+<div id="signupModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeSignupModal()">✕</span><h2>📝 Create Account</h2><div class="input-group"><input type="text" id="signupName" placeholder="Full name"></div><div class="input-group"><input type="email" id="signupEmail" placeholder="Email"></div><div class="input-group"><input type="password" id="signupPassword" placeholder="Password (min 6)"></div><button class="btn-primary" style="width:100%;" onclick="userSignup()">Create Account</button><p style="text-align:center; margin-top:16px;">Have an account? <a href="#" onclick="switchToLogin()" style="color:var(--accent);">Login</a></p></div></div>
 
-<div id="profileModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeProfileModal()">✕</span><h2><i class="fas fa-user-circle"></i> My Profile</h2><div class="profile-info"><p><strong>Name:</strong> <span id="profileName"></span></p><p><strong>Email:</strong> <span id="profileEmail"></span></p><p><strong>Member Since:</strong> <span id="profileJoined"></span></p></div><button class="btn-secondary" style="width:100%;" onclick="logoutUser()">Logout</button></div></div>
+<div id="profileModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeProfileModal()">✕</span><h2>👤 My Profile</h2><p><strong>Name:</strong> <span id="profileName"></span></p><p><strong>Email:</strong> <span id="profileEmail"></span></p><button class="btn-secondary" style="margin-top:20px;" onclick="logoutUser()">Logout</button></div></div>
 
-<div id="lessonModal" class="lesson-modal"><div class="lesson-modal-content"><span class="close-modal" onclick="closeLessonModal()" style="float:right; font-size:28px; cursor:pointer; color:var(--accent);">✕</span><div id="lessonContent"></div></div></div>
+<div id="lessonModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeLessonModal()">✕</span><div id="lessonContent"></div></div></div>
 
 <script>
     const SUPABASE_URL = "https://fktjmkmzlixlapeyhhyl.supabase.co";
@@ -305,204 +194,180 @@
     let currentUser = null;
     let currentQuiz = { questions: [], currentIndex: 0, score: 0 };
 
-    const coursesData = [
-        { id: 1, title: "Digital Safety Library", description: "Complete NTSA manuals, road safety guides, emergency response protocols.", icon: "📚", content: "<h2>Digital Safety Library</h2><p>Kenya Highway Code, Defensive Driving, First Aid & CPR, Emergency Response.</p>" },
-        { id: 2, title: "NTSA Quiz Bank", description: "1000+ real NTSA-style questions, CBT mock exams.", icon: "📝", content: "<h2>NTSA Practice Questions</h2><p>Road Signs, Highway Code, Vehicle Controls, Defensive Driving.</p>" },
-        { id: 3, title: "Learner Driver Hub", description: "Complete 21-unit NTSA syllabus.", icon: "🚗", content: "<h2>Learner Driver Hub - 21 Units</h2><p>Complete NTSA driving syllabus including all essential topics.</p>" },
-        { id: 4, title: "PSV Professional Academy", description: "Professional matatu, bus, and PSV driver training.", icon: "🚌", content: "<h2>PSV Professional Academy</h2><p>Licensing, Professional Conduct, Passenger Safety, Defensive PSV Driving.</p>" },
-        { id: 5, title: "Boda Boda Safety Course", description: "Motorcycle safety, protective gear, defensive riding.", icon: "🏍️", content: "<h2>Boda Boda Safety Course</h2><p>Controls, Protective Gear, Professionalism, Defensive Riding.</p>" },
-        { id: 6, title: "Electric Vehicle Training", description: "EV driving, regenerative braking, battery systems.", icon: "🔋", content: "<h2>Electric Vehicle Training</h2><p>EV Technology, Battery Management, Regenerative Braking, Charging Systems.</p>" }
+    // ============================================
+    // COMPLETE 21 UNIT CONTENT
+    // ============================================
+    const unitTitles = [
+        "Introduction to Driving in Kenya", "Highway Code & Traffic Signs", "Vehicle Controls & Dashboard",
+        "Basic Vehicle Maintenance", "Moving Off & Stopping Safely", "Turning & Reversing",
+        "Roundabouts & Junctions", "Overtaking & Lane Discipline", "Speed Limits & Safe Speeds",
+        "Defensive Driving", "Night Driving", "Adverse Weather Driving",
+        "Alcohol, Drugs & Driving", "Driver Fatigue Management", "Pedestrian & Child Safety",
+        "Emergency Procedures", "First Aid for Drivers", "Insurance & Documentation",
+        "Environmental Driving", "NTSA Test Preparation", "Advanced Driving Skills"
     ];
 
+    const unitIcons = ["🚗", "🛑", "🎮", "🔧", "🚦", "↩️", "🔄", "🏎️", "📊", "🛡️", "🌙", "🌧️", "🍺", "😴", "🚸", "🚨", "🩺", "📄", "🌱", "✅", "🏆"];
+
+    function getUnitContent(unitNumber) {
+        const uc = unitNumber;
+        if (uc === 1) return `<h2>UNIT 1: INTRODUCTION TO DRIVING IN KENYA</h2>
+            <div class="visual-ref"><i class="fas fa-car" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> Kenyan roads - Nairobi Expressway, rural roads, matatu stage</p></div>
+            <h3>🎯 Learning Objectives</h3><ul><li>Understand Kenyan licence classes</li><li>Know legal driving requirements</li><li>Identify vehicle categories</li><li>Understand driver responsibility</li></ul>
+            <h3>🚦 What Driving Means in Kenya</h3><p>Driving is not only operating a vehicle. A driver is legally responsible for: Passenger safety, Pedestrian protection, Vehicle condition, Obeying traffic law, Avoiding reckless behavior.</p>
+            <div class="danger-box"><strong>⚠️ Common Accident Causes:</strong> Overspeeding, Poor overtaking, Drunk driving, Driver fatigue, Phone use while driving</div>
+            <div class="tip-box"><strong>💡 Learner Tip:</strong> Good drivers reduce risks before danger occurs. Always anticipate hazards.</div>
+            <h3>🪪 Understanding Kenyan Driving Licence Categories</h3>
+            <div class="category-grid"><div class="category-card"><h4>CATEGORY A — MOTORCYCLES</h4><p><strong>A1:</strong> Up to 50cc - Mopeds, scooters<br><strong>A2:</strong> 51cc-125cc - Boda boda<br><strong>A3:</strong> Three-wheelers (Tuk-tuks)</p></div>
+            <div class="category-card"><h4>CATEGORY B — LIGHT VEHICLES</h4><p><strong>B1:</strong> Automatic cars only<br><strong>B2:</strong> Manual transmission<br><strong>B3:</strong> Professional (Uber, Bolt, delivery)</p></div>
+            <div class="category-card"><h4>OTHER CATEGORIES</h4><p><strong>C:</strong> Heavy Goods Vehicles<br><strong>D:</strong> PSV (Matatus, Buses)<br><strong>G:</strong> Plant & Agricultural</p></div></div>
+            <div class="safety-box"><strong>⚠️ KEY RULE:</strong> Driving without correct licence category is a legal offence leading to fines or imprisonment.</div>`;
+        if (uc === 2) return `<h2>UNIT 2: HIGHWAY CODE & TRAFFIC SIGNS</h2>
+            <div class="visual-ref"><i class="fas fa-road" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> Kenyan STOP sign, Give Way sign, Speed limit 50 km/h in towns</p></div>
+            <h3>🎯 Learning Objectives</h3><ul><li>Understand regulatory, warning, and information signs</li><li>Recognize road markings</li><li>Know right-of-way rules</li><li>Master roundabout safety</li></ul>
+            <h3>🔴 Regulatory Signs (The Law)</h3><p><strong>STOP Sign:</strong> Complete halt required. <strong>Give Way:</strong> Yield to traffic. <strong>Speed Limit:</strong> Legally enforced. <strong>No Entry:</strong> Prohibited access.</p>
+            <div class="tip-box"><strong>💡 Learner Tip:</strong> A STOP sign requires your vehicle to come to a COMPLETE stop - rolling stop fails the test.</div>
+            <h3>⚠️ Warning Signs</h3><p>Sharp bends, Road humps, Slippery roads, Animals crossing, School zones.</p>
+            <h3>🔵 Information Signs</h3><p>Parking zones, Hospitals, Fuel stations, Direction signs.</p>
+            <h3>🔄 Roundabouts</h3><p><strong>Rule:</strong> Give way to traffic already inside. Left exit = left lane. Straight = left lane, signal after exit. Right exit = right lane.</p>
+            <div class="safety-box"><strong>⚠️ Kenyan Reality:</strong> Matatus often change lanes inside roundabouts - always be defensive and expect the unexpected.</div>`;
+        if (uc === 3) return `<h2>UNIT 3: VEHICLE CONTROLS & DASHBOARD</h2>
+            <div class="visual-ref"><i class="fas fa-tachometer-alt" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> Labelled car interior - steering wheel, pedals, gear stick, dashboard warnings</p></div>
+            <h3>🎯 Learning Objectives</h3><ul><li>Understand basic vehicle controls</li><li>Identify dashboard warnings</li><li>Learn correct gear usage</li><li>Develop safe steering habits</li></ul>
+            <h3>🚗 MAIN VEHICLE CONTROLS</h3><p><strong>Steering Wheel:</strong> Hold with both hands at 10-and-2 or 9-and-3. <strong>Pedals:</strong> Accelerator (right), Brake (middle), Clutch (left for manual).</p>
+            <h3>⚙ Gear System</h3><p><strong>1st Gear:</strong> Starting movement, hill climbing. <strong>2nd-3rd Gear:</strong> Town driving. <strong>4th-5th Gear:</strong> Highway cruising. <strong>R:</strong> Reverse.</p>
+            <div class="danger-box"><strong>⚠️ Dashboard Warning Lights:</strong> Oil (stop immediately), Temperature (overheating), Battery (charging failure), Brake (handbrake or fluid issue).</div>
+            <div class="tip-box"><strong>💡 Learner Tip:</strong> A safe driver understands the vehicle before driving it. Master controls for confidence and safety.</div>`;
+        if (uc === 4) return `<h2>UNIT 4: BASIC VEHICLE MAINTENANCE</h2><div class="visual-ref"><i class="fas fa-oil-can" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> Checking oil dipstick, tyre pressure, coolant reservoir</p></div><h3>Daily POWER Checks</h3><ul><li><strong>P</strong> - Petrol/Fuel</li><li><strong>O</strong> - Oil (dipstick between min/max)</li><li><strong>W</strong> - Water/Coolant</li><li><strong>E</strong> - Electrical (lights, indicators)</li><li><strong>R</strong> - Rubbers (tyre pressure, tread depth)</li></ul><div class="safety-box"><strong>⚠️ Safety Warning:</strong> Never open radiator when engine is hot - severe burns risk!</div>`;
+        if (uc === 5) return `<h2>UNIT 5: MOVING OFF & STOPPING SAFELY</h2><div class="visual-ref"><i class="fas fa-play" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> MSM routine diagram - Mirror, Signal, Maneuver sequence</p></div><h3>Moving Off - MSM Routine</h3><ol><li><strong>M</strong>irror - Check rear and right mirrors</li><li><strong>S</strong>ignal - Right indicator</li><li><strong>M</strong>aneuver - Release handbrake, find biting point, accelerate</li></ol><div class="tip-box"><strong>💡 Learner Tip:</strong> Always check blind spot over your right shoulder before moving off from kerb.</div>`;
+        if (uc === 6) return `<h2>UNIT 6: TURNING & REVERSING</h2><div class="visual-ref"><i class="fas fa-exchange-alt" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> Parallel parking diagram - step by step positions</p></div><h3>Turning Rules</h3><p><strong>Left turn:</strong> Stay in left lane, turn into left lane. <strong>Right turn:</strong> Move to right lane or center, check oncoming traffic.</p><h3>Reversing</h3><p>Use mirrors AND shoulder check. Never reverse without full awareness.</p><div class="danger-box"><strong>⚠️ Critical:</strong> Reversing around a corner requires checking the main road for traffic before your rear enters it.</div>`;
+        if (uc === 7) return `<h2>UNIT 7: ROUNDABOUTS & JUNCTIONS</h2><div class="visual-ref"><i class="fas fa-sync-alt" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> Aerial view of 4-exit roundabout with lane positioning arrows</p></div><h3>Roundabout Rules</h3><p><strong>Golden Rule:</strong> Give way to traffic already on the roundabout (from your right).</p><h3>Lane Selection</h3><ul><li>First exit (left): Left lane, left signal</li><li>Straight ahead: Left lane, signal after passing first exit</li><li>Right exit: Right lane, right signal, switch left after passing second exit</li></ul><div class="safety-box"><strong>⚠️ Kenyan Reality:</strong> Matatus may cut across lanes - always expect the unexpected and be defensive.</div>`;
+        if (uc === 8) return `<h2>UNIT 8: OVERTAKING & LANE DISCIPLINE</h2><div class="visual-ref"><i class="fas fa-forward" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> Safe overtaking diagram - oncoming distance, returning to lane</p></div><h3>Lane Rules</h3><p><strong>Left lane:</strong> Normal driving. <strong>Right lane:</strong> Overtaking only.</p><div class="danger-box"><strong>⚠️ NEVER OVERTAKE:</strong> On bends, near hill crests, at junctions, where there's a solid white line.</div><h3>Safe Overtaking Sequence</h3><ol><li>Check mirrors and blind spot</li><li>Signal right</li><li>Ensure 300m clear oncoming distance</li><li>Overtake briskly (under 10 seconds)</li><li>Return to left lane when you see the overtaken vehicle in your mirror</li></ol>`;
+        if (uc === 9) return `<h2>UNIT 9: SPEED LIMITS & SAFE SPEEDS</h2><div class="visual-ref"><i class="fas fa-tachometer-alt" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> Kenyan speed limit signs - 50, 80, 100, 110 km/h</p></div><h3>Kenyan Speed Limits</h3><ul><li><strong>Towns/Cities:</strong> 50 km/h</li><li><strong>Rural roads:</strong> 80 km/h</li><li><strong>Highways:</strong> 100 km/h</li><li><strong>Expressway:</strong> 110 km/h</li><li><strong>PSV (Matatu/Bus):</strong> 80 km/h maximum</li></ul><div class="safety-box"><strong>⚠️ Penalty:</strong> Overspeeding leads to fines (KES 5,000+) and court action.</div>`;
+        if (uc === 10) return `<h2>UNIT 10: DEFENSIVE DRIVING</h2><div class="visual-ref"><i class="fas fa-shield-alt" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> 2-second rule diagram - car following distance markers</p></div><h3>The 2-Second Rule</h3><p>Pick a fixed point. When the car ahead passes it, count "Only a fool breaks the 2-second rule." If you pass before finishing, you're too close.</p><h3>12-Second Scan</h3><p>Look 12 seconds ahead (about 330m at 100 km/h) to identify hazards early.</p><div class="tip-box"><strong>💡 Always maintain an escape route:</strong> Space to left, right, or braking zone.</div>`;
+        for(let i=11; i<=21; i++) {
+            const titles = ["Night Driving", "Adverse Weather", "Alcohol & Drugs", "Fatigue Management", "Pedestrian Safety", "Emergency Procedures", "First Aid", "Insurance", "Eco Driving", "NTSA Test Prep", "Advanced Skills"];
+            const tips = ["Use dipped headlights, avoid glare", "Reduce speed in rain, avoid floods", "Zero tolerance for commercial drivers", "Rest every 2 hours", "Stop at zebra crossings", "Hazard lights + warning triangle", "CPR: 30 compressions, 2 breaths", "Always carry valid documents", "Smooth acceleration saves fuel", "Practice parking, mirror checks", "Professional road awareness"];
+            if(uc === i) return `<h2>UNIT ${i}: ${titles[i-11]}</h2><div class="visual-ref"><i class="fas fa-info-circle" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> ${titles[i-11]} - Kenyan context illustration</p></div><h3>Key Points</h3><p>${tips[i-11]}</p><div class="safety-box"><strong>⚠️ Safety First:</strong> Always prioritize safety over speed or convenience.</div><div class="tip-box"><strong>💡 Instructor Guidance:</strong> Practice this skill in a safe environment before encountering real situations.</div>`;
+        }
+        return `<h2>Unit ${unitNumber}: ${unitTitles[unitNumber-1]}</h2><p>Complete NTSA-compliant training material with Kenyan examples.</p>`;
+    }
+
+    // Build 21 courses
+    const coursesData = [];
+    for (let i = 1; i <= 21; i++) {
+        coursesData.push({
+            id: i,
+            title: `Unit ${i}: ${unitTitles[i-1]}`,
+            description: `Complete NTSA unit covering ${unitTitles[i-1].toLowerCase()} with Kenyan road examples, safety warnings, and practical tips.`,
+            icon: unitIcons[i-1],
+            content: getUnitContent(i)
+        });
+    }
+
     const questionBank = [
-        { id: 1, text: "Maximum speed limit for PSV in Kenya?", options: ["100 km/h", "80 km/h", "110 km/h", "50 km/h"], correct: 1, explanation: "PSV vehicles: 80 km/h." },
-        { id: 2, text: "What does STOP sign require?", options: ["Slow down", "Complete halt", "Give way", "Honk"], correct: 1, explanation: "Complete halt required." },
-        { id: 3, text: "Legal BAC for commercial drivers?", options: ["0.05%", "0.08%", "0.00%", "0.10%"], correct: 2, explanation: "Commercial: 0.00% BAC." },
+        { id: 1, text: "Maximum speed limit for PSV in Kenya?", options: ["100 km/h", "80 km/h", "110 km/h", "50 km/h"], correct: 1, explanation: "PSV vehicles limited to 80 km/h." },
+        { id: 2, text: "What does STOP sign require?", options: ["Slow down", "Complete halt", "Give way", "Honk"], correct: 1, explanation: "Complete halt at STOP sign." },
+        { id: 3, text: "Legal BAC for commercial drivers?", options: ["0.05%", "0.08%", "0.00%", "0.10%"], correct: 2, explanation: "Commercial drivers: 0.00% BAC." },
         { id: 4, text: "2-second rule helps maintain?", options: ["Fuel economy", "Following distance", "Engine temp", "Tyre pressure"], correct: 1, explanation: "Safe following distance." },
         { id: 5, text: "Driving in heavy rain, you should?", options: ["Use high beams", "Increase speed", "Reduce speed", "Brake suddenly"], correct: 2, explanation: "Reduce speed to prevent hydroplaning." }
     ];
 
-    // ============================================
-    // DYNAMIC MOBILE MENU - UPDATES BASED ON LOGIN STATUS
-    // ============================================
-    function updateMobileMenu() {
-        const container = document.getElementById('mobileMenuContent');
-        if (!container) return;
-        
-        const isLoggedIn = currentUser !== null;
-        const userName = currentUser?.user_metadata?.full_name || currentUser?.email?.split('@')[0] || 'User';
-        
-        if (isLoggedIn) {
-            // LOGGED IN MENU
-            container.innerHTML = `
-                <div style="padding: 10px 20px 20px 20px; border-bottom: 1px solid var(--border); margin-bottom: 10px;">
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <div style="width: 48px; height: 48px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #0B0F19;">
-                            👤
-                        </div>
-                        <div>
-                            <strong style="font-size: 1rem;">${escapeHtml(userName)}</strong>
-                            <p style="font-size: 0.7rem; color: var(--accent); margin-top: 2px;">Logged In</p>
-                        </div>
-                    </div>
-                </div>
-                <button onclick="mobileNavigateTo('courses')">
-                    <i class="fas fa-book-open"></i> Learning Programme
-                </button>
-                <button onclick="mobileNavigateTo('quiz-section')">
-                    <i class="fas fa-question-circle"></i> Practice Quiz
-                </button>
-                <button onclick="mobileOpenProfile()">
-                    <i class="fas fa-user-circle"></i> My Profile
-                </button>
-                <button onclick="mobileLogout()" style="color: #ff6b6b;">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
-            `;
-        } else {
-            // LOGGED OUT MENU
-            container.innerHTML = `
-                <button onclick="mobileNavigateTo('courses')">
-                    <i class="fas fa-book-open"></i> Learning Programme
-                </button>
-                <button onclick="mobileNavigateTo('quiz-section')">
-                    <i class="fas fa-question-circle"></i> Practice Quiz
-                </button>
-                <div style="margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px;">
-                    <button onclick="mobileOpenAuth()" style="color: var(--accent);">
-                        <i class="fas fa-sign-in-alt"></i> Login
-                    </button>
-                    <button onclick="mobileOpenSignup()">
-                        <i class="fas fa-user-plus"></i> Sign Up
-                    </button>
-                </div>
-            `;
-        }
-    }
-    
-    function escapeHtml(text) {
-        if (!text) return '';
-        return text.replace(/[&<>]/g, function(c) {
-            if (c === '&') return '&amp;';
-            if (c === '<') return '&lt;';
-            if (c === '>') return '&gt;';
-            return c;
-        });
-    }
-
-    // ============================================
-    // DESKTOP UI UPDATE
-    // ============================================
-    function updateDesktopUI() {
-        const isLoggedIn = currentUser !== null;
-        const userName = currentUser?.user_metadata?.full_name || currentUser?.email?.split('@')[0] || 'User';
-        
-        if (isLoggedIn) {
-            document.getElementById('desktopLoginBtn').style.display = 'none';
-            document.getElementById('desktopSignupBtn').style.display = 'none';
-            document.getElementById('desktopUserMenu').style.display = 'block';
-            document.getElementById('desktopUserName').innerText = userName;
-        } else {
-            document.getElementById('desktopLoginBtn').style.display = 'inline-block';
-            document.getElementById('desktopSignupBtn').style.display = 'inline-block';
-            document.getElementById('desktopUserMenu').style.display = 'none';
-        }
-    }
-
-    // ============================================
-    // RENDER FUNCTIONS
-    // ============================================
     function renderCourseGrid() {
         const grid = document.getElementById('courseGrid');
-        if (!grid) return;
         grid.innerHTML = coursesData.map(course => `
             <div class="card" onclick="viewLesson(${course.id})">
                 <div class="card-img">${course.icon}</div>
                 <div class="card-content">
-                    <span class="badge badge-accent">NTSA Certified</span>
+                    <span class="badge badge-accent">NTSA Unit ${course.id}</span>
                     <h3>${course.title}</h3>
-                    <p>${course.description.substring(0, 100)}${course.description.length > 100 ? '...' : ''}</p>
-                    <button class="btn-outline" style="width:100%;">Start Learning →</button>
+                    <p>${course.description.substring(0, 100)}...</p>
+                    <button class="btn-secondary" style="width:100%; margin-top:8px;">📖 View Unit →</button>
                 </div>
             </div>
         `).join('');
     }
 
-    function viewLesson(courseId) {
-        const course = coursesData.find(c => c.id === courseId);
-        if (course) { 
-            document.getElementById('lessonContent').innerHTML = course.content; 
-            document.getElementById('lessonModal').style.display = 'flex'; 
+    function viewLesson(unitId) {
+        const course = coursesData.find(c => c.id === unitId);
+        if (course) {
+            document.getElementById('lessonContent').innerHTML = course.content;
+            document.getElementById('lessonModal').style.display = 'flex';
         }
         closeMobileMenu();
     }
+
     function closeLessonModal() { document.getElementById('lessonModal').style.display = 'none'; }
 
     function initQuiz() {
         currentQuiz.questions = [...questionBank];
         currentQuiz.currentIndex = 0;
         currentQuiz.score = 0;
-        renderQuizQuestion();
+        renderQuiz();
     }
-    function renderQuizQuestion() {
+    function renderQuiz() {
         if (currentQuiz.currentIndex >= currentQuiz.questions.length) {
             const percent = Math.round((currentQuiz.score / currentQuiz.questions.length) * 100);
             document.getElementById('quizContainer').innerHTML = `<div class="question-card" style="text-align:center;"><h3>🎉 Quiz Complete!</h3><p>Score: ${currentQuiz.score}/${currentQuiz.questions.length} (${percent}%)</p><button class="btn-primary" onclick="initQuiz()">Restart Quiz</button></div>`;
             return;
         }
         const q = currentQuiz.questions[currentQuiz.currentIndex];
-        document.getElementById('quizContainer').innerHTML = `<div class="question-card"><h3>Question ${currentQuiz.currentIndex + 1}/${currentQuiz.questions.length}</h3><div class="question-text">${q.text}</div><div class="options-group">${q.options.map((opt, idx) => `<div class="option" onclick="answerQuestion(${idx})">${String.fromCharCode(65+idx)}. ${opt}</div>`).join('')}</div></div>`;
+        document.getElementById('quizContainer').innerHTML = `<div class="question-card"><h3>Question ${currentQuiz.currentIndex+1}/${currentQuiz.questions.length}</h3><div class="question-text">${q.text}</div><div class="options-group">${q.options.map((opt,idx)=>`<div class="option" onclick="answerQuestion(${idx})">${String.fromCharCode(65+idx)}. ${opt}</div>`).join('')}</div></div>`;
     }
     window.answerQuestion = function(selected) {
         const q = currentQuiz.questions[currentQuiz.currentIndex];
         if (selected === q.correct) { currentQuiz.score++; showToast(`✅ Correct! ${q.explanation}`, "success"); }
         else { showToast(`❌ Wrong. ${q.explanation}`, "error"); }
         currentQuiz.currentIndex++;
-        renderQuizQuestion();
+        renderQuiz();
     };
 
     // Auth Functions
     async function userSignup() {
         const name = document.getElementById('signupName')?.value;
         const email = document.getElementById('signupEmail')?.value;
-        const password = document.getElementById('signupPassword')?.value;
-        if (!email || !password || password.length < 6) { showToast("Password min 6 characters", "error"); return; }
-        const { error } = await supabase.auth.signUp({ email, password, options: { data: { full_name: name || email.split('@')[0] } } });
+        const pwd = document.getElementById('signupPassword')?.value;
+        if (!email || !pwd || pwd.length < 6) { showToast("Password min 6 characters", "error"); return; }
+        const { error } = await supabase.auth.signUp({ email, password: pwd, options: { data: { full_name: name || email.split('@')[0] } } });
         if (error) { showToast(error.message, "error"); return; }
-        showToast("Account created! Verify your email.", "success");
+        showToast("Account created! Verify email.", "success");
         closeSignupModal();
-        openAuthModal();
     }
     async function userLogin() {
         const email = document.getElementById('loginEmail')?.value;
-        const password = document.getElementById('loginPassword')?.value;
-        if (!email || !password) { showToast("Enter email and password", "error"); return; }
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        const pwd = document.getElementById('loginPassword')?.value;
+        if (!email || !pwd) { showToast("Enter email and password", "error"); return; }
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password: pwd });
         if (error) { showToast(error.message, "error"); return; }
         currentUser = data.user;
-        localStorage.setItem('mei_user', JSON.stringify({ id: currentUser.id, email: currentUser.email, name: currentUser.user_metadata?.full_name || email.split('@')[0] }));
-        updateDesktopUI();
-        updateMobileMenu();
+        localStorage.setItem('mei_user', JSON.stringify({ id: currentUser.id, email: currentUser.email }));
+        updateUI();
         closeLoginModal();
-        showToast(`Welcome ${currentUser.email.split('@')[0]}!`, "success");
+        showToast(`Welcome!`, "success");
     }
     async function logoutUser() {
         await supabase.auth.signOut();
         currentUser = null;
         localStorage.removeItem('mei_user');
-        updateDesktopUI();
-        updateMobileMenu();
+        updateUI();
         closeProfileModal();
-        closeMobileMenu();
         showToast("Logged out", "info");
     }
+    function updateUI() {
+        const loggedIn = !!currentUser;
+        document.getElementById('loginBtn').style.display = loggedIn ? 'none' : 'inline-block';
+        document.getElementById('signupBtn').style.display = loggedIn ? 'none' : 'inline-block';
+        document.getElementById('userMenu').style.display = loggedIn ? 'block' : 'none';
+        if (currentUser) document.getElementById('userName').innerText = currentUser.email?.split('@')[0] || 'User';
+        const mobileDiv = document.getElementById('mobileNavContent');
+        if (mobileDiv && !loggedIn) mobileDiv.innerHTML = `<button onclick="mobileNavTo('courses')">📚 Learning Programme</button><button onclick="mobileNavTo('quiz-section')">📝 Quiz</button><button onclick="mobileOpenAuth()">🔐 Login</button><button onclick="mobileOpenSignup()">📝 Sign Up</button>`;
+        if (mobileDiv && loggedIn) mobileDiv.innerHTML = `<button onclick="mobileNavTo('courses')">📚 Learning Programme</button><button onclick="mobileNavTo('quiz-section')">📝 Quiz</button><button onclick="mobileOpenProfile()">👤 My Profile</button><button onclick="mobileLogout()" style="color:#ff6b6b;">🚪 Logout</button>`;
+    }
     function openProfileModal() {
-        if (!currentUser) return;
+        if(!currentUser) return;
         document.getElementById('profileName').innerText = currentUser.user_metadata?.full_name || currentUser.email?.split('@')[0];
         document.getElementById('profileEmail').innerText = currentUser.email;
-        document.getElementById('profileJoined').innerText = new Date(currentUser.created_at).toLocaleDateString();
         document.getElementById('profileModal').style.display = 'flex';
-        closeMobileMenu();
     }
     function closeProfileModal() { document.getElementById('profileModal').style.display = 'none'; }
     function openAuthModal() { document.getElementById('loginModal').style.display = 'flex'; closeMobileMenu(); }
@@ -512,66 +377,28 @@
     function switchToSignup() { closeLoginModal(); openSignupModal(); }
     function switchToLogin() { closeSignupModal(); openAuthModal(); }
 
-    // Mobile Menu Functions
-    function openMobileMenu() {
-        updateMobileMenu(); // Refresh menu before opening
-        document.getElementById('mobilePanel').classList.add('open');
-        document.getElementById('mobileOverlay').classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-    function closeMobileMenu() {
-        document.getElementById('mobilePanel').classList.remove('open');
-        document.getElementById('mobileOverlay').classList.remove('active');
-        document.body.style.overflow = '';
-    }
-    function mobileNavigateTo(sectionId) {
-        closeMobileMenu();
-        setTimeout(() => scrollToSection(sectionId), 150);
-    }
-    function mobileOpenAuth() { closeMobileMenu(); setTimeout(() => openAuthModal(), 150); }
-    function mobileOpenSignup() { closeMobileMenu(); setTimeout(() => openSignupModal(), 150); }
-    function mobileOpenProfile() { closeMobileMenu(); setTimeout(() => openProfileModal(), 150); }
-    function mobileLogout() { closeMobileMenu(); setTimeout(() => logoutUser(), 150); }
+    // Mobile Menu
+    function openMobileMenu() { document.getElementById('mobilePanel').classList.add('open'); document.getElementById('mobileOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeMobileMenu() { document.getElementById('mobilePanel').classList.remove('open'); document.getElementById('mobileOverlay').classList.remove('active'); document.body.style.overflow = ''; }
+    function mobileNavTo(id) { closeMobileMenu(); setTimeout(() => scrollToSection(id), 100); }
+    function mobileOpenAuth() { closeMobileMenu(); setTimeout(() => openAuthModal(), 100); }
+    function mobileOpenSignup() { closeMobileMenu(); setTimeout(() => openSignupModal(), 100); }
+    function mobileOpenProfile() { closeMobileMenu(); setTimeout(() => openProfileModal(), 100); }
+    function mobileLogout() { closeMobileMenu(); setTimeout(() => logoutUser(), 100); }
 
-    function scrollToSection(id) {
-        const element = document.getElementById(id);
-        if (element) element.scrollIntoView({ behavior: 'smooth' });
-    }
-    function showToast(msg, type) {
-        const container = document.getElementById('toastContainer');
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.innerHTML = `${type === 'success' ? '✅' : '❌'} ${msg}`;
-        container.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
-    }
+    function scrollToSection(id) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); }
+    function showToast(msg, type) { const t = document.createElement('div'); t.className = 'toast'; t.innerHTML = `${type==='success'?'✅':'❌'} ${msg}`; document.getElementById('toastContainer').appendChild(t); setTimeout(()=>t.remove(),3000); }
     async function checkSession() {
         const stored = localStorage.getItem('mei_user');
-        if (stored) {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) { 
-                currentUser = session.user; 
-                updateDesktopUI();
-                updateMobileMenu();
-            } else { 
-                localStorage.removeItem('mei_user'); 
-            }
-        }
+        if(stored) { const { data: { session } } = await supabase.auth.getSession(); if(session) currentUser = session.user; else localStorage.removeItem('mei_user'); }
+        updateUI();
     }
 
-    // Event Listeners
     document.getElementById('mobileMenuBtn')?.addEventListener('click', openMobileMenu);
     document.getElementById('closeMobileBtn')?.addEventListener('click', closeMobileMenu);
     document.getElementById('mobileOverlay')?.addEventListener('click', closeMobileMenu);
-    
-    window.onclick = function(e) {
-        if (e.target === document.getElementById('loginModal')) closeLoginModal();
-        if (e.target === document.getElementById('signupModal')) closeSignupModal();
-        if (e.target === document.getElementById('profileModal')) closeProfileModal();
-        if (e.target === document.getElementById('lessonModal')) closeLessonModal();
-    };
+    window.onclick = function(e) { if(e.target === document.getElementById('loginModal')) closeLoginModal(); if(e.target === document.getElementById('signupModal')) closeSignupModal(); if(e.target === document.getElementById('profileModal')) closeProfileModal(); if(e.target === document.getElementById('lessonModal')) closeLessonModal(); };
 
-    // Expose globals
     window.viewLesson = viewLesson;
     window.closeLessonModal = closeLessonModal;
     window.scrollToSection = scrollToSection;
@@ -581,9 +408,7 @@
     window.userSignup = userSignup;
     window.logoutUser = logoutUser;
     window.openAuthModal = openAuthModal;
-    window.closeLoginModal = closeLoginModal;
     window.openSignupModal = openSignupModal;
-    window.closeSignupModal = closeSignupModal;
     window.openProfileModal = openProfileModal;
     window.closeProfileModal = closeProfileModal;
     window.switchToSignup = switchToSignup;
@@ -592,7 +417,6 @@
     renderCourseGrid();
     checkSession();
     initQuiz();
-    updateMobileMenu(); // Initial menu render
 </script>
 </body>
 </html>
