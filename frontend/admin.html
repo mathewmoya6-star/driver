@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>MEI DRIVE AFRICA | Admin Panel</title>
-    <meta name="description" content="Admin Dashboard for MEI DRIVE AFRICA Driver Training Platform">
-    <meta name="theme-color" content="#d4af37">
+    <meta name="description" content="Administrator Dashboard for MEI DRIVE AFRICA Driver Training Platform">
+    <meta name="theme-color" content="#00d084">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,25 +13,38 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
+        /* Matching color scheme from index.html */
         :root {
-            --primary: #d4af37;
-            --primary-dark: #b8960c;
-            --primary-light: #f0c674;
-            --secondary: #00ff88;
-            --dark: #0a0a0a;
-            --dark-card: #111111;
-            --dark-hover: #1a1a1a;
-            --border: #222222;
-            --text: #ffffff;
-            --text-muted: #888888;
-            --success: #2ecc71;
-            --error: #e74c3c;
-            --warning: #f39c12;
-            --info: #3498db;
-            --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f0c674 100%);
+            --accent: #00d084;
+            --accent-dark: #00a86b;
+            --accent-light: #4ade80;
+            --accent-glow: rgba(0, 208, 132, 0.2);
+            --bg-primary: #0B0F19;
+            --bg-secondary: #0F1622;
+            --bg-card: #121B2C;
+            --bg-hover: #1A2538;
+            --border: #1E2A3E;
+            --border-light: #2A3A50;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0B3D9;
+            --text-muted: #6B7FA3;
+            --error: #EF4444;
+            --warning: #F59E0B;
+            --success: #00d084;
+            --info: #3B82F6;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 20px rgba(0, 208, 132, 0.15);
         }
 
-        body { font-family: 'Inter', sans-serif; background: var(--dark); color: var(--text); line-height: 1.5; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.5; overflow-x: hidden; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
         
         /* Layout */
         .admin-container { display: flex; min-height: 100vh; }
@@ -39,7 +52,7 @@
         /* Sidebar */
         .sidebar {
             width: 280px;
-            background: var(--dark-card);
+            background: var(--bg-card);
             border-right: 1px solid var(--border);
             position: fixed;
             height: 100vh;
@@ -48,12 +61,35 @@
             z-index: 100;
         }
         
-        .sidebar-header { padding: 24px; border-bottom: 1px solid var(--border); }
-        .logo { font-size: 1.3rem; font-weight: 800; background: var(--gradient-gold); -webkit-background-clip: text; background-clip: text; color: transparent; display: flex; align-items: center; gap: 8px; }
+        .sidebar-header { padding: 28px 24px; border-bottom: 1px solid var(--border); }
+        .logo { 
+            font-size: 1.4rem; 
+            font-weight: 800; 
+            background: linear-gradient(135deg, var(--accent), var(--accent-light)); 
+            -webkit-background-clip: text; 
+            background-clip: text; 
+            color: transparent; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        .logo span { color: var(--text-primary); background: none; }
         .logo-icon { font-size: 1.6rem; }
         
-        .user-info { padding: 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
-        .user-avatar { width: 48px; height: 48px; background: var(--gradient-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .user-info { padding: 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+        .user-avatar { 
+            width: 52px; 
+            height: 52px; 
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark)); 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 1.5rem;
+            color: var(--bg-primary);
+        }
+        .user-details h4 { font-size: 1rem; margin-bottom: 4px; }
+        .user-details p { font-size: 0.75rem; color: var(--text-muted); }
         
         .nav-menu { padding: 20px; }
         .nav-item {
@@ -65,10 +101,13 @@
             color: var(--text-muted);
             cursor: pointer;
             margin-bottom: 4px;
-            transition: all 0.2s;
+            transition: var(--transition);
         }
-        .nav-item:hover, .nav-item.active { background: rgba(212, 175, 55, 0.1); color: var(--primary); }
-        .nav-item i { width: 24px; }
+        .nav-item:hover, .nav-item.active { 
+            background: rgba(0, 208, 132, 0.1); 
+            color: var(--accent); 
+        }
+        .nav-item i { width: 24px; font-size: 1.1rem; }
         
         .logout-btn {
             margin-top: 40px;
@@ -77,12 +116,12 @@
         }
         
         /* Main Content */
-        .main-content { flex: 1; margin-left: 280px; padding: 24px 32px; }
+        .main-content { flex: 1; margin-left: 280px; padding: 28px 36px; }
         
         /* Top Bar */
         .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; flex-wrap: wrap; gap: 16px; }
-        .page-title h1 { font-size: 1.8rem; font-weight: 700; }
-        .page-title p { color: var(--text-muted); font-size: 0.9rem; }
+        .page-title h1 { font-size: 1.8rem; font-weight: 700; background: linear-gradient(135deg, #fff, var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .page-title p { color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; }
         
         /* Stats Grid */
         .stats-grid {
@@ -92,38 +131,40 @@
             margin-bottom: 32px;
         }
         .stat-card {
-            background: var(--dark-card);
+            background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 20px;
             padding: 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.2s;
+            transition: var(--transition);
         }
-        .stat-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+        .stat-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-glow); }
         .stat-info h3 { font-size: 0.85rem; font-weight: 500; color: var(--text-muted); margin-bottom: 8px; }
-        .stat-number { font-size: 2rem; font-weight: 800; color: var(--primary); }
-        .stat-icon { width: 48px; height: 48px; background: rgba(212, 175, 55, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .stat-number { font-size: 2rem; font-weight: 800; color: var(--accent); }
+        .stat-icon { width: 52px; height: 52px; background: rgba(0, 208, 132, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--accent); }
         
         /* Cards */
         .card {
-            background: var(--dark-card);
+            background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 20px;
-            padding: 24px;
+            padding: 28px;
             margin-bottom: 32px;
+            transition: var(--transition);
         }
+        .card:hover { border-color: var(--border-light); }
         
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             flex-wrap: wrap;
             gap: 16px;
         }
-        .card-header h2 { font-size: 1.3rem; font-weight: 600; }
+        .card-header h2 { font-size: 1.3rem; font-weight: 600; color: var(--accent); }
         
         /* Table */
         .data-table {
@@ -131,11 +172,16 @@
             border-collapse: collapse;
         }
         .data-table th, .data-table td {
-            padding: 12px;
+            padding: 14px 12px;
             text-align: left;
             border-bottom: 1px solid var(--border);
         }
-        .data-table th { background: rgba(212, 175, 55, 0.1); color: var(--primary); font-weight: 600; }
+        .data-table th { 
+            background: rgba(0, 208, 132, 0.05); 
+            color: var(--accent); 
+            font-weight: 600; 
+            font-size: 0.85rem;
+        }
         .data-table tr:hover { background: rgba(255,255,255,0.02); }
         
         /* Badges */
@@ -146,10 +192,12 @@
             font-weight: 600;
             display: inline-block;
         }
-        .status-active { background: rgba(46, 204, 113, 0.2); color: #2ecc71; }
-        .status-inactive { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
-        .role-admin { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
-        .role-user { background: rgba(52, 152, 219, 0.2); color: #3498db; }
+        .status-active { background: rgba(0, 208, 132, 0.2); color: var(--accent); }
+        .status-inactive { background: rgba(239, 68, 68, 0.2); color: var(--error); }
+        .role-admin { background: rgba(239, 68, 68, 0.2); color: var(--error); }
+        .role-user { background: rgba(59, 130, 246, 0.2); color: var(--info); }
+        .badge-unlocked { background: rgba(0, 208, 132, 0.2); color: var(--accent); }
+        .badge-locked { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
         
         /* Buttons */
         .btn {
@@ -159,19 +207,22 @@
             cursor: pointer;
             border: none;
             font-size: 0.85rem;
-            transition: all 0.2s;
+            transition: var(--transition);
             display: inline-flex;
             align-items: center;
             gap: 8px;
         }
-        .btn-primary { background: var(--gradient-gold); color: #000; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212,175,55,0.3); }
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
-        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
-        .btn-danger { background: #e74c3c; color: #fff; }
-        .btn-danger:hover { background: #c0392b; }
-        .btn-success { background: #2ecc71; color: #fff; }
-        .btn-sm { padding: 6px 12px; font-size: 0.75rem; }
+        .btn-primary { 
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark)); 
+            color: var(--bg-primary); 
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px var(--accent-glow); }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); }
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-danger { background: var(--error); color: #fff; }
+        .btn-danger:hover { background: #dc2626; transform: translateY(-1px); }
+        .btn-success { background: var(--success); color: var(--bg-primary); }
+        .btn-sm { padding: 6px 14px; font-size: 0.75rem; }
         
         /* Modal */
         .modal {
@@ -181,7 +232,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.96);
+            background: rgba(11, 15, 25, 0.98);
             backdrop-filter: blur(12px);
             z-index: 1000;
             justify-content: center;
@@ -189,30 +240,42 @@
         }
         .modal.active { display: flex; }
         .modal-content {
-            background: var(--dark-card);
-            border: 1px solid var(--primary);
+            background: var(--bg-card);
+            border: 1px solid var(--accent);
             border-radius: 24px;
             width: 90%;
             max-width: 500px;
             padding: 32px;
+            animation: modalFadeIn 0.3s ease;
         }
-        .modal-content h3 { margin-bottom: 20px; }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-content h3 { margin-bottom: 20px; color: var(--accent); }
         .modal-content input, .modal-content select {
             width: 100%;
-            padding: 12px;
+            padding: 12px 16px;
             margin: 8px 0 16px;
-            background: var(--dark-hover);
+            background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 12px;
-            color: var(--text);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .modal-content input:focus, .modal-content select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
         }
         
         /* Switch Toggle */
         .toggle-switch {
             position: relative;
             display: inline-block;
-            width: 50px;
-            height: 24px;
+            width: 52px;
+            height: 26px;
         }
         .toggle-switch input { opacity: 0; width: 0; height: 0; }
         .toggle-slider {
@@ -222,40 +285,91 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #555;
+            background-color: var(--border);
             transition: 0.3s;
-            border-radius: 24px;
+            border-radius: 34px;
         }
         .toggle-slider:before {
             position: absolute;
             content: "";
-            height: 18px;
-            width: 18px;
+            height: 20px;
+            width: 20px;
             left: 3px;
             bottom: 3px;
             background-color: white;
             transition: 0.3s;
             border-radius: 50%;
         }
-        input:checked + .toggle-slider { background-color: var(--primary); }
+        input:checked + .toggle-slider { background-color: var(--accent); }
         input:checked + .toggle-slider:before { transform: translateX(26px); }
         
         /* Toast */
         .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 1100; }
-        .toast { background: var(--dark-card); border-left: 4px solid var(--primary); padding: 14px 20px; border-radius: 12px; margin-top: 8px; animation: slideIn 0.3s ease; }
+        .toast { 
+            background: var(--bg-card); 
+            border-left: 4px solid var(--accent); 
+            padding: 14px 20px; 
+            border-radius: 12px; 
+            margin-top: 8px; 
+            animation: slideIn 0.3s ease;
+            box-shadow: var(--shadow-md);
+        }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         
-        /* Mobile */
-        .mobile-menu-btn { display: none; position: fixed; top: 16px; left: 16px; z-index: 101; background: var(--dark-card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; cursor: pointer; }
+        /* Stats Mini */
+        .stats-mini {
+            background: var(--bg-card);
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+        
+        /* Mobile Responsive */
+        .mobile-menu-btn { 
+            display: none; 
+            position: fixed; 
+            top: 16px; 
+            left: 16px; 
+            z-index: 101; 
+            background: var(--bg-card); 
+            border: 1px solid var(--accent); 
+            border-radius: 12px; 
+            padding: 12px; 
+            cursor: pointer;
+            color: var(--accent);
+        }
+        
         @media (max-width: 768px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.open { transform: translateX(0); }
-            .main-content { margin-left: 0; padding: 16px; margin-top: 60px; }
+            .main-content { margin-left: 0; padding: 20px; margin-top: 60px; }
             .mobile-menu-btn { display: block; }
-            .stats-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr; gap: 12px; }
             .data-table { font-size: 0.75rem; }
             .data-table th, .data-table td { padding: 8px; }
+            .card { padding: 20px; }
+            .card-header { flex-direction: column; align-items: flex-start; }
         }
+        
+        @media (max-width: 480px) {
+            .main-content { padding: 16px; }
+            .stat-number { font-size: 1.5rem; }
+            .btn { padding: 8px 16px; font-size: 0.75rem; }
+        }
+        
+        /* Back to site link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+        .back-link:hover { color: var(--accent); }
     </style>
 </head>
 <body>
@@ -270,20 +384,23 @@
         
         // Data Stores
         let users = [
-            { id: 1, name: 'John Mwangi', email: 'john@example.com', role: 'user', status: 'active', enrolledModules: ['Beginner Drivers', 'EV Training'] },
-            { id: 2, name: 'Sarah Wanjiku', email: 'sarah@example.com', role: 'user', status: 'active', enrolledModules: ['Boda Boda Safety', 'PSV Course'] },
-            { id: 3, name: 'Michael Otieno', email: 'michael@example.com', role: 'user', status: 'active', enrolledModules: ['School Bus Safety'] },
-            { id: 4, name: 'Grace Akinyi', email: 'grace@example.com', role: 'user', status: 'inactive', enrolledModules: [] },
-            { id: 5, name: 'Admin User', email: 'admin@meidrive.com', role: 'admin', status: 'active', enrolledModules: ['All Modules'] }
+            { id: 1, name: 'John Mwangi', email: 'john.mwangi@example.com', role: 'user', status: 'active', enrolledModules: ['Learner Driver Hub', 'EV Training'], joined: '2025-01-15' },
+            { id: 2, name: 'Sarah Wanjiku', email: 'sarah.wanjiku@example.com', role: 'user', status: 'active', enrolledModules: ['Boda Boda Safety', 'PSV Professional'], joined: '2025-02-10' },
+            { id: 3, name: 'Michael Otieno', email: 'michael.otieno@example.com', role: 'user', status: 'active', enrolledModules: ['Digital Safety Library'], joined: '2025-02-20' },
+            { id: 4, name: 'Grace Akinyi', email: 'grace.akinyi@example.com', role: 'user', status: 'inactive', enrolledModules: [], joined: '2025-01-05' },
+            { id: 5, name: 'David Kimani', email: 'david.kimani@example.com', role: 'user', status: 'active', enrolledModules: ['Learner Driver Hub', 'NTSA Quiz Bank'], joined: '2025-03-01' },
+            { id: 6, name: 'Admin User', email: 'admin@meidrive.com', role: 'admin', status: 'active', enrolledModules: ['All Modules'], joined: '2024-01-01' }
         ];
         
         let modules = [
-            { id: 1, name: 'Beginner Drivers Course', price: 0, duration: '25 hours', lessons: 21, status: 'unlocked', enrolled: 1245 },
-            { id: 2, name: 'EV Drivers & Riders', price: 0, duration: '12 hours', lessons: 8, status: 'unlocked', enrolled: 567 },
-            { id: 3, name: 'Boda Boda Safety Course', price: 0, duration: '18 hours', lessons: 12, status: 'unlocked', enrolled: 2341 },
-            { id: 4, name: 'PSV Professional Course', price: 2999, duration: '15 hours', lessons: 10, status: 'locked', enrolled: 892 },
-            { id: 5, name: 'School Bus Safety Program', price: 1999, duration: '10 hours', lessons: 6, status: 'locked', enrolled: 456 },
-            { id: 6, name: 'Advanced Driver Academy', price: 4999, duration: '20 hours', lessons: 8, status: 'locked', enrolled: 234 }
+            { id: 1, name: 'Digital Safety Library', price: 0, duration: '10 hours', lessons: 8, status: 'unlocked', enrolled: 1245, icon: '📚' },
+            { id: 2, name: 'NTSA Quiz Bank', price: 0, duration: '5 hours', lessons: 1000, status: 'unlocked', enrolled: 987, icon: '📝' },
+            { id: 3, name: 'Learner Driver Hub', price: 0, duration: '25 hours', lessons: 21, status: 'unlocked', enrolled: 2341, icon: '🚗' },
+            { id: 4, name: 'PSV Professional Academy', price: 2999, duration: '15 hours', lessons: 10, status: 'locked', enrolled: 892, icon: '🚌' },
+            { id: 5, name: 'Boda Boda Safety Course', price: 0, duration: '18 hours', lessons: 12, status: 'unlocked', enrolled: 1567, icon: '🏍️' },
+            { id: 6, name: 'Electric Vehicle Training', price: 4999, duration: '20 hours', lessons: 8, status: 'locked', enrolled: 434, icon: '🔋' },
+            { id: 7, name: 'School Bus Safety Program', price: 1999, duration: '12 hours', lessons: 6, status: 'locked', enrolled: 256, icon: '🏫' },
+            { id: 8, name: 'Advanced Driver Academy', price: 3999, duration: '24 hours', lessons: 10, status: 'locked', enrolled: 189, icon: '🎓' }
         ];
         
         let systemSettings = {
@@ -293,8 +410,14 @@
             contactEmail: 'support@meidrive.com'
         };
         
-        // Stats
-        let totalRevenue = modules.filter(m => m.price > 0).reduce((sum, m) => sum + (m.price * m.enrolled), 0);
+        // Calculate Stats
+        function calculateStats() {
+            const totalUsers = users.filter(u => u.role !== 'admin').length;
+            const totalModules = modules.length;
+            const totalRevenue = modules.filter(m => m.price > 0).reduce((sum, m) => sum + (m.price * m.enrolled), 0);
+            const activeUsers = users.filter(u => u.status === 'active' && u.role !== 'admin').length;
+            return { totalUsers, totalModules, totalRevenue, activeUsers };
+        }
         
         // Toast System
         function showToast(message, type = 'info') {
@@ -321,7 +444,8 @@
                 email: email,
                 role: role,
                 status: 'active',
-                enrolledModules: []
+                enrolledModules: [],
+                joined: new Date().toISOString().split('T')[0]
             };
             users.push(newUser);
             showToast(`User ${name} added successfully!`, 'success');
@@ -336,7 +460,7 @@
         
         function updateUserStatus(userId, status) {
             const user = users.find(u => u.id === userId);
-            if (user) {
+            if (user && user.role !== 'admin') {
                 user.status = status;
                 showToast(`User ${user.name} ${status === 'active' ? 'activated' : 'deactivated'}`, 'success');
                 renderApp();
@@ -347,11 +471,12 @@
             const newModule = {
                 id: modules.length + 1,
                 name: name,
-                price: parseInt(price),
+                price: parseInt(price) || 0,
                 duration: duration,
                 lessons: parseInt(lessons),
-                status: price === 0 ? 'unlocked' : 'locked',
-                enrolled: 0
+                status: parseInt(price) === 0 ? 'unlocked' : 'locked',
+                enrolled: 0,
+                icon: '📘'
             };
             modules.push(newModule);
             showToast(`Module ${name} added successfully!`, 'success');
@@ -380,15 +505,6 @@
             systemSettings.allowRegistration = allowRegistration;
             showToast('System settings saved successfully!', 'success');
             renderApp();
-        }
-        
-        // Calculate Stats
-        function calculateStats() {
-            const totalUsers = users.length;
-            const totalModules = modules.length;
-            const totalRev = modules.filter(m => m.price > 0).reduce((sum, m) => sum + (m.price * m.enrolled), 0);
-            const activeUsers = users.filter(u => u.status === 'active').length;
-            return { totalUsers, totalModules, totalRevenue: totalRev, activeUsers };
         }
         
         // ============================================
@@ -428,40 +544,45 @@
                         <div class="stat-icon"><i class="fas fa-user-check"></i></div>
                     </div>
                 </div>
+                ${renderUserManagement()}
+                ${renderModuleManagement()}
+                ${renderSystemSettings()}
             `;
         }
         
         function renderUserManagement() {
+            const regularUsers = users.filter(u => u.role !== 'admin');
             return `
                 <div class="card">
                     <div class="card-header">
                         <h2><i class="fas fa-users"></i> User Management</h2>
-                        <button class="btn btn-primary" onclick="openAddUserModal()"><i class="fas fa-user-plus"></i> + Add User</button>
+                        <button class="btn btn-primary" onclick="openAddUserModal()"><i class="fas fa-user-plus"></i> Add User</button>
                     </div>
-                    <table class="data-table">
-                        <thead>
-                            <tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Enrolled Modules</th><th>Actions</th></tr>
-                        </thead>
-                        <tbody>
-                            ${users.map(user => `
-                                <tr>
-                                    <td><strong>${user.name}</strong></td>
-                                    <td>${user.email}</td>
-                                    <td><span class="status-badge ${user.role === 'admin' ? 'role-admin' : 'role-user'}">${user.role === 'admin' ? 'Admin' : 'User'}</span></td>
-                                    <td>
-                                        <span class="status-badge ${user.status === 'active' ? 'status-active' : 'status-inactive'}">${user.status}</span>
-                                    </td>
-                                    <td>${user.enrolledModules.slice(0,2).join(', ')}${user.enrolledModules.length > 2 ? '...' : ''}</td>
-                                    <td>
-                                        <button class="btn btn-outline btn-sm" onclick="toggleUserStatus(${user.id})" style="margin-right: 8px;">
-                                            ${user.status === 'active' ? '🔒 Deactivate' : '✅ Activate'}
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" onclick="confirmDeleteUser(${user.id})"><i class="fas fa-trash"></i> Delete</button>
-                                    </td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
+                    <div style="overflow-x: auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Enrolled Modules</th><th>Joined</th><th>Actions</th></tr>
+                            </thead>
+                            <tbody>
+                                ${regularUsers.map(user => `
+                                    <tr>
+                                        <td><strong>${user.name}</strong></td>
+                                        <td>${user.email}</td>
+                                        <td><span class="status-badge ${user.role === 'admin' ? 'role-admin' : 'role-user'}">${user.role === 'admin' ? 'Admin' : 'Learner'}</span></td>
+                                        <td><span class="status-badge ${user.status === 'active' ? 'status-active' : 'status-inactive'}">${user.status}</span></td>
+                                        <td>${user.enrolledModules.slice(0,2).join(', ')}${user.enrolledModules.length > 2 ? '...' : '' || '—'}</td>
+                                        <td>${user.joned || 'N/A'}</td>
+                                        <td>
+                                            <button class="btn btn-outline btn-sm" onclick="toggleUserStatus(${user.id})" style="margin-right: 6px;">
+                                                ${user.status === 'active' ? '🔒' : '✅'}
+                                            </button>
+                                            <button class="btn btn-danger btn-sm" onclick="confirmDeleteUser(${user.id})"><i class="fas fa-trash"></i></button>
+                                         </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             `;
         }
@@ -471,33 +592,33 @@
                 <div class="card">
                     <div class="card-header">
                         <h2><i class="fas fa-book"></i> Module Management</h2>
-                        <button class="btn btn-primary" onclick="openAddModuleModal()"><i class="fas fa-plus"></i> + Add Module</button>
+                        <button class="btn btn-primary" onclick="openAddModuleModal()"><i class="fas fa-plus"></i> Add Module</button>
                     </div>
-                    <table class="data-table">
-                        <thead>
-                            <tr><th>Module Name</th><th>Price</th><th>Duration</th><th>Lessons</th><th>Enrolled</th><th>Status</th><th>Actions</th></tr>
-                        </thead>
-                        <tbody>
-                            ${modules.map(module => `
-                                <tr>
-                                    <td><strong>${module.name}</strong></td>
-                                    <td>${module.price === 0 ? 'FREE' : `KES ${module.price.toLocaleString()}`}</td>
-                                    <td>${module.duration}</td>
-                                    <td>${module.lessons}</td>
-                                    <td>${module.enrolled}</td>
-                                    <td>
-                                        <span class="status-badge ${module.status === 'unlocked' ? 'status-active' : 'status-inactive'}">${module.status}</span>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-outline btn-sm" onclick="toggleModuleStatus(${module.id})" style="margin-right: 8px;">
-                                            ${module.status === 'unlocked' ? '🔒 Lock' : '🔓 Unlock'}
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" onclick="confirmDeleteModule(${module.id})"><i class="fas fa-trash"></i> Delete</button>
-                                    </td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
+                    <div style="overflow-x: auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>Module</th><th>Price</th><th>Duration</th><th>Lessons</th><th>Enrolled</th><th>Status</th><th>Actions</th></tr>
+                            </thead>
+                            <tbody>
+                                ${modules.map(module => `
+                                    <tr>
+                                        <td><strong>${module.icon || '📘'} ${module.name}</strong></td>
+                                        <td>${module.price === 0 ? 'FREE' : `KES ${module.price.toLocaleString()}`}</td>
+                                        <td>${module.duration}</td>
+                                        <td>${module.lessons}</td>
+                                        <td>${module.enrolled.toLocaleString()}</td>
+                                        <td><span class="status-badge ${module.status === 'unlocked' ? 'status-active' : 'status-inactive'}">${module.status}</span></td>
+                                        <td>
+                                            <button class="btn btn-outline btn-sm" onclick="toggleModuleStatus(${module.id})" style="margin-right: 6px;">
+                                                ${module.status === 'unlocked' ? '🔒' : '🔓'}
+                                            </button>
+                                            <button class="btn btn-danger btn-sm" onclick="confirmDeleteModule(${module.id})"><i class="fas fa-trash"></i></button>
+                                         </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             `;
         }
@@ -509,11 +630,11 @@
                         <h2><i class="fas fa-cog"></i> System Settings</h2>
                         <button class="btn btn-primary" onclick="saveSettings()"><i class="fas fa-save"></i> Save Settings</button>
                     </div>
-                    <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <div style="display: flex; flex-direction: column; gap: 28px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
                             <div>
                                 <h3>Maintenance Mode</h3>
-                                <p style="color: var(--text-muted); font-size: 0.8rem;">When enabled, only admins can access the site</p>
+                                <p style="color: var(--text-muted); font-size: 0.8rem;">When enabled, only admins can access the platform</p>
                             </div>
                             <label class="toggle-switch">
                                 <input type="checkbox" id="maintenanceMode" ${systemSettings.maintenanceMode ? 'checked' : ''}>
@@ -522,8 +643,8 @@
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
                             <div>
-                                <h3>Allow Registration</h3>
-                                <p style="color: var(--text-muted); font-size: 0.8rem;">Enable new user signups</p>
+                                <h3>Allow New Registrations</h3>
+                                <p style="color: var(--text-muted); font-size: 0.8rem;">Enable new user signups on the platform</p>
                             </div>
                             <label class="toggle-switch">
                                 <input type="checkbox" id="allowRegistration" ${systemSettings.allowRegistration ? 'checked' : ''}>
@@ -533,11 +654,11 @@
                         <hr style="border-color: var(--border);">
                         <div>
                             <h3>Site Information</h3>
-                            <div style="margin-top: 16px;">
-                                <label style="display: block; margin-bottom: 8px;">Site Name</label>
-                                <input type="text" id="siteName" value="${systemSettings.siteName}" style="width: 100%; max-width: 400px;">
-                                <label style="display: block; margin: 16px 0 8px;">Contact Email</label>
-                                <input type="email" id="contactEmail" value="${systemSettings.contactEmail}" style="width: 100%; max-width: 400px;">
+                            <div style="margin-top: 20px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 500;">Site Name</label>
+                                <input type="text" id="siteName" value="${systemSettings.siteName}" style="width: 100%; max-width: 380px;">
+                                <label style="display: block; margin: 20px 0 8px; font-weight: 500;">Contact Email</label>
+                                <input type="email" id="contactEmail" value="${systemSettings.contactEmail}" style="width: 100%; max-width: 380px;">
                             </div>
                         </div>
                     </div>
@@ -549,43 +670,36 @@
             const app = document.getElementById('app');
             const stats = calculateStats();
             
-            const views = {
-                dashboard: renderDashboard() + renderUserManagement() + renderModuleManagement() + renderSystemSettings(),
-                users: renderUserManagement(),
-                modules: renderModuleManagement(),
-                settings: renderSystemSettings()
-            };
-            
-            const content = views[adminView] || views.dashboard;
+            const content = adminView === 'dashboard' ? renderDashboard() :
+                           adminView === 'users' ? renderUserManagement() + renderSystemSettings() :
+                           adminView === 'modules' ? renderModuleManagement() + renderSystemSettings() :
+                           renderDashboard();
             
             app.innerHTML = `
                 <div class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
                 <div class="sidebar" id="sidebar">
                     <div class="sidebar-header">
                         <div class="logo">
-                            <span class="logo-icon">🚗</span> MEI DRIVE AFRICA
+                            <span class="logo-icon">🚗</span> MEI <span>DRIVE AFRICA</span>
                         </div>
-                        <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 8px;">Administrator Panel</p>
+                        <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 8px;">Administrator Dashboard</p>
                     </div>
                     <div class="user-info">
-                        <div class="user-avatar">👤</div>
+                        <div class="user-avatar"><i class="fas fa-crown"></i></div>
                         <div class="user-details">
                             <h4>${currentUser.name}</h4>
-                            <p>${currentUser.email} • Admin</p>
+                            <p>${currentUser.email} • Super Admin</p>
                         </div>
                     </div>
                     <div class="nav-menu">
                         <div class="nav-item ${adminView === 'dashboard' ? 'active' : ''}" onclick="setView('dashboard')">
-                            <i class="fas fa-chart-line"></i> Dashboard
+                            <i class="fas fa-chart-line"></i> Overview
                         </div>
                         <div class="nav-item ${adminView === 'users' ? 'active' : ''}" onclick="setView('users')">
-                            <i class="fas fa-users"></i> User Management
+                            <i class="fas fa-users"></i> Users
                         </div>
                         <div class="nav-item ${adminView === 'modules' ? 'active' : ''}" onclick="setView('modules')">
-                            <i class="fas fa-book"></i> Module Management
-                        </div>
-                        <div class="nav-item ${adminView === 'settings' ? 'active' : ''}" onclick="setView('settings')">
-                            <i class="fas fa-cog"></i> System Settings
+                            <i class="fas fa-book"></i> Modules
                         </div>
                         <div class="logout-btn">
                             <div class="nav-item" onclick="logout()">
@@ -597,13 +711,13 @@
                 <div class="main-content">
                     <div class="top-bar">
                         <div class="page-title">
-                            <h1>${adminView === 'dashboard' ? 'Dashboard' : adminView === 'users' ? 'User Management' : adminView === 'modules' ? 'Module Management' : 'System Settings'}</h1>
+                            <a href="javascript:history.back()" class="back-link"><i class="fas fa-arrow-left"></i> Back to Student Portal</a>
+                            <h1>${adminView === 'dashboard' ? 'Dashboard' : adminView === 'users' ? 'User Management' : 'Module Management'}</h1>
                             <p>Welcome back, ${currentUser.name}</p>
                         </div>
                         <div class="stats-mini">
-                            <span style="background: var(--dark-card); padding: 8px 16px; border-radius: 50px; font-size: 0.8rem;">
-                                <i class="fas fa-users"></i> ${stats.totalUsers} Users
-                            </span>
+                            <i class="fas fa-users"></i> ${stats.totalUsers} Learners &nbsp;|&nbsp;
+                            <i class="fas fa-book"></i> ${stats.totalModules} Modules
                         </div>
                     </div>
                     ${content}
@@ -617,10 +731,10 @@
                         <input type="text" id="newUserName" placeholder="Full Name">
                         <input type="email" id="newUserEmail" placeholder="Email Address">
                         <select id="newUserRole">
-                            <option value="user">User</option>
+                            <option value="user">Learner</option>
                             <option value="admin">Admin</option>
                         </select>
-                        <div style="display: flex; gap: 12px; margin-top: 20px;">
+                        <div style="display: flex; gap: 12px; margin-top: 24px;">
                             <button class="btn btn-outline" onclick="closeModal('addUserModal')">Cancel</button>
                             <button class="btn btn-primary" onclick="submitAddUser()">Add User</button>
                         </div>
@@ -632,10 +746,10 @@
                     <div class="modal-content">
                         <h3><i class="fas fa-plus"></i> Add New Module</h3>
                         <input type="text" id="newModuleName" placeholder="Module Name">
-                        <input type="number" id="newModulePrice" placeholder="Price (KES)">
+                        <input type="number" id="newModulePrice" placeholder="Price (KES) — 0 for FREE">
                         <input type="text" id="newModuleDuration" placeholder="Duration (e.g., 20 hours)">
                         <input type="number" id="newModuleLessons" placeholder="Number of Lessons">
-                        <div style="display: flex; gap: 12px; margin-top: 20px;">
+                        <div style="display: flex; gap: 12px; margin-top: 24px;">
                             <button class="btn btn-outline" onclick="closeModal('addModuleModal')">Cancel</button>
                             <button class="btn btn-primary" onclick="submitAddModule()">Add Module</button>
                         </div>
@@ -646,17 +760,32 @@
                 <div class="modal" id="deleteConfirmModal">
                     <div class="modal-content">
                         <h3><i class="fas fa-trash"></i> Confirm Delete</h3>
-                        <p id="deleteMessage">Are you sure you want to delete this item?</p>
-                        <div style="display: flex; gap: 12px; margin-top: 20px;">
+                        <p id="deleteMessage">Are you sure you want to delete this item? This action cannot be undone.</p>
+                        <div style="display: flex; gap: 12px; margin-top: 24px;">
                             <button class="btn btn-outline" onclick="closeModal('deleteConfirmModal')">Cancel</button>
                             <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
                         </div>
                     </div>
                 </div>
             `;
+            
+            // Attach confirm delete handler
+            const confirmBtn = document.getElementById('confirmDeleteBtn');
+            if (confirmBtn) {
+                confirmBtn.onclick = () => {
+                    if (pendingDelete && deleteType === 'user') deleteUser(pendingDelete);
+                    if (pendingDelete && deleteType === 'module') deleteModule(pendingDelete);
+                    closeModal('deleteConfirmModal');
+                    pendingDelete = null;
+                    deleteType = null;
+                };
+            }
         }
         
         // Modal Functions
+        let pendingDelete = null;
+        let deleteType = null;
+        
         window.openAddUserModal = () => {
             document.getElementById('addUserModal').classList.add('active');
         };
@@ -698,7 +827,7 @@
         
         window.toggleUserStatus = (userId) => {
             const user = users.find(u => u.id === userId);
-            if (user) {
+            if (user && user.role !== 'admin') {
                 updateUserStatus(userId, user.status === 'active' ? 'inactive' : 'active');
             }
         };
@@ -709,9 +838,6 @@
                 updateModuleStatus(moduleId, module.status === 'unlocked' ? 'locked' : 'unlocked');
             }
         };
-        
-        let pendingDelete = null;
-        let deleteType = null;
         
         window.confirmDeleteUser = (userId) => {
             pendingDelete = userId;
@@ -727,19 +853,9 @@
             document.getElementById('deleteConfirmModal').classList.add('active');
         };
         
-        window.confirmDeleteBtn = () => {
-            if (deleteType === 'user') {
-                deleteUser(pendingDelete);
-            } else if (deleteType === 'module') {
-                deleteModule(pendingDelete);
-            }
-            closeModal('deleteConfirmModal');
-            pendingDelete = null;
-            deleteType = null;
-        };
-        
         window.closeModal = (modalId) => {
-            document.getElementById(modalId).classList.remove('active');
+            const modal = document.getElementById(modalId);
+            if (modal) modal.classList.remove('active');
         };
         
         window.setView = (view) => {
@@ -758,22 +874,6 @@
             }, 1000);
         };
         
-        window.saveSettings = saveSettings;
-        
-        // Make functions global for onclick
-        window.openAddUserModal = openAddUserModal;
-        window.openAddModuleModal = openAddModuleModal;
-        window.submitAddUser = submitAddUser;
-        window.submitAddModule = submitAddModule;
-        window.toggleUserStatus = toggleUserStatus;
-        window.toggleModuleStatus = toggleModuleStatus;
-        window.confirmDeleteUser = confirmDeleteUser;
-        window.confirmDeleteModule = confirmDeleteModule;
-        window.confirmDeleteBtn = confirmDeleteBtn;
-        window.closeModal = closeModal;
-        window.setView = setView;
-        window.toggleSidebar = toggleSidebar;
-        window.logout = logout;
         window.saveSettings = saveSettings;
         
         // Initialize
