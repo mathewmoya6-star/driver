@@ -187,6 +187,149 @@
             cursor: pointer;
         }
         
+        /* Navigation Toggle Buttons */
+        .nav-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .nav-toggle .toggle-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+        }
+        
+        .nav-toggle .toggle-btn:hover:not(:disabled) {
+            border-color: var(--primary-gold);
+            color: var(--primary-gold);
+            transform: translateX(-2px);
+        }
+        
+        .nav-toggle .toggle-btn.next:hover:not(:disabled) {
+            transform: translateX(2px);
+        }
+        
+        .nav-toggle .toggle-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        
+        .unit-progress-indicator {
+            background: rgba(212, 175, 55, 0.1);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            color: var(--primary-gold);
+        }
+        
+        .unit-navigation {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        /* Expandable Sections */
+        .expandable-section {
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: var(--card-bg);
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+            font-weight: 600;
+        }
+        
+        .section-header:hover {
+            background: var(--card-bg-hover);
+        }
+        
+        .section-header .icon {
+            transition: transform 0.3s;
+            color: var(--primary-gold);
+        }
+        
+        .section-header.expanded .icon {
+            transform: rotate(180deg);
+        }
+        
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .section-content.expanded {
+            padding: 20px;
+            max-height: 2000px;
+        }
+        
+        /* Key Concepts Cards */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        
+        .concept-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            border-left: 3px solid var(--primary-gold);
+        }
+        
+        .concept-card h4 {
+            color: var(--primary-gold);
+            margin-bottom: 8px;
+        }
+        
+        .concept-card p {
+            font-size: 14px;
+            color: #ccc;
+        }
+        
+        /* Rules Table */
+        .rules-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+        
+        .rules-table th,
+        .rules-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .rules-table th {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--primary-gold);
+        }
+        
         /* Grid & Cards */
         .grid {
             display: grid;
@@ -515,6 +658,11 @@
             margin: 15px 0 10px;
         }
         
+        .unit-content h4 {
+            color: var(--primary-gold);
+            margin: 12px 0 8px;
+        }
+        
         .unit-content ul,
         .unit-content ol {
             margin-left: 20px;
@@ -587,6 +735,10 @@
             margin-top: 16px;
         }
         
+        .mt-4 {
+            margin-top: 24px;
+        }
+        
         hr {
             border-color: var(--border-color);
             margin: 16px 0;
@@ -648,6 +800,7 @@
         let questionsCache = {};
         let userProgress = {};
         let currentPage = 'home';
+        let allUnits = [];
         
         // Quiz state
         let currentQuizPage = 1;
@@ -717,11 +870,8 @@
                 if (unitId) {
                     query = query.eq('unit_id', unitId);
                 } else if (moduleType === 'learner') {
-                    // For learner module, fetch all questions across all units
-                    // No additional filter needed
+                    // No additional filter
                 } else {
-                    // For other modules, we'd need a module_type column
-                    // Fallback to limited questions
                     query = query.limit(limit);
                 }
                 
@@ -745,10 +895,12 @@
                     .order('unit_number', { ascending: true });
                 
                 if (error) throw error;
+                allUnits = data || [];
                 return data || [];
             } catch (error) {
                 console.error('Error fetching units:', error);
-                return getFallbackUnits();
+                allUnits = getFallbackUnits();
+                return allUnits;
             }
         }
         
@@ -836,20 +988,226 @@
             ];
         }
         
-        function getMaterialContent(unit) {
-            return `
-                <h2>${unit.title}</h2>
-                <p>This comprehensive training material covers all essential aspects of ${unit.title.toLowerCase()}.</p>
-                <h3>Key Learning Objectives</h3>
-                <ul>
-                    <li>Understand core concepts of ${unit.title.toLowerCase()}</li>
-                    <li>Learn practical application techniques</li>
-                    <li>Master safety protocols and regulations</li>
-                    <li>Prepare for NTSA examination</li>
-                </ul>
-                <h3>Study Notes</h3>
-                <p>Review the material thoroughly and take the practice quiz to test your knowledge. Complete all units to prepare for your driving test.</p>
-            `;
+        // ============================================
+        // EXPANDED UNIT CONTENT
+        // ============================================
+        
+        function getExpandedUnitContent(unit) {
+            const unitNumber = unit.unit_number;
+            
+            // Comprehensive content for each unit
+            const contents = {
+                1: `
+                    <h2>📘 Introduction to Driving</h2>
+                    <p>Driving is an important daily activity that helps transport people and goods safely from one place to another. Driver training ensures motorists gain the knowledge, skills, and attitude necessary for safe road use.</p>
+                    
+                    <div class="expandable-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <span>🎯 Key Learning Objectives</span>
+                            <span class="icon">▼</span>
+                        </div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Understand the purpose of driver training</li>
+                                <li>Recognise causes of road accidents</li>
+                                <li>Develop responsible driving behaviour</li>
+                                <li>Learn the importance of safe transport services</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="expandable-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <span>📚 Main Points</span>
+                            <span class="icon">▼</span>
+                        </div>
+                        <div class="section-content">
+                            <h3>Purpose of Driver Training</h3>
+                            <p>Driver training equips learners with:</p>
+                            <ul>
+                                <li>Knowledge of traffic laws</li>
+                                <li>Vehicle handling skills</li>
+                                <li>Road safety awareness</li>
+                                <li>Defensive driving techniques</li>
+                                <li>Proper reaction in traffic situations</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="expandable-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <span>⚠️ Causes of Road Accidents</span>
+                            <span class="icon">▼</span>
+                        </div>
+                        <div class="section-content">
+                            <p>Most accidents occur due to:</p>
+                            <ul>
+                                <li>Human error (80%)</li>
+                                <li>Over-speeding (45%)</li>
+                                <li>Careless driving (35%)</li>
+                                <li>Fatigue (25%)</li>
+                                <li>Alcohol and drug abuse (20%)</li>
+                                <li>Poor observation (30%)</li>
+                            </ul>
+                            <div class="progress-bar mt-3"><div class="progress-fill" style="width: 80%; background: #e74c3c;"></div></div>
+                            <p class="mt-3"><small>Human error is the leading cause of accidents in Kenya</small></p>
+                        </div>
+                    </div>
+                    
+                    <div class="expandable-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <span>🛡️ Responsibilities of a Driver</span>
+                            <span class="icon">▼</span>
+                        </div>
+                        <div class="section-content">
+                            <p>A driver should:</p>
+                            <ul>
+                                <li>Protect passengers and other road users</li>
+                                <li>Follow traffic laws</li>
+                                <li>Maintain the vehicle</li>
+                                <li>Avoid risky behaviour</li>
+                                <li>Stay alert at all times</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="expandable-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <span>📋 NTSA Requirements for Learner Drivers</span>
+                            <span class="icon">▼</span>
+                        </div>
+                        <div class="section-content">
+                            <table class="rules-table">
+                                <tr><th>Rule</th><th>Detail</th></tr>
+                                <tr><td>Minimum age</td><td>18 years for private vehicles; 21 years for PSV</td></tr>
+                                <tr><td>Valid learner's licence</td><td>Obtain from NTSA before any practice</td></tr>
+                                <tr><td>Supervision</td><td>Must be accompanied by a licensed driver</td></tr>
+                                <tr><td>"L" plate display</td><td>Red "L" plates visible front and rear</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="expandable-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <span>⚖️ Penalties for Violations</span>
+                            <span class="icon">▼</span>
+                        </div>
+                        <div class="section-content">
+                            <table class="rules-table">
+                                <tr><th>Offence</th><th>Penalty</th></tr>
+                                <tr><td>Driving without valid licence</td><td>Fine up to KES 10,000 or imprisonment</td></tr>
+                                <tr><td>Unsupervised driving by learner</td><td>Fine KES 5,000 + disqualification for 3 months</td></tr>
+                                <tr><td>No "L" plates displayed</td><td>Fine KES 2,000</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="expandable-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <span>💡 Key Concepts</span>
+                            <span class="icon">▼</span>
+                        </div>
+                        <div class="section-content">
+                            <div class="concepts-grid">
+                                <div class="concept-card"><h4>Driver Training</h4><p>Formal education teaching traffic laws, vehicle handling, and safety attitudes</p></div>
+                                <div class="concept-card"><h4>Defensive Driving</h4><p>Driving to save lives despite other road users' mistakes</p></div>
+                                <div class="concept-card"><h4>Human Error</h4><p>Mistakes made by drivers, pedestrians, or cyclists causing accidents</p></div>
+                                <div class="concept-card"><h4>Road Safety Awareness</h4><p>Continuous understanding of potential dangers and correct responses</p></div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                2: `
+                    <h2>📜 Fundamental Driving Rules</h2>
+                    <p>Roads are governed by laws and regulations to ensure safety and order. Understanding the Traffic Act and Highway Code is essential for every driver.</p>
+                    
+                    <div class="expandable-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <span>📖 Key Documents</span>
+                            <span class="icon">▼</span>
+                        </div>
+                        <div class="section-content">
+                            <h3>1. The Traffic Act</h3>
+                            <ul><li>Traffic laws</li><li>Road user responsibilities</li><li>Penalties and fines</li></ul>
+                            <h3>2. Highway Code</h3>
+                            <ul><li>Rules for motorists</li><li>Guidelines for pedestrians</li><li>Safety and courtesy standards</li></ul>
+                        </div>
+                    </div>
+                    
+                    <div class="expandable-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <span>📢 Horn Usage Rules</span>
+                            <span class="icon">▼</span>
+                        </div>
+                        <div class="section-content">
+                            <p><strong>Use the horn ONLY when:</strong></p>
+                            <ul><li>The vehicle is moving</li><li>To warn other road users</li></ul>
+                            <p><strong>Do NOT:</strong></p>
+                            <ul><li>Hoot aggressively</li><li>Hoot near hospitals or schools</li><li>Hoot where "No Hooting" signs exist</li></ul>
+                        </div>
+                    </div>
+                    
+                    <div class="expandable-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <span>🚨 Right of Way</span>
+                            <span class="icon">▼</span>
+                        </div>
+                        <div class="section-content">
+                            <p>Give way to:</p>
+                            <ul>
+                                <li>Police vehicles (sirens or blue lights active)</li>
+                                <li>Ambulances (sirens or flashing lights)</li>
+                                <li>Fire engines (emergency response mode)</li>
+                                <li>Presidential motorcade</li>
+                                <li>Traffic officers (hand signals override lights)</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            };
+            
+            // Default content if specific unit not found
+            if (!contents[unitNumber]) {
+                return `
+                    <h2>${unit.title}</h2>
+                    <p>This comprehensive training material covers all essential aspects of ${unit.title.toLowerCase()}.</p>
+                    
+                    <div class="expandable-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <span>📚 Unit Overview</span>
+                            <span class="icon">▼</span>
+                        </div>
+                        <div class="section-content">
+                            <p>Complete NTSA-approved training material for ${unit.title.toLowerCase()}. Study thoroughly and complete the quiz to test your knowledge.</p>
+                            <h3>Key Topics Covered:</h3>
+                            <ul>
+                                <li>Core concepts and definitions</li>
+                                <li>Rules and regulations</li>
+                                <li>Safety guidelines</li>
+                                <li>Practical applications</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="expandable-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <span>✅ Study Checklist</span>
+                            <span class="icon">▼</span>
+                        </div>
+                        <div class="section-content">
+                            <ul>
+                                <li>☐ Read all material thoroughly</li>
+                                <li>☐ Take notes on key points</li>
+                                <li>☐ Complete the unit quiz</li>
+                                <li>☐ Review incorrect answers</li>
+                                <li>☐ Mark unit as complete</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            return contents[unitNumber];
         }
         
         // ============================================
@@ -1098,13 +1456,10 @@
                 `;
                 
                 for (let opt of options) {
-                    let optionClass = '';
                     if (selected !== undefined) {
                         if (opt.letter === q.correct_answer) {
-                            optionClass = 'correct';
                             html += `<div class="option correct">✅ ${opt.letter}. ${escapeHtml(opt.text)} (Correct Answer)</div>`;
                         } else if (selected === opt.letter && selected !== q.correct_answer) {
-                            optionClass = 'wrong';
                             html += `<div class="option wrong">❌ ${opt.letter}. ${escapeHtml(opt.text)} (Your Answer - Incorrect)</div>`;
                         } else {
                             html += `<div class="option">${opt.letter}. ${escapeHtml(opt.text)}</div>`;
@@ -1205,25 +1560,54 @@
         window.viewMaterial = async function(id, type) {
             const units = await fetchUnits();
             const unit = units.find(u => u.id == id);
+            const currentIndex = units.findIndex(u => u.id == id);
+            const prevUnit = currentIndex > 0 ? units[currentIndex - 1] : null;
+            const nextUnit = currentIndex < units.length - 1 ? units[currentIndex + 1] : null;
+            
             if (!unit) return;
             
             const container = document.getElementById('page-content');
             const progress = userProgress[unit.id] || 0;
-            const content = getMaterialContent(unit);
+            const expandedContent = getExpandedUnitContent(unit);
             
             container.innerHTML = `
                 <div style="background:var(--card-bg); border-radius:24px; padding:24px; margin:20px 0;">
                     <div style="display:flex; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
-                        <h2 style="color:var(--primary-gold);">Unit ${unit.unit_number}: ${escapeHtml(unit.title)}</h2>
+                        <div>
+                            <span class="unit-badge">Unit ${unit.unit_number} of ${units.length}</span>
+                            <h2 style="color:var(--primary-gold); margin-top:8px;">${escapeHtml(unit.title)}</h2>
+                        </div>
                         <button class="btn-small" onclick="window.navigateTo('${type}')">← Back to Units</button>
                     </div>
-                    <div class="unit-content">${content}</div>
+                    
+                    <div class="unit-content">${expandedContent}</div>
+                    
                     <div class="progress-bar mt-3">
                         <div class="progress-fill" style="width: ${progress}%"></div>
                     </div>
-                    <div style="display:flex; gap:12px; margin-top:20px;">
+                    
+                    <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
                         <button class="btn" onclick="window.updateUserProgress(${unit.id}, true, 100)">✅ Mark Complete</button>
                         <button class="btn-ev" onclick="window.viewUnitQuiz(${unit.id})">📝 Take Unit Quiz</button>
+                    </div>
+                    
+                    <!-- Next/Previous Unit Navigation -->
+                    <div class="nav-toggle">
+                        ${prevUnit ? `
+                            <button class="toggle-btn prev" onclick="window.viewMaterial(${prevUnit.id}, '${type}')">
+                                ← Previous: Unit ${prevUnit.unit_number}
+                            </button>
+                        ` : '<div></div>'}
+                        
+                        <div class="unit-progress-indicator">
+                            📍 Unit ${unit.unit_number} of ${units.length}
+                        </div>
+                        
+                        ${nextUnit ? `
+                            <button class="toggle-btn next" onclick="window.viewMaterial(${nextUnit.id}, '${type}')">
+                                Next: Unit ${nextUnit.unit_number} →
+                            </button>
+                        ` : '<div></div>'}
                     </div>
                 </div>
             `;
@@ -1243,7 +1627,22 @@
             quizSubmitted = true;
             await updateUserProgress(unitId, score >= 80, score);
             showToast(`Quiz completed! Score: ${score}%`, score >= 80 ? 'success' : 'error');
-            renderPage('learner');
+            
+            // After quiz, prompt to return to unit
+            const units = await fetchUnits();
+            const currentUnit = units.find(u => u.id == unitId);
+            if (confirm(`You scored ${score}%. Go back to Unit ${currentUnit.unit_number}?`)) {
+                window.viewMaterial(unitId, 'learner');
+            } else {
+                renderPage('learner');
+            }
+        };
+        
+        // Toggle expandable sections
+        window.toggleSection = function(header) {
+            header.classList.toggle('expanded');
+            const content = header.nextElementSibling;
+            content.classList.toggle('expanded');
         };
         
         // Quiz functions
@@ -1336,7 +1735,7 @@
                     <p><strong>Name:</strong> ${currentUser?.name || 'N/A'}</p>
                     <p><strong>Email:</strong> ${currentUser?.email || 'N/A'}</p>
                     <hr>
-                    <p><strong>📚 Completed Units:</strong> ${Object.values(userProgress).filter(p => p === 100).length} / 21</p>
+                    <p><strong>📚 Completed Units:</strong> ${Object.values(userProgress).filter(p => p === 100).length} / ${allUnits.length}</p>
                     <button class="btn" style="margin-top:15px; width:100%;" onclick="window.closeModal()">Close</button>
                 </div>
             `;
@@ -1379,6 +1778,10 @@
         window.logout = logout;
         window.updateUserProgress = updateUserProgress;
         window.showToast = showToast;
+        
+        function renderPage(page) {
+            window.navigateTo(page);
+        }
         
         // Mobile menu
         document.getElementById('mobileMenuBtn')?.addEventListener('click', function(e) {
