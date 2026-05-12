@@ -1,422 +1,762 @@
-<!DOCTYPE html>
+ <!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>MEI DRIVE AFRICA | Complete NTSA Driver Training</title>
-    <meta name="description" content="Kenya's NTSA-certified digital driving academy - Complete 21-unit Learner Driver Hub, PSV, Boda, EV courses">
-    <meta name="theme-color" content="#00d084">
+    <title>MEI DRIVE AFRICA | Premier Driver Safety Platform</title>
+    <meta name="description" content="Kenya's premier NTSA-certified driver training platform">
+    <meta name="theme-color" content="#d4af37">
     
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🚗%3C/text%3E%3C/svg%3E">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Inter', sans-serif; background: #0B0F19; color: #E8EDF5; line-height: 1.6; overflow-x: hidden; }
-
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; line-height: 1.5; }
+        
         :root {
-            --accent: #00d084;
-            --accent-dark: #00a86b;
-            --accent-light: #4ade80;
-            --bg-primary: #0B0F19;
-            --bg-card: #121B2C;
-            --bg-hover: #1A2538;
-            --border: #1E2A3E;
-            --text-secondary: #A0B3D9;
-            --text-muted: #6B7FA3;
-            --warning: #f39c12;
-            --danger: #e74c3c;
-            --info: #3498db;
+            --primary-gold: #d4af37;
+            --ev-green: #00ff88;
+            --card-bg: #111111;
+            --border-color: #222222;
+            --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f0c674 100%);
         }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-secondary); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
-
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
-
-        /* Navigation */
-        .navbar { background: rgba(11, 15, 25, 0.98); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0, 208, 132, 0.2); padding: 8px 0; }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; padding: 0 20px; }
-        .logo { font-size: 1.3rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent-light)); -webkit-background-clip: text; background-clip: text; color: transparent; cursor: pointer; }
-        .logo span { color: var(--text-primary); background: none; }
         
-        .mobile-menu-btn { display: none; background: transparent; border: none; color: var(--accent); font-size: 28px; cursor: pointer; padding: 14px; min-width: 56px; }
-        .nav-links { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-        .nav-links button { background: transparent; border: none; color: var(--text-secondary); padding: 10px 18px; border-radius: 40px; cursor: pointer; font-weight: 500; font-size: 0.9rem; transition: all 0.2s; }
-        .nav-links button:active { transform: scale(0.96); background: rgba(0, 208, 132, 0.1); }
-        .user-badge { background: rgba(0, 208, 132, 0.1); color: var(--accent) !important; border-radius: 40px; padding: 8px 16px; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .container { width: 100%; padding: 0 16px; margin: 0 auto; }
+        @media (min-width: 768px) { .container { max-width: 1400px; padding: 0 24px; } }
         
-        /* Mobile Menu */
-        .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 999; opacity: 0; visibility: hidden; transition: 0.3s; }
-        .mobile-overlay.active { opacity: 1; visibility: visible; }
-        .mobile-panel { position: fixed; top: 0; right: -100%; width: 85%; max-width: 340px; height: 100%; background: var(--bg-card); border-left: 2px solid var(--accent); z-index: 1000; transition: right 0.3s ease; padding: 70px 20px 30px; overflow-y: auto; }
-        .mobile-panel.open { right: 0; }
-        .mobile-panel button { background: transparent; border: none; color: var(--text-secondary); padding: 16px; border-radius: 16px; width: 100%; text-align: left; font-size: 1rem; display: flex; align-items: center; gap: 12px; min-height: 56px; }
-        .mobile-panel button:active { background: rgba(0, 208, 132, 0.15); }
-        .close-mobile-btn { position: absolute; top: 16px; right: 16px; background: transparent; border: none; color: var(--accent); font-size: 24px; padding: 12px; cursor: pointer; }
-
-        /* Hero */
-        .hero { background: linear-gradient(135deg, #071120 0%, #0A1628 100%); padding: 60px 20px; text-align: center; border-bottom: 2px solid var(--accent); }
-        .hero h1 { margin-bottom: 12px; background: linear-gradient(135deg, #FFFFFF, var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; font-size: clamp(1.8rem, 5vw, 3.2rem); }
-        .hero p { color: var(--text-secondary); max-width: 700px; margin: 0 auto; }
-        .hero .highlight { color: var(--accent); font-weight: 700; }
-        .hero-btns { margin-top: 28px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-
-        .btn-primary, .btn-secondary { padding: 14px 28px; border-radius: 50px; font-weight: 700; cursor: pointer; border: none; min-height: 52px; }
-        .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: #0B0F19; }
-        .btn-secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
-
-        .section-title { font-size: 1.6rem; margin-bottom: 28px; display: flex; align-items: center; gap: 12px; color: var(--accent); border-left: 4px solid var(--accent); padding-left: 20px; }
+        .navbar { background: rgba(10,10,10,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212,175,55,0.3); position: sticky; top: 0; z-index: 1000; padding: 12px 0; }
+        .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo { font-weight: 800; font-size: 1.1rem; background: var(--gradient-gold); background-clip: text; -webkit-background-clip: text; color: transparent; cursor: pointer; }
+        @media (min-width: 768px) { .logo { font-size: 1.4rem; } }
         
-        /* Course Grid */
-        .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; margin: 32px 0; }
-        .card { background: var(--bg-card); border-radius: 20px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; transition: all 0.2s; }
+        .mobile-menu-btn { display: flex; background: transparent; border: none; color: var(--primary-gold); font-size: 24px; cursor: pointer; padding: 8px; border-radius: 50%; }
+        .nav-links { display: none; width: 100%; flex-direction: column; align-items: center; padding: 16px 0 8px; gap: 8px; }
+        .nav-links.show { display: flex; }
+        .nav-links button { background: transparent; border: none; color: #e0e0e0; padding: 12px 20px; border-radius: 50px; cursor: pointer; font-size: 15px; width: 100%; text-align: center; }
+        @media (min-width: 768px) {
+            .mobile-menu-btn { display: none; }
+            .nav-links { display: flex !important; width: auto; flex-direction: row; padding: 0; gap: 4px; }
+            .nav-links button { width: auto; padding: 8px 16px; font-size: 14px; }
+        }
+        
+        .btn, .btn-ev { min-height: 48px; padding: 12px 24px; font-size: 16px; font-weight: 600; border: none; border-radius: 50px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.2s; }
+        .btn { background: var(--gradient-gold); color: #000; }
+        .btn-ev { background: linear-gradient(135deg, #00ff88, #00b4d8); color: #000; }
+        .btn-small { min-height: 40px; padding: 8px 20px; font-size: 14px; border-radius: 50px; background: var(--gradient-gold); color: #000; border: none; cursor: pointer; }
+        
+        .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 20px 0; }
+        @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
+        @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+        
+        .card { background: var(--card-bg); border-radius: 20px; padding: 20px; border: 1px solid var(--border-color); transition: transform 0.2s; cursor: pointer; }
         .card:active { transform: scale(0.98); }
-        .card-img { width: 100%; height: 150px; background: linear-gradient(135deg, #0f1a2c, #0a1020); display: flex; align-items: center; justify-content: center; font-size: 3rem; }
-        .card-content { padding: 20px; }
-        .card h3 { margin-bottom: 10px; color: var(--accent); }
-        .card p { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin-bottom: 16px; }
-        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; margin-bottom: 12px; }
-        .badge-accent { background: var(--accent); color: #0B0F19; }
-
-        /* Lesson Content Styling */
-        .lesson-content { line-height: 1.7; }
-        .lesson-content h2 { color: var(--accent); margin: 25px 0 15px; font-size: 1.5rem; }
-        .lesson-content h3 { color: var(--accent-light); margin: 20px 0 10px; font-size: 1.2rem; }
-        .lesson-content h4 { color: var(--info); margin: 15px 0 8px; }
-        .lesson-content p { margin-bottom: 15px; color: var(--text-secondary); }
-        .lesson-content ul, .lesson-content ol { margin-left: 25px; margin-bottom: 15px; }
-        .lesson-content li { margin: 8px 0; color: var(--text-secondary); }
-        .lesson-content .safety-box { background: rgba(243, 156, 18, 0.1); border-left: 4px solid var(--warning); padding: 15px 20px; border-radius: 12px; margin: 20px 0; }
-        .lesson-content .danger-box { background: rgba(231, 76, 60, 0.1); border-left: 4px solid var(--danger); padding: 15px 20px; border-radius: 12px; margin: 20px 0; }
-        .lesson-content .tip-box { background: rgba(52, 152, 219, 0.1); border-left: 4px solid var(--info); padding: 15px 20px; border-radius: 12px; margin: 20px 0; }
-        .lesson-content .visual-ref { background: var(--bg-secondary); padding: 15px; border-radius: 12px; text-align: center; margin: 20px 0; border: 1px dashed var(--accent); }
-        .lesson-content .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin: 20px 0; }
-        .lesson-content .category-card { background: var(--bg-secondary); border-radius: 12px; padding: 15px; border: 1px solid var(--border); }
-        .lesson-content .category-card h4 { color: var(--accent); margin-top: 0; }
-
-        /* Modal */
+        @media (min-width: 768px) { .card:hover { transform: translateY(-4px); border-color: var(--primary-gold); } }
+        .card-ev { border-left: 4px solid #00ff88; }
+        
+        .unit-badge, .ev-badge-module { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 12px; }
+        .unit-badge { background: var(--gradient-gold); color: #000; }
+        .ev-badge-module { background: linear-gradient(135deg, #00ff88, #00b4d8); color: #000; }
+        
+        .progress-bar { background: #2a2a2a; border-radius: 20px; height: 6px; margin: 16px 0; overflow: hidden; }
+        .progress-fill { background: var(--gradient-gold); height: 100%; width: 0%; transition: width 0.3s; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
+        @media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+        .stat-card { background: var(--card-bg); border-radius: 16px; padding: 16px 12px; border: 1px solid var(--border-color); text-align: center; }
+        .stat-number { font-size: 1.6rem; font-weight: 800; color: var(--primary-gold); }
+        
+        .hero { text-align: center; padding: 32px 16px; background: radial-gradient(circle at 10% 30%, rgba(212,175,55,0.08), #0a0a0a); border-radius: 32px; margin: 16px 0 24px; }
+        .hero h1 { font-size: 1.8rem; margin-bottom: 12px; }
+        @media (min-width: 768px) { .hero h1 { font-size: clamp(1.8rem, 5vw, 3.5rem); } }
+        .highlight { background: var(--gradient-gold); background-clip: text; -webkit-background-clip: text; color: transparent; }
+        
+        .question-bank { background: linear-gradient(145deg, #0f1119, #080a10); border-radius: 24px; margin: 24px 0; padding: 20px; }
+        .question-card { background: var(--card-bg); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+        .question-text { font-size: 1rem; font-weight: 600; margin-bottom: 16px; }
+        .options-group { display: flex; flex-direction: column; gap: 8px; }
+        .option { background: #1a1c26; padding: 14px 16px; border-radius: 12px; cursor: pointer; border: 1px solid #2a2e3a; font-size: 14px; transition: all 0.2s; }
+        .option:hover { background: #252a38; }
+        .option.correct { background: rgba(46,204,113,0.2); border-color: #2ecc71; }
+        .option.wrong { background: rgba(231,76,60,0.2); border-color: #e74c3c; }
+        
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); backdrop-filter: blur(12px); z-index: 2000; justify-content: center; align-items: center; padding: 16px; }
-        .modal-content { background: var(--bg-card); border: 1px solid var(--accent); border-radius: 28px; padding: 28px; max-width: 800px; width: 100%; max-height: 85vh; overflow-y: auto; }
-        .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--accent); padding: 8px; }
-
-        footer { text-align: center; padding: 32px 20px; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: 40px; }
-        .toast-container { position: fixed; bottom: 20px; left: 20px; right: 20px; z-index: 9999; }
-        .toast { background: var(--bg-card); border-left: 3px solid var(--accent); padding: 12px 18px; border-radius: 12px; margin-bottom: 8px; animation: slideIn 0.3s ease; }
-        @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-
-        /* Quiz */
-        .quiz-panel { background: var(--bg-card); border-radius: 24px; padding: 24px; margin: 32px 0; border: 1px solid var(--border); }
-        .question-card { background: var(--bg-secondary); border-radius: 20px; padding: 24px; margin-bottom: 20px; }
-        .question-text { font-size: 1rem; font-weight: 600; margin-bottom: 18px; }
-        .options-group { display: flex; flex-direction: column; gap: 10px; }
-        .option { background: var(--bg-card); padding: 14px 18px; border-radius: 14px; cursor: pointer; border: 1px solid var(--border); min-height: 52px; }
-        .option:active { transform: scale(0.98); background: var(--bg-hover); }
-
-        @media (max-width: 768px) {
-            .mobile-menu-btn { display: block; }
-            .nav-links { display: none !important; }
-            .hero { padding: 40px 16px; }
-            .hero-btns { flex-direction: column; align-items: center; }
-            .hero-btns button { width: 100%; max-width: 280px; }
-            .course-grid { grid-template-columns: 1fr; }
-            .section-title { font-size: 1.3rem; }
-            .container { padding: 0 16px; }
-        }
+        .modal-content { background: var(--card-bg); border: 1px solid var(--primary-gold); border-radius: 24px; padding: 24px; width: 100%; max-width: 450px; max-height: 85vh; overflow-y: auto; }
+        .modal-content input { width: 100%; padding: 14px; margin: 8px 0; background: #1a1c26; border: 1px solid #2c2f3a; border-radius: 12px; color: #fff; font-size: 16px; }
+        .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--primary-gold); padding: 8px; margin: -8px -8px 0 0; }
+        
+        #toast-root { position: fixed; bottom: 16px; left: 16px; right: 16px; z-index: 2000; display: flex; flex-direction: column; gap: 8px; }
+        @media (min-width: 768px) { #toast-root { bottom: 30px; right: 30px; left: auto; min-width: 300px; } }
+        .toast { background: var(--card-bg); border-left: 4px solid var(--primary-gold); padding: 14px 18px; border-radius: 12px; animation: slideIn 0.3s ease; display: flex; align-items: center; gap: 12px; font-size: 14px; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
+        
+        .spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--primary-gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .unit-content { line-height: 1.6; }
+        .unit-content h2 { color: var(--primary-gold); margin: 20px 0 10px; }
+        .unit-content h3 { color: var(--ev-green); margin: 15px 0 10px; }
+        .unit-content ul, .unit-content ol { margin-left: 20px; margin-bottom: 15px; }
+        .unit-content li { margin: 8px 0; }
+        
+        .hero-buttons { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; justify-content: center; align-items: center; }
+        @media (min-width: 480px) { .hero-buttons { flex-direction: row; } }
+        
+        .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+        .pagination button { padding: 8px 12px; background: var(--card-bg); border: 1px solid var(--border-color); color: #fff; border-radius: 6px; cursor: pointer; }
+        .pagination button.active { background: var(--primary-gold); color: #000; }
+        
+        .score-card { background: var(--card-bg); border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 20px; border: 1px solid var(--primary-gold); }
+        .score-card h3 { color: var(--primary-gold); margin-bottom: 8px; }
+        .score-card .score { font-size: 2rem; font-weight: 800; }
+        
+        .profile-link { background: rgba(212,175,55,0.2); border-radius: 40px; padding: 6px 16px; cursor: pointer; font-size: 14px; }
+        .admin-panel { display: none; }
+        .admin-sidebar { width: 260px; background: var(--card-bg); border-right: 1px solid var(--border-color); padding: 20px; min-height: calc(100vh - 70px); }
+        .admin-sidebar button { width: 100%; padding: 12px; margin-bottom: 8px; background: transparent; border: 1px solid var(--border-color); color: #fff; border-radius: 12px; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 12px; }
+        .admin-sidebar button:hover { background: rgba(212,175,55,0.1); border-color: var(--primary-gold); color: var(--primary-gold); }
+        .admin-layout { display: flex; min-height: calc(100vh - 70px); }
+        .admin-content { flex: 1; padding: 30px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 16px; overflow: hidden; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { color: var(--primary-gold); }
+        .role-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; display: inline-block; }
+        .role-admin { background: rgba(231,76,60,0.2); color: #e74c3c; }
+        .role-learner { background: rgba(52,152,219,0.2); color: #3498db; }
+        .role-driver { background: rgba(46,204,113,0.2); color: #2ecc71; }
+        .search-input { width: 100%; padding: 12px; margin-bottom: 20px; background: #1a1c26; border: 1px solid var(--border-color); border-radius: 12px; color: #fff; }
+        .btn-sm { padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; font-size: 12px; margin: 0 4px; }
+        .btn-edit { background: #3498db; color: white; }
+        .btn-delete { background: #e74c3c; color: white; }
+        .btn-add { background: #2ecc71; color: white; }
+        
+        @media (max-width: 768px) { .admin-layout { flex-direction: column; } .admin-sidebar { width: 100%; } }
     </style>
 </head>
 <body>
-
-<nav class="navbar">
-    <div class="nav-container">
-        <div class="logo" onclick="scrollToSection('home')">MEI <span>DRIVE AFRICA</span></div>
-        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-        <div class="nav-links" id="desktopNav">
-            <button onclick="scrollToSection('courses')">📚 Learning Programme</button>
-            <button onclick="scrollToSection('quiz-section')">📝 Quiz</button>
-            <button id="loginBtn" onclick="openAuthModal()">🔐 Login</button>
-            <button id="signupBtn" onclick="openSignupModal()">📝 Sign Up</button>
-            <div id="userMenu" style="display:none;"><div class="user-badge" onclick="openProfileModal()"><i class="fas fa-user-circle"></i> <span id="userName">User</span></div></div>
-        </div>
-    </div>
-</nav>
-
-<div class="mobile-overlay" id="mobileOverlay"></div>
-<div class="mobile-panel" id="mobilePanel">
-    <button class="close-mobile-btn" id="closeMobileBtn">✕</button>
-    <div id="mobileNavContent">
-        <button onclick="mobileNavTo('courses')">📚 Learning Programme</button>
-        <button onclick="mobileNavTo('quiz-section')">📝 Quiz</button>
-        <button onclick="mobileOpenAuth()">🔐 Login</button>
-        <button onclick="mobileOpenSignup()">📝 Sign Up</button>
-    </div>
-</div>
-
-<section class="hero" id="home">
-    <h1>MEI DRIVE AFRICA</h1>
-    <p>Drive Smart. Stay Safe. Arrive Home. <span class="highlight">Pass NTSA Test As A Pro</span></p>
-    <div class="hero-btns">
-        <button class="btn-primary" onclick="scrollToSection('courses')"><i class="fas fa-graduation-cap"></i> Explore 21 Units</button>
-        <button class="btn-secondary" onclick="scrollToSection('quiz-section')"><i class="fas fa-question-circle"></i> Practice Quiz</button>
-    </div>
-</section>
-
-<div class="container">
-    <div id="courses">
-        <div class="section-title"><i class="fas fa-book-open"></i><h2>📖 Learner Driver Hub - Complete 21 Units</h2></div>
-        <div class="course-grid" id="courseGrid"></div>
-    </div>
-    <div id="quiz-section">
-        <div class="quiz-panel"><div id="quizContainer"></div></div>
-    </div>
-</div>
-
-<footer><p>© 2026 Meidriveafrica • NTSA-Certified Digital Driving Academy</p></footer>
-
-<div class="toast-container" id="toastContainer"></div>
-
-<!-- Modals -->
-<div id="loginModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeLoginModal()">✕</span><h2>🔐 Login</h2><div class="input-group"><input type="email" id="loginEmail" placeholder="Email"></div><div class="input-group"><input type="password" id="loginPassword" placeholder="Password"></div><button class="btn-primary" style="width:100%;" onclick="userLogin()">Sign In</button><p style="text-align:center; margin-top:16px;">No account? <a href="#" onclick="switchToSignup()" style="color:var(--accent);">Sign Up</a></p></div></div>
-
-<div id="signupModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeSignupModal()">✕</span><h2>📝 Create Account</h2><div class="input-group"><input type="text" id="signupName" placeholder="Full name"></div><div class="input-group"><input type="email" id="signupEmail" placeholder="Email"></div><div class="input-group"><input type="password" id="signupPassword" placeholder="Password (min 6)"></div><button class="btn-primary" style="width:100%;" onclick="userSignup()">Create Account</button><p style="text-align:center; margin-top:16px;">Have an account? <a href="#" onclick="switchToLogin()" style="color:var(--accent);">Login</a></p></div></div>
-
-<div id="profileModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeProfileModal()">✕</span><h2>👤 My Profile</h2><p><strong>Name:</strong> <span id="profileName"></span></p><p><strong>Email:</strong> <span id="profileEmail"></span></p><button class="btn-secondary" style="margin-top:20px;" onclick="logoutUser()">Logout</button></div></div>
-
-<div id="lessonModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeLessonModal()">✕</span><div id="lessonContent"></div></div></div>
-
-<script>
-    const SUPABASE_URL = "https://fktjmkmzlixlapeyhhyl.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E";
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    let currentUser = null;
-    let currentQuiz = { questions: [], currentIndex: 0, score: 0 };
-
-    // ============================================
-    // COMPLETE 21 UNIT CONTENT
-    // ============================================
-    const unitTitles = [
-        "Introduction to Driving in Kenya", "Highway Code & Traffic Signs", "Vehicle Controls & Dashboard",
-        "Basic Vehicle Maintenance", "Moving Off & Stopping Safely", "Turning & Reversing",
-        "Roundabouts & Junctions", "Overtaking & Lane Discipline", "Speed Limits & Safe Speeds",
-        "Defensive Driving", "Night Driving", "Adverse Weather Driving",
-        "Alcohol, Drugs & Driving", "Driver Fatigue Management", "Pedestrian & Child Safety",
-        "Emergency Procedures", "First Aid for Drivers", "Insurance & Documentation",
-        "Environmental Driving", "NTSA Test Preparation", "Advanced Driving Skills"
-    ];
-
-    const unitIcons = ["🚗", "🛑", "🎮", "🔧", "🚦", "↩️", "🔄", "🏎️", "📊", "🛡️", "🌙", "🌧️", "🍺", "😴", "🚸", "🚨", "🩺", "📄", "🌱", "✅", "🏆"];
-
-    function getUnitContent(unitNumber) {
-        const uc = unitNumber;
-        if (uc === 1) return `<h2>UNIT 1: INTRODUCTION TO DRIVING IN KENYA</h2>
-            <div class="visual-ref"><i class="fas fa-car" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> Kenyan roads - Nairobi Expressway, rural roads, matatu stage</p></div>
-            <h3>🎯 Learning Objectives</h3><ul><li>Understand Kenyan licence classes</li><li>Know legal driving requirements</li><li>Identify vehicle categories</li><li>Understand driver responsibility</li></ul>
-            <h3>🚦 What Driving Means in Kenya</h3><p>Driving is not only operating a vehicle. A driver is legally responsible for: Passenger safety, Pedestrian protection, Vehicle condition, Obeying traffic law, Avoiding reckless behavior.</p>
-            <div class="danger-box"><strong>⚠️ Common Accident Causes:</strong> Overspeeding, Poor overtaking, Drunk driving, Driver fatigue, Phone use while driving</div>
-            <div class="tip-box"><strong>💡 Learner Tip:</strong> Good drivers reduce risks before danger occurs. Always anticipate hazards.</div>
-            <h3>🪪 Understanding Kenyan Driving Licence Categories</h3>
-            <div class="category-grid"><div class="category-card"><h4>CATEGORY A — MOTORCYCLES</h4><p><strong>A1:</strong> Up to 50cc - Mopeds, scooters<br><strong>A2:</strong> 51cc-125cc - Boda boda<br><strong>A3:</strong> Three-wheelers (Tuk-tuks)</p></div>
-            <div class="category-card"><h4>CATEGORY B — LIGHT VEHICLES</h4><p><strong>B1:</strong> Automatic cars only<br><strong>B2:</strong> Manual transmission<br><strong>B3:</strong> Professional (Uber, Bolt, delivery)</p></div>
-            <div class="category-card"><h4>OTHER CATEGORIES</h4><p><strong>C:</strong> Heavy Goods Vehicles<br><strong>D:</strong> PSV (Matatus, Buses)<br><strong>G:</strong> Plant & Agricultural</p></div></div>
-            <div class="safety-box"><strong>⚠️ KEY RULE:</strong> Driving without correct licence category is a legal offence leading to fines or imprisonment.</div>`;
-        if (uc === 2) return `<h2>UNIT 2: HIGHWAY CODE & TRAFFIC SIGNS</h2>
-            <div class="visual-ref"><i class="fas fa-road" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> Kenyan STOP sign, Give Way sign, Speed limit 50 km/h in towns</p></div>
-            <h3>🎯 Learning Objectives</h3><ul><li>Understand regulatory, warning, and information signs</li><li>Recognize road markings</li><li>Know right-of-way rules</li><li>Master roundabout safety</li></ul>
-            <h3>🔴 Regulatory Signs (The Law)</h3><p><strong>STOP Sign:</strong> Complete halt required. <strong>Give Way:</strong> Yield to traffic. <strong>Speed Limit:</strong> Legally enforced. <strong>No Entry:</strong> Prohibited access.</p>
-            <div class="tip-box"><strong>💡 Learner Tip:</strong> A STOP sign requires your vehicle to come to a COMPLETE stop - rolling stop fails the test.</div>
-            <h3>⚠️ Warning Signs</h3><p>Sharp bends, Road humps, Slippery roads, Animals crossing, School zones.</p>
-            <h3>🔵 Information Signs</h3><p>Parking zones, Hospitals, Fuel stations, Direction signs.</p>
-            <h3>🔄 Roundabouts</h3><p><strong>Rule:</strong> Give way to traffic already inside. Left exit = left lane. Straight = left lane, signal after exit. Right exit = right lane.</p>
-            <div class="safety-box"><strong>⚠️ Kenyan Reality:</strong> Matatus often change lanes inside roundabouts - always be defensive and expect the unexpected.</div>`;
-        if (uc === 3) return `<h2>UNIT 3: VEHICLE CONTROLS & DASHBOARD</h2>
-            <div class="visual-ref"><i class="fas fa-tachometer-alt" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> Labelled car interior - steering wheel, pedals, gear stick, dashboard warnings</p></div>
-            <h3>🎯 Learning Objectives</h3><ul><li>Understand basic vehicle controls</li><li>Identify dashboard warnings</li><li>Learn correct gear usage</li><li>Develop safe steering habits</li></ul>
-            <h3>🚗 MAIN VEHICLE CONTROLS</h3><p><strong>Steering Wheel:</strong> Hold with both hands at 10-and-2 or 9-and-3. <strong>Pedals:</strong> Accelerator (right), Brake (middle), Clutch (left for manual).</p>
-            <h3>⚙ Gear System</h3><p><strong>1st Gear:</strong> Starting movement, hill climbing. <strong>2nd-3rd Gear:</strong> Town driving. <strong>4th-5th Gear:</strong> Highway cruising. <strong>R:</strong> Reverse.</p>
-            <div class="danger-box"><strong>⚠️ Dashboard Warning Lights:</strong> Oil (stop immediately), Temperature (overheating), Battery (charging failure), Brake (handbrake or fluid issue).</div>
-            <div class="tip-box"><strong>💡 Learner Tip:</strong> A safe driver understands the vehicle before driving it. Master controls for confidence and safety.</div>`;
-        if (uc === 4) return `<h2>UNIT 4: BASIC VEHICLE MAINTENANCE</h2><div class="visual-ref"><i class="fas fa-oil-can" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> Checking oil dipstick, tyre pressure, coolant reservoir</p></div><h3>Daily POWER Checks</h3><ul><li><strong>P</strong> - Petrol/Fuel</li><li><strong>O</strong> - Oil (dipstick between min/max)</li><li><strong>W</strong> - Water/Coolant</li><li><strong>E</strong> - Electrical (lights, indicators)</li><li><strong>R</strong> - Rubbers (tyre pressure, tread depth)</li></ul><div class="safety-box"><strong>⚠️ Safety Warning:</strong> Never open radiator when engine is hot - severe burns risk!</div>`;
-        if (uc === 5) return `<h2>UNIT 5: MOVING OFF & STOPPING SAFELY</h2><div class="visual-ref"><i class="fas fa-play" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> MSM routine diagram - Mirror, Signal, Maneuver sequence</p></div><h3>Moving Off - MSM Routine</h3><ol><li><strong>M</strong>irror - Check rear and right mirrors</li><li><strong>S</strong>ignal - Right indicator</li><li><strong>M</strong>aneuver - Release handbrake, find biting point, accelerate</li></ol><div class="tip-box"><strong>💡 Learner Tip:</strong> Always check blind spot over your right shoulder before moving off from kerb.</div>`;
-        if (uc === 6) return `<h2>UNIT 6: TURNING & REVERSING</h2><div class="visual-ref"><i class="fas fa-exchange-alt" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> Parallel parking diagram - step by step positions</p></div><h3>Turning Rules</h3><p><strong>Left turn:</strong> Stay in left lane, turn into left lane. <strong>Right turn:</strong> Move to right lane or center, check oncoming traffic.</p><h3>Reversing</h3><p>Use mirrors AND shoulder check. Never reverse without full awareness.</p><div class="danger-box"><strong>⚠️ Critical:</strong> Reversing around a corner requires checking the main road for traffic before your rear enters it.</div>`;
-        if (uc === 7) return `<h2>UNIT 7: ROUNDABOUTS & JUNCTIONS</h2><div class="visual-ref"><i class="fas fa-sync-alt" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> Aerial view of 4-exit roundabout with lane positioning arrows</p></div><h3>Roundabout Rules</h3><p><strong>Golden Rule:</strong> Give way to traffic already on the roundabout (from your right).</p><h3>Lane Selection</h3><ul><li>First exit (left): Left lane, left signal</li><li>Straight ahead: Left lane, signal after passing first exit</li><li>Right exit: Right lane, right signal, switch left after passing second exit</li></ul><div class="safety-box"><strong>⚠️ Kenyan Reality:</strong> Matatus may cut across lanes - always expect the unexpected and be defensive.</div>`;
-        if (uc === 8) return `<h2>UNIT 8: OVERTAKING & LANE DISCIPLINE</h2><div class="visual-ref"><i class="fas fa-forward" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> Safe overtaking diagram - oncoming distance, returning to lane</p></div><h3>Lane Rules</h3><p><strong>Left lane:</strong> Normal driving. <strong>Right lane:</strong> Overtaking only.</p><div class="danger-box"><strong>⚠️ NEVER OVERTAKE:</strong> On bends, near hill crests, at junctions, where there's a solid white line.</div><h3>Safe Overtaking Sequence</h3><ol><li>Check mirrors and blind spot</li><li>Signal right</li><li>Ensure 300m clear oncoming distance</li><li>Overtake briskly (under 10 seconds)</li><li>Return to left lane when you see the overtaken vehicle in your mirror</li></ol>`;
-        if (uc === 9) return `<h2>UNIT 9: SPEED LIMITS & SAFE SPEEDS</h2><div class="visual-ref"><i class="fas fa-tachometer-alt" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> Kenyan speed limit signs - 50, 80, 100, 110 km/h</p></div><h3>Kenyan Speed Limits</h3><ul><li><strong>Towns/Cities:</strong> 50 km/h</li><li><strong>Rural roads:</strong> 80 km/h</li><li><strong>Highways:</strong> 100 km/h</li><li><strong>Expressway:</strong> 110 km/h</li><li><strong>PSV (Matatu/Bus):</strong> 80 km/h maximum</li></ul><div class="safety-box"><strong>⚠️ Penalty:</strong> Overspeeding leads to fines (KES 5,000+) and court action.</div>`;
-        if (uc === 10) return `<h2>UNIT 10: DEFENSIVE DRIVING</h2><div class="visual-ref"><i class="fas fa-shield-alt" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> 2-second rule diagram - car following distance markers</p></div><h3>The 2-Second Rule</h3><p>Pick a fixed point. When the car ahead passes it, count "Only a fool breaks the 2-second rule." If you pass before finishing, you're too close.</p><h3>12-Second Scan</h3><p>Look 12 seconds ahead (about 330m at 100 km/h) to identify hazards early.</p><div class="tip-box"><strong>💡 Always maintain an escape route:</strong> Space to left, right, or braking zone.</div>`;
-        for(let i=11; i<=21; i++) {
-            const titles = ["Night Driving", "Adverse Weather", "Alcohol & Drugs", "Fatigue Management", "Pedestrian Safety", "Emergency Procedures", "First Aid", "Insurance", "Eco Driving", "NTSA Test Prep", "Advanced Skills"];
-            const tips = ["Use dipped headlights, avoid glare", "Reduce speed in rain, avoid floods", "Zero tolerance for commercial drivers", "Rest every 2 hours", "Stop at zebra crossings", "Hazard lights + warning triangle", "CPR: 30 compressions, 2 breaths", "Always carry valid documents", "Smooth acceleration saves fuel", "Practice parking, mirror checks", "Professional road awareness"];
-            if(uc === i) return `<h2>UNIT ${i}: ${titles[i-11]}</h2><div class="visual-ref"><i class="fas fa-info-circle" style="font-size: 3rem;"></i><p><strong>📸 Visual:</strong> ${titles[i-11]} - Kenyan context illustration</p></div><h3>Key Points</h3><p>${tips[i-11]}</p><div class="safety-box"><strong>⚠️ Safety First:</strong> Always prioritize safety over speed or convenience.</div><div class="tip-box"><strong>💡 Instructor Guidance:</strong> Practice this skill in a safe environment before encountering real situations.</div>`;
-        }
-        return `<h2>Unit ${unitNumber}: ${unitTitles[unitNumber-1]}</h2><p>Complete NTSA-compliant training material with Kenyan examples.</p>`;
-    }
-
-    // Build 21 courses
-    const coursesData = [];
-    for (let i = 1; i <= 21; i++) {
-        coursesData.push({
-            id: i,
-            title: `Unit ${i}: ${unitTitles[i-1]}`,
-            description: `Complete NTSA unit covering ${unitTitles[i-1].toLowerCase()} with Kenyan road examples, safety warnings, and practical tips.`,
-            icon: unitIcons[i-1],
-            content: getUnitContent(i)
-        });
-    }
-
-    const questionBank = [
-        { id: 1, text: "Maximum speed limit for PSV in Kenya?", options: ["100 km/h", "80 km/h", "110 km/h", "50 km/h"], correct: 1, explanation: "PSV vehicles limited to 80 km/h." },
-        { id: 2, text: "What does STOP sign require?", options: ["Slow down", "Complete halt", "Give way", "Honk"], correct: 1, explanation: "Complete halt at STOP sign." },
-        { id: 3, text: "Legal BAC for commercial drivers?", options: ["0.05%", "0.08%", "0.00%", "0.10%"], correct: 2, explanation: "Commercial drivers: 0.00% BAC." },
-        { id: 4, text: "2-second rule helps maintain?", options: ["Fuel economy", "Following distance", "Engine temp", "Tyre pressure"], correct: 1, explanation: "Safe following distance." },
-        { id: 5, text: "Driving in heavy rain, you should?", options: ["Use high beams", "Increase speed", "Reduce speed", "Brake suddenly"], correct: 2, explanation: "Reduce speed to prevent hydroplaning." }
-    ];
-
-    function renderCourseGrid() {
-        const grid = document.getElementById('courseGrid');
-        grid.innerHTML = coursesData.map(course => `
-            <div class="card" onclick="viewLesson(${course.id})">
-                <div class="card-img">${course.icon}</div>
-                <div class="card-content">
-                    <span class="badge badge-accent">NTSA Unit ${course.id}</span>
-                    <h3>${course.title}</h3>
-                    <p>${course.description.substring(0, 100)}...</p>
-                    <button class="btn-secondary" style="width:100%; margin-top:8px;">📖 View Unit →</button>
+    <div id="app">
+        <div class="navbar">
+            <div class="container nav">
+                <div class="logo" data-nav="home">MEI DRIVE AFRICA ⚡</div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
+                <div class="nav-links" id="navLinks">
+                    <button data-nav="home">🏠 Home</button>
+                    <button data-nav="learner">📚 Learner Hub</button>
+                    <button data-nav="psv">🚌 PSV</button>
+                    <button data-nav="schoolbus">🏫 School Bus</button>
+                    <button data-nav="boda">🏍️ Boda</button>
+                    <button data-nav="ev">⚡ EV</button>
+                    <button data-nav="academy">🎓 Academy</button>
+                    <button data-nav="library">📖 Library</button>
+                    <button data-nav="quiz">📝 Quiz</button>
+                    <div id="authButtons"></div>
                 </div>
             </div>
-        `).join('');
-    }
+        </div>
+        <div class="container"><main id="page-content"><div class="spinner"></div></main></div>
+    </div>
+    <div id="toast-root"></div>
 
-    function viewLesson(unitId) {
-        const course = coursesData.find(c => c.id === unitId);
-        if (course) {
-            document.getElementById('lessonContent').innerHTML = course.content;
-            document.getElementById('lessonModal').style.display = 'flex';
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/+esm';
+        
+        // ============================================
+        // SUPABASE CONFIGURATION
+        // ============================================
+        const supabaseUrl = 'https://fktjmkmzlixlapeyhhyl.supabase.co';
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E';
+        const supabase = createClient(supabaseUrl, supabaseAnonKey);
+        
+        // ============================================
+        // APP STATE
+        // ============================================
+        let currentUser = null;
+        let materialsCache = {};
+        let questionsCache = {};
+        let userProgress = {};
+        let currentPage = 'home';
+        
+        // Quiz state
+        let currentQuizPage = 1;
+        let quizAnswers = {};
+        const questionsPerPage = 5;
+        
+        // Toast
+        let toastQueue = [];
+        let isProcessingToast = false;
+        
+        function showToast(message, type = 'info') {
+            toastQueue.push({ message, type });
+            if (!isProcessingToast) processToastQueue();
         }
-        closeMobileMenu();
-    }
-
-    function closeLessonModal() { document.getElementById('lessonModal').style.display = 'none'; }
-
-    function initQuiz() {
-        currentQuiz.questions = [...questionBank];
-        currentQuiz.currentIndex = 0;
-        currentQuiz.score = 0;
-        renderQuiz();
-    }
-    function renderQuiz() {
-        if (currentQuiz.currentIndex >= currentQuiz.questions.length) {
-            const percent = Math.round((currentQuiz.score / currentQuiz.questions.length) * 100);
-            document.getElementById('quizContainer').innerHTML = `<div class="question-card" style="text-align:center;"><h3>🎉 Quiz Complete!</h3><p>Score: ${currentQuiz.score}/${currentQuiz.questions.length} (${percent}%)</p><button class="btn-primary" onclick="initQuiz()">Restart Quiz</button></div>`;
-            return;
+        
+        async function processToastQueue() {
+            if (toastQueue.length === 0) { isProcessingToast = false; return; }
+            isProcessingToast = true;
+            const { message, type } = toastQueue.shift();
+            const container = document.getElementById('toast-root');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+            toast.textContent = `${icon} ${message}`;
+            container.appendChild(toast);
+            await new Promise(r => setTimeout(r, 3000));
+            toast.remove();
+            processToastQueue();
         }
-        const q = currentQuiz.questions[currentQuiz.currentIndex];
-        document.getElementById('quizContainer').innerHTML = `<div class="question-card"><h3>Question ${currentQuiz.currentIndex+1}/${currentQuiz.questions.length}</h3><div class="question-text">${q.text}</div><div class="options-group">${q.options.map((opt,idx)=>`<div class="option" onclick="answerQuestion(${idx})">${String.fromCharCode(65+idx)}. ${opt}</div>`).join('')}</div></div>`;
-    }
-    window.answerQuestion = function(selected) {
-        const q = currentQuiz.questions[currentQuiz.currentIndex];
-        if (selected === q.correct) { currentQuiz.score++; showToast(`✅ Correct! ${q.explanation}`, "success"); }
-        else { showToast(`❌ Wrong. ${q.explanation}`, "error"); }
-        currentQuiz.currentIndex++;
-        renderQuiz();
-    };
-
-    // Auth Functions
-    async function userSignup() {
-        const name = document.getElementById('signupName')?.value;
-        const email = document.getElementById('signupEmail')?.value;
-        const pwd = document.getElementById('signupPassword')?.value;
-        if (!email || !pwd || pwd.length < 6) { showToast("Password min 6 characters", "error"); return; }
-        const { error } = await supabase.auth.signUp({ email, password: pwd, options: { data: { full_name: name || email.split('@')[0] } } });
-        if (error) { showToast(error.message, "error"); return; }
-        showToast("Account created! Verify email.", "success");
-        closeSignupModal();
-    }
-    async function userLogin() {
-        const email = document.getElementById('loginEmail')?.value;
-        const pwd = document.getElementById('loginPassword')?.value;
-        if (!email || !pwd) { showToast("Enter email and password", "error"); return; }
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password: pwd });
-        if (error) { showToast(error.message, "error"); return; }
-        currentUser = data.user;
-        localStorage.setItem('mei_user', JSON.stringify({ id: currentUser.id, email: currentUser.email }));
-        updateUI();
-        closeLoginModal();
-        showToast(`Welcome!`, "success");
-    }
-    async function logoutUser() {
-        await supabase.auth.signOut();
-        currentUser = null;
-        localStorage.removeItem('mei_user');
-        updateUI();
-        closeProfileModal();
-        showToast("Logged out", "info");
-    }
-    function updateUI() {
-        const loggedIn = !!currentUser;
-        document.getElementById('loginBtn').style.display = loggedIn ? 'none' : 'inline-block';
-        document.getElementById('signupBtn').style.display = loggedIn ? 'none' : 'inline-block';
-        document.getElementById('userMenu').style.display = loggedIn ? 'block' : 'none';
-        if (currentUser) document.getElementById('userName').innerText = currentUser.email?.split('@')[0] || 'User';
-        const mobileDiv = document.getElementById('mobileNavContent');
-        if (mobileDiv && !loggedIn) mobileDiv.innerHTML = `<button onclick="mobileNavTo('courses')">📚 Learning Programme</button><button onclick="mobileNavTo('quiz-section')">📝 Quiz</button><button onclick="mobileOpenAuth()">🔐 Login</button><button onclick="mobileOpenSignup()">📝 Sign Up</button>`;
-        if (mobileDiv && loggedIn) mobileDiv.innerHTML = `<button onclick="mobileNavTo('courses')">📚 Learning Programme</button><button onclick="mobileNavTo('quiz-section')">📝 Quiz</button><button onclick="mobileOpenProfile()">👤 My Profile</button><button onclick="mobileLogout()" style="color:#ff6b6b;">🚪 Logout</button>`;
-    }
-    function openProfileModal() {
-        if(!currentUser) return;
-        document.getElementById('profileName').innerText = currentUser.user_metadata?.full_name || currentUser.email?.split('@')[0];
-        document.getElementById('profileEmail').innerText = currentUser.email;
-        document.getElementById('profileModal').style.display = 'flex';
-    }
-    function closeProfileModal() { document.getElementById('profileModal').style.display = 'none'; }
-    function openAuthModal() { document.getElementById('loginModal').style.display = 'flex'; closeMobileMenu(); }
-    function closeLoginModal() { document.getElementById('loginModal').style.display = 'none'; }
-    function openSignupModal() { document.getElementById('signupModal').style.display = 'flex'; closeMobileMenu(); }
-    function closeSignupModal() { document.getElementById('signupModal').style.display = 'none'; }
-    function switchToSignup() { closeLoginModal(); openSignupModal(); }
-    function switchToLogin() { closeSignupModal(); openAuthModal(); }
-
-    // Mobile Menu
-    function openMobileMenu() { document.getElementById('mobilePanel').classList.add('open'); document.getElementById('mobileOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; }
-    function closeMobileMenu() { document.getElementById('mobilePanel').classList.remove('open'); document.getElementById('mobileOverlay').classList.remove('active'); document.body.style.overflow = ''; }
-    function mobileNavTo(id) { closeMobileMenu(); setTimeout(() => scrollToSection(id), 100); }
-    function mobileOpenAuth() { closeMobileMenu(); setTimeout(() => openAuthModal(), 100); }
-    function mobileOpenSignup() { closeMobileMenu(); setTimeout(() => openSignupModal(), 100); }
-    function mobileOpenProfile() { closeMobileMenu(); setTimeout(() => openProfileModal(), 100); }
-    function mobileLogout() { closeMobileMenu(); setTimeout(() => logoutUser(), 100); }
-
-    function scrollToSection(id) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); }
-    function showToast(msg, type) { const t = document.createElement('div'); t.className = 'toast'; t.innerHTML = `${type==='success'?'✅':'❌'} ${msg}`; document.getElementById('toastContainer').appendChild(t); setTimeout(()=>t.remove(),3000); }
-    async function checkSession() {
-        const stored = localStorage.getItem('mei_user');
-        if(stored) { const { data: { session } } = await supabase.auth.getSession(); if(session) currentUser = session.user; else localStorage.removeItem('mei_user'); }
-        updateUI();
-    }
-
-    document.getElementById('mobileMenuBtn')?.addEventListener('click', openMobileMenu);
-    document.getElementById('closeMobileBtn')?.addEventListener('click', closeMobileMenu);
-    document.getElementById('mobileOverlay')?.addEventListener('click', closeMobileMenu);
-    window.onclick = function(e) { if(e.target === document.getElementById('loginModal')) closeLoginModal(); if(e.target === document.getElementById('signupModal')) closeSignupModal(); if(e.target === document.getElementById('profileModal')) closeProfileModal(); if(e.target === document.getElementById('lessonModal')) closeLessonModal(); };
-
-    window.viewLesson = viewLesson;
-    window.closeLessonModal = closeLessonModal;
-    window.scrollToSection = scrollToSection;
-    window.initQuiz = initQuiz;
-    window.answerQuestion = answerQuestion;
-    window.userLogin = userLogin;
-    window.userSignup = userSignup;
-    window.logoutUser = logoutUser;
-    window.openAuthModal = openAuthModal;
-    window.openSignupModal = openSignupModal;
-    window.openProfileModal = openProfileModal;
-    window.closeProfileModal = closeProfileModal;
-    window.switchToSignup = switchToSignup;
-    window.switchToLogin = switchToLogin;
-
-    renderCourseGrid();
-    checkSession();
-    initQuiz();
-</script>
+        
+        // ============================================
+        // DATA FETCHING FROM SUPABASE
+        // ============================================
+        
+        // Fetch materials by module type
+        async function fetchMaterials(moduleType) {
+            if (materialsCache[moduleType]) {
+                return materialsCache[moduleType];
+            }
+            
+            try {
+                const { data, error } = await supabase
+                    .from('materials')
+                    .select('*')
+                    .eq('module_type', moduleType)
+                    .eq('status', 'published')
+                    .order('unit_number', { ascending: true });
+                
+                if (error) throw error;
+                
+                materialsCache[moduleType] = data || [];
+                return data || [];
+            } catch (error) {
+                console.error(`Error fetching ${moduleType}:`, error);
+                // Fallback data if Supabase is empty
+                return getFallbackMaterials(moduleType);
+            }
+        }
+        
+        // Fetch questions by module type
+        async function fetchQuestions(moduleType, limit = 20) {
+            if (questionsCache[moduleType]) {
+                return questionsCache[moduleType];
+            }
+            
+            try {
+                const { data, error } = await supabase
+                    .from('questions')
+                    .select('*')
+                    .eq('module_type', moduleType)
+                    .limit(limit);
+                
+                if (error) throw error;
+                
+                questionsCache[moduleType] = data || [];
+                return data || [];
+            } catch (error) {
+                console.error(`Error fetching questions:`, error);
+                return getFallbackQuestions();
+            }
+        }
+        
+        // Fetch user progress
+        async function fetchUserProgress() {
+            if (!currentUser) return {};
+            
+            try {
+                const { data, error } = await supabase
+                    .from('user_progress')
+                    .select('*')
+                    .eq('user_id', currentUser.id);
+                
+                if (error) throw error;
+                
+                const progress = {};
+                if (data) {
+                    data.forEach(p => {
+                        progress[p.material_id] = p.progress_percentage || 0;
+                    });
+                }
+                userProgress = progress;
+                return progress;
+            } catch (error) {
+                console.error('Error fetching progress:', error);
+                return {};
+            }
+        }
+        
+        // Update progress
+        async function updateProgress(materialId, progress) {
+            if (!currentUser) {
+                showToast('Please login to track progress', 'error');
+                return false;
+            }
+            
+            try {
+                const { error } = await supabase
+                    .from('user_progress')
+                    .upsert({
+                        user_id: currentUser.id,
+                        material_id: materialId,
+                        progress_percentage: progress,
+                        status: progress === 100 ? 'completed' : 'in_progress',
+                        last_accessed_at: new Date().toISOString(),
+                        completed_at: progress === 100 ? new Date().toISOString() : null
+                    });
+                
+                if (error) throw error;
+                
+                userProgress[materialId] = progress;
+                showToast(progress === 100 ? 'Unit completed! 🎉' : 'Progress saved', 'success');
+                return true;
+            } catch (error) {
+                console.error('Error updating progress:', error);
+                showToast('Error saving progress', 'error');
+                return false;
+            }
+        }
+        
+        // ============================================
+        // FALLBACK DATA (if Supabase is empty)
+        // ============================================
+        function getFallbackMaterials(moduleType) {
+            const fallback = {
+                learner: Array.from({ length: 21 }, (_, i) => ({
+                    id: i + 1,
+                    title: `Unit ${i + 1}: ${getUnitTitle(i)}`,
+                    description: `Complete training for ${getUnitTitle(i).toLowerCase()}`,
+                    content: `<h2>${getUnitTitle(i)}</h2><p>This is comprehensive training material for ${getUnitTitle(i).toLowerCase()}.</p><ul><li>Learn essential skills</li><li>Understand key concepts</li><li>Practice with examples</li></ul>`,
+                    module_type: 'learner',
+                    unit_number: i + 1,
+                    difficulty: i < 7 ? 'beginner' : i < 14 ? 'intermediate' : 'advanced',
+                    image_url: null,
+                    video_url: null,
+                    estimated_minutes: 45
+                })),
+                psv: Array.from({ length: 10 }, (_, i) => ({
+                    id: 100 + i,
+                    title: `PSV Module ${i + 1}: ${getPSVTitle(i)}`,
+                    description: `Professional PSV driver training for ${getPSVTitle(i).toLowerCase()}`,
+                    content: `<h2>${getPSVTitle(i)}</h2><p>Professional training for PSV drivers.</p><ul><li>Safety standards</li><li>Customer service</li><li>Regulatory compliance</li></ul>`,
+                    module_type: 'psv',
+                    unit_number: i + 1,
+                    difficulty: 'intermediate'
+                })),
+                ev: Array.from({ length: 8 }, (_, i) => ({
+                    id: 200 + i,
+                    title: `EV Module ${i + 1}: ${getEVTitle(i)}`,
+                    description: `Electric vehicle training for ${getEVTitle(i).toLowerCase()}`,
+                    content: `<h2>${getEVTitle(i)}</h2><p>Complete electric vehicle training.</p><ul><li>Battery technology</li><li>Charging infrastructure</li><li>Safety protocols</li></ul>`,
+                    module_type: 'ev',
+                    unit_number: i + 1,
+                    difficulty: 'intermediate'
+                })),
+                boda: Array.from({ length: 12 }, (_, i) => ({
+                    id: 300 + i,
+                    title: `Boda Module ${i + 1}: ${getBodaTitle(i)}`,
+                    description: `Motorcycle safety training for ${getBodaTitle(i).toLowerCase()}`,
+                    content: `<h2>${getBodaTitle(i)}</h2><p>Complete boda boda safety training.</p><ul><li>Protective gear</li><li>Defensive riding</li><li>Passenger safety</li></ul>`,
+                    module_type: 'boda',
+                    unit_number: i + 1,
+                    difficulty: 'beginner'
+                })),
+                schoolbus: Array.from({ length: 6 }, (_, i) => ({
+                    id: 400 + i,
+                    title: `School Bus Safety ${i + 1}: ${getSchoolBusTitle(i)}`,
+                    description: `Child transport safety training`,
+                    content: `<h2>${getSchoolBusTitle(i)}</h2><p>Specialized training for school bus drivers.</p><ul><li>Child safety protocols</li><li>Emergency procedures</li><li>Parent communication</li></ul>`,
+                    module_type: 'schoolbus',
+                    unit_number: i + 1,
+                    difficulty: 'intermediate'
+                })),
+                academy: Array.from({ length: 6 }, (_, i) => ({
+                    id: 500 + i,
+                    title: `Academy Module ${i + 1}: ${getAcademyTitle(i)}`,
+                    description: `Professional development training`,
+                    content: `<h2>${getAcademyTitle(i)}</h2><p>Advanced professional driver development.</p><ul><li>Fleet management</li><li>Logistics planning</li><li>Leadership skills</li></ul>`,
+                    module_type: 'academy',
+                    unit_number: i + 1,
+                    difficulty: 'advanced'
+                }))
+            };
+            return fallback[moduleType] || [];
+        }
+        
+        function getUnitTitle(i) {
+            const titles = ['Introduction to Driving', 'Highway Code', 'Vehicle Controls', 'Maintenance', 'Moving Off', 'Turning & Reversing', 'Roundabouts', 'Overtaking', 'Speed Limits', 'Defensive Driving', 'Night Driving', 'Adverse Weather', 'Alcohol & Drugs', 'Fatigue Management', 'Pedestrian Safety', 'Emergency Procedures', 'First Aid', 'Insurance', 'Eco Driving', 'Test Preparation', 'Advanced Skills'];
+            return titles[i] || `Driving Unit ${i + 1}`;
+        }
+        
+        function getPSVTitle(i) {
+            const titles = ['Licensing & Compliance', 'Professional Conduct', 'Personal Grooming', 'Passenger Safety', 'Vehicle Inspections', 'Route Planning', 'Fare Management', 'Emergency Response', 'Conflict Resolution', 'Defensive Driving'];
+            return titles[i] || `PSV Module ${i + 1}`;
+        }
+        
+        function getEVTitle(i) {
+            const titles = ['Introduction to EVs', 'Battery Technology', 'Charging Infrastructure', 'Maintenance', 'Safety Protocols', 'Range Management', 'Commercial Use', 'Regulations'];
+            return titles[i] || `EV Module ${i + 1}`;
+        }
+        
+        function getBodaTitle(i) {
+            const titles = ['Controls & Operation', 'Protective Gear', 'Professionalism', 'Drug Prevention', 'Customer Service', 'Crime Prevention', 'Know Your Passenger', 'Night Riding', 'Entrepreneurship', 'Defensive Riding', 'Maintenance', 'Alcohol Awareness'];
+            return titles[i] || `Boda Module ${i + 1}`;
+        }
+        
+        function getSchoolBusTitle(i) {
+            const titles = ['Child Safety', 'Pre-Trip Inspection', 'Loading & Unloading', 'Behavior Management', 'Emergency Evacuation', 'Communication'];
+            return titles[i] || `School Bus Module ${i + 1}`;
+        }
+        
+        function getAcademyTitle(i) {
+            const titles = ['Fleet Management', 'Transport Logistics', 'Driver Recruitment', 'Safety Compliance', 'Financial Management', 'Technology in Transport'];
+            return titles[i] || `Academy Module ${i + 1}`;
+        }
+        
+        function getFallbackQuestions() {
+            return [
+                { id: 1, question_text: "What is the legal blood alcohol limit for commercial drivers in Kenya?", option_a: "0.00%", option_b: "0.05%", option_c: "0.08%", option_d: "0.10%", correct_answer: 1, explanation: "Commercial drivers must have 0.00% blood alcohol." },
+                { id: 2, question_text: "What is the maximum speed limit in a residential area?", option_a: "30 km/h", option_b: "40 km/h", option_c: "50 km/h", option_d: "60 km/h", correct_answer: 2, explanation: "Residential areas: 40 km/h." },
+                { id: 3, question_text: "What should you do if your vehicle starts to skid?", option_a: "Steer into the skid", option_b: "Steer away", option_c: "Brake hard", option_d: "Accelerate", correct_answer: 1, explanation: "Steer into the skid to regain control." }
+            ];
+        }
+        
+        // ============================================
+        // AUTHENTICATION
+        // ============================================
+        async function login(email, password) {
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+                
+                currentUser = {
+                    id: data.user.id,
+                    email: data.user.email,
+                    name: data.user.user_metadata?.full_name || email.split('@')[0]
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                await fetchUserProgress();
+                showToast(`Welcome ${currentUser.name}!`, 'success');
+                renderPage(currentPage);
+                updateAuthUI();
+                return currentUser;
+            } catch (error) {
+                showToast(error.message, 'error');
+                return null;
+            }
+        }
+        
+        async function signUp(email, password, name) {
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email, password,
+                    options: { data: { full_name: name } }
+                });
+                if (error) throw error;
+                showToast('Account created! Please verify your email.', 'success');
+                return data;
+            } catch (error) {
+                showToast(error.message, 'error');
+                return null;
+            }
+        }
+        
+        async function logout() {
+            await supabase.auth.signOut();
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            userProgress = {};
+            showToast('Logged out', 'info');
+            renderPage('home');
+            updateAuthUI();
+        }
+        
+        async function checkSession() {
+            const stored = localStorage.getItem('currentUser');
+            if (stored) {
+                currentUser = JSON.parse(stored);
+                const { data: { session } } = await supabase.auth.getSession();
+                if (!session) {
+                    localStorage.removeItem('currentUser');
+                    currentUser = null;
+                } else {
+                    await fetchUserProgress();
+                }
+            }
+            updateAuthUI();
+        }
+        
+        function updateAuthUI() {
+            const authDiv = document.getElementById('authButtons');
+            if (!authDiv) return;
+            if (currentUser) {
+                authDiv.innerHTML = `<div class="profile-link" onclick="showProfileModal()">👤 ${currentUser.name}</div><button onclick="logout()">🚪 Logout</button>`;
+            } else {
+                authDiv.innerHTML = `<button onclick="showLoginModal()">🔑 Login</button><button onclick="showSignupModal()">📝 Sign Up</button>`;
+            }
+        }
+        
+        // ============================================
+        // RENDERING FUNCTIONS
+        // ============================================
+        function renderCard(material, type) {
+            const isEv = type === 'ev';
+            const progress = userProgress[material.id] || 0;
+            return `<div class="card ${isEv ? 'card-ev' : ''}" onclick="viewMaterial('${material.id}', '${type}')">
+                <span class="${isEv ? 'ev-badge-module' : 'unit-badge'}">${isEv ? '⚡' : ''} ${type === 'learner' ? `Unit ${material.unit_number}` : ''}</span>
+                <h3>${escapeHtml(material.title)}</h3>
+                <p>${escapeHtml(material.description?.substring(0, 100) || '')}...</p>
+                <div class="progress-bar"><div class="progress-fill" style="width: ${progress}%"></div></div>
+                <button class="btn-small">📖 View →</button>
+            </div>`;
+        }
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            return String(text).replace(/[&<>]/g, function(c) {
+                if (c === '&') return '&amp;';
+                if (c === '<') return '&lt;';
+                if (c === '>') return '&gt;';
+                return c;
+            });
+        }
+        
+        async function renderModulePage(moduleType) {
+            const container = document.getElementById('page-content');
+            container.innerHTML = '<div class="spinner"></div>';
+            
+            const materials = await fetchMaterials(moduleType);
+            let title = moduleType.toUpperCase();
+            if (moduleType === 'learner') title = '📚 Learner Driver Hub - 21 Complete Units';
+            if (moduleType === 'psv') title = '🚌 PSV Professional Course';
+            if (moduleType === 'ev') title = '⚡ Electric Vehicle Training';
+            if (moduleType === 'boda') title = '🏍️ Boda Boda Safety Course';
+            if (moduleType === 'schoolbus') title = '🏫 School Bus Safety Program';
+            if (moduleType === 'academy') title = '🎓 Advanced Driver Academy';
+            
+            if (materials.length === 0) {
+                container.innerHTML = `<div class="hero"><h1>${title}</h1><p>No materials available yet. Check back soon!</p></div>`;
+                return;
+            }
+            
+            let cards = '';
+            for (let i = 0; i < materials.length; i++) {
+                cards += renderCard(materials[i], moduleType);
+            }
+            
+            container.innerHTML = `<div class="hero"><h1>${title}</h1></div><div class="grid">${cards}</div>`;
+            
+            // Load questions for this module if it's learner or quiz page
+            if (moduleType === 'learner') {
+                const questions = await fetchQuestions('learner', 5);
+                if (questions.length > 0) {
+                    const questionHtml = renderQuestions(questions);
+                    container.innerHTML += `<div class="question-bank"><h2>📝 Practice Questions</h2>${questionHtml}</div>`;
+                }
+            }
+        }
+        
+        function renderQuestions(questions) {
+            return questions.map((q, idx) => `
+                <div class="question-card">
+                    <div class="question-text"><strong>${idx + 1}.</strong> ${escapeHtml(q.question_text)}</div>
+                    <div class="options-group">
+                        <div class="option" onclick="showToast('Check your answer!', 'info')">A. ${escapeHtml(q.option_a)}</div>
+                        <div class="option" onclick="showToast('Check your answer!', 'info')">B. ${escapeHtml(q.option_b)}</div>
+                        <div class="option" onclick="showToast('Check your answer!', 'info')">C. ${escapeHtml(q.option_c)}</div>
+                        <div class="option" onclick="showToast('Check your answer!', 'info')">D. ${escapeHtml(q.option_d)}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        async function renderQuiz() {
+            const questions = await fetchQuestions('learner', 50);
+            const start = (currentQuizPage - 1) * questionsPerPage;
+            const end = start + questionsPerPage;
+            const pageQuestions = questions.slice(start, end);
+            const totalPages = Math.ceil(questions.length / questionsPerPage);
+            
+            let answered = Object.keys(quizAnswers).length;
+            let correct = 0;
+            
+            let html = `<div class="hero"><h1>📝 NTSA Practice Test</h1><p>Prepare with real exam questions</p></div>`;
+            html += `<div class="score-card"><h3>Your Progress</h3><div class="score">${answered}/${questions.length}</div></div>`;
+            
+            for (let q of pageQuestions) {
+                const selected = quizAnswers[q.id];
+                html += `<div class="question-card"><div class="question-text"><strong>${q.id}.</strong> ${escapeHtml(q.question_text)}</div><div class="options-group">`;
+                const options = [q.option_a, q.option_b, q.option_c, q.option_d];
+                for (let i = 0; i < options.length; i++) {
+                    let optionClass = '';
+                    if (selected !== undefined) {
+                        if (i + 1 === q.correct_answer) optionClass = 'correct';
+                        else if (selected === i + 1 && selected !== q.correct_answer) optionClass = 'wrong';
+                    }
+                    html += `<div class="option ${optionClass}" onclick="selectQuizAnswer(${q.id}, ${i + 1})">${String.fromCharCode(65 + i)}. ${escapeHtml(options[i])}</div>`;
+                }
+                html += `</div></div>`;
+            }
+            
+            html += `<div class="pagination">`;
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button class="${i === currentQuizPage ? 'active' : ''}" onclick="goToQuizPage(${i})">${i}</button>`;
+            }
+            html += `</div>`;
+            
+            document.getElementById('page-content').innerHTML = html;
+        }
+        
+        function renderLibrary() {
+            const resources = ['Kenya Highway Code', 'EV Driver Handbook', 'NTSA Test Guide', 'PSV Manual', 'Boda Safety Guide', 'EV Maintenance Manual'];
+            document.getElementById('page-content').innerHTML = `<div class="hero"><h1>📖 Resource Library</h1><p>Official documents and manuals</p></div><div class="grid">${resources.map(r => `<div class="card" onclick="showToast('Download started: ${r}','success')"><div style="font-size:2rem;">📄</div><h3>${r}</h3><button class="btn-small">Download →</button></div>`).join('')}</div>`;
+        }
+        
+        function renderHome() {
+            document.getElementById('page-content').innerHTML = `
+                <div class="hero"><h1>Kenya's <span class="highlight">Digital Driver Safety Platform</span></h1><p>Drive Smart. Stay Safe. Arrive Home.</p><div class="hero-buttons"><button class="btn" onclick="navigateTo('learner')">📚 Start Learning</button><button class="btn-ev" onclick="navigateTo('ev')">⚡ EV Course</button></div></div>
+                <div class="stats-grid"><div class="stat-card"><div class="stat-number">21</div><div>Learner Units</div></div><div class="stat-card"><div class="stat-number">10</div><div>PSV Units</div></div><div class="stat-card"><div class="stat-number">12</div><div>Boda Units</div></div><div class="stat-card"><div class="stat-number">8</div><div>EV Units</div></div></div>
+                <div class="grid">
+                    <div class="card" onclick="navigateTo('learner')"><div style="font-size:2rem;">📚</div><h3>Learner Hub</h3><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('psv')"><div style="font-size:2rem;">🚌</div><h3>PSV Course</h3><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('schoolbus')"><div style="font-size:2rem;">🏫</div><h3>School Bus</h3><button class="btn-small">Start →</button></div>
+                    <div class="card card-ev" onclick="navigateTo('ev')"><div style="font-size:2rem;">⚡</div><h3>EV Training</h3><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('boda')"><div style="font-size:2rem;">🏍️</div><h3>Boda Safety</h3><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('academy')"><div style="font-size:2rem;">🎓</div><h3>Academy</h3><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('library')"><div style="font-size:2rem;">📖</div><h3>Library</h3><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="navigateTo('quiz')"><div style="font-size:2rem;">📝</div><h3>NTSA Quiz</h3><button class="btn-small">Start →</button></div>
+                </div>
+            `;
+        }
+        
+        // Material viewer
+        window.viewMaterial = async function(id, type) {
+            const materials = await fetchMaterials(type);
+            const material = materials.find(m => m.id == id);
+            if (!material) return;
+            
+            const content = document.getElementById('page-content');
+            const progress = userProgress[material.id] || 0;
+            content.innerHTML = `<div style="background:var(--card-bg);border-radius:24px;padding:24px;margin:20px 0;">
+                <div style="display:flex;justify-content:space-between;margin-bottom:20px;"><h2 style="color:var(--primary-gold);">${escapeHtml(material.title)}</h2><button class="btn-small" onclick="navigateTo('${type}')">← Back</button></div>
+                <div class="unit-content">${material.content || `<p>${escapeHtml(material.description)}</p>`}</div>
+                <div class="progress-bar mt-3"><div class="progress-fill" style="width: ${progress}%"></div></div>
+                <button class="btn" style="margin-top:20px;" onclick="updateProgress('${material.id}', 100)">✅ Mark Complete</button>
+            </div>`;
+            window.scrollTo({ top: 0 });
+        };
+        
+        // Quiz functions
+        window.selectQuizAnswer = function(id, answer) {
+            quizAnswers[id] = answer;
+            renderQuiz();
+        };
+        
+        window.goToQuizPage = function(page) {
+            currentQuizPage = page;
+            renderQuiz();
+        };
+        
+        // Navigation
+        window.navigateTo = async function(page) {
+            currentPage = page;
+            const container = document.getElementById('page-content');
+            container.innerHTML = '<div class="spinner"></div>';
+            
+            if (page === 'home') renderHome();
+            else if (page === 'library') renderLibrary();
+            else if (page === 'quiz') await renderQuiz();
+            else await renderModulePage(page);
+            
+            document.getElementById('navLinks')?.classList.remove('show');
+            window.scrollTo({ top: 0 });
+        };
+        
+        // Auth modals
+        function showLoginModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `<div class="modal-content"><button class="close-modal" onclick="this.closest('.modal').remove()">✕</button>
+                <h3>🔐 Login</h3>
+                <input type="email" id="loginEmail" placeholder="Email">
+                <input type="password" id="loginPassword" placeholder="Password">
+                <button class="btn" style="width:100%;margin-top:10px;" onclick="doLogin()">Login</button>
+                <hr><p style="text-align:center;">New user? <a href="#" onclick="closeModal();showSignupModal()">Sign Up</a></p>
+            </div>`;
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        }
+        
+        function showSignupModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `<div class="modal-content"><button class="close-modal" onclick="this.closest('.modal').remove()">✕</button>
+                <h3>📝 Sign Up</h3>
+                <input type="text" id="signupName" placeholder="Full Name">
+                <input type="email" id="signupEmail" placeholder="Email">
+                <input type="password" id="signupPassword" placeholder="Password (min 6)">
+                <button class="btn" style="width:100%;margin-top:10px;" onclick="doSignup()">Sign Up</button>
+                <hr><p style="text-align:center;">Already have an account? <a href="#" onclick="closeModal();showLoginModal()">Login</a></p>
+            </div>`;
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        }
+        
+        window.doLogin = async function() {
+            const email = document.getElementById('loginEmail')?.value;
+            const pwd = document.getElementById('loginPassword')?.value;
+            await login(email, pwd);
+            closeModal();
+        };
+        
+        window.doSignup = async function() {
+            const name = document.getElementById('signupName')?.value;
+            const email = document.getElementById('signupEmail')?.value;
+            const pwd = document.getElementById('signupPassword')?.value;
+            await signUp(email, pwd, name);
+            closeModal();
+        };
+        
+        window.showProfileModal = function() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `<div class="modal-content"><button class="close-modal" onclick="this.closest('.modal').remove()">✕</button>
+                <h3>👤 Profile</h3>
+                <p><strong>Name:</strong> ${currentUser?.name}</p>
+                <p><strong>Email:</strong> ${currentUser?.email}</p>
+                <button class="btn" style="margin-top:15px;" onclick="closeModal()">Close</button>
+            </div>`;
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        };
+        
+        function closeModal() {
+            const modal = document.querySelector('.modal');
+            if (modal) modal.remove();
+        }
+        
+        window.closeModal = closeModal;
+        window.showLoginModal = showLoginModal;
+        window.showSignupModal = showSignupModal;
+        window.logout = logout;
+        window.updateProgress = updateProgress;
+        
+        // Mobile menu
+        document.getElementById('mobileMenuBtn')?.addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.getElementById('navLinks')?.classList.toggle('show');
+        });
+        document.addEventListener('click', function(e) {
+            const btn = e.target.closest('[data-nav]');
+            if (btn) navigateTo(btn.getAttribute('data-nav'));
+            const navLinks = document.getElementById('navLinks');
+            const mobileBtn = document.getElementById('mobileMenuBtn');
+            if (navLinks?.classList.contains('show') && !navLinks.contains(e.target) && mobileBtn && !mobileBtn.contains(e.target)) {
+                navLinks.classList.remove('show');
+            }
+        });
+        
+        // Initialize
+        await checkSession();
+        navigateTo('home');
+    </script>
 </body>
 </html>
