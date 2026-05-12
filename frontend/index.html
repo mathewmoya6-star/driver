@@ -15,7 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Inter', sans-serif; background: #0B0F19; color: #E8EDF5; line-height: 1.5; overflow-x: hidden; }
 
         :root {
@@ -31,7 +31,7 @@
             --text-primary: #FFFFFF;
             --text-secondary: #A0B3D9;
             --text-muted: #6B7FA3;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: all 0.2s ease;
             --shadow-glow: 0 0 20px rgba(0, 208, 132, 0.15);
         }
 
@@ -41,7 +41,7 @@
 
         .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
 
-        /* Navigation - Touch Optimized */
+        /* Navigation */
         .navbar { 
             background: rgba(11, 15, 25, 0.98); 
             backdrop-filter: blur(12px); 
@@ -49,7 +49,7 @@
             top: 0; 
             z-index: 1000; 
             border-bottom: 1px solid rgba(0, 208, 132, 0.2); 
-            padding: 12px 0; 
+            padding: 8px 0; 
         }
         .nav-container { 
             display: flex; 
@@ -58,7 +58,6 @@
             max-width: 1400px; 
             margin: 0 auto; 
             padding: 0 20px; 
-            position: relative;
         }
         .logo { 
             font-size: 1.3rem; 
@@ -68,38 +67,31 @@
             background-clip: text; 
             color: transparent; 
             cursor: pointer; 
-            padding: 8px 0; 
+            padding: 10px 0; 
             min-height: 48px; 
             display: flex; 
             align-items: center; 
-            z-index: 1001;
         }
         .logo span { color: var(--text-primary); background: none; }
         
-        /* Mobile Menu Button - Large Touch Area */
+        /* Mobile Menu Button */
         .mobile-menu-btn { 
             display: none; 
             background: transparent; 
             border: none; 
             color: var(--accent); 
-            font-size: 28px; 
+            font-size: 26px; 
             cursor: pointer; 
             padding: 12px 16px; 
             min-height: 52px; 
             min-width: 52px; 
             border-radius: 12px;
             transition: background 0.2s;
-            z-index: 1001;
         }
         .mobile-menu-btn:active { background: rgba(0, 208, 132, 0.15); transform: scale(0.96); }
         
-        /* Navigation Links - Desktop */
-        .nav-links { 
-            display: flex; 
-            gap: 8px; 
-            align-items: center; 
-            flex-wrap: wrap; 
-        }
+        /* Desktop Navigation */
+        .nav-links { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
         .nav-links button, .nav-links .user-badge { 
             background: transparent; 
             border: none; 
@@ -110,57 +102,53 @@
             font-weight: 500; 
             font-size: 0.9rem; 
             transition: var(--transition); 
-            min-height: 48px;
+            min-height: 44px;
             display: inline-flex;
             align-items: center;
             gap: 8px;
         }
         .nav-links button:active, .nav-links .user-badge:active { transform: scale(0.96); background: rgba(0, 208, 132, 0.1); }
         .nav-links button:hover, .nav-links .user-badge:hover { background: rgba(0, 208, 132, 0.1); color: var(--accent); }
-        
         .user-badge { background: rgba(0, 208, 132, 0.1); color: var(--accent) !important; }
         
         /* Mobile Menu Overlay */
-        .mobile-menu-overlay {
+        .mobile-overlay {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(8px);
             z-index: 999;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        .mobile-menu-overlay.active {
-            display: block;
-            opacity: 1;
-        }
+        .mobile-overlay.active { display: block; opacity: 1; }
         
-        /* Mobile Menu Panel */
-        .mobile-menu-panel {
+        /* Mobile Menu Panel - Slide from Right */
+        .mobile-panel {
             position: fixed;
             top: 0;
             right: -100%;
-            width: 80%;
-            max-width: 320px;
+            width: 85%;
+            max-width: 340px;
             height: 100%;
             background: var(--bg-card);
             border-left: 1px solid var(--accent);
             z-index: 1000;
             transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 80px 20px 20px;
+            padding: 70px 20px 30px;
             display: flex;
             flex-direction: column;
             gap: 8px;
             box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
         }
-        .mobile-menu-panel.open {
-            right: 0;
-        }
-        .mobile-menu-panel button, .mobile-menu-panel .user-badge-mobile {
+        .mobile-panel.open { right: 0; }
+        
+        .mobile-panel button {
             background: transparent;
             border: none;
             color: var(--text-secondary);
@@ -168,19 +156,17 @@
             border-radius: 16px;
             cursor: pointer;
             font-weight: 500;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             text-align: left;
             transition: background 0.2s;
             width: 100%;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
+            min-height: 56px;
         }
-        .mobile-menu-panel button:active, .mobile-menu-panel .user-badge-mobile:active {
-            background: rgba(0, 208, 132, 0.15);
-            transform: scale(0.98);
-        }
-        .close-mobile-menu {
+        .mobile-panel button:active { background: rgba(0, 208, 132, 0.15); transform: scale(0.98); }
+        .close-mobile-btn {
             position: absolute;
             top: 16px;
             right: 16px;
@@ -191,20 +177,24 @@
             cursor: pointer;
             padding: 12px;
             min-width: 48px;
+            min-height: 48px;
             border-radius: 50%;
         }
-        .close-mobile-menu:active { background: rgba(0, 208, 132, 0.15); }
+        .close-mobile-btn:active { background: rgba(0, 208, 132, 0.15); }
 
-        /* Hero Section */
-        .hero { background: linear-gradient(135deg, #071120 0%, #0A1628 100%); padding: 60px 20px; text-align: center; border-bottom: 2px solid var(--accent); position: relative; overflow: hidden; }
-        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 30% 40%, rgba(0, 208, 132, 0.08), transparent 70%); pointer-events: none; }
-        .hero h1 { margin-bottom: 12px; background: linear-gradient(135deg, #FFFFFF, var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; font-size: clamp(1.8rem, 5vw, 3.5rem); }
-        .hero p { color: var(--text-secondary); max-width: 700px; margin: 0 auto; font-size: 1rem; line-height: 1.6; }
+        /* Hero */
+        .hero { background: linear-gradient(135deg, #071120 0%, #0A1628 100%); padding: 60px 20px; text-align: center; border-bottom: 2px solid var(--accent); }
+        .hero h1 { margin-bottom: 12px; background: linear-gradient(135deg, #FFFFFF, var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; font-size: clamp(1.8rem, 5vw, 3.2rem); }
+        .hero p { color: var(--text-secondary); max-width: 700px; margin: 0 auto; font-size: 1rem; }
         .hero .highlight { color: var(--accent); font-weight: 700; }
         .hero-btns { margin-top: 28px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
         /* Buttons */
-        .btn-primary, .btn-secondary, .btn-outline { padding: 14px 28px; border-radius: 50px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: none; min-height: 52px; }
+        .btn-primary, .btn-secondary, .btn-outline { 
+            padding: 14px 28px; border-radius: 50px; font-weight: 700; font-size: 0.95rem; 
+            cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; 
+            justify-content: center; gap: 8px; border: none; min-height: 52px; 
+        }
         .btn-primary:active, .btn-secondary:active { transform: scale(0.97); }
         .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: #0B0F19; }
         .btn-secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
@@ -213,9 +203,9 @@
         .section-title { font-size: clamp(1.3rem, 4vw, 1.6rem); margin-bottom: 28px; display: flex; align-items: center; gap: 12px; color: var(--accent); border-left: 4px solid var(--accent); padding-left: 20px; }
         
         .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin: 32px 0; }
-        .card { background: var(--bg-card); border-radius: 20px; overflow: hidden; border: 1px solid var(--border); transition: var(--transition); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        .card { background: var(--bg-card); border-radius: 20px; overflow: hidden; border: 1px solid var(--border); transition: var(--transition); cursor: pointer; }
         .card:active { transform: scale(0.98); }
-        .card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: var(--shadow-glow); }
+        .card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: var(--shadow-glow); }
         .card-img { width: 100%; height: 170px; background: linear-gradient(135deg, #0f1a2c, #0a1020); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
         .card-content { padding: 20px; }
         .card h3 { margin-bottom: 10px; color: var(--accent); font-size: 1.15rem; }
@@ -223,16 +213,17 @@
         .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; margin-bottom: 12px; }
         .badge-accent { background: var(--accent); color: #0B0F19; }
 
-        /* Modals - Touch Optimized */
+        /* Modals */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.96); backdrop-filter: blur(12px); z-index: 2000; justify-content: center; align-items: center; padding: 16px; }
         .modal-content { background: var(--bg-card); border: 1px solid var(--accent); border-radius: 28px; padding: 28px; max-width: 450px; width: 100%; animation: modalFadeIn 0.3s ease; }
         @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        .modal-content h2 { color: var(--accent); margin-bottom: 24px; text-align: center; font-size: 1.5rem; }
+        .modal-content h2 { color: var(--accent); margin-bottom: 24px; text-align: center; }
         .input-group { margin-bottom: 16px; }
         .input-group input { width: 100%; padding: 14px 18px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-secondary); color: var(--text-primary); font-size: 1rem; min-height: 52px; }
         .input-group input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
         .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--accent); padding: 8px; min-width: 44px; text-align: center; }
 
+        /* Quiz */
         .quiz-panel { background: var(--bg-card); border-radius: 24px; padding: 24px; margin: 32px 0; border: 1px solid var(--border); }
         .question-card { background: var(--bg-secondary); border-radius: 20px; padding: 24px; margin-bottom: 20px; border: 1px solid var(--border); }
         .question-text { font-size: 1rem; font-weight: 600; margin-bottom: 18px; }
@@ -246,35 +237,26 @@
         footer { text-align: center; padding: 32px 20px; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: 40px; font-size: 0.8rem; }
         .toast-container { position: fixed; bottom: 20px; left: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
         .toast { background: var(--bg-card); border-left: 3px solid var(--accent); padding: 12px 18px; border-radius: 12px; animation: slideIn 0.3s ease; }
-
         @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* Desktop */
-        @media (min-width: 769px) {
-            .mobile-menu-btn, .mobile-menu-overlay, .mobile-menu-panel { display: none !important; }
-        }
-
-        /* Mobile */
+        /* Responsive */
         @media (max-width: 768px) {
             .mobile-menu-btn { display: block; }
             .nav-links { display: none !important; }
             .hero { padding: 40px 16px; }
-            .hero p { font-size: 0.95rem; }
             .hero-btns { flex-direction: column; align-items: center; gap: 12px; }
             .hero-btns button { width: 100%; max-width: 280px; justify-content: center; }
             .course-grid { grid-template-columns: 1fr; gap: 16px; }
             .quiz-panel { padding: 18px; }
-            .question-card { padding: 18px; }
-            .btn-primary, .btn-secondary { padding: 12px 20px; font-size: 0.9rem; min-height: 48px; }
-            .modal-content { padding: 20px; margin: 16px; }
             .section-title { font-size: 1.3rem; margin-bottom: 20px; }
             .container { padding: 0 16px; }
+            .modal-content { padding: 20px; margin: 16px; }
         }
-
         @media (max-width: 480px) {
             .card-content { padding: 16px; }
             .card-img { height: 140px; font-size: 3rem; }
             .option { padding: 12px 14px; font-size: 0.85rem; }
+            .btn-primary, .btn-secondary { padding: 12px 20px; font-size: 0.9rem; min-height: 48px; }
         }
     </style>
 </head>
@@ -301,17 +283,17 @@
     </div>
 </nav>
 
-<!-- Mobile Menu Overlay & Panel -->
-<div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-<div class="mobile-menu-panel" id="mobileMenuPanel">
-    <button class="close-mobile-menu" id="closeMobileMenu">✕</button>
+<!-- Mobile Menu Components -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<div class="mobile-panel" id="mobilePanel">
+    <button class="close-mobile-btn" id="closeMobileBtn">✕</button>
     <button onclick="mobileNavigateTo('courses')">📚 Learning Programme</button>
     <button onclick="mobileNavigateTo('quiz-section')">📝 Quiz</button>
-    <div id="mobileAuthButtons">
+    <div id="mobileAuthSection">
         <button onclick="mobileOpenAuth()">🔐 Login</button>
         <button onclick="mobileOpenSignup()">📝 Sign Up</button>
     </div>
-    <div id="mobileUserMenu" style="display:none;">
+    <div id="mobileUserSection" style="display:none;">
         <button onclick="mobileOpenProfile()">👤 My Profile</button>
         <button onclick="mobileLogout()">🚪 Logout</button>
     </div>
@@ -327,7 +309,6 @@
     </div>
 </section>
 
-<!-- Main Container -->
 <div class="container">
     <div id="courses">
         <div class="section-title"><i class="fas fa-book-open"></i><h2>Learning Programme</h2></div>
@@ -343,9 +324,9 @@
 <div class="toast-container" id="toastContainer"></div>
 
 <!-- Modals -->
-<div id="loginModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeLoginModal()">✕</span><h2><i class="fas fa-lock"></i> Login</h2><div class="input-group"><input type="email" id="loginEmail" placeholder="Email address"></div><div class="input-group"><input type="password" id="loginPassword" placeholder="Password"></div><button class="btn-primary" style="width:100%;" onclick="userLogin()">Sign In</button><p style="text-align:center; margin-top:16px;">Don't have an account? <a href="#" onclick="switchToSignup()" style="color:var(--accent);">Sign Up</a></p><div id="loginMessage" style="text-align:center; margin-top:12px; color:var(--accent);"></div></div></div>
+<div id="loginModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeLoginModal()">✕</span><h2><i class="fas fa-lock"></i> Login</h2><div class="input-group"><input type="email" id="loginEmail" placeholder="Email address"></div><div class="input-group"><input type="password" id="loginPassword" placeholder="Password"></div><button class="btn-primary" style="width:100%;" onclick="userLogin()">Sign In</button><p style="text-align:center; margin-top:16px;">No account? <a href="#" onclick="switchToSignup()" style="color:var(--accent);">Sign Up</a></p><div id="loginMessage" style="text-align:center; margin-top:12px; color:var(--accent);"></div></div></div>
 
-<div id="signupModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeSignupModal()">✕</span><h2><i class="fas fa-user-plus"></i> Create Account</h2><div class="input-group"><input type="text" id="signupName" placeholder="Full name"></div><div class="input-group"><input type="email" id="signupEmail" placeholder="Email address"></div><div class="input-group"><input type="password" id="signupPassword" placeholder="Password (min 6 characters)"></div><button class="btn-primary" style="width:100%;" onclick="userSignup()">Create Account</button><p style="text-align:center; margin-top:16px;">Already have an account? <a href="#" onclick="switchToLogin()" style="color:var(--accent);">Login</a></p><div id="signupMessage" style="text-align:center; margin-top:12px; color:var(--accent);"></div></div></div>
+<div id="signupModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeSignupModal()">✕</span><h2><i class="fas fa-user-plus"></i> Create Account</h2><div class="input-group"><input type="text" id="signupName" placeholder="Full name"></div><div class="input-group"><input type="email" id="signupEmail" placeholder="Email address"></div><div class="input-group"><input type="password" id="signupPassword" placeholder="Password (min 6 characters)"></div><button class="btn-primary" style="width:100%;" onclick="userSignup()">Create Account</button><p style="text-align:center; margin-top:16px;">Have an account? <a href="#" onclick="switchToLogin()" style="color:var(--accent);">Login</a></p><div id="signupMessage" style="text-align:center; margin-top:12px; color:var(--accent);"></div></div></div>
 
 <div id="profileModal" class="modal"><div class="modal-content"><span class="close-modal" onclick="closeProfileModal()">✕</span><h2><i class="fas fa-user-circle"></i> My Profile</h2><div class="profile-info"><p><strong>Name:</strong> <span id="profileName"></span></p><p><strong>Email:</strong> <span id="profileEmail"></span></p><p><strong>Member Since:</strong> <span id="profileJoined"></span></p></div><button class="btn-secondary" style="width:100%;" onclick="logoutUser()">Logout</button></div></div>
 
@@ -360,18 +341,18 @@
     let currentQuiz = { questions: [], currentIndex: 0, score: 0 };
 
     const coursesData = [
-        { id: 1, title: "Digital Safety Library", description: "Complete NTSA manuals, road safety guides, emergency response protocols, first aid procedures, and defensive driving handbooks.", icon: "📚", content: "<h2>Digital Safety Library</h2><p>Access comprehensive safety manuals including: Kenya Highway Code, Defensive Driving Handbook, First Aid Guide, Emergency Response Protocols.</p><ul><li>Kenya Highway Code (Official)</li><li>Defensive Driving Techniques</li><li>First Aid & CPR Guide</li><li>Emergency Response Procedures</li></ul>" },
-        { id: 2, title: "NTSA Quiz Bank", description: "1000+ real NTSA-style questions, CBT mock exams, timed tests with instant scoring and detailed explanations.", icon: "📝", content: "<h2>NTSA Practice Questions</h2><p>Complete question bank covering Road Signs, Highway Code, Vehicle Controls, Defensive Driving, PSV Operations.</p>" },
-        { id: 3, title: "Learner Driver Hub", description: "Complete 21-unit NTSA syllabus covering road signs, vehicle controls, roundabouts, defensive driving, and emergency procedures.", icon: "🚗", content: "<h2>Learner Driver Hub - 21 Units</h2><p>Complete NTSA driving syllabus: Introduction, Highway Code, Controls, Maintenance, Moving Off, Turning, Roundabouts, Overtaking, Speed Limits, Defensive Driving, Night Driving, Weather, Alcohol & Drugs, Fatigue, Pedestrian Safety, Emergencies, First Aid, Insurance, Eco Driving, Test Prep, Advanced Skills.</p>" },
-        { id: 4, title: "PSV Professional Academy", description: "Professional matatu, bus, and PSV driver training focusing on discipline, passenger safety, and NTSA compliance.", icon: "🚌", content: "<h2>PSV Professional Academy</h2><p>Training for public service vehicle operators including Licensing, Professional Conduct, Passenger Safety, Defensive Driving, Route Management, Vehicle Inspection.</p>" },
-        { id: 5, title: "Boda Boda Safety Course", description: "Motorcycle safety training covering protective gear, defensive riding techniques, passenger handling, and professional rider discipline.", icon: "🏍️", content: "<h2>Boda Boda Safety Course</h2><p>Rider training: Controls, Protective Gear, Professionalism, Drug Prevention, Night Riding, Defensive Riding, Maintenance.</p>" },
-        { id: 6, title: "Electric Vehicle Training", description: "Modern EV driving techniques, regenerative braking systems, battery management, charging infrastructure, and safety protocols.", icon: "🔋", content: "<h2>Electric Vehicle Training</h2><p>EV Technology, Battery Management, Regenerative Braking, Charging Systems, EV Safety, Eco-Driving, EV Laws in Kenya.</p>" }
+        { id: 1, title: "Digital Safety Library", description: "Complete NTSA manuals, road safety guides, emergency response protocols, first aid procedures.", icon: "📚", content: "<h2>Digital Safety Library</h2><p>Kenya Highway Code, Defensive Driving, First Aid & CPR, Emergency Response.</p>" },
+        { id: 2, title: "NTSA Quiz Bank", description: "1000+ real NTSA-style questions, CBT mock exams, instant scoring.", icon: "📝", content: "<h2>NTSA Practice Questions</h2><p>Road Signs, Highway Code, Vehicle Controls, Defensive Driving, PSV, Boda, EV.</p>" },
+        { id: 3, title: "Learner Driver Hub", description: "Complete 21-unit NTSA syllabus covering all driving fundamentals.", icon: "🚗", content: "<h2>Learner Driver Hub - 21 Units</h2><p>Introduction, Highway Code, Controls, Maintenance, Moving Off, Turning, Roundabouts, Overtaking, Speed Limits, Defensive Driving, Night Driving, Weather, Alcohol & Drugs, Fatigue, Pedestrian Safety, Emergencies, First Aid, Insurance, Eco Driving, Test Prep, Advanced Skills.</p>" },
+        { id: 4, title: "PSV Professional Academy", description: "Professional matatu, bus, and PSV driver training.", icon: "🚌", content: "<h2>PSV Professional Academy</h2><p>Licensing, Professional Conduct, Passenger Safety, Defensive PSV Driving, Route Management, Vehicle Inspection.</p>" },
+        { id: 5, title: "Boda Boda Safety Course", description: "Motorcycle safety, protective gear, defensive riding.", icon: "🏍️", content: "<h2>Boda Boda Safety Course</h2><p>Controls, Protective Gear, Professionalism, Drug Prevention, Night Riding, Defensive Riding, Maintenance.</p>" },
+        { id: 6, title: "Electric Vehicle Training", description: "EV driving, regenerative braking, battery systems.", icon: "🔋", content: "<h2>Electric Vehicle Training</h2><p>EV Technology, Battery Management, Regenerative Braking, Charging Systems, EV Safety, Eco-Driving.</p>" }
     ];
 
     const questionBank = [
-        { id: 1, text: "What is the maximum speed limit for a PSV vehicle in Kenya?", options: ["100 km/h", "80 km/h", "110 km/h", "50 km/h"], correct: 1, explanation: "PSV vehicles limited to 80 km/h." },
-        { id: 2, text: "What does the 'STOP' sign require?", options: ["Slow down", "Complete halt", "Give way", "Honk"], correct: 1, explanation: "Complete halt required at STOP sign." },
-        { id: 3, text: "Legal BAC limit for commercial drivers in Kenya?", options: ["0.05%", "0.08%", "0.00%", "0.10%"], correct: 2, explanation: "Commercial drivers: 0.00% BAC." },
+        { id: 1, text: "Maximum speed limit for PSV in Kenya?", options: ["100 km/h", "80 km/h", "110 km/h", "50 km/h"], correct: 1, explanation: "PSV vehicles: 80 km/h limit." },
+        { id: 2, text: "What does STOP sign require?", options: ["Slow down", "Complete halt", "Give way", "Honk"], correct: 1, explanation: "Complete halt required at STOP sign." },
+        { id: 3, text: "Legal BAC for commercial drivers?", options: ["0.05%", "0.08%", "0.00%", "0.10%"], correct: 2, explanation: "Commercial drivers: 0.00% BAC." },
         { id: 4, text: "2-second rule helps maintain?", options: ["Fuel economy", "Following distance", "Engine temp", "Tyre pressure"], correct: 1, explanation: "Safe following distance." },
         { id: 5, text: "Driving in heavy rain, you should?", options: ["Use high beams", "Increase speed", "Reduce speed", "Brake suddenly"], correct: 2, explanation: "Reduce speed to prevent hydroplaning." }
     ];
@@ -462,16 +443,15 @@
         document.getElementById('userMenu').style.display = 'block';
         const name = currentUser?.user_metadata?.full_name || currentUser?.email?.split('@')[0] || 'User';
         document.getElementById('userNameDisplay').innerText = name;
-        // Mobile
-        document.getElementById('mobileAuthButtons').style.display = 'none';
-        document.getElementById('mobileUserMenu').style.display = 'flex';
+        if (document.getElementById('mobileAuthSection')) document.getElementById('mobileAuthSection').style.display = 'none';
+        if (document.getElementById('mobileUserSection')) document.getElementById('mobileUserSection').style.display = 'flex';
     }
     function updateUIForLoggedOutUser() {
         document.getElementById('loginNavBtn').style.display = 'inline-block';
         document.getElementById('signupNavBtn').style.display = 'inline-block';
         document.getElementById('userMenu').style.display = 'none';
-        document.getElementById('mobileAuthButtons').style.display = 'flex';
-        document.getElementById('mobileUserMenu').style.display = 'none';
+        if (document.getElementById('mobileAuthSection')) document.getElementById('mobileAuthSection').style.display = 'flex';
+        if (document.getElementById('mobileUserSection')) document.getElementById('mobileUserSection').style.display = 'none';
     }
     function openProfileModal() {
         if (!currentUser) return;
@@ -491,23 +471,23 @@
 
     // Mobile Menu Functions
     function openMobileMenu() {
-        document.getElementById('mobileMenuPanel').classList.add('open');
-        document.getElementById('mobileMenuOverlay').classList.add('active');
+        document.getElementById('mobilePanel').classList.add('open');
+        document.getElementById('mobileOverlay').classList.add('active');
         document.body.style.overflow = 'hidden';
     }
     function closeMobileMenu() {
-        document.getElementById('mobileMenuPanel').classList.remove('open');
-        document.getElementById('mobileMenuOverlay').classList.remove('active');
+        document.getElementById('mobilePanel').classList.remove('open');
+        document.getElementById('mobileOverlay').classList.remove('active');
         document.body.style.overflow = '';
     }
     function mobileNavigateTo(sectionId) {
         closeMobileMenu();
-        setTimeout(() => scrollToSection(sectionId), 100);
+        setTimeout(() => scrollToSection(sectionId), 150);
     }
-    function mobileOpenAuth() { closeMobileMenu(); setTimeout(() => openAuthModal(), 100); }
-    function mobileOpenSignup() { closeMobileMenu(); setTimeout(() => openSignupModal(), 100); }
-    function mobileOpenProfile() { closeMobileMenu(); setTimeout(() => openProfileModal(), 100); }
-    function mobileLogout() { closeMobileMenu(); setTimeout(() => logoutUser(), 100); }
+    function mobileOpenAuth() { closeMobileMenu(); setTimeout(() => openAuthModal(), 150); }
+    function mobileOpenSignup() { closeMobileMenu(); setTimeout(() => openSignupModal(), 150); }
+    function mobileOpenProfile() { closeMobileMenu(); setTimeout(() => openProfileModal(), 150); }
+    function mobileLogout() { closeMobileMenu(); setTimeout(() => logoutUser(), 150); }
 
     function scrollToSection(id) {
         const element = document.getElementById(id);
@@ -532,8 +512,8 @@
 
     // Event Listeners
     document.getElementById('mobileMenuBtn')?.addEventListener('click', openMobileMenu);
-    document.getElementById('closeMobileMenu')?.addEventListener('click', closeMobileMenu);
-    document.getElementById('mobileMenuOverlay')?.addEventListener('click', closeMobileMenu);
+    document.getElementById('closeMobileBtn')?.addEventListener('click', closeMobileMenu);
+    document.getElementById('mobileOverlay')?.addEventListener('click', closeMobileMenu);
     window.onclick = function(e) {
         if (e.target === document.getElementById('loginModal')) closeLoginModal();
         if (e.target === document.getElementById('signupModal')) closeSignupModal();
@@ -541,6 +521,7 @@
         if (e.target === document.getElementById('lessonModal')) closeLessonModal();
     };
 
+    // Expose globals
     window.viewLesson = viewLesson;
     window.closeLessonModal = closeLessonModal;
     window.scrollToSection = scrollToSection;
