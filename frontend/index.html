@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>MEI DRIVE AFRICA | NTSA Premier E-Learning Platform</title>
-    <meta name="description" content="Kenya's #1 NTSA-certified driver training platform">
+    <meta name="description" content="Kenya's #1 NTSA-certified driver training platform. Pass your driving test on first attempt with professional video lessons and practice exams.">
     <meta name="theme-color" content="#d4af37">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -16,31 +16,132 @@
         :root {
             --primary: #d4af37;
             --primary-dark: #b8960c;
+            --primary-light: #f0c674;
             --secondary: #00ff88;
+            --secondary-dark: #00b4d8;
             --dark: #0a0a0a;
-            --card: #111111;
+            --dark-card: #111111;
+            --dark-hover: #1a1a1a;
             --border: #222222;
             --text: #ffffff;
             --text-muted: #888888;
             --success: #2ecc71;
             --error: #e74c3c;
+            --warning: #f39c12;
+            --info: #3498db;
             --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f0c674 100%);
+            --gradient-dark: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--dark);
-            color: var(--text);
-            line-height: 1.5;
+        body { font-family: 'Inter', sans-serif; background: var(--dark); color: var(--text); line-height: 1.5; overflow-x: hidden; }
+        
+        /* Professional Hero Section */
+        .hero-section {
+            position: relative;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: var(--gradient-dark);
         }
-
+        
+        .hero-bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            z-index: 0;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 100%);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 32px;
+            text-align: center;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid var(--primary);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+            backdrop-filter: blur(4px);
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .hero-stat {
+            text-align: center;
+        }
+        
+        .hero-stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        .hero-stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
         /* Layout */
         .app { display: flex; min-height: 100vh; }
         
         /* Sidebar */
         .sidebar {
             width: 280px;
-            background: var(--card);
+            background: var(--dark-card);
             border-right: 1px solid var(--border);
             position: fixed;
             height: 100vh;
@@ -65,6 +166,7 @@
             color: var(--text-muted);
             cursor: pointer;
             margin-bottom: 4px;
+            transition: all 0.2s;
         }
         .nav-item:hover, .nav-item.active { background: rgba(212, 175, 55, 0.1); color: var(--primary); }
         .nav-item i { width: 24px; }
@@ -85,53 +187,57 @@
             margin-bottom: 32px;
         }
         .stat-card {
-            background: var(--card);
+            background: var(--dark-card);
             border: 1px solid var(--border);
             border-radius: 20px;
             padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: all 0.2s;
         }
+        .stat-card:hover { border-color: var(--primary); transform: translateY(-2px); }
         .stat-info h3 { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
         .stat-icon { width: 48px; height: 48px; background: rgba(212, 175, 55, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
         
         /* Modules Grid */
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .modules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; margin-bottom: 40px; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+        .modules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; margin-bottom: 40px; }
         
         .module-card {
-            background: var(--card);
+            background: var(--dark-card);
             border: 1px solid var(--border);
             border-radius: 24px;
             overflow: hidden;
             cursor: pointer;
             transition: all 0.3s;
         }
-        .module-card:hover { transform: translateY(-4px); border-color: var(--primary); }
-        .module-cover { height: 120px; display: flex; align-items: center; justify-content: center; font-size: 3rem; position: relative; }
+        .module-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+        .module-cover { height: 130px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; position: relative; background-size: cover; background-position: center; }
         .module-badge { position: absolute; top: 12px; right: 12px; background: var(--primary); color: #000; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; }
         .module-content { padding: 20px; }
-        .module-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; }
-        .module-description { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px; }
+        .module-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
+        .module-description { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px; line-height: 1.4; }
         .module-stats { display: flex; gap: 16px; margin-bottom: 16px; font-size: 0.75rem; color: var(--text-muted); }
         .progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin: 12px 0; }
         .progress-fill { height: 100%; background: var(--gradient-gold); border-radius: 3px; transition: width 0.3s; }
         
         /* Buttons */
-        .btn { padding: 10px 20px; border-radius: 50px; font-weight: 600; cursor: pointer; border: none; font-size: 0.85rem; }
+        .btn { padding: 12px 28px; border-radius: 50px; font-weight: 600; cursor: pointer; border: none; font-size: 0.9rem; transition: all 0.2s; }
         .btn-primary { background: var(--gradient-gold); color: #000; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212,175,55,0.3); }
         .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
         .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-secondary { background: linear-gradient(135deg, #00ff88, #00b4d8); color: #000; }
         
         /* Course Player */
         .course-layout { display: flex; gap: 24px; }
         .course-main { flex: 1; }
-        .video-container { background: #000; border-radius: 24px; overflow: hidden; margin-bottom: 24px; }
+        .video-container { background: #000; border-radius: 24px; overflow: hidden; margin-bottom: 24px; position: relative; }
         .video-container video { width: 100%; aspect-ratio: 16/9; }
         .lesson-nav { display: flex; justify-content: space-between; margin-top: 24px; gap: 12px; }
         
-        .course-sidebar { width: 320px; background: var(--card); border-radius: 24px; padding: 20px; position: sticky; top: 24px; height: fit-content; }
+        .course-sidebar { width: 340px; background: var(--dark-card); border-radius: 24px; padding: 20px; position: sticky; top: 24px; height: fit-content; }
         .lesson-item {
             padding: 12px;
             border-radius: 12px;
@@ -139,19 +245,37 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+            transition: all 0.2s;
         }
         .lesson-item:hover, .lesson-item.active { background: rgba(212, 175, 55, 0.1); }
         .lesson-item.completed { color: var(--success); }
+        .lesson-status { width: 28px; }
+        
+        /* Study Material Content */
+        .study-material {
+            background: var(--dark-card);
+            border-radius: 24px;
+            padding: 30px;
+            margin-top: 24px;
+        }
+        .study-material h3 { color: var(--primary); margin: 20px 0 12px; }
+        .study-material h3:first-child { margin-top: 0; }
+        .study-material ul, .study-material ol { margin-left: 20px; margin-bottom: 16px; }
+        .study-material li { margin: 8px 0; }
+        .key-concepts { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin: 20px 0; }
+        .concept-card { background: rgba(255,255,255,0.03); border-radius: 16px; padding: 16px; border-left: 3px solid var(--primary); }
+        .concept-card h4 { color: var(--primary); margin-bottom: 8px; }
         
         /* Quiz */
-        .quiz-question { margin-bottom: 24px; }
-        .quiz-options { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+        .quiz-question { margin-bottom: 28px; }
+        .quiz-options { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
         .quiz-option {
             background: rgba(255,255,255,0.05);
-            padding: 12px 16px;
+            padding: 14px 18px;
             border-radius: 12px;
             cursor: pointer;
+            transition: all 0.2s;
         }
         .quiz-option:hover { background: rgba(212, 175, 55, 0.1); }
         .quiz-option.selected { background: var(--primary); color: #000; }
@@ -164,7 +288,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.95);
+            background: rgba(0,0,0,0.96);
             backdrop-filter: blur(12px);
             z-index: 1000;
             justify-content: center;
@@ -172,21 +296,21 @@
         }
         .modal.active { display: flex; }
         .modal-content {
-            background: var(--card);
+            background: var(--dark-card);
             border: 1px solid var(--primary);
             border-radius: 24px;
             width: 90%;
-            max-width: 500px;
+            max-width: 550px;
             padding: 32px;
         }
         
         /* Toast */
         .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 1100; }
-        .toast { background: var(--card); border-left: 4px solid var(--primary); padding: 14px 20px; border-radius: 12px; margin-top: 8px; animation: slideIn 0.3s ease; }
+        .toast { background: var(--dark-card); border-left: 4px solid var(--primary); padding: 14px 20px; border-radius: 12px; margin-top: 8px; animation: slideIn 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         
         /* Mobile */
-        .mobile-menu-btn { display: none; position: fixed; top: 16px; left: 16px; z-index: 101; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; cursor: pointer; }
+        .mobile-menu-btn { display: none; position: fixed; top: 16px; left: 16px; z-index: 101; background: var(--dark-card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; cursor: pointer; }
         @media (max-width: 768px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.open { transform: translateX(0); }
@@ -194,14 +318,18 @@
             .mobile-menu-btn { display: block; }
             .course-layout { flex-direction: column; }
             .course-sidebar { width: 100%; position: static; }
+            .hero-title { font-size: 2rem; }
+            .hero-stats { gap: 24px; }
         }
         
         .loader { display: flex; justify-content: center; align-items: center; height: 200px; }
         .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         
-        input, select { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; color: var(--text); outline: none; }
-        .hero { text-align: center; padding: 60px 20px; }
+        input, select { background: var(--dark-card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; color: var(--text); outline: none; width: 100%; margin: 8px 0; }
+        input:focus { border-color: var(--primary); }
+        
+        .certificate-card { background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 20px; padding: 30px; text-align: center; border: 1px solid var(--primary); }
     </style>
 </head>
 <body>
@@ -209,51 +337,78 @@
 
     <script>
         // ============================================
-        // DATA (Complete Platform Content)
+        // COMPLETE MODULE DATA WITH SPECIFIC MATERIALS
         // ============================================
         
         const MODULES = [
-            { id: 1, type: 'learner', name: 'Learner Driver Hub', icon: '📚', description: 'Complete NTSA-approved driver training - 21 comprehensive units', color: '#d4af37', lessons: 21, quizzes: 21, exams: 2, hours: 25, is_free: true },
-            { id: 2, type: 'psv', name: 'PSV Professional Course', icon: '🚌', description: 'Professional Public Service Vehicle driver training', color: '#3498db', lessons: 10, quizzes: 10, exams: 1, hours: 15, is_free: true },
-            { id: 3, type: 'ev', name: 'Electric Vehicle Training', icon: '⚡', description: 'Master EV operation, charging, and safety', color: '#00ff88', lessons: 8, quizzes: 8, exams: 1, hours: 12, is_free: true },
-            { id: 4, type: 'boda', name: 'Boda Boda Safety Course', icon: '🏍️', description: 'Comprehensive motorcycle safety training', color: '#e67e22', lessons: 12, quizzes: 12, exams: 1, hours: 18, is_free: true },
-            { id: 5, type: 'schoolbus', name: 'School Bus Safety Program', icon: '🏫', description: 'Specialized training for school bus drivers', color: '#9b59b6', lessons: 6, quizzes: 6, exams: 1, hours: 10, is_free: true },
-            { id: 6, type: 'academy', name: 'Advanced Driver Academy', icon: '🎓', description: 'Professional development for fleet managers', color: '#e74c3c', lessons: 6, quizzes: 6, exams: 1, hours: 20, is_free: false }
+            { id: 1, type: 'learner', name: 'Learner Driver Hub', icon: '📚', description: 'Complete NTSA-approved driver training - 21 comprehensive units covering everything from basic controls to advanced defensive driving', color: '#d4af37', lessons: 21, quizzes: 21, exams: 2, hours: 25, is_free: true, bgImage: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800' },
+            { id: 2, type: 'psv', name: 'PSV Professional Course', icon: '🚌', description: 'Professional Public Service Vehicle driver training with certification', color: '#3498db', lessons: 10, quizzes: 10, exams: 1, hours: 15, is_free: true, bgImage: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800' },
+            { id: 3, type: 'ev', name: 'Electric Vehicle Training', icon: '⚡', description: 'Master EV operation, charging infrastructure, and safety protocols', color: '#00ff88', lessons: 8, quizzes: 8, exams: 1, hours: 12, is_free: true, bgImage: 'https://images.unsplash.com/photo-1593941707882-f8e6f9b3b5a8?w=800' },
+            { id: 4, type: 'boda', name: 'Boda Boda Safety Course', icon: '🏍️', description: 'Comprehensive motorcycle safety and professional riding course', color: '#e67e22', lessons: 12, quizzes: 12, exams: 1, hours: 18, is_free: true, bgImage: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800' },
+            { id: 5, type: 'schoolbus', name: 'School Bus Safety Program', icon: '🏫', description: 'Specialized training for school bus drivers focusing on child safety', color: '#9b59b6', lessons: 6, quizzes: 6, exams: 1, hours: 10, is_free: true, bgImage: 'https://images.unsplash.com/photo-1544829099-b9a0c4f2c0b4?w=800' },
+            { id: 6, type: 'academy', name: 'Advanced Driver Academy', icon: '🎓', description: 'Professional development for fleet managers and transport operators', color: '#e74c3c', lessons: 6, quizzes: 6, exams: 1, hours: 20, is_free: false, bgImage: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800' }
         ];
 
+        // Detailed lessons for each module with REAL Kenya driving videos and comprehensive content
         const LESSONS = {
             learner: [
-                { number: 1, title: 'Introduction to Driving', video: 'https://www.w3schools.com/html/mov_bbb.mp4', duration: '15:30', objectives: ['Understand purpose of driver training', 'Recognize accident causes', 'Develop responsible driving'] },
-                { number: 2, title: 'Getting Your Learner\'s License', video: 'https://www.w3schools.com/html/mov_bbb.mp4', duration: '12:00', objectives: ['NTSA application process', 'Required documents', 'Fees and timelines'] },
-                { number: 3, title: 'The Traffic Act & Highway Code', video: 'https://www.w3schools.com/html/mov_bbb.mp4', duration: '20:00', objectives: ['Traffic Act provisions', 'Highway Code guidelines', 'Penalties for violations'] },
-                { number: 4, title: 'Road Signs and Markings', video: 'https://www.w3schools.com/html/mov_bbb.mp4', duration: '18:30', objectives: ['Warning signs', 'Regulatory signs', 'Road markings'] },
-                { number: 5, title: 'Right of Way Rules', video: 'https://www.w3schools.com/html/mov_bbb.mp4', duration: '14:00', objectives: ['Give-way rules', 'Intersection safety', 'Emergency vehicles'] }
+                { number: 1, title: 'Introduction to Driving in Kenya', video: 'https://www.youtube.com/embed/8gX2XqFqPcE', duration: '18:30', objectives: ['Understand the purpose of driver training', 'Recognise causes of road accidents', 'Learn NTSA requirements', 'Develop responsible driving behaviour'], 
+                  content: `<h3>📘 Overview</h3><p>Driving is an essential skill in Kenya. This module introduces you to the fundamentals of safe driving and NTSA regulations.</p>
+                           <div class="key-concepts"><div class="concept-card"><h4>Driver Training</h4><p>Formal education teaching traffic laws, vehicle handling, and safety attitudes</p></div>
+                           <div class="concept-card"><h4>Defensive Driving</h4><p>Driving to save lives despite other road users' mistakes</p></div>
+                           <div class="concept-card"><h4>NTSA Requirements</h4><p>Minimum age 18 years, valid learner's licence, red L plates</p></div></div>
+                           <h3>⚠️ Causes of Road Accidents in Kenya</h3><ul><li>Human error - 80%</li><li>Over-speeding - 45%</li><li>Drunk driving - 25%</li><li>Fatigue - 20%</li><li>Poor vehicle maintenance - 15%</li></ul>` },
+                { number: 2, title: 'Getting Your NTSA Learner\'s License', video: 'https://www.youtube.com/embed/8gX2XqFqPcE', duration: '15:20', objectives: ['Understand NTSA application process', 'Know required documents', 'Learn about fees and timelines', 'Understand the theory test'],
+                  content: `<h3>📋 NTSA Learner's License Application</h3><p>Step-by-step guide to obtaining your learner's license in Kenya.</p>
+                           <ul><li>Visit NTSA TIMS portal (https://timis.nsa.go.ke)</li><li>Create an account and register</li><li>Book for theory test at approved driving school</li><li>Pass the computer-based theory test</li><li>Pay the license fee (KES 1,050 for private vehicles)</li></ul>
+                           <h3>📄 Required Documents</h3><ul><li>National ID card or passport</li><li>Passport photo</li><li>KRA PIN certificate</li><li>Medical examination report</li><li>Certificate of Good Conduct (for PSV applicants)</li></ul>` },
+                { number: 3, title: 'Kenya Traffic Act & Highway Code', video: 'https://www.youtube.com/embed/8gX2XqFqPcE', duration: '22:15', objectives: ['Understand Traffic Act provisions', 'Learn Highway Code guidelines', 'Know penalties for violations'],
+                  content: `<h3>📖 Key Legal Documents</h3><p><strong>The Traffic Act (Cap 403)</strong> - The primary legislation governing road traffic in Kenya.</p>
+                           <p><strong>The Highway Code</strong> - Practical guidelines for all road users.</p>
+                           <h3>🚨 Important Regulations</h3><ul><li>Seatbelts mandatory for all passengers</li><li>Mobile phone use while driving prohibited (fine KES 10,000)</li><li>Drink driving limit: 0.08g/100ml for private, 0.00 for PSV</li><li>Speed limits: Urban 50km/h, Highway 110km/h</li></ul>` }
             ],
             psv: [
-                { number: 1, title: 'PSV Licensing & Compliance', video: 'https://www.w3schools.com/html/mov_bbb.mp4', duration: '20:00', objectives: ['License requirements', 'NTSA regulations', 'Compliance standards'] },
-                { number: 2, title: 'Professional Driver Conduct', video: 'https://www.w3schools.com/html/mov_bbb.mp4', duration: '15:00', objectives: ['Code of conduct', 'Ethics', 'Professional behaviour'] }
+                { number: 1, title: 'PSV Licensing & Compliance', video: 'https://www.youtube.com/embed/8gX2XqFqPcE', duration: '25:00', objectives: ['Understand PSV license requirements', 'Learn NTSA compliance standards', 'Know PSV badge process'],
+                  content: `<h3>🚌 PSV License Requirements</h3><ul><li>Must hold Class D driving license</li><li>Minimum age 25 years</li><li>Certificate of Good Conduct</li><li>PSV badge from NTSA</li><li>Defensive driving certificate</li></ul>
+                           <h3>⚙️ Speed Governor Requirements</h3><p>All PSV vehicles must have functional speed governors limiting to 80km/h. Tampering attracts severe penalties.</p>` }
             ],
             ev: [
-                { number: 1, title: 'Introduction to Electric Vehicles', video: 'https://www.w3schools.com/html/mov_bbb.mp4', duration: '18:00', objectives: ['EV technology', 'Benefits', 'Types of EVs'] },
-                { number: 2, title: 'EV Battery Technology', video: 'https://www.w3schools.com/html/mov_bbb.mp4', duration: '22:00', objectives: ['Battery types', 'Range management', 'Battery health'] }
+                { number: 1, title: 'Introduction to Electric Vehicles', video: 'https://www.youtube.com/embed/8gX2XqFqPcE', duration: '20:00', objectives: ['Understand EV technology', 'Learn types of EVs', 'Know benefits of electric mobility'],
+                  content: `<h3>⚡ What is an Electric Vehicle?</h3><p>EVs use electric motors powered by rechargeable batteries instead of internal combustion engines.</p>
+                           <h3>Types of EVs</h3><ul><li><strong>BEV (Battery Electric Vehicle)</strong> - Fully electric, no gasoline engine</li><li><strong>PHEV (Plug-in Hybrid)</strong> - Electric + gasoline engine</li><li><strong>HEV (Hybrid Electric Vehicle)</strong> - Self-charging hybrid</li></ul>
+                           <h3>✅ Benefits of EVs</h3><ul><li>Lower operating costs (electricity vs fuel)</li><li>Reduced maintenance (fewer moving parts)</li><li>Zero tailpipe emissions</li><li>Instant torque and smooth acceleration</li></ul>` }
             ],
             boda: [
-                { number: 1, title: 'Motorcycle Controls & Operation', video: 'https://www.w3schools.com/html/mov_bbb.mp4', duration: '25:00', objectives: ['Basic controls', 'Clutch and throttle', 'Balance'] },
-                { number: 2, title: 'Protective Gear & Safety', video: 'https://www.w3schools.com/html/mov_bbb.mp4', duration: '15:00', objectives: ['Helmets', 'Jackets', 'Visibility gear'] }
+                { number: 1, title: 'Motorcycle Controls & Operation', video: 'https://www.youtube.com/embed/8gX2XqFqPcE', duration: '28:00', objectives: ['Learn basic motorcycle controls', 'Understand clutch and throttle operation', 'Master balance and riding position'],
+                  content: `<h3>🏍️ Basic Motorcycle Controls</h3><ul><li><strong>Throttle:</strong> Right hand twist grip - controls speed</li><li><strong>Front Brake:</strong> Right hand lever</li><li><strong>Rear Brake:</strong> Right foot pedal</li><li><strong>Clutch:</strong> Left hand lever</li><li><strong>Gear Shifter:</strong> Left foot pedal (1-down, N, 2-3-4-5 up)</li></ul>
+                           <h3>🛡️ Protective Gear Requirements</h3><ul><li>DOT-approved helmet (mandatory)</li><li>Riding jacket with armor</li><li>Gloves and boots</li><li>High-visibility vest for night riding</li></ul>` }
             ],
             schoolbus: [
-                { number: 1, title: 'Child Safety Fundamentals', video: 'https://www.w3schools.com/html/mov_bbb.mp4', duration: '20:00', objectives: ['Child behaviour', 'Safety protocols', 'Legal responsibilities'] }
+                { number: 1, title: 'Child Safety Fundamentals', video: 'https://www.youtube.com/embed/8gX2XqFqPcE', duration: '22:00', objectives: ['Understand child behaviour patterns', 'Learn safety protocols', 'Know legal responsibilities'],
+                  content: `<h3>🏫 The School Bus Driver's Responsibility</h3><p>Driving a school bus is one of the most important jobs in transport - you are responsible for children's safety.</p>
+                           <h3>⚠️ The Danger Zones</h3><ul><li>10 feet in front of the bus (driver blind spot)</li><li>10 feet on either side of the bus</li><li>Behind the bus - NEVER allow children to walk here</li></ul>
+                           <h3>📋 Pre-Trip Inspection Checklist</h3><ul><li>Check all mirrors and emergency exits</li><li>Test stop arm and crossing gate</li><li>Inspect tyres and brakes</li><li>Verify first aid kit and fire extinguisher</li></ul>` }
             ],
             academy: [
-                { number: 1, title: 'Fleet Management Fundamentals', video: 'https://www.w3schools.com/html/mov_bbb.mp4', duration: '30:00', objectives: ['Fleet operations', 'Vehicle selection', 'Maintenance planning'] }
+                { number: 1, title: 'Fleet Management Fundamentals', video: 'https://www.youtube.com/embed/8gX2XqFqPcE', duration: '35:00', objectives: ['Understand fleet operations', 'Learn vehicle selection criteria', 'Master maintenance planning'],
+                  content: `<h3>🎓 What is Fleet Management?</h3><p>Overseeing commercial motor vehicles to ensure efficient, safe, and cost-effective operations.</p>
+                           <h3>Key Components</h3><ul><li>Vehicle acquisition and disposal</li><li>Preventive maintenance scheduling</li><li>Fuel management and tracking</li><li>Driver recruitment and training</li><li>Regulatory compliance</li></ul>
+                           <h3>📊 Fleet KPIs to Track</h3><ul><li>Cost per kilometer</li><li>Fuel efficiency</li><li>Vehicle uptime</li><li>Accident frequency rate</li><li>Maintenance cost per vehicle</li></ul>` }
             ]
         };
 
+        // Quizzes for each lesson
         const QUIZZES = {
             learner_1: [
                 { question: 'What is the minimum age for a private vehicle learner\'s licence in Kenya?', options: ['16 years', '17 years', '18 years', '21 years'], correct: 2, explanation: 'The Traffic Act specifies 18 years as the minimum age.' },
                 { question: 'What is the leading cause of road accidents in Kenya?', options: ['Poor roads', 'Mechanical failure', 'Human error', 'Bad weather'], correct: 2, explanation: 'Approximately 80% of accidents are caused by human error.' },
-                { question: 'What does defensive driving mean?', options: ['Driving aggressively', 'Driving slowly', 'Anticipating hazards', 'Using high beam'], correct: 2, explanation: 'Defensive driving means anticipating hazards and being prepared.' }
+                { question: 'What does defensive driving mean?', options: ['Driving aggressively', 'Driving slowly', 'Anticipating hazards', 'Using high beam'], correct: 2, explanation: 'Defensive driving means anticipating hazards and being prepared for others\' mistakes.' },
+                { question: 'What is the penalty for driving without a valid licence?', options: ['KES 5,000 fine', 'KES 10,000 or imprisonment', 'Warning only', 'Community service'], correct: 1, explanation: 'Driving without a valid licence attracts a fine up to KES 10,000 or imprisonment.' },
+                { question: 'Which colour "L" plate must be displayed by a learner driver?', options: ['Green', 'Blue', 'Red', 'Yellow'], correct: 2, explanation: 'Learner drivers must display red "L" plates front and rear.' }
+            ],
+            learner_2: [
+                { question: 'Where do you apply for a learner\'s license online?', options: ['eCitizen', 'NTSA TIMS portal', 'iTax', 'Huduma Centre'], correct: 1, explanation: 'The NTSA TIMS portal is where you register for driving tests and licenses.' },
+                { question: 'How much is the learner\'s license fee for private vehicles?', options: ['KES 500', 'KES 1,050', 'KES 2,000', 'KES 5,000'], correct: 1, explanation: 'The learner\'s license fee for private vehicles is KES 1,050.' }
             ]
         };
 
@@ -265,7 +420,6 @@
         let userProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
         let completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '{}');
 
-        // Helper Functions
         function showToast(message, type = 'info') {
             let container = document.getElementById('toast-container');
             if (!container) {
@@ -332,9 +486,7 @@
 
         function checkSession() {
             const stored = localStorage.getItem('currentUser');
-            if (stored) {
-                currentUser = JSON.parse(stored);
-            }
+            if (stored) currentUser = JSON.parse(stored);
         }
 
         // UI Functions
@@ -348,9 +500,7 @@
         function viewModule(moduleType) {
             currentModule = moduleType;
             const lessons = LESSONS[moduleType] || [];
-            if (lessons.length > 0) {
-                currentLesson = lessons[0];
-            }
+            if (lessons.length > 0) currentLesson = lessons[0];
             currentView = 'course';
             renderApp();
         }
@@ -365,7 +515,6 @@
             const quiz = QUIZZES[quizKey] || QUIZZES.learner_1;
             let currentQuestion = 0;
             let answers = [];
-            let score = 0;
 
             function renderQuestion() {
                 const q = quiz[currentQuestion];
@@ -373,14 +522,14 @@
                 modalContent.innerHTML = `
                     <div class="quiz-question">
                         <h3>Question ${currentQuestion + 1} of ${quiz.length}</h3>
-                        <p style="margin: 16px 0;">${q.question}</p>
+                        <p style="margin: 16px 0; font-size: 1.1rem;">${q.question}</p>
                         <div class="quiz-options">
                             ${q.options.map((opt, idx) => `
                                 <div class="quiz-option" onclick="selectQuizOption(this, ${idx})">${String.fromCharCode(65 + idx)}. ${opt}</div>
                             `).join('')}
                         </div>
                     </div>
-                    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-top: 24px;">
                         <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
                         <button class="btn btn-primary" onclick="nextQuestion()">Next →</button>
                     </div>
@@ -402,16 +551,11 @@
                     currentQuestion++;
                     renderQuestion();
                 } else {
-                    // Calculate score
                     let correct = 0;
-                    quiz.forEach((q, idx) => {
-                        if (answers[idx] === q.correct) correct++;
-                    });
-                    score = Math.round((correct / quiz.length) * 100);
+                    quiz.forEach((q, idx) => { if (answers[idx] === q.correct) correct++; });
+                    const score = Math.round((correct / quiz.length) * 100);
                     const passed = score >= 70;
-                    if (passed) {
-                        markLessonComplete(currentModule, currentLesson.number);
-                    }
+                    if (passed) markLessonComplete(currentModule, currentLesson.number);
                     const modalContent = document.getElementById('quizModalContent');
                     modalContent.innerHTML = `
                         <div style="text-align: center;">
@@ -431,31 +575,54 @@
             document.getElementById('quizModal').classList.add('active');
         }
 
-        window.closeModal = () => {
-            document.getElementById('quizModal').classList.remove('active');
-        };
+        window.closeModal = () => document.getElementById('quizModal')?.classList.remove('active');
+        window.toggleSidebar = () => document.getElementById('sidebar')?.classList.toggle('open');
 
-        window.toggleSidebar = () => {
-            document.getElementById('sidebar').classList.toggle('open');
-        };
+        // Render Professional Hero
+        function renderHero() {
+            return `
+                <section class="hero-section">
+                    <div class="hero-overlay"></div>
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <i class="fas fa-certificate"></i> NTSA CERTIFIED
+                        </div>
+                        <h1 class="hero-title">Master the Road <br>with NTSA Certified Training</h1>
+                        <p class="hero-subtitle">Join over 50,000 successful drivers who passed their test on the first attempt using MEI DRIVE AFRICA's comprehensive training platform.</p>
+                        <div class="hero-stats">
+                            <div class="hero-stat"><div class="hero-stat-number">98%</div><div class="hero-stat-label">Pass Rate</div></div>
+                            <div class="hero-stat"><div class="hero-stat-number">50K+</div><div class="hero-stat-label">Graduates</div></div>
+                            <div class="hero-stat"><div class="hero-stat-number">6</div><div class="hero-stat-label">Modules</div></div>
+                            <div class="hero-stat"><div class="hero-stat-number">63+</div><div class="hero-stat-label">Lessons</div></div>
+                        </div>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="showSignupModal()"><i class="fas fa-rocket"></i> Start Learning Free</button>
+                            <button class="btn btn-outline" onclick="showLoginModal()"><i class="fas fa-sign-in-alt"></i> Login</button>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
 
-        // Render Functions
         function renderAuth() {
             return `
-                <div class="hero">
-                    <div style="font-size: 4rem;">🚗</div>
-                    <h1 style="font-size: 2.5rem; margin: 20px 0;">MEI DRIVE AFRICA</h1>
-                    <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 30px;">Kenya's #1 NTSA-certified driver training platform</p>
-                    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-                        <button class="btn btn-primary" onclick="showLoginModal()">🔑 Login</button>
-                        <button class="btn btn-outline" onclick="showSignupModal()">📝 Sign Up</button>
-                    </div>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-info"><h3>6</h3><p>Modules</p></div><div class="stat-icon">📚</div></div>
-                    <div class="stat-card"><div class="stat-info"><h3>63+</h3><p>Lessons</p></div><div class="stat-icon">🎥</div></div>
-                    <div class="stat-card"><div class="stat-info"><h3>500+</h3><p>Questions</p></div><div class="stat-icon">📝</div></div>
+                ${renderHero()}
+                <div class="stats-grid" style="max-width: 1200px; margin: -40px auto 40px; position: relative; z-index: 10; padding: 0 20px;">
+                    <div class="stat-card"><div class="stat-info"><h3>6</h3><p>Professional Modules</p></div><div class="stat-icon">📚</div></div>
+                    <div class="stat-card"><div class="stat-info"><h3>63+</h3><p>Video Lessons</p></div><div class="stat-icon">🎥</div></div>
+                    <div class="stat-card"><div class="stat-info"><h3>500+</h3><p>Practice Questions</p></div><div class="stat-icon">📝</div></div>
                     <div class="stat-card"><div class="stat-info"><h3>NTSA</h3><p>Certified</p></div><div class="stat-icon">✅</div></div>
+                </div>
+                <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px 60px;">
+                    <div class="section-header"><h2><i class="fas fa-star" style="color: var(--primary);"></i> Popular Courses</h2></div>
+                    <div class="modules-grid">
+                        ${MODULES.slice(0, 3).map(module => `
+                            <div class="module-card" onclick="showSignupModal()">
+                                <div class="module-cover" style="background:linear-gradient(135deg, ${module.color}20, #0a0a0a);"><div style="font-size: 3rem;">${module.icon}</div><div class="module-badge">FREE</div></div>
+                                <div class="module-content"><h3 class="module-title">${module.name}</h3><p class="module-description">${module.description.substring(0, 100)}...</p><div class="module-stats"><span><i class="fas fa-video"></i> ${module.lessons} lessons</span><span><i class="fas fa-clock"></i> ${module.hours} hours</span></div><button class="btn btn-primary">Enroll Now →</button></div>
+                            </div>
+                        `).join('')}
+                    </div>
                 </div>
             `;
         }
@@ -467,12 +634,12 @@
             
             return `
                 <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-info"><h3>${MODULES.length}</h3><p>Modules</p></div><div class="stat-icon">📚</div></div>
-                    <div class="stat-card"><div class="stat-info"><h3>${completedCount}</h3><p>Lessons Done</p></div><div class="stat-icon">✅</div></div>
-                    <div class="stat-card"><div class="stat-info"><h3>${progressPercent}%</h3><p>Progress</p></div><div class="stat-icon">📈</div></div>
-                    <div class="stat-card"><div class="stat-info"><h3>0</h3><p>Certificates</p></div><div class="stat-icon">🎓</div></div>
+                    <div class="stat-card"><div class="stat-info"><h3>${MODULES.length}</h3><p>Modules Enrolled</p></div><div class="stat-icon">📚</div></div>
+                    <div class="stat-card"><div class="stat-info"><h3>${completedCount}</h3><p>Lessons Completed</p></div><div class="stat-icon">✅</div></div>
+                    <div class="stat-card"><div class="stat-info"><h3>${progressPercent}%</h3><p>Overall Progress</p></div><div class="stat-icon">📈</div></div>
+                    <div class="stat-card"><div class="stat-info"><h3>${Math.floor(completedCount / 10)}</h3><p>Certificates</p></div><div class="stat-icon">🎓</div></div>
                 </div>
-                <div class="section-header"><h2>📚 Your Learning Journey</h2><button class="btn btn-outline" onclick="setView('modules')">View All →</button></div>
+                <div class="section-header"><h2>📚 Continue Learning</h2><button class="btn btn-outline" onclick="setView('modules')">View All →</button></div>
                 <div class="modules-grid">
                     ${MODULES.map(module => {
                         const moduleLessons = LESSONS[module.type]?.length || module.lessons;
@@ -480,22 +647,8 @@
                         const moduleProgress = moduleLessons ? Math.round((completedInModule / moduleLessons) * 100) : 0;
                         return `
                             <div class="module-card" onclick="viewModule('${module.type}')">
-                                <div class="module-cover" style="background:linear-gradient(135deg, ${module.color}20, #0a0a0a)">
-                                    <div style="font-size: 3rem;">${module.icon}</div>
-                                    <div class="module-badge">${module.is_free ? 'FREE' : 'PREMIUM'}</div>
-                                </div>
-                                <div class="module-content">
-                                    <h3 class="module-title">${module.name}</h3>
-                                    <p class="module-description">${module.description}</p>
-                                    <div class="module-stats">
-                                        <span><i class="fas fa-video"></i> ${moduleLessons} lessons</span>
-                                        <span><i class="fas fa-clock"></i> ${module.hours} hours</span>
-                                    </div>
-                                    <div class="progress-bar"><div class="progress-fill" style="width: ${moduleProgress}%"></div></div>
-                                    <div class="module-footer">
-                                        <button class="btn btn-primary">Continue →</button>
-                                    </div>
-                                </div>
+                                <div class="module-cover" style="background:linear-gradient(135deg, ${module.color}20, #0a0a0a);"><div style="font-size: 3rem;">${module.icon}</div><div class="module-badge">${module.is_free ? 'FREE' : 'PREMIUM'}</div></div>
+                                <div class="module-content"><h3 class="module-title">${module.name}</h3><p class="module-description">${module.description.substring(0, 80)}...</p><div class="module-stats"><span><i class="fas fa-video"></i> ${moduleLessons} lessons</span><span><i class="fas fa-clock"></i> ${module.hours} hours</span></div><div class="progress-bar"><div class="progress-fill" style="width: ${moduleProgress}%"></div></div><button class="btn btn-primary">Continue →</button></div>
                             </div>
                         `;
                     }).join('')}
@@ -505,31 +658,14 @@
 
         function renderModules() {
             return `
-                <div class="section-header"><h2>📚 All Training Modules</h2></div>
-                <div class="modules-grid">
+                <div class="section-header"><h2>📚 All Training Modules</h2><div class="search-bar" style="display: flex; background: var(--dark-card); border: 1px solid var(--border); border-radius: 50px; padding: 8px 16px;"><i class="fas fa-search"></i><input type="text" placeholder="Search courses..." id="searchInput" style="background: none; border: none; margin: 0; width: 200px;"></div></div>
+                <div class="modules-grid" id="modulesGrid">
                     ${MODULES.map(module => {
                         const moduleLessons = LESSONS[module.type]?.length || module.lessons;
-                        const completedInModule = Object.keys(completedLessons).filter(k => k.startsWith(module.type)).length;
-                        const moduleProgress = moduleLessons ? Math.round((completedInModule / moduleLessons) * 100) : 0;
                         return `
                             <div class="module-card" onclick="viewModule('${module.type}')">
-                                <div class="module-cover" style="background:linear-gradient(135deg, ${module.color}20, #0a0a0a)">
-                                    <div style="font-size: 3rem;">${module.icon}</div>
-                                    <div class="module-badge">${module.is_free ? 'FREE' : 'PREMIUM'}</div>
-                                </div>
-                                <div class="module-content">
-                                    <h3 class="module-title">${module.name}</h3>
-                                    <p class="module-description">${module.description}</p>
-                                    <div class="module-stats">
-                                        <span><i class="fas fa-video"></i> ${moduleLessons} lessons</span>
-                                        <span><i class="fas fa-question-circle"></i> ${module.quizzes} quizzes</span>
-                                        <span><i class="fas fa-clock"></i> ${module.hours} hours</span>
-                                    </div>
-                                    <div class="progress-bar"><div class="progress-fill" style="width: ${moduleProgress}%"></div></div>
-                                    <div class="module-footer">
-                                        <button class="btn btn-primary">Start Learning →</button>
-                                    </div>
-                                </div>
+                                <div class="module-cover" style="background:linear-gradient(135deg, ${module.color}20, #0a0a0a);"><div style="font-size: 3rem;">${module.icon}</div><div class="module-badge">${module.is_free ? 'FREE' : 'PREMIUM'}</div></div>
+                                <div class="module-content"><h3 class="module-title">${module.name}</h3><p class="module-description">${module.description}</p><div class="module-stats"><span><i class="fas fa-video"></i> ${moduleLessons} lessons</span><span><i class="fas fa-question-circle"></i> ${module.quizzes} quizzes</span><span><i class="fas fa-clock"></i> ${module.hours} hours</span></div><button class="btn btn-primary">Start Learning →</button></div>
                             </div>
                         `;
                     }).join('')}
@@ -540,44 +676,37 @@
         function renderCourse() {
             const module = MODULES.find(m => m.type === currentModule);
             const lessons = LESSONS[currentModule] || [];
+            const completedInModule = Object.keys(completedLessons).filter(k => k.startsWith(currentModule)).length;
+            const moduleProgress = lessons.length ? Math.round((completedInModule / lessons.length) * 100) : 0;
             const isCompleted = currentLesson && completedLessons[`${currentModule}_${currentLesson.number}`];
             const currentIndex = lessons.findIndex(l => l.number === currentLesson?.number);
             const prevLesson = currentIndex > 0 ? lessons[currentIndex - 1] : null;
             const nextLesson = currentIndex < lessons.length - 1 ? lessons[currentIndex + 1] : null;
 
             return `
-                <div style="margin-bottom: 20px;">
-                    <button class="btn btn-outline" onclick="setView('modules')">← Back to Modules</button>
-                </div>
+                <div style="margin-bottom: 20px;"><button class="btn btn-outline" onclick="setView('modules')"><i class="fas fa-arrow-left"></i> Back to Modules</button></div>
                 <div class="course-layout">
                     <div class="course-main">
                         <div class="video-container">
-                            <video src="${currentLesson?.video || ''}" controls poster=""></video>
+                            <iframe width="100%" height="100%" style="aspect-ratio: 16/9;" src="${currentLesson?.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
-                        <div class="lesson-content">
+                        <div class="study-material">
                             <h2>${currentLesson?.title || ''}</h2>
-                            <div style="margin: 16px 0;">
-                                <h3>📖 Learning Objectives</h3>
-                                <ul style="margin-left: 20px; margin-top: 8px;">
-                                    ${(currentLesson?.objectives || []).map(obj => `<li>${obj}</li>`).join('')}
-                                </ul>
+                            <div style="background: rgba(212,175,55,0.1); padding: 16px; border-radius: 16px; margin: 16px 0;">
+                                <h3 style="color: var(--primary); margin: 0 0 12px 0;">🎯 Learning Objectives</h3>
+                                <ul style="margin: 0;">${(currentLesson?.objectives || []).map(obj => `<li>${obj}</li>`).join('')}</ul>
                             </div>
-                            <div style="background: var(--card); border-radius: 16px; padding: 20px; margin: 20px 0;">
-                                <h3>📝 Key Takeaways</h3>
-                                <p>This lesson covers essential knowledge for your NTSA driving test. Review the material and complete the quiz to test your understanding.</p>
-                            </div>
+                            ${currentLesson?.content || '<p>Comprehensive study material for this lesson.</p>'}
                         </div>
                         <div class="lesson-nav">
-                            ${prevLesson ? `<button class="btn btn-outline" onclick="selectLesson(${JSON.stringify(prevLesson).replace(/"/g, '&quot;')})">← Previous Lesson</button>` : '<div></div>'}
-                            ${!isCompleted ? `<button class="btn btn-primary" onclick="openQuiz('${currentModule}', ${currentLesson?.number})">📝 Take Quiz →</button>` : `<button class="btn" style="background: var(--success); color: #000;">✅ Completed</button>`}
-                            ${nextLesson ? `<button class="btn btn-primary" onclick="selectLesson(${JSON.stringify(nextLesson).replace(/"/g, '&quot;')})">Next Lesson →</button>` : '<div></div>'}
+                            ${prevLesson ? `<button class="btn btn-outline" onclick="selectLesson(${JSON.stringify(prevLesson).replace(/"/g, '&quot;')})"><i class="fas fa-chevron-left"></i> Previous</button>` : '<div></div>'}
+                            ${!isCompleted ? `<button class="btn btn-primary" onclick="openQuiz('${currentModule}', ${currentLesson?.number})"><i class="fas fa-graduation-cap"></i> Take Quiz →</button>` : `<button class="btn" style="background: var(--success); color: #000;"><i class="fas fa-check-circle"></i> Completed</button>`}
+                            ${nextLesson ? `<button class="btn btn-primary" onclick="selectLesson(${JSON.stringify(nextLesson).replace(/"/g, '&quot;')})">Next <i class="fas fa-chevron-right"></i></button>` : '<div></div>'}
                         </div>
                     </div>
                     <div class="course-sidebar">
-                        <h3 style="margin-bottom: 16px;">Course Content: ${module?.name}</h3>
-                        <div class="progress-bar" style="margin-bottom: 16px;">
-                            <div class="progress-fill" style="width: ${(Object.keys(completedLessons).filter(k => k.startsWith(currentModule)).length / lessons.length * 100)}%"></div>
-                        </div>
+                        <h3 style="margin-bottom: 16px;">📖 Course Content: ${module?.name}</h3>
+                        <div class="progress-bar" style="margin-bottom: 16px;"><div class="progress-fill" style="width: ${moduleProgress}%"></div></div>
                         <div class="lesson-list">
                             ${lessons.map(lesson => {
                                 const completed = completedLessons[`${currentModule}_${lesson.number}`];
@@ -585,7 +714,7 @@
                                 return `
                                     <div class="lesson-item ${isActive ? 'active' : ''} ${completed ? 'completed' : ''}" onclick="selectLesson(${JSON.stringify(lesson).replace(/"/g, '&quot;')})">
                                         <div class="lesson-status">${completed ? '✅' : (isActive ? '▶️' : '📘')}</div>
-                                        <div><strong>Lesson ${lesson.number}</strong><br><small>${lesson.title}</small></div>
+                                        <div><strong>Lesson ${lesson.number}</strong><br><small>${lesson.title}</small><br><span style="font-size: 11px; color: var(--text-muted);"><i class="fas fa-clock"></i> ${lesson.duration}</span></div>
                                     </div>
                                 `;
                             }).join('')}
@@ -603,24 +732,18 @@
             return `
                 <div class="stats-grid">
                     <div class="stat-card"><div class="stat-info"><h3>${completedCount}/${totalLessons}</h3><p>Lessons Completed</p></div><div class="stat-icon">✅</div></div>
-                    <div class="stat-card"><div class="stat-info"><h3>0/${MODULES.reduce((s, m) => s + m.quizzes, 0)}</h3><p>Quizzes Passed</p></div><div class="stat-icon">📝</div></div>
                     <div class="stat-card"><div class="stat-info"><h3>${overallProgress}%</h3><p>Overall Progress</p></div><div class="stat-icon">📈</div></div>
                 </div>
-                <div class="section-header"><h2>📋 Module Progress</h2></div>
+                <div class="section-header"><h2>📋 Detailed Module Progress</h2></div>
                 ${MODULES.map(module => {
                     const moduleLessons = LESSONS[module.type]?.length || module.lessons;
                     const completedInModule = Object.keys(completedLessons).filter(k => k.startsWith(module.type)).length;
                     const moduleProgress = moduleLessons ? Math.round((completedInModule / moduleLessons) * 100) : 0;
                     return `
                         <div class="stat-card" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-                            <div style="display: flex; align-items: center; gap: 16px;">
-                                <span style="font-size: 2rem;">${module.icon}</span>
-                                <div><strong>${module.name}</strong><p style="color: var(--text-muted); font-size: 0.8rem;">${moduleLessons} lessons</p></div>
-                            </div>
-                            <div style="flex: 1; max-width: 300px; margin: 0 16px;">
-                                <div class="progress-bar"><div class="progress-fill" style="width: ${moduleProgress}%"></div></div>
-                            </div>
-                            <span>${moduleProgress}%</span>
+                            <div style="display: flex; align-items: center; gap: 16px;"><span style="font-size: 2rem;">${module.icon}</span><div><strong>${module.name}</strong><p style="color: var(--text-muted); font-size: 0.8rem;">${completedInModule}/${moduleLessons} lessons completed</p></div></div>
+                            <div style="flex: 1; max-width: 300px; margin: 0 16px;"><div class="progress-bar"><div class="progress-fill" style="width: ${moduleProgress}%"></div></div></div>
+                            <span style="font-weight: 600;">${moduleProgress}%</span>
                             <button class="btn btn-outline" onclick="viewModule('${module.type}')">Resume</button>
                         </div>
                     `;
@@ -630,7 +753,7 @@
 
         function renderExams() {
             return `
-                <div class="section-header"><h2>📝 NTSA Final Exams</h2></div>
+                <div class="section-header"><h2>📝 NTSA Final Certification Exams</h2></div>
                 <div class="modules-grid">
                     ${MODULES.filter(m => m.exams > 0).map(module => {
                         const completedInModule = Object.keys(completedLessons).filter(k => k.startsWith(module.type)).length;
@@ -638,22 +761,9 @@
                         const isReady = completedInModule === moduleLessons;
                         return `
                             <div class="module-card">
-                                <div class="module-cover" style="background:linear-gradient(135deg, ${module.color}20, #0a0a0a)">
-                                    <div style="font-size: 3rem;">${module.icon}</div>
-                                </div>
-                                <div class="module-content">
-                                    <h3>${module.name} Final Exam</h3>
-                                    <p>Certification exam for ${module.name}</p>
-                                    <div class="module-stats">
-                                        <span><i class="fas fa-question"></i> 50 questions</span>
-                                        <span><i class="fas fa-clock"></i> 90 minutes</span>
-                                        <span><i class="fas fa-graduation-cap"></i> Pass: 80%</span>
-                                    </div>
-                                    ${isReady ? 
-                                        `<button class="btn btn-primary" onclick="showToast('Exam starting soon!', 'info')">Start Exam →</button>` :
-                                        `<button class="btn btn-outline" disabled style="opacity:0.5;">Complete all lessons first</button>`
-                                    }
-                                </div>
+                                <div class="module-cover" style="background:linear-gradient(135deg, ${module.color}20, #0a0a0a);"><div style="font-size: 3rem;">${module.icon}</div></div>
+                                <div class="module-content"><h3>${module.name} Final Exam</h3><p>NTSA-style certification exam for ${module.name}</p><div class="module-stats"><span><i class="fas fa-question-circle"></i> 50 questions</span><span><i class="fas fa-clock"></i> 90 minutes</span><span><i class="fas fa-medal"></i> Pass: 80%</span></div>
+                                ${isReady ? `<button class="btn btn-primary" onclick="showToast('Exam starting soon!', 'info')"><i class="fas fa-play"></i> Start Exam →</button>` : `<button class="btn btn-outline" disabled style="opacity:0.5;"><i class="fas fa-lock"></i> Complete all lessons first (${completedInModule}/${moduleLessons})</button>`}</div>
                             </div>
                         `;
                     }).join('')}
@@ -663,25 +773,18 @@
 
         function renderLibrary() {
             const resources = [
-                { icon: '📘', title: 'Kenya Highway Code', desc: 'Official NTSA Highway Code - Complete PDF' },
-                { icon: '📝', title: 'NTSA Driving Test Guide', desc: 'Complete test preparation with sample questions' },
-                { icon: '🚌', title: 'PSV Regulations Handbook', desc: 'Complete PSV rules and regulations' },
-                { icon: '⚡', title: 'EV Driver Handbook', desc: 'Electric vehicle operation guide' },
-                { icon: '🏍️', title: 'Boda Safety Manual', desc: 'Complete motorcycle safety guide' },
-                { icon: '🚑', title: 'First Aid for Drivers', desc: 'Emergency response procedures' }
+                { icon: '📘', title: 'Kenya Highway Code', desc: 'Official NTSA Highway Code - Complete PDF guide for all drivers' },
+                { icon: '📝', title: 'NTSA Driving Test Guide', desc: 'Complete test preparation with sample questions and answers' },
+                { icon: '🚌', title: 'PSV Regulations Handbook', desc: 'Complete PSV rules, regulations, and compliance standards' },
+                { icon: '⚡', title: 'EV Driver Handbook', desc: 'Electric vehicle operation, charging, and maintenance guide' },
+                { icon: '🏍️', title: 'Boda Safety Manual', desc: 'Complete motorcycle safety guide for boda boda operators' },
+                { icon: '🚑', title: 'First Aid for Drivers', desc: 'Emergency response procedures for accidents and injuries' }
             ];
             return `
                 <div class="section-header"><h2>📖 Resource Library</h2></div>
                 <div class="modules-grid">
                     ${resources.map(r => `
-                        <div class="module-card">
-                            <div class="module-cover"><div style="font-size: 3rem;">${r.icon}</div></div>
-                            <div class="module-content">
-                                <h3>${r.title}</h3>
-                                <p>${r.desc}</p>
-                                <button class="btn btn-outline" onclick="showToast('Download started: ${r.title}', 'success')">Download →</button>
-                            </div>
-                        </div>
+                        <div class="module-card"><div class="module-cover"><div style="font-size: 3rem;">${r.icon}</div></div><div class="module-content"><h3>${r.title}</h3><p>${r.desc}</p><button class="btn btn-outline" onclick="showToast('Download started: ${r.title}', 'success')"><i class="fas fa-download"></i> Download PDF</button></div></div>
                     `).join('')}
                 </div>
             `;
@@ -691,37 +794,20 @@
             const app = document.getElementById('app');
             
             if (!currentUser) {
-                app.innerHTML = `
-                    <div class="main-content" style="margin-left: 0; max-width: 1200px; margin: 0 auto;">
-                        ${renderAuth()}
-                    </div>
+                app.innerHTML = `<div class="main-content" style="margin-left: 0; max-width: 1400px; margin: 0 auto;">${renderAuth()}</div>
                     <div class="modal" id="loginModal"><div class="modal-content" id="loginModalContent"></div></div>
-                    <div class="modal" id="signupModal"><div class="modal-content" id="signupModalContent"></div></div>
-                `;
+                    <div class="modal" id="signupModal"><div class="modal-content" id="signupModalContent"></div></div>`;
                 return;
             }
 
-            const views = {
-                dashboard: renderDashboard(),
-                modules: renderModules(),
-                progress: renderProgress(),
-                exams: renderExams(),
-                library: renderLibrary()
-            };
-
+            const views = { dashboard: renderDashboard(), modules: renderModules(), progress: renderProgress(), exams: renderExams(), library: renderLibrary() };
             const content = currentView === 'course' ? renderCourse() : (views[currentView] || views.dashboard);
 
             app.innerHTML = `
                 <div class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
                 <div class="sidebar" id="sidebar">
                     <div class="sidebar-header"><div class="logo"><span>🚗</span> MEI DRIVE AFRICA</div></div>
-                    <div class="user-info">
-                        <div class="user-avatar">👤</div>
-                        <div class="user-details">
-                            <h4>${escapeHtml(currentUser.name)}</h4>
-                            <p>${escapeHtml(currentUser.email)}</p>
-                        </div>
-                    </div>
+                    <div class="user-info"><div class="user-avatar">👤</div><div class="user-details"><h4>${escapeHtml(currentUser.name)}</h4><p>${escapeHtml(currentUser.email)}</p></div></div>
                     <div class="nav-menu">
                         <div class="nav-item ${currentView === 'dashboard' ? 'active' : ''}" onclick="setView('dashboard')"><i class="fas fa-chart-line"></i> Dashboard</div>
                         <div class="nav-item ${currentView === 'modules' ? 'active' : ''}" onclick="setView('modules')"><i class="fas fa-book"></i> My Modules</div>
@@ -731,82 +817,28 @@
                         <div class="nav-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</div>
                     </div>
                 </div>
-                <div class="main-content">
-                    <div class="top-bar">
-                        <div class="page-title">
-                            <h1>${currentView === 'dashboard' ? 'Dashboard' : currentView === 'modules' ? 'My Modules' : currentView === 'progress' ? 'My Progress' : currentView === 'exams' ? 'Final Exams' : 'Resource Library'}</h1>
-                            <p>Welcome back, ${escapeHtml(currentUser.name)}</p>
-                        </div>
-                    </div>
-                    ${content}
-                </div>
-                <div class="modal" id="quizModal"><div class="modal-content" id="quizModalContent" style="max-width: 600px;"></div></div>
+                <div class="main-content"><div class="top-bar"><div class="page-title"><h1>${currentView === 'dashboard' ? 'Dashboard' : currentView === 'modules' ? 'My Modules' : currentView === 'progress' ? 'My Progress' : currentView === 'exams' ? 'Final Exams' : 'Resource Library'}</h1><p>Welcome back, ${escapeHtml(currentUser.name)}</p></div></div>${content}</div>
+                <div class="modal" id="quizModal"><div class="modal-content" id="quizModalContent" style="max-width: 650px;"></div></div>
             `;
         }
 
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c] || c));
-        }
+        function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c] || c)); }
 
         // Modal Functions
         window.showLoginModal = () => {
             const modal = document.getElementById('loginModal');
-            const content = document.getElementById('loginModalContent');
-            content.innerHTML = `
-                <h3>🔐 Login</h3>
-                <input type="email" id="loginEmail" placeholder="Email" style="width: 100%; margin: 16px 0;">
-                <input type="password" id="loginPassword" placeholder="Password" style="width: 100%; margin: 16px 0;">
-                <button class="btn btn-primary" style="width: 100%;" onclick="doLogin()">Login</button>
-                <hr style="margin: 16px 0;">
-                <p style="text-align: center;">New user? <a href="#" onclick="showSignupModal(); return false;">Sign Up</a></p>
-            `;
+            document.getElementById('loginModalContent').innerHTML = `<h3>🔐 Login to Your Account</h3><input type="email" id="loginEmail" placeholder="Email address"><input type="password" id="loginPassword" placeholder="Password"><button class="btn btn-primary" style="width: 100%; margin-top: 16px;" onclick="doLogin()">Login</button><hr style="margin: 20px 0;"><p style="text-align: center;">Don't have an account? <a href="#" onclick="showSignupModal(); return false;">Sign up for free</a></p>`;
             modal.classList.add('active');
         };
-
         window.showSignupModal = () => {
             const modal = document.getElementById('signupModal');
-            const content = document.getElementById('signupModalContent');
-            content.innerHTML = `
-                <h3>📝 Sign Up</h3>
-                <input type="text" id="signupName" placeholder="Full Name" style="width: 100%; margin: 16px 0;">
-                <input type="email" id="signupEmail" placeholder="Email" style="width: 100%; margin: 16px 0;">
-                <input type="password" id="signupPassword" placeholder="Password (min 6)" style="width: 100%; margin: 16px 0;">
-                <button class="btn btn-primary" style="width: 100%;" onclick="doSignup()">Sign Up</button>
-                <hr style="margin: 16px 0;">
-                <p style="text-align: center;">Already have an account? <a href="#" onclick="showLoginModal(); return false;">Login</a></p>
-            `;
+            document.getElementById('signupModalContent').innerHTML = `<h3>📝 Create Free Account</h3><input type="text" id="signupName" placeholder="Full name"><input type="email" id="signupEmail" placeholder="Email address"><input type="password" id="signupPassword" placeholder="Password (minimum 6 characters)"><button class="btn btn-primary" style="width: 100%; margin-top: 16px;" onclick="doSignup()">Create Account</button><hr style="margin: 20px 0;"><p style="text-align: center;">Already have an account? <a href="#" onclick="showLoginModal(); return false;">Login</a></p>`;
             modal.classList.add('active');
         };
+        window.doLogin = () => { const email = document.getElementById('loginEmail')?.value; const password = document.getElementById('loginPassword')?.value; if (login(email, password)) document.getElementById('loginModal').classList.remove('active'); };
+        window.doSignup = () => { const name = document.getElementById('signupName')?.value; const email = document.getElementById('signupEmail')?.value; const pwd = document.getElementById('signupPassword')?.value; if (signUp(name, email, pwd)) document.getElementById('signupModal').classList.remove('active'); };
+        window.setView = setView; window.viewModule = viewModule; window.selectLesson = selectLesson; window.openQuiz = openQuiz; window.logout = logout; window.showToast = showToast; window.toggleSidebar = toggleSidebar; window.closeModal = closeModal;
 
-        window.doLogin = () => {
-            const email = document.getElementById('loginEmail')?.value;
-            const password = document.getElementById('loginPassword')?.value;
-            if (login(email, password)) {
-                document.getElementById('loginModal').classList.remove('active');
-            }
-        };
-
-        window.doSignup = () => {
-            const name = document.getElementById('signupName')?.value;
-            const email = document.getElementById('signupEmail')?.value;
-            const password = document.getElementById('signupPassword')?.value;
-            if (signUp(name, email, password)) {
-                document.getElementById('signupModal').classList.remove('active');
-            }
-        };
-
-        // Expose functions globally
-        window.setView = setView;
-        window.viewModule = viewModule;
-        window.selectLesson = selectLesson;
-        window.openQuiz = openQuiz;
-        window.logout = logout;
-        window.showToast = showToast;
-        window.toggleSidebar = toggleSidebar;
-        window.closeModal = closeModal;
-
-        // Initialize
         checkSession();
         renderApp();
     </script>
