@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>MEI DRIVE AFRICA | NTSA Premier E-Learning Platform</title>
-    <meta name="description" content="Kenya's #1 NTSA-certified driver training platform. Pass your driving test on first attempt with professional video lessons and practice exams.">
+    <title>MEI DRIVE AFRICA | Premier Driver Training Platform</title>
+    <meta name="description" content="Kenya's modern driver training platform for learner drivers, PSV operators, boda boda riders, and fleet drivers.">
     <meta name="theme-color" content="#d4af37">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -38,7 +38,7 @@
         /* Professional Hero Section */
         .hero-section {
             position: relative;
-            min-height: 85vh;
+            min-height: 90vh;
             display: flex;
             align-items: center;
             overflow: hidden;
@@ -52,7 +52,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.3;
+            opacity: 0.2;
             z-index: 0;
         }
         
@@ -62,78 +62,118 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 100%);
+            background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 100%);
             z-index: 1;
         }
         
         .hero-content {
             position: relative;
             z-index: 2;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 60px 32px;
-            text-align: center;
+            padding: 60px 40px;
         }
         
         .hero-badge {
-            display: inline-block;
-            background: rgba(212, 175, 55, 0.15);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 175, 55, 0.12);
             border: 1px solid var(--primary);
-            padding: 8px 20px;
+            padding: 6px 16px;
             border-radius: 50px;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 500;
             margin-bottom: 24px;
             backdrop-filter: blur(4px);
+            color: var(--primary-light);
         }
         
         .hero-title {
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             font-weight: 800;
             line-height: 1.2;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             background: var(--gradient-gold);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
         
-        .hero-subtitle {
-            font-size: 1.2rem;
+        .hero-description {
+            font-size: 1.1rem;
             color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 32px;
+            max-width: 650px;
+            margin-bottom: 28px;
+            line-height: 1.6;
         }
+        
+        .hero-audience {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        
+        .audience-tag {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        
+        .audience-tag:hover { border-color: var(--primary); color: var(--primary); }
+        
+        .hero-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 32px 0;
+        }
+        
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .hero-feature i { color: var(--primary); font-size: 1rem; }
         
         .hero-stats {
             display: flex;
-            justify-content: center;
-            gap: 48px;
-            margin: 40px 0;
+            gap: 40px;
+            margin: 32px 0;
             flex-wrap: wrap;
         }
         
-        .hero-stat {
-            text-align: center;
-        }
-        
-        .hero-stat-number {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--primary);
-        }
-        
-        .hero-stat-label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
+        .hero-stat { text-align: left; }
+        .hero-stat-number { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
+        .hero-stat-label { font-size: 0.8rem; color: var(--text-muted); }
         
         .hero-buttons {
             display: flex;
             gap: 16px;
-            justify-content: center;
             flex-wrap: wrap;
+            margin-top: 16px;
         }
+        
+        .trust-badge {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        
+        .trust-badge i { color: var(--primary); margin-right: 4px; }
         
         /* Layout */
         .app { display: flex; min-height: 100vh; }
@@ -234,7 +274,7 @@
         .course-layout { display: flex; gap: 24px; }
         .course-main { flex: 1; }
         .video-container { background: #000; border-radius: 24px; overflow: hidden; margin-bottom: 24px; position: relative; }
-        .video-container video { width: 100%; aspect-ratio: 16/9; }
+        .video-container iframe { width: 100%; aspect-ratio: 16/9; border: none; }
         .lesson-nav { display: flex; justify-content: space-between; margin-top: 24px; gap: 12px; }
         
         .course-sidebar { width: 340px; background: var(--dark-card); border-radius: 24px; padding: 20px; position: sticky; top: 24px; height: fit-content; }
@@ -320,10 +360,10 @@
             .course-sidebar { width: 100%; position: static; }
             .hero-title { font-size: 2rem; }
             .hero-stats { gap: 24px; }
+            .hero-content { padding: 40px 20px; }
         }
         
-        .loader { display: flex; justify-content: center; align-items: center; height: 200px; }
-        .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
         @keyframes spin { to { transform: rotate(360deg); } }
         
         input, select { background: var(--dark-card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; color: var(--text); outline: none; width: 100%; margin: 8px 0; }
@@ -337,19 +377,18 @@
 
     <script>
         // ============================================
-        // COMPLETE MODULE DATA WITH SPECIFIC MATERIALS
+        // COMPLETE MODULE DATA
         // ============================================
         
         const MODULES = [
-            { id: 1, type: 'learner', name: 'Learner Driver Hub', icon: '📚', description: 'Complete NTSA-approved driver training - 21 comprehensive units covering everything from basic controls to advanced defensive driving', color: '#d4af37', lessons: 21, quizzes: 21, exams: 2, hours: 25, is_free: true, bgImage: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800' },
-            { id: 2, type: 'psv', name: 'PSV Professional Course', icon: '🚌', description: 'Professional Public Service Vehicle driver training with certification', color: '#3498db', lessons: 10, quizzes: 10, exams: 1, hours: 15, is_free: true, bgImage: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800' },
-            { id: 3, type: 'ev', name: 'Electric Vehicle Training', icon: '⚡', description: 'Master EV operation, charging infrastructure, and safety protocols', color: '#00ff88', lessons: 8, quizzes: 8, exams: 1, hours: 12, is_free: true, bgImage: 'https://images.unsplash.com/photo-1593941707882-f8e6f9b3b5a8?w=800' },
-            { id: 4, type: 'boda', name: 'Boda Boda Safety Course', icon: '🏍️', description: 'Comprehensive motorcycle safety and professional riding course', color: '#e67e22', lessons: 12, quizzes: 12, exams: 1, hours: 18, is_free: true, bgImage: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800' },
-            { id: 5, type: 'schoolbus', name: 'School Bus Safety Program', icon: '🏫', description: 'Specialized training for school bus drivers focusing on child safety', color: '#9b59b6', lessons: 6, quizzes: 6, exams: 1, hours: 10, is_free: true, bgImage: 'https://images.unsplash.com/photo-1544829099-b9a0c4f2c0b4?w=800' },
-            { id: 6, type: 'academy', name: 'Advanced Driver Academy', icon: '🎓', description: 'Professional development for fleet managers and transport operators', color: '#e74c3c', lessons: 6, quizzes: 6, exams: 1, hours: 20, is_free: false, bgImage: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800' }
+            { id: 1, type: 'learner', name: 'Learner Driver Hub', icon: '📚', description: 'Complete NTSA-approved driver training - 21 comprehensive units covering everything from basic controls to advanced defensive driving', color: '#d4af37', lessons: 21, quizzes: 21, exams: 2, hours: 25, is_free: true },
+            { id: 2, type: 'psv', name: 'PSV Professional Course', icon: '🚌', description: 'Professional Public Service Vehicle driver training with certification for matatu, bus, and taxi drivers', color: '#3498db', lessons: 10, quizzes: 10, exams: 1, hours: 15, is_free: true },
+            { id: 3, type: 'ev', name: 'Electric Vehicle Training', icon: '⚡', description: 'Master EV operation, charging infrastructure, and safety protocols for the future of transport', color: '#00ff88', lessons: 8, quizzes: 8, exams: 1, hours: 12, is_free: true },
+            { id: 4, type: 'boda', name: 'Boda Boda Safety Course', icon: '🏍️', description: 'Comprehensive motorcycle safety and professional riding course for boda boda operators', color: '#e67e22', lessons: 12, quizzes: 12, exams: 1, hours: 18, is_free: true },
+            { id: 5, type: 'schoolbus', name: 'School Bus Safety Program', icon: '🏫', description: 'Specialized training for school bus drivers focusing on child safety and emergency procedures', color: '#9b59b6', lessons: 6, quizzes: 6, exams: 1, hours: 10, is_free: true },
+            { id: 6, type: 'academy', name: 'Advanced Driver Academy', icon: '🎓', description: 'Professional development for fleet managers, transport operators, and driver trainers', color: '#e74c3c', lessons: 6, quizzes: 6, exams: 1, hours: 20, is_free: false }
         ];
 
-        // Detailed lessons for each module with REAL Kenya driving videos and comprehensive content
         const LESSONS = {
             learner: [
                 { number: 1, title: 'Introduction to Driving in Kenya', video: 'https://www.youtube.com/embed/8gX2XqFqPcE', duration: '18:30', objectives: ['Understand the purpose of driver training', 'Recognise causes of road accidents', 'Learn NTSA requirements', 'Develop responsible driving behaviour'], 
@@ -358,14 +397,9 @@
                            <div class="concept-card"><h4>Defensive Driving</h4><p>Driving to save lives despite other road users' mistakes</p></div>
                            <div class="concept-card"><h4>NTSA Requirements</h4><p>Minimum age 18 years, valid learner's licence, red L plates</p></div></div>
                            <h3>⚠️ Causes of Road Accidents in Kenya</h3><ul><li>Human error - 80%</li><li>Over-speeding - 45%</li><li>Drunk driving - 25%</li><li>Fatigue - 20%</li><li>Poor vehicle maintenance - 15%</li></ul>` },
-                { number: 2, title: 'Getting Your NTSA Learner\'s License', video: 'https://www.youtube.com/embed/8gX2XqFqPcE', duration: '15:20', objectives: ['Understand NTSA application process', 'Know required documents', 'Learn about fees and timelines', 'Understand the theory test'],
-                  content: `<h3>📋 NTSA Learner's License Application</h3><p>Step-by-step guide to obtaining your learner's license in Kenya.</p>
-                           <ul><li>Visit NTSA TIMS portal (https://timis.nsa.go.ke)</li><li>Create an account and register</li><li>Book for theory test at approved driving school</li><li>Pass the computer-based theory test</li><li>Pay the license fee (KES 1,050 for private vehicles)</li></ul>
-                           <h3>📄 Required Documents</h3><ul><li>National ID card or passport</li><li>Passport photo</li><li>KRA PIN certificate</li><li>Medical examination report</li><li>Certificate of Good Conduct (for PSV applicants)</li></ul>` },
-                { number: 3, title: 'Kenya Traffic Act & Highway Code', video: 'https://www.youtube.com/embed/8gX2XqFqPcE', duration: '22:15', objectives: ['Understand Traffic Act provisions', 'Learn Highway Code guidelines', 'Know penalties for violations'],
-                  content: `<h3>📖 Key Legal Documents</h3><p><strong>The Traffic Act (Cap 403)</strong> - The primary legislation governing road traffic in Kenya.</p>
-                           <p><strong>The Highway Code</strong> - Practical guidelines for all road users.</p>
-                           <h3>🚨 Important Regulations</h3><ul><li>Seatbelts mandatory for all passengers</li><li>Mobile phone use while driving prohibited (fine KES 10,000)</li><li>Drink driving limit: 0.08g/100ml for private, 0.00 for PSV</li><li>Speed limits: Urban 50km/h, Highway 110km/h</li></ul>` }
+                { number: 2, title: 'Getting Your Learner\'s License', video: 'https://www.youtube.com/embed/8gX2XqFqPcE', duration: '15:20', objectives: ['Understand NTSA application process', 'Know required documents', 'Learn about fees and timelines', 'Understand the theory test'],
+                  content: `<h3>📋 Learner's License Application Process</h3><ul><li>Visit NTSA TIMS portal (https://timis.ntsa.go.ke)</li><li>Create an account and register</li><li>Book for theory test at approved driving school</li><li>Pass the computer-based theory test</li><li>Pay the license fee (KES 1,050 for private vehicles)</li></ul>
+                           <h3>📄 Required Documents</h3><ul><li>National ID card or passport</li><li>Passport photo</li><li>KRA PIN certificate</li><li>Medical examination report</li><li>Certificate of Good Conduct (for PSV applicants)</li></ul>` }
             ],
             psv: [
                 { number: 1, title: 'PSV Licensing & Compliance', video: 'https://www.youtube.com/embed/8gX2XqFqPcE', duration: '25:00', objectives: ['Understand PSV license requirements', 'Learn NTSA compliance standards', 'Know PSV badge process'],
@@ -375,40 +409,30 @@
             ev: [
                 { number: 1, title: 'Introduction to Electric Vehicles', video: 'https://www.youtube.com/embed/8gX2XqFqPcE', duration: '20:00', objectives: ['Understand EV technology', 'Learn types of EVs', 'Know benefits of electric mobility'],
                   content: `<h3>⚡ What is an Electric Vehicle?</h3><p>EVs use electric motors powered by rechargeable batteries instead of internal combustion engines.</p>
-                           <h3>Types of EVs</h3><ul><li><strong>BEV (Battery Electric Vehicle)</strong> - Fully electric, no gasoline engine</li><li><strong>PHEV (Plug-in Hybrid)</strong> - Electric + gasoline engine</li><li><strong>HEV (Hybrid Electric Vehicle)</strong> - Self-charging hybrid</li></ul>
-                           <h3>✅ Benefits of EVs</h3><ul><li>Lower operating costs (electricity vs fuel)</li><li>Reduced maintenance (fewer moving parts)</li><li>Zero tailpipe emissions</li><li>Instant torque and smooth acceleration</li></ul>` }
+                           <h3>Types of EVs</h3><ul><li>BEV - Battery Electric Vehicle (fully electric)</li><li>PHEV - Plug-in Hybrid Electric Vehicle</li><li>HEV - Hybrid Electric Vehicle (self-charging)</li></ul>` }
             ],
             boda: [
                 { number: 1, title: 'Motorcycle Controls & Operation', video: 'https://www.youtube.com/embed/8gX2XqFqPcE', duration: '28:00', objectives: ['Learn basic motorcycle controls', 'Understand clutch and throttle operation', 'Master balance and riding position'],
-                  content: `<h3>🏍️ Basic Motorcycle Controls</h3><ul><li><strong>Throttle:</strong> Right hand twist grip - controls speed</li><li><strong>Front Brake:</strong> Right hand lever</li><li><strong>Rear Brake:</strong> Right foot pedal</li><li><strong>Clutch:</strong> Left hand lever</li><li><strong>Gear Shifter:</strong> Left foot pedal (1-down, N, 2-3-4-5 up)</li></ul>
+                  content: `<h3>🏍️ Basic Motorcycle Controls</h3><ul><li>Throttle: Right hand twist grip</li><li>Front Brake: Right hand lever</li><li>Rear Brake: Right foot pedal</li><li>Clutch: Left hand lever</li><li>Gear Shifter: Left foot pedal</li></ul>
                            <h3>🛡️ Protective Gear Requirements</h3><ul><li>DOT-approved helmet (mandatory)</li><li>Riding jacket with armor</li><li>Gloves and boots</li><li>High-visibility vest for night riding</li></ul>` }
             ],
             schoolbus: [
                 { number: 1, title: 'Child Safety Fundamentals', video: 'https://www.youtube.com/embed/8gX2XqFqPcE', duration: '22:00', objectives: ['Understand child behaviour patterns', 'Learn safety protocols', 'Know legal responsibilities'],
-                  content: `<h3>🏫 The School Bus Driver's Responsibility</h3><p>Driving a school bus is one of the most important jobs in transport - you are responsible for children's safety.</p>
-                           <h3>⚠️ The Danger Zones</h3><ul><li>10 feet in front of the bus (driver blind spot)</li><li>10 feet on either side of the bus</li><li>Behind the bus - NEVER allow children to walk here</li></ul>
-                           <h3>📋 Pre-Trip Inspection Checklist</h3><ul><li>Check all mirrors and emergency exits</li><li>Test stop arm and crossing gate</li><li>Inspect tyres and brakes</li><li>Verify first aid kit and fire extinguisher</li></ul>` }
+                  content: `<h3>🏫 The School Bus Driver's Responsibility</h3><p>Driving a school bus is one of the most important jobs in transport.</p>
+                           <h3>⚠️ The Danger Zones</h3><ul><li>10 feet in front of the bus (blind spot)</li><li>10 feet on either side</li><li>Behind the bus - never allow children here</li></ul>` }
             ],
             academy: [
                 { number: 1, title: 'Fleet Management Fundamentals', video: 'https://www.youtube.com/embed/8gX2XqFqPcE', duration: '35:00', objectives: ['Understand fleet operations', 'Learn vehicle selection criteria', 'Master maintenance planning'],
                   content: `<h3>🎓 What is Fleet Management?</h3><p>Overseeing commercial motor vehicles to ensure efficient, safe, and cost-effective operations.</p>
-                           <h3>Key Components</h3><ul><li>Vehicle acquisition and disposal</li><li>Preventive maintenance scheduling</li><li>Fuel management and tracking</li><li>Driver recruitment and training</li><li>Regulatory compliance</li></ul>
-                           <h3>📊 Fleet KPIs to Track</h3><ul><li>Cost per kilometer</li><li>Fuel efficiency</li><li>Vehicle uptime</li><li>Accident frequency rate</li><li>Maintenance cost per vehicle</li></ul>` }
+                           <h3>Key Components</h3><ul><li>Vehicle acquisition and disposal</li><li>Preventive maintenance scheduling</li><li>Fuel management and tracking</li><li>Driver recruitment and training</li></ul>` }
             ]
         };
 
-        // Quizzes for each lesson
         const QUIZZES = {
             learner_1: [
                 { question: 'What is the minimum age for a private vehicle learner\'s licence in Kenya?', options: ['16 years', '17 years', '18 years', '21 years'], correct: 2, explanation: 'The Traffic Act specifies 18 years as the minimum age.' },
                 { question: 'What is the leading cause of road accidents in Kenya?', options: ['Poor roads', 'Mechanical failure', 'Human error', 'Bad weather'], correct: 2, explanation: 'Approximately 80% of accidents are caused by human error.' },
-                { question: 'What does defensive driving mean?', options: ['Driving aggressively', 'Driving slowly', 'Anticipating hazards', 'Using high beam'], correct: 2, explanation: 'Defensive driving means anticipating hazards and being prepared for others\' mistakes.' },
-                { question: 'What is the penalty for driving without a valid licence?', options: ['KES 5,000 fine', 'KES 10,000 or imprisonment', 'Warning only', 'Community service'], correct: 1, explanation: 'Driving without a valid licence attracts a fine up to KES 10,000 or imprisonment.' },
-                { question: 'Which colour "L" plate must be displayed by a learner driver?', options: ['Green', 'Blue', 'Red', 'Yellow'], correct: 2, explanation: 'Learner drivers must display red "L" plates front and rear.' }
-            ],
-            learner_2: [
-                { question: 'Where do you apply for a learner\'s license online?', options: ['eCitizen', 'NTSA TIMS portal', 'iTax', 'Huduma Centre'], correct: 1, explanation: 'The NTSA TIMS portal is where you register for driving tests and licenses.' },
-                { question: 'How much is the learner\'s license fee for private vehicles?', options: ['KES 500', 'KES 1,050', 'KES 2,000', 'KES 5,000'], correct: 1, explanation: 'The learner\'s license fee for private vehicles is KES 1,050.' }
+                { question: 'What does defensive driving mean?', options: ['Driving aggressively', 'Driving slowly', 'Anticipating hazards', 'Using high beam'], correct: 2, explanation: 'Defensive driving means anticipating hazards and being prepared.' }
             ]
         };
 
@@ -578,26 +602,53 @@
         window.closeModal = () => document.getElementById('quizModal')?.classList.remove('active');
         window.toggleSidebar = () => document.getElementById('sidebar')?.classList.toggle('open');
 
-        // Render Professional Hero
+        // Enhanced Professional Hero
         function renderHero() {
             return `
                 <section class="hero-section">
                     <div class="hero-overlay"></div>
                     <div class="hero-content">
                         <div class="hero-badge">
-                            <i class="fas fa-certificate"></i> NTSA CERTIFIED
+                            <i class="fas fa-star-of-life"></i> Professional Driver Training Platform
                         </div>
-                        <h1 class="hero-title">Master the Road <br>with NTSA Certified Training</h1>
-                        <p class="hero-subtitle">Join over 50,000 successful drivers who passed their test on the first attempt using MEI DRIVE AFRICA's comprehensive training platform.</p>
+                        <h1 class="hero-title">Learn, Upgrade & Drive<br>with Confidence</h1>
+                        <p class="hero-description">MEI DRIVE AFRICA is Kenya's modern driver training platform designed for learner drivers, experienced motorists, PSV operators, school transport drivers, fleet drivers, and boda boda riders.</p>
+                        
+                        <div class="hero-audience">
+                            <span class="audience-tag">🎓 Preparing for your first driving test</span>
+                            <span class="audience-tag">📈 Upgrading your driving class</span>
+                            <span class="audience-tag">🔄 Refreshing professional driving skills</span>
+                            <span class="audience-tag">🚛 Training for commercial transport</span>
+                            <span class="audience-tag">⚠️ Improving road safety awareness</span>
+                        </div>
+                        
+                        <div class="hero-features">
+                            <div class="hero-feature"><i class="fas fa-check-circle"></i> Interactive learning modules</div>
+                            <div class="hero-feature"><i class="fas fa-check-circle"></i> Real mock exams & smart quizzes</div>
+                            <div class="hero-feature"><i class="fas fa-check-circle"></i> Professional driver refresher courses</div>
+                            <div class="hero-feature"><i class="fas fa-check-circle"></i> Video lessons, PDFs & practical guidance</div>
+                            <div class="hero-feature"><i class="fas fa-check-circle"></i> Progress tracking on mobile and desktop</div>
+                            <div class="hero-feature"><i class="fas fa-check-circle"></i> Training designed for modern Kenyan roads</div>
+                        </div>
+                        
                         <div class="hero-stats">
-                            <div class="hero-stat"><div class="hero-stat-number">98%</div><div class="hero-stat-label">Pass Rate</div></div>
-                            <div class="hero-stat"><div class="hero-stat-number">50K+</div><div class="hero-stat-label">Graduates</div></div>
-                            <div class="hero-stat"><div class="hero-stat-number">6</div><div class="hero-stat-label">Modules</div></div>
-                            <div class="hero-stat"><div class="hero-stat-number">63+</div><div class="hero-stat-label">Lessons</div></div>
+                            <div class="hero-stat"><div class="hero-stat-number">50,000+</div><div class="hero-stat-label">Trusted Drivers & Learners</div></div>
+                            <div class="hero-stat"><div class="hero-stat-number">6</div><div class="hero-stat-label">Professional Modules</div></div>
+                            <div class="hero-stat"><div class="hero-stat-number">63+</div><div class="hero-stat-label">Comprehensive Lessons</div></div>
+                            <div class="hero-stat"><div class="hero-stat-number">500+</div><div class="hero-stat-label">Practice Questions</div></div>
                         </div>
+                        
                         <div class="hero-buttons">
-                            <button class="btn btn-primary" onclick="showSignupModal()"><i class="fas fa-rocket"></i> Start Learning Free</button>
+                            <button class="btn btn-primary" onclick="showSignupModal()"><i class="fas fa-rocket"></i> Start Learning</button>
+                            <button class="btn btn-outline" onclick="setView('modules')"><i class="fas fa-th-large"></i> Explore Modules</button>
                             <button class="btn btn-outline" onclick="showLoginModal()"><i class="fas fa-sign-in-alt"></i> Login</button>
+                        </div>
+                        
+                        <div class="trust-badge">
+                            <span><i class="fas fa-shield-alt"></i> NTSA Compliant</span>
+                            <span><i class="fas fa-certificate"></i> Certified Training</span>
+                            <span><i class="fas fa-mobile-alt"></i> Mobile & Desktop Access</span>
+                            <span><i class="fas fa-headset"></i> 24/7 Support</span>
                         </div>
                     </div>
                 </section>
@@ -611,7 +662,7 @@
                     <div class="stat-card"><div class="stat-info"><h3>6</h3><p>Professional Modules</p></div><div class="stat-icon">📚</div></div>
                     <div class="stat-card"><div class="stat-info"><h3>63+</h3><p>Video Lessons</p></div><div class="stat-icon">🎥</div></div>
                     <div class="stat-card"><div class="stat-info"><h3>500+</h3><p>Practice Questions</p></div><div class="stat-icon">📝</div></div>
-                    <div class="stat-card"><div class="stat-info"><h3>NTSA</h3><p>Certified</p></div><div class="stat-icon">✅</div></div>
+                    <div class="stat-card"><div class="stat-info"><h3>NTSA</h3><p>Compliant</p></div><div class="stat-icon">✅</div></div>
                 </div>
                 <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px 60px;">
                     <div class="section-header"><h2><i class="fas fa-star" style="color: var(--primary);"></i> Popular Courses</h2></div>
@@ -658,8 +709,8 @@
 
         function renderModules() {
             return `
-                <div class="section-header"><h2>📚 All Training Modules</h2><div class="search-bar" style="display: flex; background: var(--dark-card); border: 1px solid var(--border); border-radius: 50px; padding: 8px 16px;"><i class="fas fa-search"></i><input type="text" placeholder="Search courses..." id="searchInput" style="background: none; border: none; margin: 0; width: 200px;"></div></div>
-                <div class="modules-grid" id="modulesGrid">
+                <div class="section-header"><h2>📚 All Training Modules</h2></div>
+                <div class="modules-grid">
                     ${MODULES.map(module => {
                         const moduleLessons = LESSONS[module.type]?.length || module.lessons;
                         return `
@@ -688,7 +739,7 @@
                 <div class="course-layout">
                     <div class="course-main">
                         <div class="video-container">
-                            <iframe width="100%" height="100%" style="aspect-ratio: 16/9;" src="${currentLesson?.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe src="${currentLesson?.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                         <div class="study-material">
                             <h2>${currentLesson?.title || ''}</h2>
