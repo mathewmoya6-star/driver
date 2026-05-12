@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Mei Drive Africa | Premier Driver Training Platform</title>
-    <meta name="description" content="Kenya's modern driver training platform for learner drivers, boda boda riders, PSV operators, and fleet drivers.">
+    <title>MEI DRIVE AFRICA | Premier Driver Training Platform</title>
+    <meta name="description" content="Kenya's premier driver training platform for learner drivers, boda boda riders, PSV operators, and fleet drivers. NTSA-certified training with 21+ units.">
     <meta name="theme-color" content="#d4af37">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -35,7 +35,7 @@
 
         body { font-family: 'Inter', sans-serif; background: var(--dark); color: var(--text); line-height: 1.5; overflow-x: hidden; }
         
-        /* Hero Section */
+        /* Hero Section - MEI DRIVE AFRICA */
         .hero-section {
             position: relative;
             min-height: 100vh;
@@ -440,6 +440,9 @@
         .role-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; display: inline-block; }
         .role-admin { background: rgba(231,76,60,0.2); color: #e74c3c; }
         .role-user { background: rgba(46,204,113,0.2); color: #2ecc71; }
+        
+        .trust-badge { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+        .trust-badge span { color: var(--text-muted); font-size: 0.85rem; }
     </style>
 </head>
 <body>
@@ -489,7 +492,7 @@
             { id: 20, question: "What does a flashing amber traffic light mean?", options: ["Go quickly", "Stop immediately", "Proceed with caution", "Prepare to go"], correct: 2, explanation: "A flashing amber light means proceed with caution if it is safe to do so.", category: "Signals", difficulty: "Medium" }
         ];
         
-        // Modules Data (Updated: Beginner Drivers -> Learner Hub)
+        // Modules Data
         const MODULES = [
             { id: 1, type: 'learner', name: 'Learner Hub', icon: '📚', description: 'Complete NTSA-approved driver training - 21 comprehensive units covering everything from basic controls to advanced defensive driving', color: '#d4af37', lessons: 21, quizzes: 21, exams: 2, hours: 25, is_free: true },
             { id: 2, type: 'ev', name: 'EV Drivers & Riders', icon: '⚡', description: 'Modern training for electric vehicle drivers focused on safety, efficiency, and control.', color: '#00ff88', lessons: 8, quizzes: 8, exams: 1, hours: 12, is_free: true },
@@ -799,10 +802,10 @@
                     <div class="hero-overlay"></div>
                     <div class="hero-content">
                         <div class="hero-badge">
-                            <i class="fas fa-star-of-life"></i> 🚀 Choose Your Learning Path
+                            <i class="fas fa-star-of-life"></i> 🚀 MEI DRIVE AFRICA ⚡
                         </div>
-                        <h1 class="hero-title">Master Your Driving Journey</h1>
-                        <p class="hero-subtitle">Train smarter. Drive safer. Pass with confidence.<br>A modern driving platform designed for learners, riders, and professional drivers in Kenya — built for real roads, real tests, and real results.</p>
+                        <h1 class="hero-title">Kenya's <span class="highlight">Digital Driver Safety Platform</span></h1>
+                        <p class="hero-subtitle">Drive Smart. Stay Safe. Arrive Home. Keep Our Roads Safe</p>
                         
                         <div class="learning-paths">
                             <div class="path-card" onclick="viewModule('learner')">
@@ -839,7 +842,7 @@
                         
                         <div class="cta-banner">
                             <h2>🚀 Ready to Start Your Driving Journey?</h2>
-                            <p>Join over 50,000 drivers who passed their tests with Mei Drive Africa</p>
+                            <p>Join over 50,000 drivers who passed their tests with MEI Drive Africa</p>
                             <div class="btn-group">
                                 <button class="btn btn-primary" onclick="showSignupModal()"><i class="fas fa-rocket"></i> Start Free Training</button>
                                 <button class="btn btn-outline" onclick="showLoginModal()"><i class="fas fa-sign-in-alt"></i> Login to Continue</button>
@@ -853,7 +856,7 @@
                             <div class="stat-card"><div class="stat-info"><h3>24/7</h3><p>Support</p></div><div class="stat-icon">🛡️</div></div>
                         </div>
                         
-                        <div class="trust-badge" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;">
+                        <div class="trust-badge">
                             <span><i class="fas fa-shield-alt"></i> NTSA Compliant</span>
                             <span><i class="fas fa-certificate"></i> Certified Training</span>
                             <span><i class="fas fa-mobile-alt"></i> Mobile & Desktop Access</span>
@@ -950,7 +953,7 @@
                 
                 <table class="user-table">
                     <thead>
-                        <tr><th>Name</th><th>Email</th><th>Role</th><th>Progress</th><th>Actions</th></tr>
+                        <tr><th>Name</th><th>Email</th><th>Role</th><th>Progress</th><th>Actions</th></td>
                     </thead>
                     <tbody>
                         <tr><td>John Mwangi</td><td>john@example.com</td><td><span class="role-badge role-user">User</span></td><td>45%</td><td><button class="btn btn-outline" style="padding: 4px 12px; margin-right: 8px;" onclick="showToast('Promoted to Admin', 'success')">Make Admin</button><button class="btn btn-danger" style="padding: 4px 12px;" onclick="showToast('User deleted', 'success')">Delete</button></td></tr>
@@ -1035,7 +1038,7 @@
             app.innerHTML = `
                 <div class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
                 <div class="sidebar" id="sidebar">
-                    <div class="sidebar-header"><div class="logo"><span class="logo-icon">🚗</span> Mei Drive Africa</div></div>
+                    <div class="sidebar-header"><div class="logo"><span class="logo-icon">🚗</span> MEI DRIVE AFRICA ⚡</div></div>
                     <div class="user-info"><div class="user-avatar">👤</div><div class="user-details"><h4>${escapeHtml(currentUser.name)}</h4><p>${escapeHtml(currentUser.email)}${userRole === 'admin' ? ' • Admin' : ''}</p></div></div>
                     <div class="nav-menu">${navItems}</div>
                 </div>
