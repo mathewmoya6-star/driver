@@ -172,7 +172,15 @@
         // Cache for materials
         let materialsCache = {};
         
-        // Unit Titles for 21 units
+        // Table mapping for different module types
+        const tableMapping = {
+            learner: 'learner_units',
+            psv: 'psv_modules',
+            boda: 'boda_modules',
+            ev: 'ev_modules'
+        };
+        
+        // Unit Titles for 21 units (fallback)
         const unitTitles = [
             "Introduction to Driving in Kenya", "Highway Code & Traffic Signs", "Vehicle Controls & Dashboard",
             "Basic Vehicle Maintenance", "Moving Off & Stopping Safely", "Turning & Reversing",
@@ -183,26 +191,48 @@
             "Environmental Driving", "NTSA Test Preparation", "Advanced Driving Skills"
         ];
         
-        // Fetch materials from Supabase
+        // Fetch materials from Supabase using correct table names
         async function fetchMaterials(moduleType) {
             if (materialsCache[moduleType]) {
                 return materialsCache[moduleType];
             }
             
+            const tableName = tableMapping[moduleType];
+            if (!tableName) {
+                return getFallbackMaterials(moduleType);
+            }
+            
             try {
+                console.log(`Fetching from table: ${tableName}`);
                 const { data, error } = await supabase
-                    .from('materials')
+                    .from(tableName)
                     .select('*')
-                    .eq('module_type', moduleType)
                     .eq('status', 'published')
-                    .order('unit_number', { ascending: true });
+                    .order('module_number', { ascending: true });
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('Supabase error:', error);
+                    return getFallbackMaterials(moduleType);
+                }
                 
                 if (data && data.length > 0) {
-                    materialsCache[moduleType] = data;
-                    return data;
+                    // Transform data to expected format
+                    const transformed = data.map(item => ({
+                        id: item.id,
+                        title: item.title,
+                        description: item.description,
+                        content: item.content,
+                        module_type: moduleType,
+                        unit_number: item.module_number,
+                        icon: item.icon,
+                        difficulty: item.difficulty
+                    }));
+                    materialsCache[moduleType] = transformed;
+                    console.log(`Loaded ${transformed.length} items from ${tableName}`);
+                    return transformed;
                 }
+                
+                console.log(`No data found in ${tableName}, using fallback`);
                 return getFallbackMaterials(moduleType);
             } catch (error) {
                 console.error('Error fetching materials:', error);
@@ -210,7 +240,7 @@
             }
         }
         
-        // Fallback materials
+        // Fallback materials when Supabase table is empty
         function getFallbackMaterials(moduleType) {
             if (moduleType === 'learner') {
                 return Array.from({ length: 21 }, (_, i) => ({
@@ -222,6 +252,42 @@
                     unit_number: i + 1,
                     icon: ["🚗","🛑","🎮","🔧","🚦","↩️","🔄","🏎️","📊","🛡️","🌙","🌧️","🍺","😴","🚸","🚨","🩺","📄","🌱","✅","🏆"][i],
                     difficulty: i < 7 ? 'beginner' : i < 14 ? 'intermediate' : 'advanced'
+                }));
+            }
+            if (moduleType === 'psv') {
+                return Array.from({ length: 10 }, (_, i) => ({
+                    id: 100 + i,
+                    title: `PSV Module ${i + 1}: ${['Licensing & Compliance', 'Professional Conduct', 'Personal Grooming', 'Passenger Safety', 'Defensive Driving', 'Route Management', 'Vehicle Care', 'Emergency Response', 'Fare Management', 'Customer Service'][i]}`,
+                    description: `Professional PSV training module.`,
+                    content: `<h2>PSV Module ${i + 1}</h2><p>Professional training content for PSV drivers.</p>`,
+                    module_type: 'psv',
+                    unit_number: i + 1,
+                    icon: "🚌",
+                    difficulty: 'intermediate'
+                }));
+            }
+            if (moduleType === 'boda') {
+                return Array.from({ length: 12 }, (_, i) => ({
+                    id: 200 + i,
+                    title: `Boda Module ${i + 1}: ${['Basic Controls', 'Protective Gear', 'Professionalism', 'Drug Prevention', 'Customer Service', 'Crime Prevention', 'Passenger Assessment', 'Night Riding', 'Entrepreneurship', 'Defensive Riding', 'Maintenance', 'Alcohol Awareness'][i]}`,
+                    description: `Motorcycle safety training module.`,
+                    content: `<h2>Boda Module ${i + 1}</h2><p>Complete boda boda safety training.</p>`,
+                    module_type: 'boda',
+                    unit_number: i + 1,
+                    icon: "🏍️",
+                    difficulty: 'beginner'
+                }));
+            }
+            if (moduleType === 'ev') {
+                return Array.from({ length: 8 }, (_, i) => ({
+                    id: 300 + i,
+                    title: `EV Module ${i + 1}: ${['Introduction to EVs', 'Battery Technology', 'Charging Infrastructure', 'Maintenance', 'Safety Protocols', 'Range Management', 'Commercial Use', 'Regulations'][i]}`,
+                    description: `Electric vehicle training module.`,
+                    content: `<h2>EV Module ${i + 1}</h2><p>Complete electric vehicle training.</p>`,
+                    module_type: 'ev',
+                    unit_number: i + 1,
+                    icon: "⚡",
+                    difficulty: 'intermediate'
                 }));
             }
             return [];
@@ -250,32 +316,44 @@
                     <div class="tip-box"><strong>👨‍🏫 Instructor Guidance:</strong> Practice these skills in a safe environment before encountering real-world situations.</div>`;
         }
         
-        // Fetch user progress
+        // Fetch user progress from Supabase
         async function fetchUserProgress() {
             if (!currentUser) return {};
             try {
-                const { data, error } = await supabase.from('user_progress').select('*').eq('user_id', currentUser.id);
+                const { data, error } = await supabase
+                    .from('user_progress')
+                    .select('*')
+                    .eq('user_id', currentUser.id);
                 if (error) throw error;
                 const progress = {};
                 if (data) data.forEach(p => { progress[p.material_id] = p.progress_percentage || 0; });
                 userProgress = progress;
                 return progress;
-            } catch (error) { return {}; }
+            } catch (error) { 
+                console.log('No user_progress table yet, using local');
+                return {}; 
+            }
         }
         
-        // Update progress
+        // Update progress in Supabase
         async function updateProgress(materialId, progress) {
             if (!currentUser) { showToast('Please login to track progress', 'error'); return false; }
             try {
                 await supabase.from('user_progress').upsert({
-                    user_id: currentUser.id, material_id: materialId, progress_percentage: progress,
-                    status: progress === 100 ? 'completed' : 'in_progress', last_accessed_at: new Date().toISOString(),
+                    user_id: currentUser.id, 
+                    material_id: materialId, 
+                    progress_percentage: progress,
+                    status: progress === 100 ? 'completed' : 'in_progress', 
+                    last_accessed_at: new Date().toISOString(),
                     completed_at: progress === 100 ? new Date().toISOString() : null
                 });
                 userProgress[materialId] = progress;
                 showToast(progress === 100 ? 'Unit completed! 🎉' : 'Progress saved', 'success');
                 return true;
-            } catch (error) { showToast('Error saving progress', 'error'); return false; }
+            } catch (error) { 
+                showToast('Error saving progress', 'error'); 
+                return false; 
+            }
         }
         
         // Render functions
@@ -292,7 +370,10 @@
             </div>`;
         }
         
-        function escapeHtml(text) { if (!text) return ''; return String(text).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c] || c)); }
+        function escapeHtml(text) { 
+            if (!text) return ''; 
+            return String(text).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c] || c)); 
+        }
         
         async function renderModulePage(moduleType) {
             currentModuleType = moduleType;
@@ -300,10 +381,16 @@
             container.innerHTML = '<div class="spinner"></div>';
             currentMaterials = await fetchMaterials(moduleType);
             
-            let title = { learner: '📚 Learner Driver Hub - 21 Complete NTSA Units', psv: '🚌 PSV Professional Course', boda: '🏍️ Boda Boda Safety Course', ev: '⚡ Electric Vehicle Training', academy: '🎓 Advanced Driver Academy' }[moduleType] || moduleType.toUpperCase();
+            let title = { 
+                learner: '📚 Learner Driver Hub - 21 Complete NTSA Units', 
+                psv: '🚌 PSV Professional Course', 
+                boda: '🏍️ Boda Boda Safety Course', 
+                ev: '⚡ Electric Vehicle Training', 
+                academy: '🎓 Advanced Driver Academy' 
+            }[moduleType] || moduleType.toUpperCase();
             
             if (currentMaterials.length === 0) {
-                container.innerHTML = `<div class="hero"><h1>${title}</h1><p>No materials available yet. Check back soon!</p></div>`;
+                container.innerHTML = `<div class="hero"><h1>${title}</h1><p>Loading materials from database...</p><div class="spinner"></div></div>`;
                 return;
             }
             
@@ -398,7 +485,11 @@
         // Auth functions
         async function checkSession() {
             const { data: { session } } = await supabase.auth.getSession();
-            if (session) { currentUser = session.user; await fetchUserProgress(); }
+            if (session) { 
+                currentUser = session.user; 
+                await fetchUserProgress(); 
+                console.log('User logged in:', currentUser.email);
+            }
             updateAuthUI();
         }
         
@@ -412,20 +503,44 @@
             }
         }
         
-        async function logout() { await supabase.auth.signOut(); currentUser = null; userProgress = {}; updateAuthUI(); showToast('Logged out', 'info'); navigateTo('home'); }
+        async function logout() { 
+            await supabase.auth.signOut(); 
+            currentUser = null; 
+            userProgress = {}; 
+            updateAuthUI(); 
+            showToast('Logged out', 'info'); 
+            navigateTo('home'); 
+        }
+        
         function showLoginModal() { alert('🔐 Login with Supabase Auth\n\nUse "Sign Up" to create an account, then login to track your progress across devices!'); }
         function showSignupModal() { alert('📝 Create Account\n\nAfter signing up via Supabase, your progress will be saved to the cloud!'); }
-        function showProfileModal() { if (!currentUser) return; alert(`👤 Profile\n\nEmail: ${currentUser.email}\n\nYour progress is saved to the cloud!`); }
-        function showToast(message, type) { const toast = document.createElement('div'); toast.className = 'toast'; toast.innerHTML = `${type === 'success' ? '✅' : 'ℹ️'} ${message}`; document.getElementById('toast-root').appendChild(toast); setTimeout(() => toast.remove(), 3000); }
+        function showProfileModal() { 
+            if (!currentUser) return; 
+            alert(`👤 Profile\n\nEmail: ${currentUser.email}\n\nYour progress is saved to the cloud!`); 
+        }
+        
+        function showToast(message, type) { 
+            const toast = document.createElement('div'); 
+            toast.className = 'toast'; 
+            toast.innerHTML = `${type === 'success' ? '✅' : 'ℹ️'} ${message}`; 
+            document.getElementById('toast-root').appendChild(toast); 
+            setTimeout(() => toast.remove(), 3000); 
+        }
         
         // Mobile menu
-        document.getElementById('mobileMenuBtn')?.addEventListener('click', (e) => { e.stopPropagation(); document.getElementById('navLinks')?.classList.toggle('show'); });
+        document.getElementById('mobileMenuBtn')?.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            document.getElementById('navLinks')?.classList.toggle('show'); 
+        });
+        
         document.addEventListener('click', (e) => {
             const btn = e.target.closest('[data-nav]');
             if (btn) navigateTo(btn.getAttribute('data-nav'));
             const navLinks = document.getElementById('navLinks');
             const mobileBtn = document.getElementById('mobileMenuBtn');
-            if (navLinks?.classList.contains('show') && !navLinks.contains(e.target) && mobileBtn && !mobileBtn.contains(e.target)) navLinks.classList.remove('show');
+            if (navLinks?.classList.contains('show') && !navLinks.contains(e.target) && mobileBtn && !mobileBtn.contains(e.target)) {
+                navLinks.classList.remove('show');
+            }
         });
         
         window.viewMaterial = viewMaterial;
