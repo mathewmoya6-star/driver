@@ -1,336 +1,469 @@
--- ============================================
--- MEI DRIVE AFRICA - MODULE-BASED SCHEMA
--- Each module has its own materials
--- ============================================
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>MEI DRIVE AFRICA | NTSA Driver Training Platform</title>
+    <meta name="description" content="Kenya's premier NTSA-certified driver training platform with 500+ exam questions">
+    <meta name="theme-color" content="#d4af37">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🚗%3C/text%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; line-height: 1.5; }
+        
+        :root {
+            --primary-gold: #d4af37;
+            --ev-green: #00ff88;
+            --card-bg: #111111;
+            --border-color: #222222;
+            --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f0c674 100%);
+        }
+        
+        .container { width: 100%; padding: 0 16px; margin: 0 auto; }
+        @media (min-width: 768px) { .container { max-width: 1400px; padding: 0 24px; } }
+        
+        .navbar { background: rgba(10,10,10,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212,175,55,0.3); position: sticky; top: 0; z-index: 1000; padding: 12px 0; }
+        .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo { font-weight: 800; font-size: 1.1rem; background: var(--gradient-gold); background-clip: text; -webkit-background-clip: text; color: transparent; cursor: pointer; }
+        @media (min-width: 768px) { .logo { font-size: 1.4rem; } }
+        
+        .mobile-menu-btn { display: flex; background: transparent; border: none; color: var(--primary-gold); font-size: 24px; cursor: pointer; padding: 8px; border-radius: 50%; }
+        .nav-links { display: none; width: 100%; flex-direction: column; align-items: center; padding: 16px 0 8px; gap: 8px; }
+        .nav-links.show { display: flex; }
+        .nav-links button { background: transparent; border: none; color: #e0e0e0; padding: 12px 20px; border-radius: 50px; cursor: pointer; font-size: 15px; width: 100%; text-align: center; }
+        @media (min-width: 768px) {
+            .mobile-menu-btn { display: none; }
+            .nav-links { display: flex !important; width: auto; flex-direction: row; padding: 0; gap: 4px; }
+            .nav-links button { width: auto; padding: 8px 16px; font-size: 14px; }
+        }
+        
+        .btn, .btn-ev, .btn-small { min-height: 48px; padding: 12px 24px; font-size: 16px; font-weight: 600; border: none; border-radius: 50px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; }
+        .btn { background: var(--gradient-gold); color: #000; }
+        .btn-ev { background: linear-gradient(135deg, #00ff88, #00b4d8); color: #000; }
+        .btn-small { min-height: 40px; padding: 8px 20px; font-size: 14px; background: var(--gradient-gold); color: #000; }
+        
+        .nav-toggle { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 20px 0; flex-wrap: wrap; }
+        .toggle-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 12px 24px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; gap: 8px; color: #fff; }
+        .toggle-btn:hover:not(:disabled) { border-color: var(--primary-gold); color: var(--primary-gold); }
+        .toggle-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .unit-progress-indicator { background: rgba(212,175,55,0.1); padding: 8px 16px; border-radius: 50px; font-size: 13px; color: var(--primary-gold); }
+        
+        .expandable-section { margin: 20px 0; border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; }
+        .section-header { background: var(--card-bg); padding: 16px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+        .section-header .icon { transition: transform 0.3s; color: var(--primary-gold); }
+        .section-header.expanded .icon { transform: rotate(180deg); }
+        .section-content { padding: 0; max-height: 0; overflow: hidden; transition: all 0.3s ease; background: rgba(0,0,0,0.3); }
+        .section-content.expanded { padding: 20px; max-height: 2000px; }
+        
+        .concepts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 16px; }
+        .concept-card { background: var(--card-bg); border-radius: 12px; padding: 16px; border-left: 3px solid var(--primary-gold); }
+        .concept-card h4 { color: var(--primary-gold); margin-bottom: 8px; }
+        
+        .rules-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        .rules-table th, .rules-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        .rules-table th { background: rgba(212,175,55,0.1); color: var(--primary-gold); }
+        
+        .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 20px 0; }
+        @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
+        @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+        
+        .card { background: var(--card-bg); border-radius: 20px; padding: 20px; border: 1px solid var(--border-color); transition: all 0.2s; cursor: pointer; }
+        .card:active { transform: scale(0.98); }
+        @media (min-width: 768px) { .card:hover { transform: translateY(-4px); border-color: var(--primary-gold); } }
+        .card-ev { border-left: 4px solid #00ff88; }
+        
+        .unit-badge, .ev-badge-module { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 12px; }
+        .unit-badge { background: var(--gradient-gold); color: #000; }
+        .ev-badge-module { background: linear-gradient(135deg, #00ff88, #00b4d8); color: #000; }
+        
+        .progress-bar { background: #2a2a2a; border-radius: 20px; height: 6px; margin: 16px 0; overflow: hidden; }
+        .progress-fill { background: var(--gradient-gold); height: 100%; width: 0%; transition: width 0.3s; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
+        @media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+        .stat-card { background: var(--card-bg); border-radius: 16px; padding: 16px 12px; border: 1px solid var(--border-color); text-align: center; }
+        .stat-number { font-size: 1.6rem; font-weight: 800; color: var(--primary-gold); }
+        
+        .hero { text-align: center; padding: 32px 16px; background: radial-gradient(circle at 10% 30%, rgba(212,175,55,0.08), #0a0a0a); border-radius: 32px; margin: 16px 0 24px; }
+        .hero h1 { font-size: 1.8rem; margin-bottom: 12px; }
+        @media (min-width: 768px) { .hero h1 { font-size: clamp(1.8rem, 5vw, 3.5rem); } }
+        .highlight { background: var(--gradient-gold); background-clip: text; -webkit-background-clip: text; color: transparent; }
+        .hero-buttons { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; justify-content: center; align-items: center; }
+        @media (min-width: 480px) { .hero-buttons { flex-direction: row; } }
+        
+        .question-card { background: var(--card-bg); border-radius: 16px; padding: 20px; margin-bottom: 16px; border: 1px solid var(--border-color); }
+        .question-text { font-size: 1rem; font-weight: 600; margin-bottom: 16px; }
+        .options-group { display: flex; flex-direction: column; gap: 8px; }
+        .option { background: #1a1c26; padding: 14px 16px; border-radius: 12px; cursor: pointer; border: 1px solid #2a2e3a; font-size: 14px; }
+        .option:hover { background: #252a38; }
+        .option.correct { background: rgba(46,204,113,0.2); border-color: #2ecc71; }
+        .option.wrong { background: rgba(231,76,60,0.2); border-color: #e74c3c; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); backdrop-filter: blur(12px); z-index: 2000; justify-content: center; align-items: center; padding: 16px; }
+        .modal-content { background: var(--card-bg); border: 1px solid var(--primary-gold); border-radius: 24px; padding: 24px; width: 100%; max-width: 450px; }
+        .modal-content input { width: 100%; padding: 14px; margin: 8px 0; background: #1a1c26; border: 1px solid #2c2f3a; border-radius: 12px; color: #fff; }
+        .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--primary-gold); }
+        
+        #toast-root { position: fixed; bottom: 16px; left: 16px; right: 16px; z-index: 2000; display: flex; flex-direction: column; gap: 8px; }
+        @media (min-width: 768px) { #toast-root { bottom: 30px; right: 30px; left: auto; min-width: 300px; } }
+        .toast { background: var(--card-bg); border-left: 4px solid var(--primary-gold); padding: 14px 18px; border-radius: 12px; animation: slideIn 0.3s ease; display: flex; align-items: center; gap: 12px; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
+        
+        .spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--primary-gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+        .pagination button { padding: 8px 12px; background: var(--card-bg); border: 1px solid var(--border-color); color: #fff; border-radius: 6px; cursor: pointer; }
+        .pagination button.active { background: var(--primary-gold); color: #000; }
+        
+        .score-card { background: var(--card-bg); border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 20px; border: 1px solid var(--primary-gold); }
+        .score-card .score { font-size: 2rem; font-weight: 800; }
+        
+        .profile-link { background: rgba(212,175,55,0.2); border-radius: 40px; padding: 6px 16px; cursor: pointer; font-size: 14px; }
+        .unit-content h2 { color: var(--primary-gold); margin: 20px 0 10px; }
+        .unit-content h3 { color: var(--ev-green); margin: 15px 0 10px; }
+        .unit-content ul, .unit-content ol { margin-left: 20px; margin-bottom: 15px; }
+        .mt-3 { margin-top: 16px; }
+        hr { border-color: var(--border-color); margin: 16px 0; }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="navbar">
+            <div class="container nav">
+                <div class="logo" data-nav="home">MEI DRIVE AFRICA ⚡</div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
+                <div class="nav-links" id="navLinks">
+                    <button data-nav="home">🏠 Home</button>
+                    <button data-nav="learner">📚 Learner Hub</button>
+                    <button data-nav="psv">🚌 PSV</button>
+                    <button data-nav="schoolbus">🏫 School Bus</button>
+                    <button data-nav="boda">🏍️ Boda</button>
+                    <button data-nav="ev">⚡ EV</button>
+                    <button data-nav="academy">🎓 Academy</button>
+                    <button data-nav="library">📖 Library</button>
+                    <button data-nav="quiz">📝 Quiz</button>
+                    <div id="authButtons"></div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <main id="page-content"><div class="spinner"></div></main>
+        </div>
+    </div>
+    <div id="toast-root"></div>
 
--- Drop existing tables
-DROP TABLE IF EXISTS user_progress CASCADE;
-DROP TABLE IF EXISTS module_questions CASCADE;
-DROP TABLE IF EXISTS module_materials CASCADE;
-DROP TABLE IF EXISTS modules CASCADE;
-
--- Table: modules (main categories)
-CREATE TABLE modules (
-    id SERIAL PRIMARY KEY,
-    module_type TEXT UNIQUE NOT NULL CHECK (module_type IN ('learner', 'psv', 'ev', 'boda', 'schoolbus', 'academy')),
-    name TEXT NOT NULL,
-    icon TEXT,
-    description TEXT,
-    color TEXT,
-    total_units INTEGER DEFAULT 0,
-    is_active BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT NOW()
-);
-
--- Table: module_materials (units belong to specific module)
-CREATE TABLE module_materials (
-    id SERIAL PRIMARY KEY,
-    module_id INTEGER REFERENCES modules(id) ON DELETE CASCADE,
-    unit_number INTEGER NOT NULL,
-    title TEXT NOT NULL,
-    description TEXT,
-    content TEXT,
-    difficulty TEXT DEFAULT 'beginner',
-    estimated_minutes INTEGER DEFAULT 45,
-    display_order INTEGER DEFAULT 0,
-    created_at TIMESTAMP DEFAULT NOW(),
-    UNIQUE(module_id, unit_number)
-);
-
--- Table: module_questions (questions belong to specific module material)
-CREATE TABLE module_questions (
-    id SERIAL PRIMARY KEY,
-    material_id INTEGER REFERENCES module_materials(id) ON DELETE CASCADE,
-    question_number INTEGER NOT NULL,
-    question_text TEXT NOT NULL,
-    option_a TEXT NOT NULL,
-    option_b TEXT NOT NULL,
-    option_c TEXT NOT NULL,
-    option_d TEXT NOT NULL,
-    correct_answer TEXT CHECK (correct_answer IN ('A', 'B', 'C', 'D')),
-    explanation TEXT,
-    difficulty INTEGER DEFAULT 1,
-    created_at TIMESTAMP DEFAULT NOW()
-);
-
--- Table: user_progress (tracks progress per material)
-CREATE TABLE user_progress (
-    id SERIAL PRIMARY KEY,
-    user_id UUID NOT NULL,
-    material_id INTEGER REFERENCES module_materials(id) ON DELETE CASCADE,
-    completed BOOLEAN DEFAULT FALSE,
-    quiz_score INTEGER,
-    completed_at TIMESTAMP,
-    last_accessed_at TIMESTAMP DEFAULT NOW(),
-    UNIQUE(user_id, material_id)
-);
-
--- ============================================
--- INSERT MODULES
--- ============================================
-
-INSERT INTO modules (module_type, name, icon, description, color, total_units) VALUES
-('learner', 'Learner Driver Hub', '📚', 'Complete NTSA-approved driver training with 21 comprehensive units', '#d4af37', 21),
-('psv', 'PSV Professional Course', '🚌', 'Professional Public Service Vehicle driver training', '#3498db', 10),
-('ev', 'Electric Vehicle Training', '⚡', 'Master electric vehicle operation and safety', '#00ff88', 8),
-('boda', 'Boda Boda Safety Course', '🏍️', 'Comprehensive motorcycle safety training', '#e67e22', 12),
-('schoolbus', 'School Bus Safety Program', '🏫', 'Specialized training for school bus drivers', '#9b59b6', 6),
-('academy', 'Advanced Driver Academy', '🎓', 'Professional development for transport operators', '#e74c3c', 6);
-
--- ============================================
--- INSERT LEARNER MODULE MATERIALS (21 Units)
--- ============================================
-
-WITH mod AS (SELECT id FROM modules WHERE module_type = 'learner')
-INSERT INTO module_materials (module_id, unit_number, title, description, difficulty, estimated_minutes, display_order)
-SELECT 
-    mod.id,
-    unit_number,
-    title,
-    description,
-    difficulty,
-    minutes,
-    unit_number
-FROM mod
-CROSS JOIN (
-    VALUES 
-        (1, 'Introduction to Driving', 'Learn the fundamentals of driving and NTSA requirements', 'beginner', 45),
-        (2, 'Fundamental Driving Rules', 'Master traffic laws, horn usage, and right of way', 'beginner', 45),
-        (3, 'Model Town', 'Practice roundabouts, parking, and road markings', 'beginner', 60),
-        (4, 'Human Factors in Traffic', 'Understand driver fatigue, distractions, and alcohol effects', 'beginner', 45),
-        (5, 'Vehicle Construction and Controls', 'Learn dashboard controls and vehicle systems', 'beginner', 45),
-        (6, 'Self-Inspection of Vehicle', 'Master pre-trip inspection and safety checks', 'beginner', 30),
-        (7, 'Observation', 'Develop hazard perception and blind spot awareness', 'beginner', 30),
-        (8, 'Vehicle Control', 'Perfect clutch control, gears, and hill starts', 'intermediate', 60),
-        (9, 'Communication on the Road', 'Master MSM routine and road communication', 'intermediate', 45),
-        (10, 'Speed Management', 'Learn speed limits and stopping distances', 'intermediate', 45),
-        (11, 'Space Management', 'Maintain safe space around your vehicle', 'intermediate', 30),
-        (12, 'Emergency Manoeuvres', 'Handle brake failure and tyre blowouts', 'intermediate', 45),
-        (13, 'Skid Control and Recovery', 'Recover from skids and aquaplaning', 'intermediate', 30),
-        (14, 'Adverse Driving Conditions', 'Drive safely in rain, fog, and at night', 'intermediate', 45),
-        (15, 'Preventive Maintenance', 'Regular vehicle checks and maintenance', 'intermediate', 30),
-        (16, 'Conditions of Carriage', 'PSV regulations and passenger safety', 'advanced', 45),
-        (17, 'Hazardous Materials', 'Safe transport of dangerous goods', 'advanced', 30),
-        (18, 'Emergency Procedures', 'Accident response and first aid', 'advanced', 45),
-        (19, 'Work Planning', 'Route planning and fatigue prevention', 'advanced', 30),
-        (20, 'Customer Care', 'Professional customer service for drivers', 'advanced', 30),
-        (21, 'The Examination', 'NTSA test preparation and exam tips', 'advanced', 60)
-) AS u(unit_number, title, description, difficulty, minutes);
-
--- ============================================
--- INSERT PSV MODULE MATERIALS (10 Units)
--- ============================================
-
-WITH mod AS (SELECT id FROM modules WHERE module_type = 'psv')
-INSERT INTO module_materials (module_id, unit_number, title, description, difficulty, estimated_minutes, display_order)
-SELECT 
-    mod.id,
-    unit_number,
-    title,
-    description,
-    difficulty,
-    minutes,
-    unit_number
-FROM mod
-CROSS JOIN (
-    VALUES 
-        (1, 'PSV Licensing & Compliance', 'Understanding PSV licenses and NTSA regulations', 'beginner', 45),
-        (2, 'Professional Driver Conduct', 'Code of conduct and professional behaviour', 'beginner', 45),
-        (3, 'Personal Grooming & Presentation', 'Professional appearance and first impressions', 'beginner', 30),
-        (4, 'Passenger Safety Management', 'Safety protocols and emergency evacuation', 'intermediate', 60),
-        (5, 'Vehicle Inspections & Maintenance', 'Daily checks and defect reporting', 'intermediate', 45),
-        (6, 'Route Planning & Navigation', 'Efficient route selection and time management', 'intermediate', 45),
-        (7, 'Fare Management & Touting', 'Legal fare collection and anti-touting measures', 'intermediate', 45),
-        (8, 'Emergency Response Procedures', 'Accident response and crisis management', 'advanced', 60),
-        (9, 'Conflict Resolution Skills', 'Managing difficult passengers and de-escalation', 'advanced', 45),
-        (10, 'Defensive Driving for PSV', 'Advanced defensive driving for passenger transport', 'advanced', 60)
-) AS u(unit_number, title, description, difficulty, minutes);
-
--- ============================================
--- INSERT EV MODULE MATERIALS (8 Units)
--- ============================================
-
-WITH mod AS (SELECT id FROM modules WHERE module_type = 'ev')
-INSERT INTO module_materials (module_id, unit_number, title, description, difficulty, estimated_minutes, display_order)
-SELECT 
-    mod.id,
-    unit_number,
-    title,
-    description,
-    difficulty,
-    minutes,
-    unit_number
-FROM mod
-CROSS JOIN (
-    VALUES 
-        (1, 'Introduction to Electric Vehicles', 'EV technology overview and benefits', 'beginner', 45),
-        (2, 'EV Battery Technology', 'Battery types, range management, and health', 'intermediate', 60),
-        (3, 'Charging Infrastructure', 'Charging stations and connector standards', 'intermediate', 45),
-        (4, 'EV Maintenance & Safety', 'Maintenance differences and high-voltage safety', 'intermediate', 60),
-        (5, 'Regenerative Braking', 'Mastering one-pedal driving and efficiency', 'intermediate', 45),
-        (6, 'EV Range Management', 'Maximizing range and route planning', 'advanced', 60),
-        (7, 'Commercial EV Operations', 'Fleet electrification and charging logistics', 'advanced', 60),
-        (8, 'EV Regulations & Incentives', 'Government policies and Kenyan EV regulations', 'advanced', 45)
-) AS u(unit_number, title, description, difficulty, minutes);
-
--- ============================================
--- INSERT BODA MODULE MATERIALS (12 Units)
--- ============================================
-
-WITH mod AS (SELECT id FROM modules WHERE module_type = 'boda')
-INSERT INTO module_materials (module_id, unit_number, title, description, difficulty, estimated_minutes, display_order)
-SELECT 
-    mod.id,
-    unit_number,
-    title,
-    description,
-    difficulty,
-    minutes,
-    unit_number
-FROM mod
-CROSS JOIN (
-    VALUES 
-        (1, 'Motorcycle Controls & Operation', 'Basic controls, clutch, throttle, and balance', 'beginner', 60),
-        (2, 'Protective Gear & Safety Equipment', 'Helmets, jackets, and visibility gear', 'beginner', 45),
-        (3, 'Professional Boda Conduct', 'Customer service and industry standards', 'beginner', 45),
-        (4, 'Alcohol & Drug Prevention', 'Substance effects and legal consequences', 'intermediate', 45),
-        (5, 'Customer Service Excellence', 'Handling passengers and special requests', 'intermediate', 45),
-        (6, 'Crime Prevention & Security', 'Personal safety and theft prevention', 'intermediate', 45),
-        (7, 'Know Your Passenger', 'Identifying suspicious behaviour', 'intermediate', 45),
-        (8, 'Night Riding Techniques', 'Dealing with darkness and night hazards', 'intermediate', 60),
-        (9, 'Entrepreneurship for Riders', 'Financial management and business growth', 'advanced', 60),
-        (10, 'Defensive Riding Techniques', 'Anticipating hazards and emergency avoidance', 'advanced', 60),
-        (11, 'Motorcycle Maintenance', 'Daily checks and servicing', 'advanced', 60),
-        (12, 'Advanced Road Safety', 'Complex traffic situations and group riding', 'advanced', 60)
-) AS u(unit_number, title, description, difficulty, minutes);
-
--- ============================================
--- INSERT SCHOOL BUS MODULE MATERIALS (6 Units)
--- ============================================
-
-WITH mod AS (SELECT id FROM modules WHERE module_type = 'schoolbus')
-INSERT INTO module_materials (module_id, unit_number, title, description, difficulty, estimated_minutes, display_order)
-SELECT 
-    mod.id,
-    unit_number,
-    title,
-    description,
-    difficulty,
-    minutes,
-    unit_number
-FROM mod
-CROSS JOIN (
-    VALUES 
-        (1, 'Child Safety Fundamentals', 'Understanding child behaviour and safety protocols', 'beginner', 60),
-        (2, 'Pre-Trip Bus Inspection', 'Daily safety checks and defect reporting', 'beginner', 45),
-        (3, 'Safe Loading & Unloading', 'Proper procedures and danger zones', 'intermediate', 60),
-        (4, 'Behaviour Management on the Bus', 'Managing disruptive behaviour and discipline', 'intermediate', 60),
-        (5, 'Emergency Evacuation Procedures', 'Evacuation drills and crisis response', 'advanced', 60),
-        (6, 'Communication with Parents & Schools', 'Reporting incidents and documentation', 'advanced', 45)
-) AS u(unit_number, title, description, difficulty, minutes);
-
--- ============================================
--- INSERT ACADEMY MODULE MATERIALS (6 Units)
--- ============================================
-
-WITH mod AS (SELECT id FROM modules WHERE module_type = 'academy')
-INSERT INTO module_materials (module_id, unit_number, title, description, difficulty, estimated_minutes, display_order)
-SELECT 
-    mod.id,
-    unit_number,
-    title,
-    description,
-    difficulty,
-    minutes,
-    unit_number
-FROM mod
-CROSS JOIN (
-    VALUES 
-        (1, 'Fleet Management Fundamentals', 'Fleet operations and maintenance planning', 'advanced', 60),
-        (2, 'Transport Logistics & Planning', 'Route optimization and scheduling', 'advanced', 60),
-        (3, 'Driver Recruitment & Training', 'Hiring practices and performance evaluation', 'advanced', 60),
-        (4, 'Safety Compliance & Auditing', 'Regulatory compliance and safety audits', 'advanced', 60),
-        (5, 'Financial Management for Transport', 'Budgeting and cost control', 'advanced', 90),
-        (6, 'Technology in Transport Management', 'GPS tracking and fleet management software', 'advanced', 60)
-) AS u(unit_number, title, description, difficulty, minutes);
-
--- ============================================
--- INSERT SAMPLE QUESTIONS (10 per module for demo)
--- ============================================
-
--- Learner Unit 1 Questions
-WITH material AS (SELECT id FROM module_materials WHERE module_id = (SELECT id FROM modules WHERE module_type = 'learner') AND unit_number = 1)
-INSERT INTO module_questions (material_id, question_number, question_text, option_a, option_b, option_c, option_d, correct_answer, explanation, difficulty)
-SELECT 
-    material.id,
-    qn,
-    qt,
-    oa,
-    ob,
-    oc,
-    od,
-    ca,
-    exp,
-    diff
-FROM material
-CROSS JOIN (
-    VALUES 
-        (1, 'What is the minimum age for a private vehicle learner''s licence in Kenya?', '16 years', '17 years', '18 years', '21 years', 'C', 'The Traffic Act specifies 18 years as the minimum age.', 1),
-        (2, 'What is the leading cause of road accidents in Kenya?', 'Poor roads', 'Mechanical failure', 'Human error', 'Bad weather', 'C', 'Approximately 80% of accidents are caused by human error.', 1),
-        (3, 'What does defensive driving mean?', 'Driving aggressively', 'Driving slowly', 'Anticipating hazards', 'Using high beam', 'C', 'Defensive driving means anticipating hazards and being prepared.', 1)
-) AS q(qn, qt, oa, ob, oc, od, ca, exp, diff);
-
--- PSV Unit 1 Questions
-WITH material AS (SELECT id FROM module_materials WHERE module_id = (SELECT id FROM modules WHERE module_type = 'psv') AND unit_number = 1)
-INSERT INTO module_questions (material_id, question_number, question_text, option_a, option_b, option_c, option_d, correct_answer, explanation, difficulty)
-SELECT 
-    material.id,
-    qn,
-    qt,
-    oa,
-    ob,
-    oc,
-    od,
-    ca,
-    exp,
-    diff
-FROM material
-CROSS JOIN (
-    VALUES 
-        (1, 'What license class is required for PSV drivers in Kenya?', 'Class A', 'Class B', 'Class C', 'Class D', 'D', 'PSV drivers require a Class D driving license.', 1),
-        (2, 'What is the maximum speed limit for PSV vehicles?', '60 km/h', '70 km/h', '80 km/h', '100 km/h', 'C', 'PSV vehicles are limited to 80 km/h by speed governors.', 1),
-        (3, 'What additional certification must PSV drivers have?', 'First Aid', 'PSV Badge from NTSA', 'International Permit', 'Degree', 'B', 'PSV drivers must obtain a PSV badge from NTSA.', 1)
-) AS q(qn, qt, oa, ob, oc, od, ca, exp, diff);
-
--- EV Unit 1 Questions
-WITH material AS (SELECT id FROM module_materials WHERE module_id = (SELECT id FROM modules WHERE module_type = 'ev') AND unit_number = 1)
-INSERT INTO module_questions (material_id, question_number, question_text, option_a, option_b, option_c, option_d, correct_answer, explanation, difficulty)
-SELECT 
-    material.id,
-    qn,
-    qt,
-    oa,
-    ob,
-    oc,
-    od,
-    ca,
-    exp,
-    diff
-FROM material
-CROSS JOIN (
-    VALUES 
-        (1, 'What does BEV stand for?', 'Battery Electric Vehicle', 'Basic Electric Vehicle', 'Backup Electric Vehicle', 'Brake Electric Vehicle', 'A', 'BEV stands for Battery Electric Vehicle.', 1),
-        (2, 'What is regenerative braking?', 'Normal braking', 'Recovering energy to charge battery', 'Emergency braking', 'Hand brake', 'B', 'Regenerative braking captures energy to charge the battery.', 2),
-        (3, 'Which component powers an EV?', 'Alternator', 'Starter motor', 'Traction battery', 'Fuel tank', 'C', 'EVs are powered by a high-voltage traction battery.', 1)
-) AS q(qn, qt, oa, ob, oc, od, ca, exp, diff);
-
--- ============================================
--- VERIFICATION QUERIES
--- ============================================
-
--- Check all modules and their material counts
-SELECT m.module_type, m.name, COUNT(mt.id) as total_units
-FROM modules m
-LEFT JOIN module_materials mt ON m.id = mt.module_id
-GROUP BY m.id
-ORDER BY m.id;
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/+esm';
+        
+        const supabaseUrl = 'https://fktjmkmzlixlapeyhhyl.supabase.co';
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E';
+        const supabase = createClient(supabaseUrl, supabaseAnonKey);
+        
+        let currentUser = null;
+        let modulesCache = {};
+        let materialsCache = {};
+        let questionsCache = {};
+        let userProgress = {};
+        let currentPage = 'home';
+        let currentModule = null;
+        let currentMaterials = [];
+        let currentQuizPage = 1;
+        let quizAnswers = {};
+        let currentQuizMaterialId = null;
+        
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-root');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+            toast.innerHTML = `${icon} ${message}`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+        
+        async function fetchModules() {
+            if (modulesCache.all) return modulesCache.all;
+            const { data, error } = await supabase.from('modules').select('*').eq('is_active', true);
+            if (error) throw error;
+            modulesCache.all = data;
+            return data;
+        }
+        
+        async function fetchModuleMaterials(moduleType) {
+            if (materialsCache[moduleType]) return materialsCache[moduleType];
+            
+            const { data: module } = await supabase.from('modules').select('id').eq('module_type', moduleType).single();
+            if (!module) return [];
+            
+            const { data, error } = await supabase.from('module_materials').select('*').eq('module_id', module.id).order('unit_number');
+            if (error) throw error;
+            materialsCache[moduleType] = data;
+            return data;
+        }
+        
+        async function fetchQuestions(materialId) {
+            if (questionsCache[materialId]) return questionsCache[materialId];
+            const { data, error } = await supabase.from('module_questions').select('*').eq('material_id', materialId).order('question_number');
+            if (error) throw error;
+            questionsCache[materialId] = data;
+            return data;
+        }
+        
+        async function fetchUserProgress() {
+            if (!currentUser) return {};
+            const { data, error } = await supabase.from('user_progress').select('*').eq('user_id', currentUser.id);
+            if (error) return {};
+            const progress = {};
+            data.forEach(p => { progress[p.material_id] = p.completed ? 100 : (p.quiz_score || 0); });
+            userProgress = progress;
+            return progress;
+        }
+        
+        async function updateUserProgress(materialId, completed, quizScore = null) {
+            if (!currentUser) { showToast('Please login to track progress', 'error'); return false; }
+            const { error } = await supabase.from('user_progress').upsert({
+                user_id: currentUser.id, material_id: materialId, completed: completed,
+                quiz_score: quizScore, completed_at: completed ? new Date().toISOString() : null,
+                last_accessed_at: new Date().toISOString()
+            });
+            if (error) { showToast('Error saving progress', 'error'); return false; }
+            userProgress[materialId] = completed ? 100 : (quizScore || 0);
+            showToast(completed ? 'Unit completed! 🎉' : 'Progress saved', 'success');
+            return true;
+        }
+        
+        function getExpandedContent(material) {
+            return `
+                <h2>📘 ${material.title}</h2>
+                <p>${material.description || 'Comprehensive training material for ' + material.title.toLowerCase()}</p>
+                <div class="expandable-section"><div class="section-header" onclick="toggleSection(this)"><span>🎯 Key Learning Objectives</span><span class="icon">▼</span></div><div class="section-content"><ul><li>Understand core concepts of ${material.title.toLowerCase()}</li><li>Learn practical application techniques</li><li>Master safety protocols and regulations</li><li>Prepare for NTSA examination</li></ul></div></div>
+                <div class="expandable-section"><div class="section-header" onclick="toggleSection(this)"><span>📚 Study Notes</span><span class="icon">▼</span></div><div class="section-content"><p>Review this material thoroughly and take the practice quiz to test your knowledge.</p><ul><li>Take notes on key points</li><li>Review regularly</li><li>Practice with the quiz</li></ul></div></div>
+                <div class="expandable-section"><div class="section-header" onclick="toggleSection(this)"><span>✅ Study Checklist</span><span class="icon">▼</span></div><div class="section-content"><ul><li>☐ Read all material thoroughly</li><li>☐ Take notes on key points</li><li>☐ Complete the unit quiz</li><li>☐ Review incorrect answers</li><li>☐ Mark unit as complete</li></ul></div></div>
+            `;
+        }
+        
+        function renderCard(material, moduleType) {
+            const progress = userProgress[material.id] || 0;
+            const isCompleted = progress === 100;
+            const isEv = moduleType === 'ev';
+            return `<div class="card ${isEv ? 'card-ev' : ''}" onclick="viewMaterial(${material.id}, '${moduleType}')">
+                <span class="${isEv ? 'ev-badge-module' : 'unit-badge'}">${isEv ? '⚡' : ''} Unit ${material.unit_number}</span>
+                <h3>${isCompleted ? '✅ ' : ''}${material.title}</h3>
+                <p>${material.description || 'Complete training material'}</p>
+                <div class="progress-bar"><div class="progress-fill" style="width: ${progress}%"></div></div>
+                <button class="btn-small">📖 View →</button>
+            </div>`;
+        }
+        
+        async function renderModulePage(moduleType) {
+            const container = document.getElementById('page-content');
+            container.innerHTML = '<div class="spinner"></div>';
+            const modules = await fetchModules();
+            const moduleInfo = modules.find(m => m.module_type === moduleType);
+            const materials = await fetchModuleMaterials(moduleType);
+            currentMaterials = materials;
+            currentModule = moduleType;
+            
+            const titles = { learner: 'Learner Driver Hub', psv: 'PSV Professional Course', ev: 'Electric Vehicle Training', boda: 'Boda Boda Safety Course', schoolbus: 'School Bus Safety Program', academy: 'Advanced Driver Academy' };
+            const icons = { learner: '📚', psv: '🚌', ev: '⚡', boda: '🏍️', schoolbus: '🏫', academy: '🎓' };
+            
+            container.innerHTML = `<div class="hero"><h1>${icons[moduleType]} ${titles[moduleType]}</h1><p>Complete NTSA-certified training with practice questions</p></div><div class="grid">${materials.map(m => renderCard(m, moduleType)).join('')}</div>`;
+        }
+        
+        window.viewMaterial = async function(materialId, moduleType) {
+            const materials = await fetchModuleMaterials(moduleType);
+            const material = materials.find(m => m.id === materialId);
+            const currentIndex = materials.findIndex(m => m.id === materialId);
+            const prevMaterial = currentIndex > 0 ? materials[currentIndex - 1] : null;
+            const nextMaterial = currentIndex < materials.length - 1 ? materials[currentIndex + 1] : null;
+            const progress = userProgress[material.id] || 0;
+            const content = getExpandedContent(material);
+            
+            document.getElementById('page-content').innerHTML = `
+                <div style="background:var(--card-bg); border-radius:24px; padding:24px; margin:20px 0;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+                        <div><span class="unit-badge">Unit ${material.unit_number} of ${materials.length}</span><h2 style="color:var(--primary-gold); margin-top:8px;">${material.title}</h2></div>
+                        <button class="btn-small" onclick="renderModulePage('${moduleType}')">← Back to Units</button>
+                    </div>
+                    <div class="unit-content">${content}</div>
+                    <div class="progress-bar mt-3"><div class="progress-fill" style="width: ${progress}%"></div></div>
+                    <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+                        <button class="btn" onclick="updateUserProgress(${material.id}, true, 100); renderModulePage('${moduleType}')">✅ Mark Complete</button>
+                        <button class="btn-ev" onclick="viewUnitQuiz(${material.id}, '${moduleType}')">📝 Take Unit Quiz</button>
+                    </div>
+                    <div class="nav-toggle">
+                        ${prevMaterial ? `<button class="toggle-btn prev" onclick="viewMaterial(${prevMaterial.id}, '${moduleType}')">← Previous: Unit ${prevMaterial.unit_number}</button>` : '<div></div>'}
+                        <div class="unit-progress-indicator">📍 Unit ${material.unit_number} of ${materials.length}</div>
+                        ${nextMaterial ? `<button class="toggle-btn next" onclick="viewMaterial(${nextMaterial.id}, '${moduleType}')">Next: Unit ${nextMaterial.unit_number} →</button>` : '<div></div>'}
+                    </div>
+                </div>`;
+            window.scrollTo({ top: 0 });
+        };
+        
+        window.viewUnitQuiz = async function(materialId, moduleType) {
+            currentQuizMaterialId = materialId;
+            currentQuizPage = 1;
+            quizAnswers = {};
+            const questions = await fetchQuestions(materialId);
+            const materials = await fetchModuleMaterials(moduleType);
+            const material = materials.find(m => m.id === materialId);
+            
+            const start = (currentQuizPage - 1) * 5;
+            const pageQuestions = questions.slice(start, start + 5);
+            const totalPages = Math.ceil(questions.length / 5);
+            
+            let html = `<div class="hero"><h1>📝 Quiz: ${material.title}</h1><p>Test your knowledge</p></div><div class="score-card"><h3>Progress</h3><div class="score">0/${questions.length} Answered</div></div>`;
+            for (let q of pageQuestions) {
+                html += `<div class="question-card"><div class="question-text"><strong>Q${q.question_number}:</strong> ${q.question_text}</div><div class="options-group">
+                    <div class="option" onclick="selectQuizAnswer(${q.id}, 'A', '${moduleType}', ${materialId})">A. ${q.option_a}</div>
+                    <div class="option" onclick="selectQuizAnswer(${q.id}, 'B', '${moduleType}', ${materialId})">B. ${q.option_b}</div>
+                    <div class="option" onclick="selectQuizAnswer(${q.id}, 'C', '${moduleType}', ${materialId})">C. ${q.option_c}</div>
+                    <div class="option" onclick="selectQuizAnswer(${q.id}, 'D', '${moduleType}', ${materialId})">D. ${q.option_d}</div>
+                </div></div>`;
+            }
+            html += `<div class="pagination">`;
+            for (let i = 1; i <= totalPages; i++) html += `<button class="${i === currentQuizPage ? 'active' : ''}" onclick="goToQuizPage(${i}, '${moduleType}', ${materialId})">${i}</button>`;
+            html += `</div><div style="text-align:center; margin-top:20px;"><button class="btn" onclick="renderModulePage('${moduleType}')">← Back to Units</button></div>`;
+            document.getElementById('page-content').innerHTML = html;
+        };
+        
+        window.selectQuizAnswer = async function(questionId, answer, moduleType, materialId) {
+            const questions = await fetchQuestions(materialId);
+            const question = questions.find(q => q.id === questionId);
+            const isCorrect = answer === question.correct_answer;
+            const allQuestions = questions;
+            quizAnswers[questionId] = { selected: answer, correct: isCorrect };
+            
+            const answered = Object.keys(quizAnswers).length;
+            const correctCount = Object.values(quizAnswers).filter(v => v.correct).length;
+            
+            const start = (currentQuizPage - 1) * 5;
+            const pageQuestions = allQuestions.slice(start, start + 5);
+            const totalPages = Math.ceil(allQuestions.length / 5);
+            
+            let html = `<div class="hero"><h1>📝 Quiz</h1></div><div class="score-card"><h3>Your Progress</h3><div class="score">${answered}/${allQuestions.length} Answered</div><div>✅ ${correctCount} Correct | ❌ ${answered - correctCount} Incorrect</div></div>`;
+            for (let q of pageQuestions) {
+                const userAnswer = quizAnswers[q.id];
+                html += `<div class="question-card"><div class="question-text"><strong>Q${q.question_number}:</strong> ${q.question_text}</div><div class="options-group">`;
+                const options = ['A', 'B', 'C', 'D'];
+                for (let opt of options) {
+                    let optText = q[`option_${opt.toLowerCase()}`];
+                    let extraClass = '';
+                    if (userAnswer) {
+                        if (opt === q.correct_answer) extraClass = 'correct';
+                        else if (userAnswer.selected === opt && userAnswer.selected !== q.correct_answer) extraClass = 'wrong';
+                    }
+                    html += `<div class="option ${extraClass}">${opt}. ${optText}</div>`;
+                }
+                if (userAnswer && userAnswer.selected !== q.correct_answer) {
+                    html += `<div style="margin-top:12px; padding:12px; background:rgba(46,204,113,0.1); border-radius:8px;"><strong>✅ Correct answer:</strong> ${q.correct_answer}. ${q[`option_${q.correct_answer.toLowerCase()}`]}<br><strong>💡 Explanation:</strong> ${q.explanation || 'No explanation provided.'}</div>`;
+                }
+                html += `</div></div>`;
+            }
+            html += `<div class="pagination">`;
+            for (let i = 1; i <= totalPages; i++) html += `<button class="${i === currentQuizPage ? 'active' : ''}" onclick="goToQuizPage(${i}, '${moduleType}', ${materialId})">${i}</button>`;
+            html += `</div><div style="text-align:center; margin-top:20px;"><div style="display:flex; gap:12px; justify-content:center;">`;
+            if (answered === allQuestions.length) {
+                const score = Math.round((correctCount / allQuestions.length) * 100);
+                html += `<button class="btn" onclick="submitQuizScore(${materialId}, ${score}, '${moduleType}')">📤 Submit Score (${score}%)</button>`;
+            }
+            html += `<button class="btn-ev" onclick="viewMaterial(${materialId}, '${moduleType}')">← Back to Unit</button></div></div>`;
+            document.getElementById('page-content').innerHTML = html;
+        };
+        
+        window.submitQuizScore = async function(materialId, score, moduleType) {
+            await updateUserProgress(materialId, score >= 80, score);
+            showToast(`Quiz completed! Score: ${score}%`, score >= 80 ? 'success' : 'error');
+            viewMaterial(materialId, moduleType);
+        };
+        
+        window.goToQuizPage = function(page, moduleType, materialId) {
+            currentQuizPage = page;
+            viewUnitQuiz(materialId, moduleType);
+        };
+        
+        async function renderLibrary() {
+            document.getElementById('page-content').innerHTML = `<div class="hero"><h1>📖 Resource Library</h1><p>Official NTSA documents and training manuals</p></div><div class="grid">${['Kenya Highway Code', 'NTSA Driving Test Guide', 'PSV Regulations', 'Defensive Driving Manual', 'EV Handbook', 'First Aid for Drivers'].map(r => `<div class="card" onclick="showToast('Download started: ${r}', 'success')"><div style="font-size:2rem;">📘</div><h3>${r}</h3><button class="btn-small">Download →</button></div>`).join('')}</div>`;
+        }
+        
+        function renderHome() {
+            document.getElementById('page-content').innerHTML = `
+                <div class="hero"><h1>Kenya's <span class="highlight">Digital Driver Safety Platform</span></h1><p>Drive Smart. Stay Safe. Arrive Home.</p><div class="hero-buttons"><button class="btn" onclick="renderModulePage('learner')">📚 Start Learning</button><button class="btn-ev" onclick="renderModulePage('ev')">⚡ EV Course</button></div></div>
+                <div class="stats-grid"><div class="stat-card"><div class="stat-number">21</div><div>Learner Units</div></div><div class="stat-card"><div class="stat-number">10</div><div>PSV Units</div></div><div class="stat-card"><div class="stat-number">12</div><div>Boda Units</div></div><div class="stat-card"><div class="stat-number">8</div><div>EV Units</div></div></div>
+                <div class="grid">
+                    <div class="card" onclick="renderModulePage('learner')"><div style="font-size:2rem;">📚</div><h3>Learner Hub</h3><p>21 complete units with quizzes</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="renderModulePage('psv')"><div style="font-size:2rem;">🚌</div><h3>PSV Course</h3><p>Professional driver training</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="renderModulePage('schoolbus')"><div style="font-size:2rem;">🏫</div><h3>School Bus</h3><p>Child transport safety</p><button class="btn-small">Start →</button></div>
+                    <div class="card card-ev" onclick="renderModulePage('ev')"><div style="font-size:2rem;">⚡</div><h3>EV Training</h3><p>Electric vehicle operation</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="renderModulePage('boda')"><div style="font-size:2rem;">🏍️</div><h3>Boda Safety</h3><p>Motorcycle safety course</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="renderModulePage('academy')"><div style="font-size:2rem;">🎓</div><h3>Academy</h3><p>Advanced driver development</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="renderLibrary()"><div style="font-size:2rem;">📖</div><h3>Library</h3><p>Official documents</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="renderModulePage('quiz')"><div style="font-size:2rem;">📝</div><h3>NTSA Quiz</h3><p>Practice questions</p><button class="btn-small">Start →</button></div>
+                </div>`;
+        }
+        
+        window.toggleSection = function(header) { header.classList.toggle('expanded'); header.nextElementSibling.classList.toggle('expanded'); };
+        window.renderModulePage = renderModulePage;
+        window.renderHome = renderHome;
+        window.renderLibrary = renderLibrary;
+        window.viewMaterial = viewMaterial;
+        window.viewUnitQuiz = viewUnitQuiz;
+        window.updateUserProgress = updateUserProgress;
+        window.showToast = showToast;
+        
+        async function login(email, password) {
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+            if (error) { showToast(error.message, 'error'); return null; }
+            currentUser = { id: data.user.id, email: data.user.email, name: data.user.user_metadata?.full_name || email.split('@')[0] };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            await fetchUserProgress();
+            showToast(`Welcome ${currentUser.name}!`, 'success');
+            updateAuthUI();
+            renderHome();
+            return currentUser;
+        }
+        
+        async function signUp(email, password, name) {
+            const { error } = await supabase.auth.signUp({ email, password, options: { data: { full_name: name } } });
+            if (error) { showToast(error.message, 'error'); return null; }
+            showToast('Account created! Please verify your email.', 'success');
+            return {};
+        }
+        
+        async function logout() { await supabase.auth.signOut(); currentUser = null; localStorage.removeItem('currentUser'); userProgress = {}; showToast('Logged out', 'info'); updateAuthUI(); renderHome(); }
+        
+        async function checkSession() {
+            const stored = localStorage.getItem('currentUser');
+            if (stored) { currentUser = JSON.parse(stored); const { data: { session } } = await supabase.auth.getSession(); if (!session) { localStorage.removeItem('currentUser'); currentUser = null; } else await fetchUserProgress(); }
+            updateAuthUI();
+        }
+        
+        function updateAuthUI() {
+            const authDiv = document.getElementById('authButtons');
+            if (!authDiv) return;
+            if (currentUser) authDiv.innerHTML = `<div class="profile-link" onclick="showProfileModal()">👤 ${currentUser.name}</div><button onclick="logout()">🚪 Logout</button>`;
+            else authDiv.innerHTML = `<button onclick="showLoginModal()">🔑 Login</button><button onclick="showSignupModal()">📝 Sign Up</button>`;
+        }
+        
+        function showLoginModal() { closeModal(); const modal = document.createElement('div'); modal.className = 'modal'; modal.innerHTML = `<div class="modal-content"><button class="close-modal" onclick="closeModal()">✕</button><h3>🔐 Login</h3><input type="email" id="loginEmail" placeholder="Email"><input type="password" id="loginPassword" placeholder="Password"><button class="btn" style="width:100%; margin-top:10px;" onclick="doLogin()">Login</button><hr><p style="text-align:center;">New user? <a href="#" onclick="showSignupModal(); return false;">Sign Up</a></p></div>`; document.body.appendChild(modal); modal.style.display = 'flex'; }
+        function showSignupModal() { closeModal(); const modal = document.createElement('div'); modal.className = 'modal'; modal.innerHTML = `<div class="modal-content"><button class="close-modal" onclick="closeModal()">✕</button><h3>📝 Sign Up</h3><input type="text" id="signupName" placeholder="Full Name"><input type="email" id="signupEmail" placeholder="Email"><input type="password" id="signupPassword" placeholder="Password (min 6)"><button class="btn" style="width:100%; margin-top:10px;" onclick="doSignup()">Sign Up</button><hr><p style="text-align:center;">Already have an account? <a href="#" onclick="showLoginModal(); return false;">Login</a></p></div>`; document.body.appendChild(modal); modal.style.display = 'flex'; }
+        function showProfileModal() { const modal = document.createElement('div'); modal.className = 'modal'; modal.innerHTML = `<div class="modal-content"><button class="close-modal" onclick="closeModal()">✕</button><h3>👤 Profile</h3><p><strong>Name:</strong> ${currentUser?.name}</p><p><strong>Email:</strong> ${currentUser?.email}</p><hr><p><strong>📚 Completed:</strong> ${Object.values(userProgress).filter(p => p === 100).length} units</p><button class="btn" style="width:100%; margin-top:15px;" onclick="closeModal()">Close</button></div>`; document.body.appendChild(modal); modal.style.display = 'flex'; }
+        async function doLogin() { const email = document.getElementById('loginEmail')?.value; const pwd = document.getElementById('loginPassword')?.value; if (!email || !pwd) { showToast('Please enter email and password', 'error'); return; } await login(email, pwd); closeModal(); }
+        async function doSignup() { const name = document.getElementById('signupName')?.value; const email = document.getElementById('signupEmail')?.value; const pwd = document.getElementById('signupPassword')?.value; if (!name || !email || !pwd) { showToast('Please fill all fields', 'error'); return; } if (pwd.length < 6) { showToast('Password must be at least 6 characters', 'error'); return; } await signUp(email, pwd, name); closeModal(); }
+        function closeModal() { document.querySelector('.modal')?.remove(); }
+        
+        window.doLogin = doLogin; window.doSignup = doSignup; window.closeModal = closeModal; window.showLoginModal = showLoginModal; window.showSignupModal = showSignupModal; window.showProfileModal = showProfileModal; window.logout = logout;
+        
+        document.getElementById('mobileMenuBtn')?.addEventListener('click', () => document.getElementById('navLinks')?.classList.toggle('show'));
+        document.addEventListener('click', (e) => { const btn = e.target.closest('[data-nav]'); if (btn) { const page = btn.getAttribute('data-nav'); if (page === 'home') renderHome(); else if (page === 'library') renderLibrary(); else if (page === 'quiz') showToast('Quiz coming soon!', 'info'); else renderModulePage(page); } const navLinks = document.getElementById('navLinks'); if (navLinks?.classList.contains('show') && !navLinks.contains(e.target) && !document.getElementById('mobileMenuBtn')?.contains(e.target)) navLinks.classList.remove('show'); });
+        
+        await checkSession();
+        renderHome();
+    </script>
+</body>
+</html>
