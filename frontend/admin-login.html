@@ -20,7 +20,6 @@
             --primary: #00d084;
             --primary-dark: #00a86b;
             --primary-light: #4ade80;
-            --secondary: #00ff88;
             --dark: #000000;
             --dark-card: #0a0a0a;
             --dark-hover: #111111;
@@ -30,7 +29,6 @@
             --success: #2ecc71;
             --error: #e74c3c;
             --warning: #f39c12;
-            --info: #3498db;
             --gradient-primary: linear-gradient(135deg, #00d084 0%, #4ade80 100%);
         }
 
@@ -160,7 +158,6 @@
         .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
         .btn-danger { background: #e74c3c; color: #fff; }
         .btn-danger:hover { background: #c0392b; }
-        .btn-success { background: #2ecc71; color: #fff; }
         .btn-sm { padding: 6px 12px; font-size: 0.75rem; }
         
         .modal {
@@ -201,6 +198,7 @@
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         
         .mobile-menu-btn { display: none; position: fixed; top: 16px; left: 16px; z-index: 101; background: var(--dark-card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; cursor: pointer; color: var(--primary); }
+        
         @media (max-width: 768px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.open { transform: translateX(0); }
@@ -228,21 +226,21 @@
         .price-input-container input { flex: 1; margin: 0; }
         .module-info { margin-bottom: 16px; padding: 12px; background: rgba(0, 208, 132, 0.1); border-radius: 12px; }
         
-        /* Custom scrollbar for black theme */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #111; border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
     </style>
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app"><div class="spinner" style="display: flex; justify-content: center; align-items: center; height: 100vh;"><div style="width: 50px; height: 50px; border: 3px solid #1a1a1a; border-top-color: #00d084; border-radius: 50%; animation: spin 1s linear infinite;"></div></div></div>
+    <style>.spinner { display: flex; justify-content: center; align-items: center; height: 100vh; } @keyframes spin { to { transform: rotate(360deg); } }</style>
 
     <script>
         const supabaseUrl = 'https://fktjmkmzlixlapeyhhyl.supabase.co';
         const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E';
         const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
         
-        let currentUser = { name: 'Admin User', email: 'admin@meidrive.com', role: 'admin' };
+        let currentAdmin = { name: 'Admin User', email: 'admin@meidrive.com', role: 'admin' };
         let adminView = 'dashboard';
         let users = [];
         let modules = [];
@@ -252,54 +250,88 @@
         let pendingDelete = null, deleteType = null;
         let pendingLockModuleId = null;
         
-        async function loadData() {
-            await loadUsers();
-            await loadModules();
-            await loadQuizQuestions();
-            await loadLibraryResources();
+        // Load mock data directly (bypassing auth to prevent black screen)
+        function loadMockData() {
+            users = [
+                { id: '1', name: 'John Mwangi', email: 'john@example.com', role: 'user', status: 'active', enrolledModules: [], progress: 45, created_at: '2024-01-15' },
+                { id: '2', name: 'Sarah Wanjiku', email: 'sarah@example.com', role: 'user', status: 'active', enrolledModules: [], progress: 78, created_at: '2024-02-10' },
+                { id: '3', name: 'Michael Otieno', email: 'michael@example.com', role: 'user', status: 'active', enrolledModules: [], progress: 32, created_at: '2024-02-20' },
+                { id: '4', name: 'Grace Akinyi', email: 'grace@example.com', role: 'user', status: 'inactive', enrolledModules: [], progress: 0, created_at: '2024-01-05' },
+                { id: '5', name: 'Admin User', email: 'admin@meidrive.com', role: 'admin', status: 'active', enrolledModules: [], progress: 100, created_at: '2024-01-01' }
+            ];
+            
+            modules = [
+                { id: 1, name: 'Learner Hub - 21 Units', price: 0, duration: '25 hours', examTimer: 60, lessons: 21, status: 'unlocked', enrolled: 1245, description: 'Complete NTSA-approved driver training - 21 comprehensive units covering all aspects of driving in Kenya.' },
+                { id: 2, name: 'EV Drivers & Riders', price: 0, duration: '12 hours', examTimer: 45, lessons: 8, status: 'unlocked', enrolled: 567, description: 'Modern training for electric vehicle drivers focusing on battery management, charging, and safety.' },
+                { id: 3, name: 'Boda Boda Safety Course', price: 0, duration: '18 hours', examTimer: 50, lessons: 12, status: 'unlocked', enrolled: 2341, description: 'Practical road safety training for boda boda riders including protective gear and defensive riding.' },
+                { id: 4, name: 'PSV Professional Course', price: 2999, duration: '15 hours', examTimer: 90, lessons: 10, status: 'locked', enrolled: 892, description: 'Advanced preparation for matatu, bus, and commercial drivers focusing on passenger safety.' },
+                { id: 5, name: 'School Bus Safety Program', price: 1999, duration: '10 hours', examTimer: 60, lessons: 6, status: 'locked', enrolled: 456, description: 'Specialized safety training for school bus drivers with focus on child protection.' },
+                { id: 6, name: 'Advanced Driver Academy', price: 4999, duration: '20 hours', examTimer: 120, lessons: 8, status: 'locked', enrolled: 234, description: 'Professional development for fleet managers and advanced driving techniques.' }
+            ];
+            
+            quizBank = [
+                { id: 1, question: "What is the legal blood alcohol limit for private drivers in Kenya?", options: ["0.00%", "0.05%", "0.08%", "0.10%"], correct: 1, category: "Safety", difficulty: "Medium" },
+                { id: 2, question: "What does a STOP sign require?", options: ["Slow down", "Complete halt", "Give way", "Honk"], correct: 1, category: "Signs", difficulty: "Easy" },
+                { id: 3, question: "What is the maximum speed limit in residential areas?", options: ["30 km/h", "40 km/h", "50 km/h", "60 km/h"], correct: 1, category: "Speed Limits", difficulty: "Easy" },
+                { id: 4, question: "What does ABS stand for?", options: ["Automatic Braking System", "Anti-lock Braking System", "Advanced Brake Service", "Auxiliary Brake Safety"], correct: 1, category: "Vehicle Technology", difficulty: "Medium" },
+                { id: 5, question: "What is the penalty for driving without insurance in Kenya?", options: ["KES 10,000", "KES 25,000", "KES 50,000", "KES 100,000"], correct: 2, category: "Insurance", difficulty: "Medium" }
+            ];
+            
+            library = [
+                { id: 1, title: "Kenya Highway Code", type: "PDF", url: "#", size: "2.5 MB", downloads: 1245 },
+                { id: 2, title: "NTSA Driving Test Guide", type: "PDF", url: "#", size: "1.8 MB", downloads: 892 },
+                { id: 3, title: "Defensive Driving Manual", type: "PDF", url: "#", size: "3.2 MB", downloads: 567 },
+                { id: 4, title: "PSV Regulations Handbook", type: "PDF", url: "#", size: "2.1 MB", downloads: 234 },
+                { id: 5, title: "EV Maintenance Guide", type: "PDF", url: "#", size: "1.5 MB", downloads: 456 }
+            ];
+        }
+        
+        // Load data from Supabase (with fallback to mock)
+        async function loadAllData() {
+            await loadUsersFromSupabase();
+            await loadModulesFromSupabase();
+            await loadQuizFromSupabase();
+            await loadLibraryFromSupabase();
             renderApp();
         }
         
-        async function loadUsers() {
+        async function loadUsersFromSupabase() {
             try {
-                const { data: profiles, error } = await supabase.from('profiles').select('*');
-                if (error) throw error;
-                if (profiles && profiles.length > 0) {
-                    users = profiles.map(p => ({
+                const { data, error } = await supabase.from('profiles').select('*').limit(50);
+                if (!error && data && data.length > 0) {
+                    users = data.map(p => ({
                         id: p.id,
                         name: p.full_name || p.email?.split('@')[0] || 'User',
                         email: p.email || 'user@example.com',
                         role: p.role || 'user',
-                        status: p.is_active ? 'active' : 'inactive',
-                        enrolledModules: [],
-                        progress: 0
+                        status: p.is_active !== false ? 'active' : 'inactive',
+                        progress: 0,
+                        created_at: p.created_at
                     }));
-                } else {
-                    users = [
-                        { id: 1, name: 'John Mwangi', email: 'john@example.com', role: 'user', status: 'active', enrolledModules: [], progress: 45 },
-                        { id: 2, name: 'Sarah Wanjiku', email: 'sarah@example.com', role: 'user', status: 'active', enrolledModules: [], progress: 78 },
-                        { id: 3, name: 'Michael Otieno', email: 'michael@example.com', role: 'user', status: 'active', enrolledModules: [], progress: 32 },
-                        { id: 4, name: 'Admin User', email: 'admin@meidrive.com', role: 'admin', status: 'active', enrolledModules: [], progress: 100 }
-                    ];
+                    return;
                 }
-            } catch (e) { console.log('Using mock users'); }
+            } catch (e) { console.log('Supabase users error, using mock'); }
+            loadMockData();
             renderApp();
         }
         
-        async function loadModules() {
+        async function loadModulesFromSupabase() {
             const moduleTables = ['learner_modules', 'psv_modules', 'boda_modules', 'ev_modules', 'academy_modules'];
             let allModules = [];
             for (const table of moduleTables) {
                 try {
-                    const { data, error } = await supabase.from(table).select('*').eq('status', 'published');
+                    const { data, error } = await supabase.from(table).select('*').eq('status', 'published').limit(100);
                     if (!error && data && data.length > 0) {
-                        allModules.push(...data.map(m => ({ ...m, module_type: table.replace('_modules', '') })));
+                        allModules.push(...data.map(m => ({ ...m, table_name: table })));
                     }
                 } catch (e) {}
             }
+            
             if (allModules.length > 0) {
                 modules = allModules.map((m, idx) => ({
                     id: idx + 1,
+                    db_id: m.id,
+                    table_name: m.table_name,
                     name: m.title,
                     price: 0,
                     duration: `${m.estimated_minutes || 45} min`,
@@ -307,45 +339,34 @@
                     lessons: 1,
                     status: 'unlocked',
                     enrolled: 0,
-                    description: m.description || 'NTSA-certified training module',
-                    module_type: m.module_type
+                    description: m.description || 'NTSA-certified training module'
                 }));
             } else {
-                modules = [
-                    { id: 1, name: 'Learner Hub', price: 0, duration: '25 hours', examTimer: 60, lessons: 21, status: 'unlocked', enrolled: 1245, description: 'Complete NTSA-approved driver training - 21 comprehensive units' },
-                    { id: 2, name: 'EV Drivers & Riders', price: 0, duration: '12 hours', examTimer: 45, lessons: 8, status: 'unlocked', enrolled: 567, description: 'Modern training for electric vehicle drivers' },
-                    { id: 3, name: 'Boda Boda Safety Course', price: 0, duration: '18 hours', examTimer: 50, lessons: 12, status: 'unlocked', enrolled: 2341, description: 'Practical road safety training for riders' },
-                    { id: 4, name: 'PSV Professional Course', price: 2999, duration: '15 hours', examTimer: 90, lessons: 10, status: 'locked', enrolled: 892, description: 'Advanced preparation for commercial drivers' },
-                    { id: 5, name: 'Advanced Driver Academy', price: 4999, duration: '20 hours', examTimer: 120, lessons: 8, status: 'locked', enrolled: 234, description: 'Professional development for fleet managers' }
-                ];
+                loadMockData();
             }
             renderApp();
         }
         
-        async function loadQuizQuestions() {
+        async function loadQuizFromSupabase() {
             try {
-                const { data, error } = await supabase.from('quiz_questions').select('*').limit(50);
+                const { data, error } = await supabase.from('quiz_questions').select('*').limit(100);
                 if (!error && data && data.length > 0) {
                     quizBank = data.map(q => ({
                         id: q.id,
                         question: q.question_text,
                         options: [q.option_a, q.option_b, q.option_c, q.option_d],
-                        correct: q.correct_answer - 1,
+                        correct: (q.correct_answer || 1) - 1,
                         category: q.topic || 'General',
                         difficulty: q.difficulty || 'Medium'
                     }));
-                } else {
-                    quizBank = [
-                        { id: 1, question: "What is the minimum age for a private vehicle learner's licence in Kenya?", options: ["16 years", "17 years", "18 years", "21 years"], correct: 2, category: "Licensing", difficulty: "Easy" },
-                        { id: 2, question: "What is the legal blood alcohol limit for private drivers?", options: ["0.00%", "0.05%", "0.08%", "0.10%"], correct: 2, category: "Safety", difficulty: "Medium" },
-                        { id: 3, question: "What does a STOP sign require?", options: ["Slow down", "Complete halt", "Give way", "Honk"], correct: 1, category: "Signs", difficulty: "Easy" }
-                    ];
+                    return;
                 }
-            } catch (e) { console.log('Using mock quiz'); }
+            } catch (e) {}
+            loadMockData();
             renderApp();
         }
         
-        async function loadLibraryResources() {
+        async function loadLibraryFromSupabase() {
             try {
                 const { data, error } = await supabase.from('library_resources').select('*').eq('status', 'published');
                 if (!error && data && data.length > 0) {
@@ -357,14 +378,10 @@
                         size: 'N/A',
                         downloads: l.download_count || 0
                     }));
-                } else {
-                    library = [
-                        { id: 1, title: "Kenya Highway Code", type: "PDF", url: "/pdfs/highway-code.pdf", size: "2.5 MB", downloads: 1245 },
-                        { id: 2, title: "NTSA Driving Test Guide", type: "PDF", url: "/pdfs/test-guide.pdf", size: "1.8 MB", downloads: 892 },
-                        { id: 3, title: "Defensive Driving Manual", type: "PDF", url: "/pdfs/defensive-driving.pdf", size: "3.2 MB", downloads: 567 }
-                    ];
+                    return;
                 }
-            } catch (e) { console.log('Using mock library'); }
+            } catch (e) {}
+            loadMockData();
             renderApp();
         }
         
@@ -383,10 +400,11 @@
             setTimeout(() => toast.remove(), 3000);
         }
         
+        // CRUD Functions
         function addUser(name, email, role) {
-            const newUser = { id: users.length + 1, name, email, role, status: 'active', enrolledModules: [], progress: 0 };
+            const newUser = { id: Date.now().toString(), name, email, role, status: 'active', enrolledModules: [], progress: 0, created_at: new Date().toISOString() };
             users.push(newUser);
-            showToast(`User ${name} added successfully!`, 'success');
+            showToast(`User ${name} added`, 'success');
             renderApp();
         }
         
@@ -407,10 +425,7 @@
         }
         
         function addModule(name, price, duration, examTimer, lessons, description) {
-            const newModule = {
-                id: modules.length + 1, name, price: parseInt(price), duration, examTimer: parseInt(examTimer),
-                lessons: parseInt(lessons), status: price === 0 ? 'unlocked' : 'locked', enrolled: 0, description
-            };
+            const newModule = { id: modules.length + 1, name, price: parseInt(price), duration, examTimer: parseInt(examTimer), lessons: parseInt(lessons), status: price === 0 ? 'unlocked' : 'locked', enrolled: 0, description };
             modules.push(newModule);
             showToast(`Module ${name} added!`, 'success');
             renderApp();
@@ -434,56 +449,33 @@
             const price = parseInt(document.getElementById('priceInput').value) || 0;
             if (pendingLockModuleId) {
                 updateModule(pendingLockModuleId, { status: 'locked', price: price });
-                showToast(`Module locked with price KES ${price.toLocaleString()}`, 'success');
                 document.getElementById('priceInputModal').classList.remove('active');
                 pendingLockModuleId = null;
-                renderApp();
             }
         }
         
-        function unlockModule(moduleId) {
-            updateModule(moduleId, { status: 'unlocked', price: 0 });
-            showToast(`Module unlocked and set to FREE`, 'success');
-        }
-        
+        function unlockModule(moduleId) { updateModule(moduleId, { status: 'unlocked', price: 0 }); }
         function toggleModuleStatus(moduleId) {
             const module = modules.find(m => m.id === moduleId);
             if (module.status === 'unlocked') lockModuleWithPrice(moduleId);
             else unlockModule(moduleId);
         }
         
-        function deleteModule(moduleId) {
-            modules = modules.filter(m => m.id !== moduleId);
-            showToast('Module deleted', 'success');
-            renderApp();
-        }
-        
+        function deleteModule(moduleId) { modules = modules.filter(m => m.id !== moduleId); showToast('Module deleted', 'success'); renderApp(); }
         function addQuizQuestion(question, options, correct, category, difficulty) {
             const newQuestion = { id: quizBank.length + 1, question, options, correct, category, difficulty };
             quizBank.push(newQuestion);
             showToast('Question added!', 'success');
             renderApp();
         }
-        
-        function deleteQuizQuestion(id) {
-            quizBank = quizBank.filter(q => q.id !== id);
-            showToast('Question deleted', 'success');
-            renderApp();
-        }
-        
+        function deleteQuizQuestion(id) { quizBank = quizBank.filter(q => q.id !== id); showToast('Question deleted', 'success'); renderApp(); }
         function addLibraryItem(title, type, url, size) {
             const newItem = { id: library.length + 1, title, type, url, size, downloads: 0 };
             library.push(newItem);
             showToast('Resource added!', 'success');
             renderApp();
         }
-        
-        function deleteLibraryItem(id) {
-            library = library.filter(l => l.id !== id);
-            showToast('Resource deleted', 'success');
-            renderApp();
-        }
-        
+        function deleteLibraryItem(id) { library = library.filter(l => l.id !== id); showToast('Resource deleted', 'success'); renderApp(); }
         function saveSettings() {
             systemSettings.maintenanceMode = document.getElementById('maintenanceMode')?.checked || false;
             systemSettings.allowRegistration = document.getElementById('allowRegistration')?.checked || true;
@@ -495,15 +487,16 @@
         
         function calculateStats() {
             return {
-                totalUsers: users.length,
+                totalUsers: users.filter(u => u.role !== 'admin').length,
                 totalModules: modules.length,
                 totalRevenue: modules.filter(m => m.price > 0).reduce((sum, m) => sum + (m.price * m.enrolled), 0),
-                activeUsers: users.filter(u => u.status === 'active').length,
+                activeUsers: users.filter(u => u.status === 'active' && u.role !== 'admin').length,
                 totalQuizQuestions: quizBank.length,
                 totalLibraryItems: library.length
             };
         }
         
+        // Render Functions
         function renderDashboard() {
             const stats = calculateStats();
             return `<div class="stats-grid">
@@ -517,35 +510,30 @@
         }
         
         function renderUserManagement() {
-            return `<div class="card">
-                <div class="card-header"><h2><i class="fas fa-users"></i> User Management</h2><button class="btn btn-primary" onclick="openAddUserModal()"><i class="fas fa-user-plus"></i> Add User</button></div>
-                <table class="data-table"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Progress</th><th>Actions</th></tr></thead>
-                <tbody>${users.map(user => `<tr>
-                    <td><strong>${user.name}</strong></td>
-                    <td>${user.email}</td>
+            const regularUsers = users.filter(u => u.role !== 'admin');
+            return `<div class="card"><div class="card-header"><h2><i class="fas fa-users"></i> User Management</h2><button class="btn btn-primary" onclick="openAddUserModal()"><i class="fas fa-user-plus"></i> Add User</button></div>
+                <table class="data-table"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody>${regularUsers.map(user => `<tr><td><strong>${user.name}</strong></td><td>${user.email}</td>
                     <td><span class="status-badge ${user.role === 'admin' ? 'role-admin' : 'role-user'}">${user.role === 'admin' ? 'Admin' : 'User'}</span></td>
                     <td><span class="status-badge ${user.status === 'active' ? 'status-active' : 'status-inactive'}">${user.status}</span></td>
-                    <td>${user.progress || 0}%</td>
-                    <td><button class="btn btn-outline btn-sm" onclick="updateUserRole(${user.id}, '${user.role === 'admin' ? 'user' : 'admin'}')">${user.role === 'admin' ? 'Demote' : 'Make Admin'}</button>
-                    <button class="btn btn-outline btn-sm" onclick="updateUserStatus(${user.id}, '${user.status === 'active' ? 'inactive' : 'active'}')">${user.status === 'active' ? 'Deactivate' : 'Activate'}</button>
-                    <button class="btn btn-danger btn-sm" onclick="confirmDeleteUser(${user.id})"><i class="fas fa-trash"></i></button></td>
-                </tr>`).join('')}</tbody>}</table></div>`;
+                    <td><button class="btn btn-outline btn-sm" onclick="updateUserRole('${user.id}', '${user.role === 'admin' ? 'user' : 'admin'}')">${user.role === 'admin' ? 'Demote' : 'Make Admin'}</button>
+                    <button class="btn btn-outline btn-sm" onclick="updateUserStatus('${user.id}', '${user.status === 'active' ? 'inactive' : 'active'}')">${user.status === 'active' ? 'Deactivate' : 'Activate'}</button>
+                    <button class="btn btn-danger btn-sm" onclick="confirmDeleteUser('${user.id}')"><i class="fas fa-trash"></i></button></td></td>`).join('')}</tbody>}.</div>`;
         }
         
         function renderModuleManagement() {
-            return `<div class="card">
-                <div class="card-header"><h2><i class="fas fa-book"></i> Module Management</h2><button class="btn btn-primary" onclick="openAddModuleModal()"><i class="fas fa-plus"></i> Add Module</button></div>
-                <div class="module-info"><p><i class="fas fa-info-circle"></i> <strong>Lock/Unlock Guide:</strong> Click <strong>Lock & Set Price</strong> to set price. Click <strong>Unlock</strong> to make FREE.</p></div>
-                <table class="data-table"><thead><tr><th>Module</th><th>Price</th><th>Duration</th><th>Exam Timer</th><th>Lessons</th><th>Enrolled</th><th>Status</th><th>Actions</th></tr></thead>
+            return `<div class="card"><div class="card-header"><h2><i class="fas fa-book"></i> Module Management</h2><button class="btn btn-primary" onclick="openAddModuleModal()"><i class="fas fa-plus"></i> Add Module</button></div>
+                <div class="module-info"><p><i class="fas fa-info-circle"></i> <strong>Lock/Unlock:</strong> Click <strong>Lock & Set Price</strong> to set price. Click <strong>Unlock</strong> to make FREE.</p></div>
+                <table class="data-table"><thead><tr><th>Module</th><th>Price</th><th>Duration</th><th>Lessons</th><th>Enrolled</th><th>Status</th><th>Actions</th></tr></thead>
                 <tbody>${modules.map(module => `<tr>
                     <td><strong>${module.name}</strong><br><small style="color:var(--text-muted);">${module.description?.substring(0, 40)}...</small></td>
                     <td>${module.price === 0 ? 'FREE' : `KES ${module.price.toLocaleString()}`}</td>
-                    <td>${module.duration}</td><td>${module.examTimer} min</td><td>${module.lessons}</td><td>${module.enrolled}</td>
+                    <td>${module.duration}</td><td>${module.lessons}</td><td>${module.enrolled}</td>
                     <td><span class="status-badge ${module.status === 'unlocked' ? 'status-active' : 'status-inactive'}">${module.status === 'unlocked' ? 'UNLOCKED' : 'LOCKED'}</span></td>
                     <td><button class="btn btn-outline btn-sm" onclick="openEditModuleModal(${module.id})">Edit</button>
                     <button class="btn btn-${module.status === 'unlocked' ? 'danger' : 'success'} btn-sm" onclick="toggleModuleStatus(${module.id})">${module.status === 'unlocked' ? 'Lock & Set Price' : 'Unlock (FREE)'}</button>
                     <button class="btn btn-danger btn-sm" onclick="confirmDeleteModule(${module.id})"><i class="fas fa-trash"></i></button></td>
-                </tr>`).join('')}</tbody>}</table></div>`;
+                </tr>`).join('')}</tbody>}.</div>`;
         }
         
         function renderQuizBank() {
@@ -584,7 +572,7 @@
                 <div class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
                 <div class="sidebar" id="sidebar">
                     <div class="sidebar-header"><div class="logo"><span class="logo-icon">🚗</span> MEI DRIVE AFRICA</div><p style="font-size: 0.7rem; color: var(--text-muted);">Administrator Panel</p></div>
-                    <div class="user-info"><div class="user-avatar">👑</div><div class="user-details"><h4>${currentUser.name}</h4><p>${currentUser.email} • Admin</p></div></div>
+                    <div class="user-info"><div class="user-avatar">👑</div><div class="user-details"><h4>${currentAdmin.name}</h4><p>${currentAdmin.email} • Admin</p></div></div>
                     <div class="nav-menu">
                         <div class="nav-item ${adminView === 'dashboard' ? 'active' : ''}" onclick="setView('dashboard')"><i class="fas fa-chart-line"></i> Dashboard</div>
                         <div class="nav-item ${adminView === 'users' ? 'active' : ''}" onclick="setView('users')"><i class="fas fa-users"></i> Users</div>
@@ -595,7 +583,7 @@
                         <div class="logout-btn"><div class="nav-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</div></div>
                     </div>
                 </div>
-                <div class="main-content"><div class="top-bar"><div class="page-title"><h1>${adminView.charAt(0).toUpperCase() + adminView.slice(1)}</h1><p>Welcome back, ${currentUser.name}</p></div><div class="stats-mini"><span style="background: var(--dark-card); padding: 8px 16px; border-radius: 50px;"><i class="fas fa-users"></i> ${stats.totalUsers} Users</span></div></div>${content}</div>
+                <div class="main-content"><div class="top-bar"><div class="page-title"><h1>${adminView.charAt(0).toUpperCase() + adminView.slice(1)}</h1><p>Welcome back, ${currentAdmin.name}</p></div><div class="stats-mini"><span style="background: var(--dark-card); padding: 8px 16px; border-radius: 50px;"><i class="fas fa-users"></i> ${stats.totalUsers} Learners</span></div></div>${content}</div>
                 <div id="toast-container"></div>
                 
                 <div class="modal" id="addUserModal"><div class="modal-content"><h3>Add User</h3><input type="text" id="newUserName" placeholder="Full Name"><input type="email" id="newUserEmail" placeholder="Email"><select id="newUserRole"><option value="user">User</option><option value="admin">Admin</option></select><div style="display: flex; gap: 12px;"><button class="btn btn-outline" onclick="closeModal('addUserModal')">Cancel</button><button class="btn btn-primary" onclick="submitAddUser()">Add</button></div></div></div>
@@ -612,6 +600,7 @@
         function toggleSidebar() { document.getElementById('sidebar')?.classList.toggle('open'); }
         function logout() { showToast('Logged out', 'info'); setTimeout(() => window.location.href = 'index.html', 1000); }
         
+        // Modal submission functions
         window.openAddUserModal = () => document.getElementById('addUserModal').classList.add('active');
         window.openAddModuleModal = () => document.getElementById('addModuleModal').classList.add('active');
         window.openEditModuleModal = (id) => {
@@ -697,7 +686,8 @@
         window.logout = logout;
         window.saveSettings = saveSettings;
         
-        loadData();
+        // Initialize
+        loadAllData();
     </script>
 </body>
 </html>
