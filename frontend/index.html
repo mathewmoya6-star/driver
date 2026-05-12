@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>MEI DRIVE AFRICA | Premier Driver Safety Platform</title>
-    <meta name="description" content="Kenya's premier NTSA-certified driver training platform">
+    <title>MEI DRIVE AFRICA | NTSA Driver Training Platform</title>
+    <meta name="description" content="Kenya's premier NTSA-certified driver training platform with 500+ exam questions">
     <meta name="theme-color" content="#d4af37">
     
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🚗%3C/text%3E%3C/svg%3E">
@@ -12,126 +12,594 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; line-height: 1.5; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.5;
+        }
         
         :root {
             --primary-gold: #d4af37;
+            --primary-gold-dark: #b8960c;
             --ev-green: #00ff88;
             --card-bg: #111111;
+            --card-bg-hover: #1a1a1a;
             --border-color: #222222;
             --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f0c674 100%);
+            --gradient-dark: linear-gradient(145deg, #0f1119, #080a10);
         }
         
-        .container { width: 100%; padding: 0 16px; margin: 0 auto; }
-        @media (min-width: 768px) { .container { max-width: 1400px; padding: 0 24px; } }
+        .container {
+            width: 100%;
+            padding: 0 16px;
+            margin: 0 auto;
+        }
         
-        .navbar { background: rgba(10,10,10,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212,175,55,0.3); position: sticky; top: 0; z-index: 1000; padding: 12px 0; }
-        .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-        .logo { font-weight: 800; font-size: 1.1rem; background: var(--gradient-gold); background-clip: text; -webkit-background-clip: text; color: transparent; cursor: pointer; }
-        @media (min-width: 768px) { .logo { font-size: 1.4rem; } }
-        
-        .mobile-menu-btn { display: flex; background: transparent; border: none; color: var(--primary-gold); font-size: 24px; cursor: pointer; padding: 8px; border-radius: 50%; }
-        .nav-links { display: none; width: 100%; flex-direction: column; align-items: center; padding: 16px 0 8px; gap: 8px; }
-        .nav-links.show { display: flex; }
-        .nav-links button { background: transparent; border: none; color: #e0e0e0; padding: 12px 20px; border-radius: 50px; cursor: pointer; font-size: 15px; width: 100%; text-align: center; }
         @media (min-width: 768px) {
-            .mobile-menu-btn { display: none; }
-            .nav-links { display: flex !important; width: auto; flex-direction: row; padding: 0; gap: 4px; }
-            .nav-links button { width: auto; padding: 8px 16px; font-size: 14px; }
+            .container {
+                max-width: 1400px;
+                padding: 0 24px;
+            }
         }
         
-        .btn, .btn-ev { min-height: 48px; padding: 12px 24px; font-size: 16px; font-weight: 600; border: none; border-radius: 50px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.2s; }
-        .btn { background: var(--gradient-gold); color: #000; }
-        .btn-ev { background: linear-gradient(135deg, #00ff88, #00b4d8); color: #000; }
-        .btn-small { min-height: 40px; padding: 8px 20px; font-size: 14px; border-radius: 50px; background: var(--gradient-gold); color: #000; border: none; cursor: pointer; }
+        /* Navbar */
+        .navbar {
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 0;
+        }
         
-        .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 20px 0; }
-        @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
-        @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
         
-        .card { background: var(--card-bg); border-radius: 20px; padding: 20px; border: 1px solid var(--border-color); transition: transform 0.2s; cursor: pointer; }
-        .card:active { transform: scale(0.98); }
-        @media (min-width: 768px) { .card:hover { transform: translateY(-4px); border-color: var(--primary-gold); } }
-        .card-ev { border-left: 4px solid #00ff88; }
+        .logo {
+            font-weight: 800;
+            font-size: 1.1rem;
+            background: var(--gradient-gold);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            cursor: pointer;
+            letter-spacing: -0.5px;
+        }
         
-        .unit-badge, .ev-badge-module { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 12px; }
-        .unit-badge { background: var(--gradient-gold); color: #000; }
-        .ev-badge-module { background: linear-gradient(135deg, #00ff88, #00b4d8); color: #000; }
+        @media (min-width: 768px) {
+            .logo {
+                font-size: 1.4rem;
+            }
+        }
         
-        .progress-bar { background: #2a2a2a; border-radius: 20px; height: 6px; margin: 16px 0; overflow: hidden; }
-        .progress-fill { background: var(--gradient-gold); height: 100%; width: 0%; transition: width 0.3s; }
+        .mobile-menu-btn {
+            display: flex;
+            background: transparent;
+            border: none;
+            color: var(--primary-gold);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+        }
         
-        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
-        @media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
-        .stat-card { background: var(--card-bg); border-radius: 16px; padding: 16px 12px; border: 1px solid var(--border-color); text-align: center; }
-        .stat-number { font-size: 1.6rem; font-weight: 800; color: var(--primary-gold); }
+        .nav-links {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 0 8px;
+            gap: 8px;
+        }
         
-        .hero { text-align: center; padding: 32px 16px; background: radial-gradient(circle at 10% 30%, rgba(212,175,55,0.08), #0a0a0a); border-radius: 32px; margin: 16px 0 24px; }
-        .hero h1 { font-size: 1.8rem; margin-bottom: 12px; }
-        @media (min-width: 768px) { .hero h1 { font-size: clamp(1.8rem, 5vw, 3.5rem); } }
-        .highlight { background: var(--gradient-gold); background-clip: text; -webkit-background-clip: text; color: transparent; }
+        .nav-links.show {
+            display: flex;
+        }
         
-        .question-bank { background: linear-gradient(145deg, #0f1119, #080a10); border-radius: 24px; margin: 24px 0; padding: 20px; }
-        .question-card { background: var(--card-bg); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
-        .question-text { font-size: 1rem; font-weight: 600; margin-bottom: 16px; }
-        .options-group { display: flex; flex-direction: column; gap: 8px; }
-        .option { background: #1a1c26; padding: 14px 16px; border-radius: 12px; cursor: pointer; border: 1px solid #2a2e3a; font-size: 14px; transition: all 0.2s; }
-        .option:hover { background: #252a38; }
-        .option.correct { background: rgba(46,204,113,0.2); border-color: #2ecc71; }
-        .option.wrong { background: rgba(231,76,60,0.2); border-color: #e74c3c; }
+        .nav-links button {
+            background: transparent;
+            border: none;
+            color: #e0e0e0;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 15px;
+            width: 100%;
+            text-align: center;
+            transition: all 0.2s;
+        }
         
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); backdrop-filter: blur(12px); z-index: 2000; justify-content: center; align-items: center; padding: 16px; }
-        .modal-content { background: var(--card-bg); border: 1px solid var(--primary-gold); border-radius: 24px; padding: 24px; width: 100%; max-width: 450px; max-height: 85vh; overflow-y: auto; }
-        .modal-content input { width: 100%; padding: 14px; margin: 8px 0; background: #1a1c26; border: 1px solid #2c2f3a; border-radius: 12px; color: #fff; font-size: 16px; }
-        .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--primary-gold); padding: 8px; margin: -8px -8px 0 0; }
+        .nav-links button:hover {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--primary-gold);
+        }
         
-        #toast-root { position: fixed; bottom: 16px; left: 16px; right: 16px; z-index: 2000; display: flex; flex-direction: column; gap: 8px; }
-        @media (min-width: 768px) { #toast-root { bottom: 30px; right: 30px; left: auto; min-width: 300px; } }
-        .toast { background: var(--card-bg); border-left: 4px solid var(--primary-gold); padding: 14px 18px; border-radius: 12px; animation: slideIn 0.3s ease; display: flex; align-items: center; gap: 12px; font-size: 14px; }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
+        @media (min-width: 768px) {
+            .mobile-menu-btn {
+                display: none;
+            }
+            .nav-links {
+                display: flex !important;
+                width: auto;
+                flex-direction: row;
+                padding: 0;
+                gap: 4px;
+            }
+            .nav-links button {
+                width: auto;
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
         
-        .spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--primary-gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        /* Buttons */
+        .btn, .btn-ev, .btn-small {
+            min-height: 48px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
         
-        .unit-content { line-height: 1.6; }
-        .unit-content h2 { color: var(--primary-gold); margin: 20px 0 10px; }
-        .unit-content h3 { color: var(--ev-green); margin: 15px 0 10px; }
-        .unit-content ul, .unit-content ol { margin-left: 20px; margin-bottom: 15px; }
-        .unit-content li { margin: 8px 0; }
+        .btn {
+            background: var(--gradient-gold);
+            color: #000;
+        }
         
-        .hero-buttons { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; justify-content: center; align-items: center; }
-        @media (min-width: 480px) { .hero-buttons { flex-direction: row; } }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
         
-        .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
-        .pagination button { padding: 8px 12px; background: var(--card-bg); border: 1px solid var(--border-color); color: #fff; border-radius: 6px; cursor: pointer; }
-        .pagination button.active { background: var(--primary-gold); color: #000; }
+        .btn-ev {
+            background: linear-gradient(135deg, #00ff88, #00b4d8);
+            color: #000;
+        }
         
-        .score-card { background: var(--card-bg); border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 20px; border: 1px solid var(--primary-gold); }
-        .score-card h3 { color: var(--primary-gold); margin-bottom: 8px; }
-        .score-card .score { font-size: 2rem; font-weight: 800; }
+        .btn-small {
+            min-height: 40px;
+            padding: 8px 20px;
+            font-size: 14px;
+            border-radius: 50px;
+            background: var(--gradient-gold);
+            color: #000;
+            border: none;
+            cursor: pointer;
+        }
         
-        .profile-link { background: rgba(212,175,55,0.2); border-radius: 40px; padding: 6px 16px; cursor: pointer; font-size: 14px; }
-        .admin-panel { display: none; }
-        .admin-sidebar { width: 260px; background: var(--card-bg); border-right: 1px solid var(--border-color); padding: 20px; min-height: calc(100vh - 70px); }
-        .admin-sidebar button { width: 100%; padding: 12px; margin-bottom: 8px; background: transparent; border: 1px solid var(--border-color); color: #fff; border-radius: 12px; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 12px; }
-        .admin-sidebar button:hover { background: rgba(212,175,55,0.1); border-color: var(--primary-gold); color: var(--primary-gold); }
-        .admin-layout { display: flex; min-height: calc(100vh - 70px); }
-        .admin-content { flex: 1; padding: 30px; overflow-y: auto; }
-        table { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 16px; overflow: hidden; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
-        th { color: var(--primary-gold); }
-        .role-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; display: inline-block; }
-        .role-admin { background: rgba(231,76,60,0.2); color: #e74c3c; }
-        .role-learner { background: rgba(52,152,219,0.2); color: #3498db; }
-        .role-driver { background: rgba(46,204,113,0.2); color: #2ecc71; }
-        .search-input { width: 100%; padding: 12px; margin-bottom: 20px; background: #1a1c26; border: 1px solid var(--border-color); border-radius: 12px; color: #fff; }
-        .btn-sm { padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; font-size: 12px; margin: 0 4px; }
-        .btn-edit { background: #3498db; color: white; }
-        .btn-delete { background: #e74c3c; color: white; }
-        .btn-add { background: #2ecc71; color: white; }
+        /* Grid & Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
         
-        @media (max-width: 768px) { .admin-layout { flex-direction: column; } .admin-sidebar { width: 100%; } }
+        @media (min-width: 640px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .card:active {
+            transform: scale(0.98);
+        }
+        
+        @media (min-width: 768px) {
+            .card:hover {
+                transform: translateY(-4px);
+                border-color: var(--primary-gold);
+                background: var(--card-bg-hover);
+            }
+        }
+        
+        .card-ev {
+            border-left: 4px solid #00ff88;
+        }
+        
+        /* Badges */
+        .unit-badge, .ev-badge-module {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .unit-badge {
+            background: var(--gradient-gold);
+            color: #000;
+        }
+        
+        .ev-badge-module {
+            background: linear-gradient(135deg, #00ff88, #00b4d8);
+            color: #000;
+        }
+        
+        /* Progress Bar */
+        .progress-bar {
+            background: #2a2a2a;
+            border-radius: 20px;
+            height: 6px;
+            margin: 16px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: var(--gradient-gold);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        @media (min-width: 640px) {
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px 12px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary-gold);
+        }
+        
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 32px 16px;
+            background: radial-gradient(circle at 10% 30%, rgba(212, 175, 55, 0.08), #0a0a0a);
+            border-radius: 32px;
+            margin: 16px 0 24px;
+        }
+        
+        .hero h1 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+        
+        @media (min-width: 768px) {
+            .hero h1 {
+                font-size: clamp(1.8rem, 5vw, 3.5rem);
+            }
+        }
+        
+        .highlight {
+            background: var(--gradient-gold);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        @media (min-width: 480px) {
+            .hero-buttons {
+                flex-direction: row;
+            }
+        }
+        
+        /* Quiz Styles */
+        .question-bank {
+            background: var(--gradient-dark);
+            border-radius: 24px;
+            margin: 24px 0;
+            padding: 20px;
+        }
+        
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .question-text {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .option {
+            background: #1a1c26;
+            padding: 14px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 1px solid #2a2e3a;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background: #252a38;
+        }
+        
+        .option.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border-color: #2ecc71;
+        }
+        
+        .option.wrong {
+            background: rgba(231, 76, 60, 0.2);
+            border-color: #e74c3c;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.96);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+        
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--primary-gold);
+            border-radius: 24px;
+            padding: 24px;
+            width: 100%;
+            max-width: 450px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        
+        .modal-content input {
+            width: 100%;
+            padding: 14px;
+            margin: 8px 0;
+            background: #1a1c26;
+            border: 1px solid #2c2f3a;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
+        }
+        
+        .close-modal {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--primary-gold);
+            padding: 8px;
+            margin: -8px -8px 0 0;
+        }
+        
+        /* Toast */
+        #toast-root {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        @media (min-width: 768px) {
+            #toast-root {
+                bottom: 30px;
+                right: 30px;
+                left: auto;
+                min-width: 300px;
+            }
+        }
+        
+        .toast {
+            background: var(--card-bg);
+            border-left: 4px solid var(--primary-gold);
+            padding: 14px 18px;
+            border-radius: 12px;
+            animation: slideIn 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Spinner */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--primary-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 40px auto;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Content Styles */
+        .unit-content {
+            line-height: 1.6;
+        }
+        
+        .unit-content h2 {
+            color: var(--primary-gold);
+            margin: 20px 0 10px;
+        }
+        
+        .unit-content h3 {
+            color: var(--ev-green);
+            margin: 15px 0 10px;
+        }
+        
+        .unit-content ul,
+        .unit-content ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .unit-content li {
+            margin: 8px 0;
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .pagination button {
+            padding: 8px 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .pagination button:hover {
+            border-color: var(--primary-gold);
+        }
+        
+        .pagination button.active {
+            background: var(--primary-gold);
+            color: #000;
+        }
+        
+        /* Score Card */
+        .score-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid var(--primary-gold);
+        }
+        
+        .score-card h3 {
+            color: var(--primary-gold);
+            margin-bottom: 8px;
+        }
+        
+        .score-card .score {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+        
+        /* Profile */
+        .profile-link {
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 40px;
+            padding: 6px 16px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        /* Utilities */
+        .mt-3 {
+            margin-top: 16px;
+        }
+        
+        hr {
+            border-color: var(--border-color);
+            margin: 16px 0;
+        }
+        
+        a {
+            color: var(--primary-gold);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -154,7 +622,11 @@
                 </div>
             </div>
         </div>
-        <div class="container"><main id="page-content"><div class="spinner"></div></main></div>
+        <div class="container">
+            <main id="page-content">
+                <div class="spinner"></div>
+            </main>
+        </div>
     </div>
     <div id="toast-root"></div>
 
@@ -180,9 +652,14 @@
         // Quiz state
         let currentQuizPage = 1;
         let quizAnswers = {};
+        let currentQuestions = [];
+        let currentQuizMode = 'learner';
+        let currentQuizUnit = null;
+        let quizScore = 0;
+        let quizSubmitted = false;
         const questionsPerPage = 5;
         
-        // Toast
+        // Toast system
         let toastQueue = [];
         let isProcessingToast = false;
         
@@ -192,14 +669,17 @@
         }
         
         async function processToastQueue() {
-            if (toastQueue.length === 0) { isProcessingToast = false; return; }
+            if (toastQueue.length === 0) {
+                isProcessingToast = false;
+                return;
+            }
             isProcessingToast = true;
             const { message, type } = toastQueue.shift();
             const container = document.getElementById('toast-root');
             const toast = document.createElement('div');
             toast.className = 'toast';
             const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
-            toast.textContent = `${icon} ${message}`;
+            toast.innerHTML = `${icon} ${message}`;
             container.appendChild(toast);
             await new Promise(r => setTimeout(r, 3000));
             toast.remove();
@@ -210,55 +690,68 @@
         // DATA FETCHING FROM SUPABASE
         // ============================================
         
-        // Fetch materials by module type
-        async function fetchMaterials(moduleType) {
-            if (materialsCache[moduleType]) {
-                return materialsCache[moduleType];
+        async function fetchQuestions(moduleType = 'learner', unitId = null, limit = 100) {
+            const cacheKey = unitId ? `${moduleType}_unit_${unitId}` : moduleType;
+            if (questionsCache[cacheKey]) {
+                return questionsCache[cacheKey];
             }
             
             try {
-                const { data, error } = await supabase
-                    .from('materials')
-                    .select('*')
-                    .eq('module_type', moduleType)
-                    .eq('status', 'published')
-                    .order('unit_number', { ascending: true });
+                let query = supabase
+                    .from('quiz_questions')
+                    .select(`
+                        id,
+                        question_number,
+                        question_text,
+                        option_a,
+                        option_b,
+                        option_c,
+                        option_d,
+                        correct_answer,
+                        explanation,
+                        difficulty,
+                        unit_id,
+                        units!inner(unit_number, title)
+                    `);
+                
+                if (unitId) {
+                    query = query.eq('unit_id', unitId);
+                } else if (moduleType === 'learner') {
+                    // For learner module, fetch all questions across all units
+                    // No additional filter needed
+                } else {
+                    // For other modules, we'd need a module_type column
+                    // Fallback to limited questions
+                    query = query.limit(limit);
+                }
+                
+                const { data, error } = await query;
                 
                 if (error) throw error;
                 
-                materialsCache[moduleType] = data || [];
+                questionsCache[cacheKey] = data || [];
                 return data || [];
             } catch (error) {
-                console.error(`Error fetching ${moduleType}:`, error);
-                // Fallback data if Supabase is empty
-                return getFallbackMaterials(moduleType);
-            }
-        }
-        
-        // Fetch questions by module type
-        async function fetchQuestions(moduleType, limit = 20) {
-            if (questionsCache[moduleType]) {
-                return questionsCache[moduleType];
-            }
-            
-            try {
-                const { data, error } = await supabase
-                    .from('questions')
-                    .select('*')
-                    .eq('module_type', moduleType)
-                    .limit(limit);
-                
-                if (error) throw error;
-                
-                questionsCache[moduleType] = data || [];
-                return data || [];
-            } catch (error) {
-                console.error(`Error fetching questions:`, error);
+                console.error('Error fetching questions:', error);
                 return getFallbackQuestions();
             }
         }
         
-        // Fetch user progress
+        async function fetchUnits() {
+            try {
+                const { data, error } = await supabase
+                    .from('units')
+                    .select('*')
+                    .order('unit_number', { ascending: true });
+                
+                if (error) throw error;
+                return data || [];
+            } catch (error) {
+                console.error('Error fetching units:', error);
+                return getFallbackUnits();
+            }
+        }
+        
         async function fetchUserProgress() {
             if (!currentUser) return {};
             
@@ -273,7 +766,7 @@
                 const progress = {};
                 if (data) {
                     data.forEach(p => {
-                        progress[p.material_id] = p.progress_percentage || 0;
+                        progress[p.unit_id] = p.completed ? 100 : (p.quiz_score || 0);
                     });
                 }
                 userProgress = progress;
@@ -284,8 +777,7 @@
             }
         }
         
-        // Update progress
-        async function updateProgress(materialId, progress) {
+        async function updateUserProgress(unitId, completed, quizScore = null) {
             if (!currentUser) {
                 showToast('Please login to track progress', 'error');
                 return false;
@@ -296,17 +788,17 @@
                     .from('user_progress')
                     .upsert({
                         user_id: currentUser.id,
-                        material_id: materialId,
-                        progress_percentage: progress,
-                        status: progress === 100 ? 'completed' : 'in_progress',
-                        last_accessed_at: new Date().toISOString(),
-                        completed_at: progress === 100 ? new Date().toISOString() : null
+                        unit_id: unitId,
+                        completed: completed,
+                        quiz_score: quizScore,
+                        completed_at: completed ? new Date().toISOString() : null,
+                        last_accessed_at: new Date().toISOString()
                     });
                 
                 if (error) throw error;
                 
-                userProgress[materialId] = progress;
-                showToast(progress === 100 ? 'Unit completed! 🎉' : 'Progress saved', 'success');
+                userProgress[unitId] = completed ? 100 : (quizScore || 0);
+                showToast(completed ? 'Unit completed! 🎉' : 'Progress saved', 'success');
                 return true;
             } catch (error) {
                 console.error('Error updating progress:', error);
@@ -316,112 +808,54 @@
         }
         
         // ============================================
-        // FALLBACK DATA (if Supabase is empty)
+        // FALLBACK DATA
         // ============================================
-        function getFallbackMaterials(moduleType) {
-            const fallback = {
-                learner: Array.from({ length: 21 }, (_, i) => ({
-                    id: i + 1,
-                    title: `Unit ${i + 1}: ${getUnitTitle(i)}`,
-                    description: `Complete training for ${getUnitTitle(i).toLowerCase()}`,
-                    content: `<h2>${getUnitTitle(i)}</h2><p>This is comprehensive training material for ${getUnitTitle(i).toLowerCase()}.</p><ul><li>Learn essential skills</li><li>Understand key concepts</li><li>Practice with examples</li></ul>`,
-                    module_type: 'learner',
-                    unit_number: i + 1,
-                    difficulty: i < 7 ? 'beginner' : i < 14 ? 'intermediate' : 'advanced',
-                    image_url: null,
-                    video_url: null,
-                    estimated_minutes: 45
-                })),
-                psv: Array.from({ length: 10 }, (_, i) => ({
-                    id: 100 + i,
-                    title: `PSV Module ${i + 1}: ${getPSVTitle(i)}`,
-                    description: `Professional PSV driver training for ${getPSVTitle(i).toLowerCase()}`,
-                    content: `<h2>${getPSVTitle(i)}</h2><p>Professional training for PSV drivers.</p><ul><li>Safety standards</li><li>Customer service</li><li>Regulatory compliance</li></ul>`,
-                    module_type: 'psv',
-                    unit_number: i + 1,
-                    difficulty: 'intermediate'
-                })),
-                ev: Array.from({ length: 8 }, (_, i) => ({
-                    id: 200 + i,
-                    title: `EV Module ${i + 1}: ${getEVTitle(i)}`,
-                    description: `Electric vehicle training for ${getEVTitle(i).toLowerCase()}`,
-                    content: `<h2>${getEVTitle(i)}</h2><p>Complete electric vehicle training.</p><ul><li>Battery technology</li><li>Charging infrastructure</li><li>Safety protocols</li></ul>`,
-                    module_type: 'ev',
-                    unit_number: i + 1,
-                    difficulty: 'intermediate'
-                })),
-                boda: Array.from({ length: 12 }, (_, i) => ({
-                    id: 300 + i,
-                    title: `Boda Module ${i + 1}: ${getBodaTitle(i)}`,
-                    description: `Motorcycle safety training for ${getBodaTitle(i).toLowerCase()}`,
-                    content: `<h2>${getBodaTitle(i)}</h2><p>Complete boda boda safety training.</p><ul><li>Protective gear</li><li>Defensive riding</li><li>Passenger safety</li></ul>`,
-                    module_type: 'boda',
-                    unit_number: i + 1,
-                    difficulty: 'beginner'
-                })),
-                schoolbus: Array.from({ length: 6 }, (_, i) => ({
-                    id: 400 + i,
-                    title: `School Bus Safety ${i + 1}: ${getSchoolBusTitle(i)}`,
-                    description: `Child transport safety training`,
-                    content: `<h2>${getSchoolBusTitle(i)}</h2><p>Specialized training for school bus drivers.</p><ul><li>Child safety protocols</li><li>Emergency procedures</li><li>Parent communication</li></ul>`,
-                    module_type: 'schoolbus',
-                    unit_number: i + 1,
-                    difficulty: 'intermediate'
-                })),
-                academy: Array.from({ length: 6 }, (_, i) => ({
-                    id: 500 + i,
-                    title: `Academy Module ${i + 1}: ${getAcademyTitle(i)}`,
-                    description: `Professional development training`,
-                    content: `<h2>${getAcademyTitle(i)}</h2><p>Advanced professional driver development.</p><ul><li>Fleet management</li><li>Logistics planning</li><li>Leadership skills</li></ul>`,
-                    module_type: 'academy',
-                    unit_number: i + 1,
-                    difficulty: 'advanced'
-                }))
-            };
-            return fallback[moduleType] || [];
-        }
         
-        function getUnitTitle(i) {
-            const titles = ['Introduction to Driving', 'Highway Code', 'Vehicle Controls', 'Maintenance', 'Moving Off', 'Turning & Reversing', 'Roundabouts', 'Overtaking', 'Speed Limits', 'Defensive Driving', 'Night Driving', 'Adverse Weather', 'Alcohol & Drugs', 'Fatigue Management', 'Pedestrian Safety', 'Emergency Procedures', 'First Aid', 'Insurance', 'Eco Driving', 'Test Preparation', 'Advanced Skills'];
-            return titles[i] || `Driving Unit ${i + 1}`;
-        }
-        
-        function getPSVTitle(i) {
-            const titles = ['Licensing & Compliance', 'Professional Conduct', 'Personal Grooming', 'Passenger Safety', 'Vehicle Inspections', 'Route Planning', 'Fare Management', 'Emergency Response', 'Conflict Resolution', 'Defensive Driving'];
-            return titles[i] || `PSV Module ${i + 1}`;
-        }
-        
-        function getEVTitle(i) {
-            const titles = ['Introduction to EVs', 'Battery Technology', 'Charging Infrastructure', 'Maintenance', 'Safety Protocols', 'Range Management', 'Commercial Use', 'Regulations'];
-            return titles[i] || `EV Module ${i + 1}`;
-        }
-        
-        function getBodaTitle(i) {
-            const titles = ['Controls & Operation', 'Protective Gear', 'Professionalism', 'Drug Prevention', 'Customer Service', 'Crime Prevention', 'Know Your Passenger', 'Night Riding', 'Entrepreneurship', 'Defensive Riding', 'Maintenance', 'Alcohol Awareness'];
-            return titles[i] || `Boda Module ${i + 1}`;
-        }
-        
-        function getSchoolBusTitle(i) {
-            const titles = ['Child Safety', 'Pre-Trip Inspection', 'Loading & Unloading', 'Behavior Management', 'Emergency Evacuation', 'Communication'];
-            return titles[i] || `School Bus Module ${i + 1}`;
-        }
-        
-        function getAcademyTitle(i) {
-            const titles = ['Fleet Management', 'Transport Logistics', 'Driver Recruitment', 'Safety Compliance', 'Financial Management', 'Technology in Transport'];
-            return titles[i] || `Academy Module ${i + 1}`;
+        function getFallbackUnits() {
+            const titles = [
+                'Introduction to Driving', 'Fundamental Driving Rules', 'Model Town',
+                'Human Factors in Traffic', 'Vehicle Construction and Controls', 'Self-Inspection of Vehicle',
+                'Observation', 'Vehicle Control', 'Communication on the Road',
+                'Speed Management', 'Space Management', 'Emergency Manoeuvres',
+                'Skid Control and Recovery', 'Adverse Driving Conditions', 'Preventive Maintenance',
+                'Conditions of Carriage', 'Hazardous Materials', 'Emergency Procedures',
+                'Work Planning', 'Customer Care', 'The Examination'
+            ];
+            return titles.map((title, i) => ({
+                id: i + 1,
+                unit_number: i + 1,
+                title: title
+            }));
         }
         
         function getFallbackQuestions() {
             return [
-                { id: 1, question_text: "What is the legal blood alcohol limit for commercial drivers in Kenya?", option_a: "0.00%", option_b: "0.05%", option_c: "0.08%", option_d: "0.10%", correct_answer: 1, explanation: "Commercial drivers must have 0.00% blood alcohol." },
-                { id: 2, question_text: "What is the maximum speed limit in a residential area?", option_a: "30 km/h", option_b: "40 km/h", option_c: "50 km/h", option_d: "60 km/h", correct_answer: 2, explanation: "Residential areas: 40 km/h." },
-                { id: 3, question_text: "What should you do if your vehicle starts to skid?", option_a: "Steer into the skid", option_b: "Steer away", option_c: "Brake hard", option_d: "Accelerate", correct_answer: 1, explanation: "Steer into the skid to regain control." }
+                { id: 1, question_number: 1, question_text: 'What is the minimum age for a private vehicle learner\'s licence in Kenya?', option_a: '16 years', option_b: '17 years', option_c: '18 years', option_d: '21 years', correct_answer: 'C', explanation: 'The Traffic Act specifies 18 years as the minimum age.', difficulty: 1, units: { unit_number: 1, title: 'Introduction to Driving' } },
+                { id: 2, question_number: 2, question_text: 'What does a triangular traffic sign indicate?', option_a: 'Information', option_b: 'Prohibition', option_c: 'Warning', option_d: 'Direction', correct_answer: 'C', explanation: 'Triangle signs are warning signs.', difficulty: 1, units: { unit_number: 2, title: 'Fundamental Driving Rules' } },
+                { id: 3, question_number: 3, question_text: 'What does a yellow kerb mean?', option_a: 'Parking allowed', option_b: 'No parking, waiting, or stopping', option_c: 'Loading zone', option_d: 'VIP parking', correct_answer: 'B', explanation: 'Yellow kerb means no parking, waiting, or stopping.', difficulty: 1, units: { unit_number: 3, title: 'Model Town' } }
             ];
+        }
+        
+        function getMaterialContent(unit) {
+            return `
+                <h2>${unit.title}</h2>
+                <p>This comprehensive training material covers all essential aspects of ${unit.title.toLowerCase()}.</p>
+                <h3>Key Learning Objectives</h3>
+                <ul>
+                    <li>Understand core concepts of ${unit.title.toLowerCase()}</li>
+                    <li>Learn practical application techniques</li>
+                    <li>Master safety protocols and regulations</li>
+                    <li>Prepare for NTSA examination</li>
+                </ul>
+                <h3>Study Notes</h3>
+                <p>Review the material thoroughly and take the practice quiz to test your knowledge. Complete all units to prepare for your driving test.</p>
+            `;
         }
         
         // ============================================
         // AUTHENTICATION
         // ============================================
+        
         async function login(email, password) {
             try {
                 const { data, error } = await supabase.auth.signInWithPassword({ email, password });
@@ -434,7 +868,7 @@
                 };
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
                 await fetchUserProgress();
-                showToast(`Welcome ${currentUser.name}!`, 'success');
+                showToast(`Welcome back, ${currentUser.name}!`, 'success');
                 renderPage(currentPage);
                 updateAuthUI();
                 return currentUser;
@@ -447,7 +881,8 @@
         async function signUp(email, password, name) {
             try {
                 const { data, error } = await supabase.auth.signUp({
-                    email, password,
+                    email,
+                    password,
                     options: { data: { full_name: name } }
                 });
                 if (error) throw error;
@@ -464,7 +899,9 @@
             currentUser = null;
             localStorage.removeItem('currentUser');
             userProgress = {};
-            showToast('Logged out', 'info');
+            quizAnswers = {};
+            currentQuizPage = 1;
+            showToast('Logged out successfully', 'info');
             renderPage('home');
             updateAuthUI();
         }
@@ -488,26 +925,21 @@
             const authDiv = document.getElementById('authButtons');
             if (!authDiv) return;
             if (currentUser) {
-                authDiv.innerHTML = `<div class="profile-link" onclick="showProfileModal()">👤 ${currentUser.name}</div><button onclick="logout()">🚪 Logout</button>`;
+                authDiv.innerHTML = `
+                    <div class="profile-link" onclick="window.showProfileModal()">👤 ${currentUser.name}</div>
+                    <button onclick="window.logout()">🚪 Logout</button>
+                `;
             } else {
-                authDiv.innerHTML = `<button onclick="showLoginModal()">🔑 Login</button><button onclick="showSignupModal()">📝 Sign Up</button>`;
+                authDiv.innerHTML = `
+                    <button onclick="window.showLoginModal()">🔑 Login</button>
+                    <button onclick="window.showSignupModal()">📝 Sign Up</button>
+                `;
             }
         }
         
         // ============================================
         // RENDERING FUNCTIONS
         // ============================================
-        function renderCard(material, type) {
-            const isEv = type === 'ev';
-            const progress = userProgress[material.id] || 0;
-            return `<div class="card ${isEv ? 'card-ev' : ''}" onclick="viewMaterial('${material.id}', '${type}')">
-                <span class="${isEv ? 'ev-badge-module' : 'unit-badge'}">${isEv ? '⚡' : ''} ${type === 'learner' ? `Unit ${material.unit_number}` : ''}</span>
-                <h3>${escapeHtml(material.title)}</h3>
-                <p>${escapeHtml(material.description?.substring(0, 100) || '')}...</p>
-                <div class="progress-bar"><div class="progress-fill" style="width: ${progress}%"></div></div>
-                <button class="btn-small">📖 View →</button>
-            </div>`;
-        }
         
         function escapeHtml(text) {
             if (!text) return '';
@@ -519,57 +951,107 @@
             });
         }
         
+        function renderCard(unit, type) {
+            const isEv = type === 'ev';
+            const progress = userProgress[unit.id] || 0;
+            const isCompleted = progress === 100;
+            const checkmark = isCompleted ? '✅ ' : '';
+            return `
+                <div class="card ${isEv ? 'card-ev' : ''}" onclick="window.viewMaterial(${unit.id}, '${type}')">
+                    <span class="${isEv ? 'ev-badge-module' : 'unit-badge'}">${isEv ? '⚡' : ''} ${type === 'learner' ? `Unit ${unit.unit_number}` : ''}</span>
+                    <h3>${checkmark}${escapeHtml(unit.title)}</h3>
+                    <p>${escapeHtml(getDescription(unit))}</p>
+                    <div class="progress-bar"><div class="progress-fill" style="width: ${progress}%"></div></div>
+                    <button class="btn-small">📖 View →</button>
+                </div>
+            `;
+        }
+        
+        function getDescription(unit) {
+            const descriptions = {
+                1: 'Learn the fundamentals of driving and NTSA requirements',
+                2: 'Master traffic rules, signs, and right of way',
+                3: 'Practice roundabouts, parking, and town driving',
+                4: 'Understand driver fatigue, distractions, and alcohol effects',
+                5: 'Learn vehicle components and dashboard controls',
+                6: 'Master pre-trip inspection and safety checks',
+                7: 'Develop hazard perception and blind spot awareness',
+                8: 'Perfect clutch control, gears, and hill starts',
+                9: 'Master MSM routine and road communication',
+                10: 'Learn speed management and stopping distances',
+                11: 'Maintain safe space around your vehicle',
+                12: 'Handle brake failure, blowouts, and emergencies',
+                13: 'Recover from skids and aquaplaning',
+                14: 'Drive safely in rain, fog, and at night',
+                15: 'Preventive maintenance and vehicle care',
+                16: 'PSV regulations and passenger safety',
+                17: 'Safe transport of hazardous materials',
+                18: 'Accident response and first aid',
+                19: 'Route planning and fatigue prevention',
+                20: 'Professional customer service for drivers',
+                21: 'Exam preparation and test tips'
+            };
+            return descriptions[unit.unit_number] || 'Complete training material with quiz and certification';
+        }
+        
         async function renderModulePage(moduleType) {
             const container = document.getElementById('page-content');
             container.innerHTML = '<div class="spinner"></div>';
             
-            const materials = await fetchMaterials(moduleType);
-            let title = moduleType.toUpperCase();
-            if (moduleType === 'learner') title = '📚 Learner Driver Hub - 21 Complete Units';
-            if (moduleType === 'psv') title = '🚌 PSV Professional Course';
-            if (moduleType === 'ev') title = '⚡ Electric Vehicle Training';
-            if (moduleType === 'boda') title = '🏍️ Boda Boda Safety Course';
-            if (moduleType === 'schoolbus') title = '🏫 School Bus Safety Program';
-            if (moduleType === 'academy') title = '🎓 Advanced Driver Academy';
+            let units = await fetchUnits();
             
-            if (materials.length === 0) {
+            const titles = {
+                learner: '📚 Learner Driver Hub - 21 Complete Units',
+                psv: '🚌 PSV Professional Course',
+                ev: '⚡ Electric Vehicle Training',
+                boda: '🏍️ Boda Boda Safety Course',
+                schoolbus: '🏫 School Bus Safety Program',
+                academy: '🎓 Advanced Driver Academy'
+            };
+            
+            const title = titles[moduleType] || moduleType.toUpperCase();
+            
+            if (units.length === 0) {
                 container.innerHTML = `<div class="hero"><h1>${title}</h1><p>No materials available yet. Check back soon!</p></div>`;
                 return;
             }
             
             let cards = '';
-            for (let i = 0; i < materials.length; i++) {
-                cards += renderCard(materials[i], moduleType);
+            for (let i = 0; i < units.length; i++) {
+                cards += renderCard(units[i], moduleType);
             }
             
-            container.innerHTML = `<div class="hero"><h1>${title}</h1></div><div class="grid">${cards}</div>`;
-            
-            // Load questions for this module if it's learner or quiz page
-            if (moduleType === 'learner') {
-                const questions = await fetchQuestions('learner', 5);
-                if (questions.length > 0) {
-                    const questionHtml = renderQuestions(questions);
-                    container.innerHTML += `<div class="question-bank"><h2>📝 Practice Questions</h2>${questionHtml}</div>`;
-                }
-            }
-        }
-        
-        function renderQuestions(questions) {
-            return questions.map((q, idx) => `
-                <div class="question-card">
-                    <div class="question-text"><strong>${idx + 1}.</strong> ${escapeHtml(q.question_text)}</div>
-                    <div class="options-group">
-                        <div class="option" onclick="showToast('Check your answer!', 'info')">A. ${escapeHtml(q.option_a)}</div>
-                        <div class="option" onclick="showToast('Check your answer!', 'info')">B. ${escapeHtml(q.option_b)}</div>
-                        <div class="option" onclick="showToast('Check your answer!', 'info')">C. ${escapeHtml(q.option_c)}</div>
-                        <div class="option" onclick="showToast('Check your answer!', 'info')">D. ${escapeHtml(q.option_d)}</div>
-                    </div>
+            container.innerHTML = `
+                <div class="hero">
+                    <h1>${title}</h1>
+                    <p>Complete NTSA-certified training with 500+ practice questions</p>
                 </div>
-            `).join('');
+                <div class="grid">${cards}</div>
+            `;
         }
         
-        async function renderQuiz() {
-            const questions = await fetchQuestions('learner', 50);
+        async function renderQuiz(unitId = null) {
+            const container = document.getElementById('page-content');
+            container.innerHTML = '<div class="spinner"></div>';
+            
+            let questions;
+            let unitInfo = null;
+            
+            if (unitId) {
+                questions = await fetchQuestions('learner', unitId);
+                const units = await fetchUnits();
+                unitInfo = units.find(u => u.id === unitId);
+            } else {
+                questions = await fetchQuestions('learner', null, 100);
+            }
+            
+            currentQuestions = questions;
+            
+            if (questions.length === 0) {
+                container.innerHTML = `<div class="hero"><h1>📝 NTSA Practice Test</h1><p>No questions available. Please check back later.</p></div>`;
+                return;
+            }
+            
             const start = (currentQuizPage - 1) * questionsPerPage;
             const end = start + questionsPerPage;
             const pageQuestions = questions.slice(start, end);
@@ -578,86 +1060,218 @@
             let answered = Object.keys(quizAnswers).length;
             let correct = 0;
             
-            let html = `<div class="hero"><h1>📝 NTSA Practice Test</h1><p>Prepare with real exam questions</p></div>`;
-            html += `<div class="score-card"><h3>Your Progress</h3><div class="score">${answered}/${questions.length}</div></div>`;
+            for (let answerId in quizAnswers) {
+                const question = questions.find(q => q.id == answerId);
+                if (question && quizAnswers[answerId] === question.correct_answer) {
+                    correct++;
+                }
+            }
+            
+            let html = `
+                <div class="hero">
+                    <h1>📝 NTSA Practice Test</h1>
+                    <p>${unitInfo ? `Unit ${unitInfo.unit_number}: ${unitInfo.title}` : 'All Units - 500+ Questions'}</p>
+                </div>
+                <div class="score-card">
+                    <h3>📊 Your Progress</h3>
+                    <div class="score">${answered}/${questions.length} Answered</div>
+                    <div>✅ ${correct} Correct | ❌ ${answered - correct} Incorrect</div>
+                </div>
+            `;
             
             for (let q of pageQuestions) {
                 const selected = quizAnswers[q.id];
-                html += `<div class="question-card"><div class="question-text"><strong>${q.id}.</strong> ${escapeHtml(q.question_text)}</div><div class="options-group">`;
-                const options = [q.option_a, q.option_b, q.option_c, q.option_d];
-                for (let i = 0; i < options.length; i++) {
+                const options = [
+                    { letter: 'A', text: q.option_a },
+                    { letter: 'B', text: q.option_b },
+                    { letter: 'C', text: q.option_c },
+                    { letter: 'D', text: q.option_d }
+                ];
+                
+                html += `
+                    <div class="question-card">
+                        <div class="question-text">
+                            <strong>Q${q.question_number}:</strong> ${escapeHtml(q.question_text)}
+                            ${q.units ? `<span style="font-size:12px; color:var(--primary-gold); display:block; margin-top:5px;">📚 Unit ${q.units.unit_number}: ${q.units.title}</span>` : ''}
+                        </div>
+                        <div class="options-group">
+                `;
+                
+                for (let opt of options) {
                     let optionClass = '';
                     if (selected !== undefined) {
-                        if (i + 1 === q.correct_answer) optionClass = 'correct';
-                        else if (selected === i + 1 && selected !== q.correct_answer) optionClass = 'wrong';
+                        if (opt.letter === q.correct_answer) {
+                            optionClass = 'correct';
+                            html += `<div class="option correct">✅ ${opt.letter}. ${escapeHtml(opt.text)} (Correct Answer)</div>`;
+                        } else if (selected === opt.letter && selected !== q.correct_answer) {
+                            optionClass = 'wrong';
+                            html += `<div class="option wrong">❌ ${opt.letter}. ${escapeHtml(opt.text)} (Your Answer - Incorrect)</div>`;
+                        } else {
+                            html += `<div class="option">${opt.letter}. ${escapeHtml(opt.text)}</div>`;
+                        }
+                    } else {
+                        html += `<div class="option" onclick="window.selectQuizAnswer(${q.id}, '${opt.letter}')">${opt.letter}. ${escapeHtml(opt.text)}</div>`;
                     }
-                    html += `<div class="option ${optionClass}" onclick="selectQuizAnswer(${q.id}, ${i + 1})">${String.fromCharCode(65 + i)}. ${escapeHtml(options[i])}</div>`;
                 }
+                
+                if (selected !== undefined && q.explanation) {
+                    html += `<div style="margin-top:12px; padding:12px; background:rgba(212,175,55,0.1); border-radius:8px; font-size:13px;">
+                        <strong>💡 Explanation:</strong> ${escapeHtml(q.explanation)}
+                    </div>`;
+                }
+                
                 html += `</div></div>`;
             }
             
             html += `<div class="pagination">`;
             for (let i = 1; i <= totalPages; i++) {
-                html += `<button class="${i === currentQuizPage ? 'active' : ''}" onclick="goToQuizPage(${i})">${i}</button>`;
+                html += `<button class="${i === currentQuizPage ? 'active' : ''}" onclick="window.goToQuizPage(${i})">${i}</button>`;
             }
             html += `</div>`;
             
-            document.getElementById('page-content').innerHTML = html;
+            if (unitId && answered === questions.length && !quizSubmitted) {
+                const score = Math.round((correct / questions.length) * 100);
+                html += `
+                    <div style="text-align:center; margin-top:20px;">
+                        <button class="btn" onclick="window.submitQuizScore(${unitId}, ${score})">📤 Submit Quiz Score</button>
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = html;
         }
         
-        function renderLibrary() {
-            const resources = ['Kenya Highway Code', 'EV Driver Handbook', 'NTSA Test Guide', 'PSV Manual', 'Boda Safety Guide', 'EV Maintenance Manual'];
-            document.getElementById('page-content').innerHTML = `<div class="hero"><h1>📖 Resource Library</h1><p>Official documents and manuals</p></div><div class="grid">${resources.map(r => `<div class="card" onclick="showToast('Download started: ${r}','success')"><div style="font-size:2rem;">📄</div><h3>${r}</h3><button class="btn-small">Download →</button></div>`).join('')}</div>`;
-        }
-        
-        function renderHome() {
+        async function renderLibrary() {
+            const resources = [
+                { title: 'Kenya Highway Code', icon: '📘', desc: 'Official NTSA Highway Code manual' },
+                { title: 'NTSA Driving Test Guide', icon: '📝', desc: 'Complete test preparation guide' },
+                { title: 'PSV Regulations Handbook', icon: '🚌', desc: 'Public Service Vehicle rules' },
+                { title: 'Defensive Driving Manual', icon: '🛡️', desc: 'Advanced safety techniques' },
+                { title: 'EV Driver Handbook', icon: '⚡', desc: 'Electric vehicle operation guide' },
+                { title: 'First Aid for Drivers', icon: '🚑', desc: 'Emergency response procedures' }
+            ];
+            
             document.getElementById('page-content').innerHTML = `
-                <div class="hero"><h1>Kenya's <span class="highlight">Digital Driver Safety Platform</span></h1><p>Drive Smart. Stay Safe. Arrive Home.</p><div class="hero-buttons"><button class="btn" onclick="navigateTo('learner')">📚 Start Learning</button><button class="btn-ev" onclick="navigateTo('ev')">⚡ EV Course</button></div></div>
-                <div class="stats-grid"><div class="stat-card"><div class="stat-number">21</div><div>Learner Units</div></div><div class="stat-card"><div class="stat-number">10</div><div>PSV Units</div></div><div class="stat-card"><div class="stat-number">12</div><div>Boda Units</div></div><div class="stat-card"><div class="stat-number">8</div><div>EV Units</div></div></div>
+                <div class="hero">
+                    <h1>📖 Resource Library</h1>
+                    <p>Official NTSA documents and training manuals</p>
+                </div>
                 <div class="grid">
-                    <div class="card" onclick="navigateTo('learner')"><div style="font-size:2rem;">📚</div><h3>Learner Hub</h3><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('psv')"><div style="font-size:2rem;">🚌</div><h3>PSV Course</h3><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('schoolbus')"><div style="font-size:2rem;">🏫</div><h3>School Bus</h3><button class="btn-small">Start →</button></div>
-                    <div class="card card-ev" onclick="navigateTo('ev')"><div style="font-size:2rem;">⚡</div><h3>EV Training</h3><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('boda')"><div style="font-size:2rem;">🏍️</div><h3>Boda Safety</h3><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('academy')"><div style="font-size:2rem;">🎓</div><h3>Academy</h3><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('library')"><div style="font-size:2rem;">📖</div><h3>Library</h3><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('quiz')"><div style="font-size:2rem;">📝</div><h3>NTSA Quiz</h3><button class="btn-small">Start →</button></div>
+                    ${resources.map(r => `
+                        <div class="card" onclick="window.showToast('Download started: ${r.title}', 'success')">
+                            <div style="font-size:2rem;">${r.icon}</div>
+                            <h3>${r.title}</h3>
+                            <p>${r.desc}</p>
+                            <button class="btn-small">📥 Download →</button>
+                        </div>
+                    `).join('')}
                 </div>
             `;
         }
         
-        // Material viewer
+        function renderHome() {
+            document.getElementById('page-content').innerHTML = `
+                <div class="hero">
+                    <h1>Kenya's <span class="highlight">Digital Driver Safety Platform</span></h1>
+                    <p>Drive Smart. Stay Safe. Arrive Home.</p>
+                    <div class="hero-buttons">
+                        <button class="btn" onclick="window.navigateTo('learner')">📚 Start Learning</button>
+                        <button class="btn-ev" onclick="window.navigateTo('ev')">⚡ EV Course</button>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-number">21</div><div>Learner Units</div></div>
+                    <div class="stat-card"><div class="stat-number">500+</div><div>Quiz Questions</div></div>
+                    <div class="stat-card"><div class="stat-number">NTSA</div><div>Certified</div></div>
+                    <div class="stat-card"><div class="stat-number">24/7</div><div>Access</div></div>
+                </div>
+                <div class="grid">
+                    <div class="card" onclick="window.navigateTo('learner')"><div style="font-size:2rem;">📚</div><h3>Learner Hub</h3><p>21 complete units with quizzes</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="window.navigateTo('psv')"><div style="font-size:2rem;">🚌</div><h3>PSV Course</h3><p>Professional driver training</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="window.navigateTo('schoolbus')"><div style="font-size:2rem;">🏫</div><h3>School Bus</h3><p>Child transport safety</p><button class="btn-small">Start →</button></div>
+                    <div class="card card-ev" onclick="window.navigateTo('ev')"><div style="font-size:2rem;">⚡</div><h3>EV Training</h3><p>Electric vehicle operation</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="window.navigateTo('boda')"><div style="font-size:2rem;">🏍️</div><h3>Boda Safety</h3><p>Motorcycle safety course</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="window.navigateTo('academy')"><div style="font-size:2rem;">🎓</div><h3>Academy</h3><p>Advanced driver development</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="window.navigateTo('library')"><div style="font-size:2rem;">📖</div><h3>Library</h3><p>Official documents</p><button class="btn-small">Start →</button></div>
+                    <div class="card" onclick="window.navigateTo('quiz')"><div style="font-size:2rem;">📝</div><h3>NTSA Quiz</h3><p>500+ exam questions</p><button class="btn-small">Start →</button></div>
+                </div>
+            `;
+        }
+        
+        // ============================================
+        // VIEW FUNCTIONS (Global)
+        // ============================================
+        
         window.viewMaterial = async function(id, type) {
-            const materials = await fetchMaterials(type);
-            const material = materials.find(m => m.id == id);
-            if (!material) return;
+            const units = await fetchUnits();
+            const unit = units.find(u => u.id == id);
+            if (!unit) return;
             
-            const content = document.getElementById('page-content');
-            const progress = userProgress[material.id] || 0;
-            content.innerHTML = `<div style="background:var(--card-bg);border-radius:24px;padding:24px;margin:20px 0;">
-                <div style="display:flex;justify-content:space-between;margin-bottom:20px;"><h2 style="color:var(--primary-gold);">${escapeHtml(material.title)}</h2><button class="btn-small" onclick="navigateTo('${type}')">← Back</button></div>
-                <div class="unit-content">${material.content || `<p>${escapeHtml(material.description)}</p>`}</div>
-                <div class="progress-bar mt-3"><div class="progress-fill" style="width: ${progress}%"></div></div>
-                <button class="btn" style="margin-top:20px;" onclick="updateProgress('${material.id}', 100)">✅ Mark Complete</button>
-            </div>`;
+            const container = document.getElementById('page-content');
+            const progress = userProgress[unit.id] || 0;
+            const content = getMaterialContent(unit);
+            
+            container.innerHTML = `
+                <div style="background:var(--card-bg); border-radius:24px; padding:24px; margin:20px 0;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+                        <h2 style="color:var(--primary-gold);">Unit ${unit.unit_number}: ${escapeHtml(unit.title)}</h2>
+                        <button class="btn-small" onclick="window.navigateTo('${type}')">← Back to Units</button>
+                    </div>
+                    <div class="unit-content">${content}</div>
+                    <div class="progress-bar mt-3">
+                        <div class="progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                    <div style="display:flex; gap:12px; margin-top:20px;">
+                        <button class="btn" onclick="window.updateUserProgress(${unit.id}, true, 100)">✅ Mark Complete</button>
+                        <button class="btn-ev" onclick="window.viewUnitQuiz(${unit.id})">📝 Take Unit Quiz</button>
+                    </div>
+                </div>
+            `;
             window.scrollTo({ top: 0 });
+        };
+        
+        window.viewUnitQuiz = async function(unitId) {
+            currentQuizMode = 'unit';
+            currentQuizUnit = unitId;
+            currentQuizPage = 1;
+            quizAnswers = {};
+            quizSubmitted = false;
+            await renderQuiz(unitId);
+        };
+        
+        window.submitQuizScore = async function(unitId, score) {
+            quizSubmitted = true;
+            await updateUserProgress(unitId, score >= 80, score);
+            showToast(`Quiz completed! Score: ${score}%`, score >= 80 ? 'success' : 'error');
+            renderPage('learner');
         };
         
         // Quiz functions
         window.selectQuizAnswer = function(id, answer) {
             quizAnswers[id] = answer;
-            renderQuiz();
+            if (currentQuizMode === 'unit' && currentQuizUnit) {
+                renderQuiz(currentQuizUnit);
+            } else {
+                renderQuiz();
+            }
         };
         
         window.goToQuizPage = function(page) {
             currentQuizPage = page;
-            renderQuiz();
+            if (currentQuizMode === 'unit' && currentQuizUnit) {
+                renderQuiz(currentQuizUnit);
+            } else {
+                renderQuiz();
+            }
         };
         
         // Navigation
         window.navigateTo = async function(page) {
             currentPage = page;
+            currentQuizPage = 1;
+            currentQuizMode = 'learner';
+            currentQuizUnit = null;
+            
             const container = document.getElementById('page-content');
             container.innerHTML = '<div class="spinner"></div>';
             
@@ -671,38 +1285,72 @@
         };
         
         // Auth modals
-        function showLoginModal() {
+        window.showLoginModal = function() {
+            closeModal();
             const modal = document.createElement('div');
             modal.className = 'modal';
-            modal.innerHTML = `<div class="modal-content"><button class="close-modal" onclick="this.closest('.modal').remove()">✕</button>
-                <h3>🔐 Login</h3>
-                <input type="email" id="loginEmail" placeholder="Email">
-                <input type="password" id="loginPassword" placeholder="Password">
-                <button class="btn" style="width:100%;margin-top:10px;" onclick="doLogin()">Login</button>
-                <hr><p style="text-align:center;">New user? <a href="#" onclick="closeModal();showSignupModal()">Sign Up</a></p>
-            </div>`;
+            modal.id = 'authModal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <button class="close-modal" onclick="window.closeModal()">✕</button>
+                    <h3>🔐 Login</h3>
+                    <input type="email" id="loginEmail" placeholder="Email">
+                    <input type="password" id="loginPassword" placeholder="Password">
+                    <button class="btn" style="width:100%; margin-top:10px;" onclick="window.doLogin()">Login</button>
+                    <hr>
+                    <p style="text-align:center;">New user? <a href="#" onclick="window.showSignupModal(); return false;">Sign Up</a></p>
+                </div>
+            `;
             document.body.appendChild(modal);
             modal.style.display = 'flex';
-        }
+        };
         
-        function showSignupModal() {
+        window.showSignupModal = function() {
+            closeModal();
             const modal = document.createElement('div');
             modal.className = 'modal';
-            modal.innerHTML = `<div class="modal-content"><button class="close-modal" onclick="this.closest('.modal').remove()">✕</button>
-                <h3>📝 Sign Up</h3>
-                <input type="text" id="signupName" placeholder="Full Name">
-                <input type="email" id="signupEmail" placeholder="Email">
-                <input type="password" id="signupPassword" placeholder="Password (min 6)">
-                <button class="btn" style="width:100%;margin-top:10px;" onclick="doSignup()">Sign Up</button>
-                <hr><p style="text-align:center;">Already have an account? <a href="#" onclick="closeModal();showLoginModal()">Login</a></p>
-            </div>`;
+            modal.id = 'authModal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <button class="close-modal" onclick="window.closeModal()">✕</button>
+                    <h3>📝 Sign Up</h3>
+                    <input type="text" id="signupName" placeholder="Full Name">
+                    <input type="email" id="signupEmail" placeholder="Email">
+                    <input type="password" id="signupPassword" placeholder="Password (min 6)">
+                    <button class="btn" style="width:100%; margin-top:10px;" onclick="window.doSignup()">Sign Up</button>
+                    <hr>
+                    <p style="text-align:center;">Already have an account? <a href="#" onclick="window.showLoginModal(); return false;">Login</a></p>
+                </div>
+            `;
             document.body.appendChild(modal);
             modal.style.display = 'flex';
-        }
+        };
+        
+        window.showProfileModal = function() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <button class="close-modal" onclick="window.closeModal()">✕</button>
+                    <h3>👤 My Profile</h3>
+                    <p><strong>Name:</strong> ${currentUser?.name || 'N/A'}</p>
+                    <p><strong>Email:</strong> ${currentUser?.email || 'N/A'}</p>
+                    <hr>
+                    <p><strong>📚 Completed Units:</strong> ${Object.values(userProgress).filter(p => p === 100).length} / 21</p>
+                    <button class="btn" style="margin-top:15px; width:100%;" onclick="window.closeModal()">Close</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        };
         
         window.doLogin = async function() {
             const email = document.getElementById('loginEmail')?.value;
             const pwd = document.getElementById('loginPassword')?.value;
+            if (!email || !pwd) {
+                showToast('Please enter email and password', 'error');
+                return;
+            }
             await login(email, pwd);
             closeModal();
         };
@@ -711,42 +1359,36 @@
             const name = document.getElementById('signupName')?.value;
             const email = document.getElementById('signupEmail')?.value;
             const pwd = document.getElementById('signupPassword')?.value;
+            if (!name || !email || !pwd) {
+                showToast('Please fill all fields', 'error');
+                return;
+            }
+            if (pwd.length < 6) {
+                showToast('Password must be at least 6 characters', 'error');
+                return;
+            }
             await signUp(email, pwd, name);
             closeModal();
         };
         
-        window.showProfileModal = function() {
-            const modal = document.createElement('div');
-            modal.className = 'modal';
-            modal.innerHTML = `<div class="modal-content"><button class="close-modal" onclick="this.closest('.modal').remove()">✕</button>
-                <h3>👤 Profile</h3>
-                <p><strong>Name:</strong> ${currentUser?.name}</p>
-                <p><strong>Email:</strong> ${currentUser?.email}</p>
-                <button class="btn" style="margin-top:15px;" onclick="closeModal()">Close</button>
-            </div>`;
-            document.body.appendChild(modal);
-            modal.style.display = 'flex';
-        };
-        
-        function closeModal() {
+        window.closeModal = function() {
             const modal = document.querySelector('.modal');
             if (modal) modal.remove();
-        }
+        };
         
-        window.closeModal = closeModal;
-        window.showLoginModal = showLoginModal;
-        window.showSignupModal = showSignupModal;
         window.logout = logout;
-        window.updateProgress = updateProgress;
+        window.updateUserProgress = updateUserProgress;
+        window.showToast = showToast;
         
         // Mobile menu
         document.getElementById('mobileMenuBtn')?.addEventListener('click', function(e) {
             e.stopPropagation();
             document.getElementById('navLinks')?.classList.toggle('show');
         });
+        
         document.addEventListener('click', function(e) {
             const btn = e.target.closest('[data-nav]');
-            if (btn) navigateTo(btn.getAttribute('data-nav'));
+            if (btn) window.navigateTo(btn.getAttribute('data-nav'));
             const navLinks = document.getElementById('navLinks');
             const mobileBtn = document.getElementById('mobileMenuBtn');
             if (navLinks?.classList.contains('show') && !navLinks.contains(e.target) && mobileBtn && !mobileBtn.contains(e.target)) {
@@ -756,7 +1398,7 @@
         
         // Initialize
         await checkSession();
-        navigateTo('home');
+        window.navigateTo('home');
     </script>
 </body>
 </html>
