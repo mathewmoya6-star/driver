@@ -2,394 +2,544 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MEI DRIVE AFRICA – Admin Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Admin Login | MEI DRIVE AFRICA</title>
+    <meta name="description" content="Secure admin access to MEI DRIVE AFRICA driver training platform">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{
-            background: #0b0f19;
-            color: #fff;
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0B0F19 0%, #0a0e17 100%);
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
-        /* Login Card */
-        .login-card{
-            background: #121b2c;
-            max-width: 420px;
-            margin: 100px auto;
-            padding: 40px;
-            border-radius: 24px;
-            border: 1px solid #1f2b3d;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-        .login-card h2{
-            text-align: center;
-            margin-bottom: 24px;
-            color: #00d084;
-        }
-        .login-card input{
+
+        .admin-container {
             width: 100%;
-            padding: 14px;
-            margin: 8px 0;
-            background: #0b0f19;
-            border: 1px solid #1f2b3d;
-            border-radius: 12px;
-            color: white;
-            font-size: 15px;
+            max-width: 480px;
         }
-        .login-card button{
+
+        .admin-card {
+            background: rgba(18, 27, 44, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 32px 28px;
+            border: 1px solid rgba(0, 208, 132, 0.3);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00d084, #4ade80);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .badge {
+            text-align: center;
+            background: rgba(0, 208, 132, 0.15);
+            display: inline-block;
+            width: 100%;
+            padding: 8px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            color: #00d084;
+            margin-bottom: 28px;
+            font-weight: 600;
+        }
+
+        h2 {
+            color: white;
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .sub {
+            text-align: center;
+            color: #A0B3D9;
+            margin-bottom: 32px;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary, #A0B3D9);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6B7FA3;
+            font-size: 1.1rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px 14px 46px;
+            background: #0F1622;
+            border: 1px solid #1E2A3E;
+            border-radius: 60px;
+            color: white;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #00d084;
+            box-shadow: 0 0 0 3px rgba(0, 208, 132, 0.2);
+        }
+
+        .admin-code-group {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .toggle-admin {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background: #121B2C;
+            padding: 12px 18px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .toggle-admin:hover {
+            background: #1A2538;
+        }
+
+        .toggle-admin span {
+            color: #E8EDF5;
+            font-weight: 500;
+        }
+
+        .toggle-switch {
+            width: 48px;
+            height: 24px;
+            background: #1E2A3E;
+            border-radius: 40px;
+            position: relative;
+            transition: 0.2s;
+        }
+
+        .toggle-switch.active {
+            background: #00d084;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 4px;
+            transition: 0.2s;
+        }
+
+        .toggle-switch.active::after {
+            left: 24px;
+        }
+
+        button {
             width: 100%;
             padding: 14px;
             background: linear-gradient(135deg, #00d084, #00a86b);
             border: none;
-            border-radius: 12px;
-            color: #000;
+            border-radius: 60px;
+            font-size: 1rem;
             font-weight: 700;
-            font-size: 16px;
+            color: #0B0F19;
             cursor: pointer;
-            margin-top: 12px;
-        }
-        .message{
-            text-align: center;
-            margin: 12px 0;
-            font-size: 14px;
-        }
-        .error{color:#ef4444}
-        .success{color:#10b981}
-        /* Dashboard */
-        .dashboard{
-            display: none;
-            padding: 20px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        .header{
-            background: #121b2c;
-            border: 1px solid #1f2b3d;
-            border-radius: 20px;
-            padding: 20px 24px;
+            transition: transform 0.1s, opacity 0.2s;
+            margin-top: 8px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 16px;
+            justify-content: center;
+            gap: 10px;
         }
-        .stats{
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+
+        button:active {
+            transform: scale(0.97);
         }
-        .stat-card{
-            background: #121b2c;
-            border: 1px solid #1f2b3d;
-            border-radius: 20px;
-            padding: 24px;
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
-        .stat-card h3{
-            font-size: 36px;
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.15);
+            border-left: 3px solid #EF4444;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #FCA5A5;
+            display: none;
+        }
+
+        .info-message {
+            background: rgba(0, 208, 132, 0.1);
+            border-left: 3px solid #00d084;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #A0B3D9;
+            display: none;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(11, 15, 25, 0.3);
+            border-top-color: #0B0F19;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .footer-links {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.8rem;
+        }
+
+        .footer-links a {
             color: #00d084;
-            margin-bottom: 8px;
+            text-decoration: none;
         }
-        .section{
-            background: #121b2c;
-            border: 1px solid #1f2b3d;
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 30px;
-        }
-        .section h3{
-            margin-bottom: 20px;
-            color: #00d084;
-        }
-        .form-group{
-            margin-bottom: 16px;
-        }
-        .form-group input, .form-group select, .form-group textarea{
-            width: 100%;
-            padding: 12px;
-            background: #0b0f19;
-            border: 1px solid #1f2b3d;
-            border-radius: 10px;
-            color: white;
-        }
-        table{
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td{
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #1f2b3d;
-        }
-        th{
-            color: #00d084;
-        }
-        .delete-btn{
-            background: #ef4444;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-        }
-        .logout-btn{
-            background: #ef4444;
-            width: auto;
-            padding: 8px 20px;
-        }
-        @media (max-width: 700px){
-            .stats{grid-template-columns: 1fr 1fr}
+
+        hr {
+            border-color: #1E2A3E;
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
+    <div class="admin-container">
+        <div class="admin-card">
+            <div class="logo">⚡ MEI DRIVE AFRICA</div>
+            <div class="badge">ADMIN PORTAL</div>
+            <h2>🔐 Secure Access</h2>
+            <div class="sub">Sign in to manage courses & content</div>
 
-<!-- LOGIN FORM -->
-<div id="loginContainer">
-    <div class="login-card">
-        <h2>🚗 MEI DRIVE AFRICA</h2>
-        <div id="loginMessage" class="message"></div>
-        <input type="email" id="email" placeholder="admin@meidriveafrica.com" value="admin@meidriveafrica.com">
-        <input type="password" id="password" placeholder="Password" value="admin123">
-        <button id="loginBtn">Login to Dashboard</button>
-    </div>
-</div>
+            <!-- Toggle for Admin Code (optional elevated privilege) -->
+            <div class="toggle-admin" id="toggleAdminBtn">
+                <span><i class="fas fa-shield-alt" style="margin-right: 8px; color: #F59E0B;"></i> Grant admin privileges (with code)</span>
+                <div class="toggle-switch" id="toggleSwitch"></div>
+            </div>
 
-<!-- DASHBOARD (hidden initially) -->
-<div id="dashboard" class="dashboard">
-    <div class="header">
-        <h2>📊 Admin Dashboard</h2>
-        <button class="logout-btn" id="logoutBtn">Logout</button>
-    </div>
-    <div class="stats" id="statsArea"></div>
-    <div class="section">
-        <h3>➕ Add New Module</h3>
-        <div class="form-group">
-            <label>Module Type</label>
-            <select id="moduleType">
-                <option value="learner">Learner Driver</option>
-                <option value="psv">PSV Commercial</option>
-                <option value="boda">Boda Boda</option>
-                <option value="ev">Electric Vehicle</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Module Number</label>
-            <input type="number" id="moduleNumber" placeholder="e.g., 1, 2, 3">
-        </div>
-        <div class="form-group">
-            <label>Title</label>
-            <input type="text" id="moduleTitle" placeholder="Module title">
-        </div>
-        <div class="form-group">
-            <label>Description</label>
-            <textarea id="moduleDescription" rows="3" placeholder="Description"></textarea>
-        </div>
-        <button id="addModuleBtn">Save Module</button>
-    </div>
-    <div class="section">
-        <h3>📚 Module Library</h3>
-        <div id="moduleList">Loading modules...</div>
-    </div>
-</div>
-
-<script>
-    // ==================== SUPABASE CONFIGURATION ====================
-    const SUPABASE_URL = 'https://fktjmkmzlixlapeyhhyl.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E';
-    
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    
-    // Table mapping
-    const TABLES = {
-        learner: 'learner_units',
-        psv: 'psv_modules',
-        boda: 'boda_modules',
-        ev: 'ev_modules'
-    };
-    
-    let currentUser = null;
-    
-    // Helper: show message on login card
-    function showLoginMessage(msg, isError = false) {
-        const el = document.getElementById('loginMessage');
-        el.textContent = msg;
-        el.className = `message ${isError ? 'error' : 'success'}`;
-        setTimeout(() => {
-            if (el) el.textContent = '';
-        }, 4000);
-    }
-    
-    // LOGIN FUNCTION
-    async function login() {
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value;
-        const btn = document.getElementById('loginBtn');
-        if (!email || !password) {
-            showLoginMessage('Please enter email and password', true);
-            return;
-        }
-        btn.disabled = true;
-        btn.textContent = 'Logging in...';
-        showLoginMessage('Authenticating...', false);
-        
-        try {
-            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-            if (error) throw error;
-            currentUser = data.user;
-            showLoginMessage('✅ Login successful! Loading dashboard...', false);
-            setTimeout(() => {
-                document.getElementById('loginContainer').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-                loadStats();
-                loadModules();
-            }, 1000);
-        } catch (err) {
-            showLoginMessage(`❌ ${err.message}`, true);
-        } finally {
-            btn.disabled = false;
-            btn.textContent = 'Login to Dashboard';
-        }
-    }
-    
-    // LOGOUT
-    async function logout() {
-        await supabase.auth.signOut();
-        currentUser = null;
-        document.getElementById('loginContainer').style.display = 'block';
-        document.getElementById('dashboard').style.display = 'none';
-        document.getElementById('email').value = 'admin@meidriveafrica.com';
-        document.getElementById('password').value = '';
-        const statsDiv = document.getElementById('statsArea');
-        if (statsDiv) statsDiv.innerHTML = '';
-        const moduleDiv = document.getElementById('moduleList');
-        if (moduleDiv) moduleDiv.innerHTML = 'Loading modules...';
-    }
-    
-    // LOAD STATISTICS
-    async function loadStats() {
-        const statsDiv = document.getElementById('statsArea');
-        statsDiv.innerHTML = '';
-        for (const [type, table] of Object.entries(TABLES)) {
-            const { count, error } = await supabase.from(table).select('*', { count: 'exact', head: true });
-            if (!error) {
-                statsDiv.innerHTML += `
-                    <div class="stat-card">
-                        <h3>${count || 0}</h3>
-                        <p>${type.toUpperCase()}</p>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email Address</label>
+                    <div class="input-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="email" id="email" placeholder="admin@meidrive.com" required autocomplete="email">
                     </div>
-                `;
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Password</label>
+                    <div class="input-icon">
+                        <i class="fas fa-key"></i>
+                        <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+                    </div>
+                </div>
+
+                <div class="form-group admin-code-group" id="adminCodeGroup">
+                    <label><i class="fas fa-code"></i> Admin Secret Code</label>
+                    <div class="input-icon">
+                        <i class="fas fa-star-of-life"></i>
+                        <input type="password" id="adminCode" placeholder="Enter ADMIN2025 to become admin">
+                    </div>
+                    <small style="color: #6B7FA3; display: block; margin-top: 6px;">Required to grant admin role if account is not already admin</small>
+                </div>
+
+                <button type="submit" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Login to Admin Panel
+                </button>
+            </form>
+
+            <div id="errorMsg" class="error-message"></div>
+            <div id="infoMsg" class="info-message"></div>
+
+            <hr>
+            <div class="footer-links">
+                <a href="#" id="backToHome"><i class="fas fa-arrow-left"></i> Return to Main Site</a>
+                <span style="color: #2A3A50; margin: 0 8px">|</span>
+                <a href="#" id="needHelp">Need help?</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.js"></script>
+    <script>
+        // Supabase configuration (same as main app)
+        const SUPABASE_URL = 'https://fktjmkmzlixlapeyhhyl.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // DOM elements
+        const toggleBtn = document.getElementById('toggleAdminBtn');
+        const toggleSwitch = document.getElementById('toggleSwitch');
+        const adminCodeGroup = document.getElementById('adminCodeGroup');
+        const loginForm = document.getElementById('adminLoginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const errorDiv = document.getElementById('errorMsg');
+        const infoDiv = document.getElementById('infoMsg');
+        
+        let isAdminMode = false;  // whether admin code field is shown
+        
+        // Toggle admin code visibility
+        toggleBtn.addEventListener('click', () => {
+            isAdminMode = !isAdminMode;
+            if (isAdminMode) {
+                toggleSwitch.classList.add('active');
+                adminCodeGroup.style.display = 'block';
+            } else {
+                toggleSwitch.classList.remove('active');
+                adminCodeGroup.style.display = 'none';
+            }
+        });
+        
+        // Helper: show/hide messages
+        function showError(msg) {
+            errorDiv.textContent = msg;
+            errorDiv.style.display = 'block';
+            infoDiv.style.display = 'none';
+            setTimeout(() => {
+                if (errorDiv.style.display === 'block') errorDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        function showInfo(msg) {
+            infoDiv.textContent = msg;
+            infoDiv.style.display = 'block';
+            errorDiv.style.display = 'none';
+            setTimeout(() => {
+                if (infoDiv.style.display === 'block') infoDiv.style.display = 'none';
+            }, 4000);
+        }
+        
+        // Function to ensure user_profiles table entry and set admin if code matches
+        async function ensureAdminProfile(userId, makeAdmin) {
+            try {
+                // Check if profile exists
+                const { data: existing, error: fetchError } = await supabase
+                    .from('user_profiles')
+                    .select('id, is_admin')
+                    .eq('id', userId)
+                    .single();
+                
+                if (fetchError && fetchError.code !== 'PGRST116') {
+                    console.warn('Error checking profile:', fetchError);
+                }
+                
+                if (!existing) {
+                    // Create new profile
+                    const { error: insertError } = await supabase
+                        .from('user_profiles')
+                        .insert({ id: userId, is_admin: makeAdmin, created_at: new Date().toISOString() });
+                    if (insertError) throw insertError;
+                    return makeAdmin;
+                } else {
+                    // Update if needed
+                    if (makeAdmin && !existing.is_admin) {
+                        const { error: updateError } = await supabase
+                            .from('user_profiles')
+                            .update({ is_admin: true, updated_at: new Date().toISOString() })
+                            .eq('id', userId);
+                        if (updateError) throw updateError;
+                        return true;
+                    }
+                    return existing.is_admin || false;
+                }
+            } catch (err) {
+                console.error('Profile sync error:', err);
+                return false;
             }
         }
-    }
-    
-    // LOAD ALL MODULES
-    async function loadModules() {
-        const container = document.getElementById('moduleList');
-        let allModules = [];
-        for (const [type, table] of Object.entries(TABLES)) {
-            const { data, error } = await supabase.from(table).select('*').order('module_number', { ascending: true });
-            if (!error && data && data.length) {
-                allModules.push(...data.map(m => ({ ...m, type })));
+        
+        // Check if user is admin by querying user_profiles
+        async function isUserAdmin(userId) {
+            try {
+                const { data, error } = await supabase
+                    .from('user_profiles')
+                    .select('is_admin')
+                    .eq('id', userId)
+                    .single();
+                if (error && error.code !== 'PGRST116') throw error;
+                return data?.is_admin === true;
+            } catch (err) {
+                console.warn('Admin check failed:', err);
+                return false;
             }
         }
-        if (allModules.length === 0) {
-            container.innerHTML = '<div style="text-align:center; padding:40px;">No modules yet. Create your first module!</div>';
-            return;
-        }
-        let html = '<table><thead><tr><th>Type</th><th>#</th><th>Title</th><th>Action</th></tr></thead><tbody>';
-        for (const m of allModules) {
-            html += `
-                <tr>
-                    <td><strong>${m.type.toUpperCase()}</strong></td>
-                    <td>${m.module_number}</td>
-                    <td>${escapeHtml(m.title)}</td>
-                    <td><button class="delete-btn" data-type="${m.type}" data-id="${m.id}">Delete</button></td>
-                </tr>
-            `;
-        }
-        html += `</tbody><table>`;
-        container.innerHTML = html;
-        // Attach delete events
-        document.querySelectorAll('.delete-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const type = btn.getAttribute('data-type');
-                const id = parseInt(btn.getAttribute('data-id'));
-                deleteModule(type, id);
-            });
+        
+        // Handle login
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const adminCode = document.getElementById('adminCode').value.trim();
+            
+            if (!email || !password) {
+                showError('Please enter email and password');
+                return;
+            }
+            
+            // Disable button and show loading state
+            loginBtn.disabled = true;
+            const originalBtnHTML = loginBtn.innerHTML;
+            loginBtn.innerHTML = '<div class="spinner"></div> Authenticating...';
+            
+            try {
+                // 1. Sign in with Supabase Auth
+                const { data: authData, error: signInError } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+                
+                if (signInError) {
+                    throw new Error(signInError.message);
+                }
+                
+                const user = authData.user;
+                if (!user) throw new Error('Login failed: no user data');
+                
+                // 2. Determine if we should grant admin
+                let grantAdmin = false;
+                let currentAdminStatus = await isUserAdmin(user.id);
+                
+                // If admin mode is enabled and code matches ADMIN2025, grant/ensure admin
+                if (isAdminMode && adminCode === 'ADMIN2025') {
+                    grantAdmin = true;
+                    showInfo('Admin code accepted. Granting administrative rights...');
+                } else if (isAdminMode && adminCode !== 'ADMIN2025') {
+                    throw new Error('Invalid admin secret code. Access denied.');
+                }
+                
+                // 3. Update or create profile with admin status if needed
+                let finalAdminStatus = currentAdminStatus;
+                if (grantAdmin || (email === 'admin@meidrive.com')) {
+                    finalAdminStatus = await ensureAdminProfile(user.id, true);
+                    if (!finalAdminStatus && grantAdmin) {
+                        throw new Error('Could not set admin privileges. Please contact support.');
+                    }
+                } else {
+                    // Ensure profile exists (non-admin)
+                    await ensureAdminProfile(user.id, false);
+                    finalAdminStatus = await isUserAdmin(user.id);
+                }
+                
+                // 4. Verify final admin status (must be true for admin access)
+                if (!finalAdminStatus) {
+                    throw new Error('This account does not have admin privileges. Please use an admin account or the correct admin code.');
+                }
+                
+                // 5. SUCCESS: redirect to main application (index.html)
+                showInfo('✅ Admin login successful! Redirecting to dashboard...');
+                
+                // Small delay to show success message
+                setTimeout(() => {
+                    // Redirect to index.html (main app) - session will be persisted by Supabase
+                    window.location.href = 'index.html';
+                }, 800);
+                
+            } catch (err) {
+                console.error('Admin login error:', err);
+                showError(err.message || 'Login failed. Check credentials or admin permissions.');
+                // Sign out any partial session
+                await supabase.auth.signOut();
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = originalBtnHTML;
+            }
         });
-    }
-    
-    // ADD MODULE
-    async function addModule() {
-        const type = document.getElementById('moduleType').value;
-        const table = TABLES[type];
-        const moduleNumber = parseInt(document.getElementById('moduleNumber').value);
-        const title = document.getElementById('moduleTitle').value.trim();
-        const description = document.getElementById('moduleDescription').value.trim();
-        if (!title || isNaN(moduleNumber)) {
-            alert('Please fill in title and module number');
-            return;
-        }
-        const { error } = await supabase.from(table).insert([{
-            module_number: moduleNumber,
-            title: title,
-            description: description,
-            status: 'published',
-            created_at: new Date().toISOString()
-        }]);
-        if (error) {
-            alert('Error: ' + error.message);
-            return;
-        }
-        alert('Module added successfully!');
-        document.getElementById('moduleNumber').value = '';
-        document.getElementById('moduleTitle').value = '';
-        document.getElementById('moduleDescription').value = '';
-        loadStats();
-        loadModules();
-    }
-    
-    // DELETE MODULE
-    async function deleteModule(type, id) {
-        if (!confirm('Are you sure you want to delete this module?')) return;
-        const table = TABLES[type];
-        const { error } = await supabase.from(table).delete().eq('id', id);
-        if (error) {
-            alert('Delete error: ' + error.message);
-            return;
-        }
-        loadStats();
-        loadModules();
-    }
-    
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
+        
+        // Back to home / index.html
+        document.getElementById('backToHome').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'index.html';
         });
-    }
-    
-    // Event listeners
-    document.getElementById('loginBtn').addEventListener('click', login);
-    document.getElementById('logoutBtn').addEventListener('click', logout);
-    document.getElementById('addModuleBtn').addEventListener('click', addModule);
-    
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session) {
-            currentUser = session.user;
-            document.getElementById('loginContainer').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-            loadStats();
-            loadModules();
+        
+        document.getElementById('needHelp').addEventListener('click', (e) => {
+            e.preventDefault();
+            showInfo('Contact support: admin@meidrive.com | Use ADMIN2025 code to grant admin rights to any registered user.');
+        });
+        
+        // Pre-fill for demo convenience (optional - remove in production)
+        // But keep for easy testing as per user expectation
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('demo') === 'admin') {
+            document.getElementById('email').value = 'admin@meidrive.com';
+            document.getElementById('password').value = 'admin123';
+            // Optionally auto-toggle admin mode
+            isAdminMode = true;
+            toggleSwitch.classList.add('active');
+            adminCodeGroup.style.display = 'block';
+            document.getElementById('adminCode').value = 'ADMIN2025';
         }
-    });
-</script>
+        
+        // Check if already logged in as admin - redirect to index
+        async function checkExistingSession() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session?.user) {
+                const isAdmin = await isUserAdmin(session.user.id);
+                if (isAdmin) {
+                    // Already admin, redirect to main app
+                    window.location.href = 'index.html';
+                }
+            }
+        }
+        checkExistingSession();
+    </script>
 </body>
 </html>
