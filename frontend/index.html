@@ -3,560 +3,310 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>MEI DRIVE AFRICA | Learn Smart Pass NTSA Test Like Pro</title>
-    <meta name="description" content="Kenya's premier NTSA-certified driver training platform - Complete 21-unit Learner Driver Hub with professional syllabus">
+    <title>MEI DRIVE AFRICA | Admin + Learner Platform</title>
+    <meta name="description" content="Complete NTSA driver training with full admin dashboard">
     <meta name="theme-color" content="#00d084">
-    
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🚗%3C/text%3E%3C/svg%3E">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Inter', sans-serif; background: #0B0F19; color: #E8EDF5; line-height: 1.5; }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0B0F19; color: #E8EDF5; }
         :root {
             --primary: #00d084;
             --primary-dark: #00a86b;
-            --primary-light: #4ade80;
-            --primary-glow: rgba(0, 208, 132, 0.2);
-            --bg-primary: #0B0F19;
-            --bg-secondary: #0F1622;
             --bg-card: #121B2C;
-            --bg-hover: #1A2538;
             --border: #1E2A3E;
-            --border-light: #2A3A50;
-            --text-primary: #FFFFFF;
-            --text-secondary: #A0B3D9;
-            --text-muted: #6B7FA3;
-            --warning: #F59E0B;
             --danger: #EF4444;
-            --info: #3B82F6;
-            --success: #00d084;
-            --transition: all 0.2s ease;
+            --warning: #F59E0B;
         }
-        
-        .container { width: 100%; padding: 0 16px; margin: 0 auto; }
-        @media (min-width: 768px) { .container { max-width: 1400px; padding: 0 24px; } }
-        
-        .navbar { background: rgba(11, 15, 25, 0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 208, 132, 0.3); position: sticky; top: 0; z-index: 1000; padding: 12px 0; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        .navbar { background: rgba(11,15,25,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,208,132,0.3); padding: 12px 0; position: sticky; top: 0; z-index: 100; }
         .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-        .logo { font-weight: 800; font-size: 1.1rem; background: linear-gradient(135deg, var(--primary), var(--primary-light)); background-clip: text; -webkit-background-clip: text; color: transparent; cursor: pointer; }
-        @media (min-width: 768px) { .logo { font-size: 1.4rem; } }
-        
-        .mobile-menu-btn { display: flex; background: transparent; border: none; color: var(--primary); font-size: 24px; cursor: pointer; padding: 12px; border-radius: 50%; min-width: 48px; min-height: 48px; justify-content: center; align-items: center; }
-        .mobile-menu-btn:active { background: rgba(0, 208, 132, 0.1); transform: scale(0.96); }
-        .nav-links { display: none; width: 100%; flex-direction: column; align-items: center; padding: 16px 0 8px; gap: 8px; }
-        .nav-links.show { display: flex; }
-        .nav-links button { background: transparent; border: none; color: var(--text-secondary); padding: 12px 20px; border-radius: 50px; cursor: pointer; font-size: 15px; width: 100%; text-align: center; transition: var(--transition); }
-        .nav-links button:active { background: rgba(0, 208, 132, 0.1); transform: scale(0.98); }
-        @media (min-width: 768px) {
-            .mobile-menu-btn { display: none; }
-            .nav-links { display: flex !important; width: auto; flex-direction: row; padding: 0; gap: 4px; }
-            .nav-links button { width: auto; padding: 8px 16px; font-size: 14px; }
-            .nav-links button:hover { background: rgba(0, 208, 132, 0.1); color: var(--primary); }
-        }
-        
-        .btn, .btn-ev { min-height: 48px; padding: 12px 24px; font-size: 16px; font-weight: 600; border: none; border-radius: 50px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: var(--transition); }
-        .btn:active, .btn-ev:active { transform: scale(0.97); }
-        .btn { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #0B0F19; }
-        .btn-ev { background: linear-gradient(135deg, #00ff88, #00b4d8); color: #0B0F19; }
-        .btn-small { min-height: 40px; padding: 8px 20px; font-size: 14px; border-radius: 50px; background: var(--primary); color: #0B0F19; border: none; cursor: pointer; font-weight: 600; transition: var(--transition); }
-        .btn-small:active { transform: scale(0.96); }
-        .btn-nav { background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-secondary); }
-        .btn-nav:active { transform: scale(0.96); background: var(--bg-hover); }
-        
-        .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 20px 0; }
-        @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
-        @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-        
-        .card { background: var(--bg-card); border-radius: 20px; padding: 20px; border: 1px solid var(--border); transition: var(--transition); cursor: pointer; }
-        .card:active { transform: scale(0.98); }
-        @media (min-width: 768px) { .card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: 0 8px 20px rgba(0, 208, 132, 0.15); } }
-        
-        .unit-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 12px; background: var(--primary); color: #0B0F19; }
-        
-        .progress-bar { background: var(--border); border-radius: 20px; height: 6px; margin: 16px 0; overflow: hidden; }
-        .progress-fill { background: linear-gradient(90deg, var(--primary), var(--primary-light)); height: 100%; width: 0%; transition: width 0.3s; }
-        
-        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
-        @media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
-        .stat-card { background: var(--bg-card); border-radius: 16px; padding: 16px 12px; border: 1px solid var(--border); text-align: center; }
-        .stat-number { font-size: 1.6rem; font-weight: 800; color: var(--primary); }
-        
-        .hero { text-align: center; padding: 32px 16px; background: radial-gradient(circle at 10% 30%, rgba(0, 208, 132, 0.08), var(--bg-primary)); border-radius: 32px; margin: 16px 0 24px; border: 1px solid rgba(0, 208, 132, 0.15); }
-        .hero h1 { font-size: 1.8rem; margin-bottom: 12px; }
-        @media (min-width: 768px) { .hero h1 { font-size: clamp(1.8rem, 5vw, 3.5rem); } }
-        .highlight { background: linear-gradient(135deg, var(--primary), var(--primary-light)); background-clip: text; -webkit-background-clip: text; color: transparent; }
-        
-        .unit-content { line-height: 1.6; font-size: 15px; }
-        .unit-content h2 { color: var(--primary); margin: 25px 0 15px; font-size: 1.5rem; }
-        .unit-content h3 { color: var(--primary-light); margin: 20px 0 10px; font-size: 1.2rem; }
-        .unit-content p { margin-bottom: 15px; color: var(--text-secondary); }
-        .unit-content ul, .unit-content ol { margin-left: 25px; margin-bottom: 15px; }
-        .unit-content li { margin: 8px 0; color: var(--text-secondary); }
-        .unit-content .safety-box { background: rgba(245, 158, 11, 0.1); border-left: 4px solid var(--warning); padding: 15px 20px; border-radius: 12px; margin: 20px 0; }
-        .unit-content .danger-box { background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--danger); padding: 15px 20px; border-radius: 12px; margin: 20px 0; }
-        .unit-content .tip-box { background: rgba(59, 130, 246, 0.1); border-left: 4px solid var(--info); padding: 15px 20px; border-radius: 12px; margin: 20px 0; }
-        .unit-content .visual-ref { background: var(--bg-secondary); padding: 15px; border-radius: 12px; text-align: center; margin: 20px 0; border: 1px dashed var(--primary); }
-        
-        .nav-buttons-container { display: flex; justify-content: space-between; gap: 16px; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border); }
-        .nav-buttons-container .btn { flex: 1; justify-content: center; }
-        
-        @media (max-width: 768px) { .nav-buttons-container { flex-direction: column; } }
-        
-        .question-bank { background: linear-gradient(145deg, var(--bg-secondary), var(--bg-primary)); border-radius: 24px; margin: 24px 0; padding: 20px; border: 1px solid var(--border); }
-        .question-card { background: var(--bg-card); border-radius: 16px; padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); }
-        .question-text { font-size: 1rem; font-weight: 600; margin-bottom: 16px; color: var(--text-primary); }
-        .options-group { display: flex; flex-direction: column; gap: 8px; }
-        .option { background: var(--bg-secondary); padding: 14px 16px; border-radius: 12px; cursor: pointer; border: 1px solid var(--border); font-size: 14px; transition: var(--transition); color: var(--text-secondary); }
-        .option:active { transform: scale(0.98); background: var(--bg-hover); }
-        
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 15, 25, 0.96); backdrop-filter: blur(12px); z-index: 2000; justify-content: center; align-items: center; padding: 16px; }
-        .modal-content { background: var(--bg-card); border: 1px solid var(--primary); border-radius: 24px; padding: 24px; width: 100%; max-width: 500px; max-height: 85vh; overflow-y: auto; }
-        .close-modal { float: right; font-size: 28px; cursor: pointer; color: var(--primary); padding: 8px; margin: -8px -8px 0 0; min-width: 44px; text-align: center; }
-        
-        #toast-root { position: fixed; bottom: 16px; left: 16px; right: 16px; z-index: 2000; display: flex; flex-direction: column; gap: 8px; }
-        @media (min-width: 768px) { #toast-root { bottom: 30px; right: 30px; left: auto; min-width: 300px; } }
-        .toast { background: var(--bg-card); border-left: 4px solid var(--primary); padding: 14px 18px; border-radius: 12px; animation: slideIn 0.3s ease; font-size: 14px; }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
-        
+        .logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, var(--primary), #4ade80); background-clip: text; -webkit-background-clip: text; color: transparent; cursor: pointer; }
+        .nav-links { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+        .nav-links button, .nav-links .nav-item { background: transparent; border: none; color: #A0B3D9; padding: 8px 16px; border-radius: 50px; cursor: pointer; }
+        .nav-links button:hover { background: rgba(0,208,132,0.1); color: var(--primary); }
+        .btn { padding: 12px 24px; border-radius: 50px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border: none; font-weight: bold; cursor: pointer; }
+        .btn-small { padding: 6px 12px; border-radius: 40px; background: var(--primary); border: none; cursor: pointer; font-size: 12px; }
+        .btn-danger { background: var(--danger); color: white; }
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .admin-section { margin: 30px 0; }
+        .admin-tabs { display: flex; gap: 8px; border-bottom: 1px solid var(--border); margin-bottom: 20px; flex-wrap: wrap; }
+        .admin-tab { padding: 10px 20px; cursor: pointer; border-radius: 12px 12px 0 0; background: #1E2A3E; }
+        .admin-tab.active { background: var(--primary); color: #0B0F19; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
+        input, select, textarea { background: #0F1622; border: 1px solid var(--border); padding: 8px 12px; border-radius: 12px; color: white; width: 100%; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: var(--bg-card); padding: 24px; border-radius: 24px; max-width: 600px; width: 90%; }
+        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--bg-card); border-left: 4px solid var(--primary); padding: 12px 20px; border-radius: 12px; z-index: 1100; }
         .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        
-        .hero-buttons { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; justify-content: center; align-items: center; }
-        @media (min-width: 480px) { .hero-buttons { flex-direction: row; } }
-        
-        .profile-link { background: rgba(0, 208, 132, 0.15); border-radius: 40px; padding: 6px 16px; cursor: pointer; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; color: var(--primary); }
-        .profile-link:active { transform: scale(0.96); background: rgba(0, 208, 132, 0.25); }
-        
-        @media (max-width: 768px) { .section-title { font-size: 1.3rem; } }
+        .hero { text-align: center; padding: 40px 20px; background: radial-gradient(circle at 10% 30%, rgba(0,208,132,0.08), #0B0F19); border-radius: 32px; margin: 20px 0; }
+        .profile-link { background: rgba(0,208,132,0.15); border-radius: 40px; padding: 6px 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+        @media (max-width: 768px) { .nav-links { display: none; } .mobile-menu-btn { display: block; } }
     </style>
 </head>
 <body>
-    <div id="app">
-        <div class="navbar">
-            <div class="container nav">
-                <div class="logo" data-nav="home">MEI DRIVE AFRICA ⚡</div>
-                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
-                <div class="nav-links" id="navLinks">
-                    <button data-nav="home">🏠 Home</button>
-                    <button data-nav="learner">📚 Learner Hub</button>
-                    <button data-nav="psv">🚌 PSV</button>
-                    <button data-nav="boda">🏍️ Boda</button>
-                    <button data-nav="ev">⚡ EV</button>
-                    <button data-nav="academy">🎓 Academy</button>
-                    <button data-nav="library">📖 Library</button>
-                    <button data-nav="quiz">📝 Quiz</button>
-                    <div id="authButtons"></div>
-                </div>
+<div id="app">
+    <div class="navbar">
+        <div class="container nav">
+            <div class="logo" data-nav="home">MEI DRIVE AFRICA ⚡</div>
+            <div class="nav-links" id="navLinks">
+                <button data-nav="home">🏠 Home</button>
+                <button data-nav="learner">📚 Learner Hub</button>
+                <button data-nav="psv">🚌 PSV</button>
+                <button data-nav="boda">🏍️ Boda</button>
+                <button data-nav="ev">⚡ EV</button>
+                <button data-nav="quiz">📝 Quiz</button>
+                <div id="adminNavLink" style="display:none;"><button data-nav="admin">🛡️ Admin</button></div>
+                <div id="authButtons"></div>
             </div>
         </div>
-        <div class="container"><main id="page-content"><div class="spinner"></div></main></div>
     </div>
-    <div id="toast-root"></div>
+    <div class="container"><main id="page-content"><div class="spinner"></div></main></div>
+</div>
+<div id="toast-root"></div>
 
-    <script type="module">
-        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/+esm';
+<script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/+esm';
+    
+    // ==================== SUPABASE CONFIG ====================
+    const supabaseUrl = 'https://jeksrwrzzrczamxijvwl.supabase.co';
+    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impla3Nyd3J6enJjemFteGlqdndsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzYyMjAsImV4cCI6MjA5NDI1MjIyMH0.1poYpJKNFEVe2NTBkXBTH2bIHGk2yT8aqCU-OlJc4vs';
+    const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    
+    // ==================== GLOBAL STATE ====================
+    let currentUser = null;
+    let isAdmin = false;
+    let userProgress = {};
+    let currentPage = 'home';
+    let currentMaterials = [];
+    let materialsCache = {};
+    
+    const tableMapping = { learner: 'learner_units', psv: 'psv_modules', boda: 'boda_modules', ev: 'ev_modules' };
+    const unitTitles = ["Intro to Driving","Highway Code","Vehicle Controls","Maintenance","Moving Off","Turning","Roundabouts","Overtaking","Speed Limits","Defensive Driving","Night Driving","Adverse Weather","Alcohol & Drugs","Fatigue","Pedestrian Safety","Emergency Procedures","First Aid","Insurance","Environmental Driving","NTSA Prep","Advanced Skills"];
+    
+    // ==================== HELPER FUNCTIONS ====================
+    function showToast(msg, type) {
+        const toast = document.createElement('div'); 
+        toast.className = 'toast'; 
+        toast.innerHTML = `${type==='success'?'✅':'ℹ️'} ${msg}`;
+        document.getElementById('toast-root').appendChild(toast); 
+        setTimeout(()=>toast.remove(), 3000);
+    }
+    function escapeHtml(t) { return t?.replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]||c)) || ''; }
+    
+    // ==================== FETCH MATERIALS (with fallback) ====================
+    async function fetchMaterials(moduleType) {
+        if (materialsCache[moduleType]) return materialsCache[moduleType];
+        const table = tableMapping[moduleType];
+        if (!table) return getFallbackMaterials(moduleType);
+        try {
+            const { data, error } = await supabase.from(table).select('*').order('module_number', {ascending:true});
+            if (error || !data?.length) return getFallbackMaterials(moduleType);
+            const transformed = data.map(item => ({ ...item, unit_number: item.module_number, module_type: moduleType, price: item.price || 0, is_locked: item.is_locked || false }));
+            materialsCache[moduleType] = transformed;
+            return transformed;
+        } catch(e) { return getFallbackMaterials(moduleType); }
+    }
+    
+    function getFallbackMaterials(moduleType) {
+        if (moduleType === 'learner') return Array.from({length:21},(_,i)=>({ id:i+1, title:`Unit ${i+1}: ${unitTitles[i]}`, description:`NTSA unit`, content:generateUnitContent(i+1,unitTitles[i]), module_type:'learner', unit_number:i+1, icon:"🚗", difficulty:i<7?'beginner':'intermediate', price:19.99, is_locked:false }));
+        if (moduleType === 'psv') return Array.from({length:8},(_,i)=>({ id:100+i, title:`PSV: ${['Licensing','Conduct','Safety','Defensive','Routes','Emergencies','Fares','Customer'][i]}`, content:'<p>PSV content</p>', price:29.99, is_locked:false }));
+        if (moduleType === 'boda') return Array.from({length:10},(_,i)=>({ id:200+i, title:`Boda: ${['Controls','Gear','Professionalism','Drugs','Service','Crime','Passengers','Night','Biz','Defensive'][i]}`, content:'<p>Boda training</p>', price:14.99, is_locked:false }));
+        if (moduleType === 'ev') return Array.from({length:8},(_,i)=>({ id:300+i, title:`EV: ${['Intro','Battery','Charging','Maintenance','Safety','Range','Commercial','Rules'][i]}`, content:'<p>EV knowledge</p>', price:39.99, is_locked:false }));
+        return [];
+    }
+    function generateUnitContent(num, title) { return `<h2>Unit ${num}: ${title}</h2><div class="safety-box">Safety first!</div><p>Full NTSA content.</p>`; }
+    
+    // ==================== USER PROGRESS ====================
+    async function fetchUserProgress() { if(!currentUser) return {}; try { const {data}=await supabase.from('user_progress').select('*').eq('user_id',currentUser.id); const prog={}; data?.forEach(p=>{ prog[p.material_id]=p.progress_percentage||0; }); userProgress=prog; return prog; } catch(e){ return {}; } }
+    async function updateProgress(materialId, progress) { if(!currentUser) return false; await supabase.from('user_progress').upsert({ user_id:currentUser.id, material_id:materialId, progress_percentage:progress, status:progress===100?'completed':'in_progress', last_accessed_at:new Date() }); userProgress[materialId]=progress; showToast(progress===100?'Unit completed!':'Progress saved','success'); return true; }
+    
+    // ==================== ADMIN FUNCTIONS ====================
+    async function adminGetAllUsers() {
+        const { data: profiles } = await supabase.from('user_profiles').select('id, is_admin, status, full_name');
+        const users = [];
+        for (const p of profiles || []) {
+            const { data: authUser } = await supabase.auth.admin.getUserById(p.id);
+            const email = authUser?.user?.email || 'unknown';
+            users.push({ ...p, email });
+        }
+        return users;
+    }
+    async function adminDeleteUser(userId) { if(!confirm('Permanently delete user?')) return; await supabase.from('user_progress').delete().eq('user_id',userId); await supabase.from('payments').delete().eq('user_id',userId); await supabase.from('user_profiles').delete().eq('id',userId); await supabase.auth.admin.deleteUser(userId); showToast('User deleted','success'); }
+    async function adminUpdateModule(moduleType, moduleId, updates) { const table=tableMapping[moduleType]; await supabase.from(table).update(updates).eq('id',moduleId); materialsCache={}; showToast('Module updated','success'); }
+    async function adminDeleteModule(moduleType, moduleId) { if(confirm('Delete this module?')){ await supabase.from(tableMapping[moduleType]).delete().eq('id',moduleId); materialsCache={}; showToast('Deleted','success'); } }
+    async function adminAddModule(moduleType, data) { const table=tableMapping[moduleType]; await supabase.from(table).insert(data); materialsCache={}; showToast('Module added','success'); }
+    async function adminGetPayments() { const { data } = await supabase.from('payments').select('*, user_profiles(full_name)'); return data || []; }
+    async function adminUpdatePayment(paymentId, status) { await supabase.from('payments').update({ status, updated_at:new Date() }).eq('id',paymentId); showToast(`Payment ${status}`, 'success'); }
+    
+    // ==================== VIEW MATERIAL ====================
+    window.viewMaterial = async function(id, type) {
+        const materials = await fetchMaterials(type);
+        const material = materials.find(m => m.id == id);
+        if (!material) return;
+        if (material.is_locked && (!currentUser || !isAdmin)) { showToast('This module is locked. Please purchase or contact admin.','error'); return; }
+        const progress = userProgress[material.id] || 0;
+        const content = material.content || `<h2>${escapeHtml(material.title)}</h2><p>${escapeHtml(material.description)}</p>`;
+        document.getElementById('page-content').innerHTML = `
+            <div class="card"><h2>${escapeHtml(material.title)}</h2>
+            <div class="unit-content">${content}</div>
+            <div class="progress-bar"><div class="progress-fill" style="width: ${progress}%"></div></div>
+            <button class="btn" onclick="updateProgress(${material.id}, 100)">Mark Complete</button>
+            <button class="btn-small" onclick="navigateTo('${type}')">← Back</button></div>`;
+    };
+    
+    // ==================== RENDER ADMIN DASHBOARD ====================
+    async function renderAdminDashboard() {
+        if (!isAdmin) { navigateTo('home'); return; }
+        const container = document.getElementById('page-content');
+        container.innerHTML = `<div class="admin-section"><div class="admin-tabs" id="adminTabs"><div class="admin-tab active" data-tab="users">👥 Users</div><div class="admin-tab" data-tab="modules">📦 Modules</div><div class="admin-tab" data-tab="payments">💰 Payments</div></div><div id="adminTabContent"></div></div>`;
+        const users = await adminGetAllUsers();
+        const payments = await adminGetPayments();
         
-        // ========== UPDATED SUPABASE CREDENTIALS ==========
-        const supabaseUrl = 'https://jeksrwrzzrczamxijvwl.supabase.co';
-        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impla3Nyd3J6enJjemFteGlqdndsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzYyMjAsImV4cCI6MjA5NDI1MjIyMH0.1poYpJKNFEVe2NTBkXBTH2bIHGk2yT8aqCU-OlJc4vs';
-        // ================================================
-        
-        const supabase = createClient(supabaseUrl, supabaseAnonKey);
-        
-        let currentUser = null;
-        let userProgress = {};
-        let currentPage = 'home';
-        let currentMaterials = [];
-        let currentModuleType = 'learner';
-        
-        // Cache for materials
-        let materialsCache = {};
-        
-        // Table mapping for different module types
-        const tableMapping = {
-            learner: 'learner_units',
-            psv: 'psv_modules',
-            boda: 'boda_modules',
-            ev: 'ev_modules'
-        };
-        
-        // Unit Titles for 21 units (fallback)
-        const unitTitles = [
-            "Introduction to Driving in Kenya", "Highway Code & Traffic Signs", "Vehicle Controls & Dashboard",
-            "Basic Vehicle Maintenance", "Moving Off & Stopping Safely", "Turning & Reversing",
-            "Roundabouts & Junctions", "Overtaking & Lane Discipline", "Speed Limits & Safe Speeds",
-            "Defensive Driving", "Night Driving", "Adverse Weather Driving",
-            "Alcohol, Drugs & Driving", "Driver Fatigue Management", "Pedestrian & Child Safety",
-            "Emergency Procedures", "First Aid for Drivers", "Insurance & Documentation",
-            "Environmental Driving", "NTSA Test Preparation", "Advanced Driving Skills"
-        ];
-        
-        // Fetch materials from Supabase using correct table names
-        async function fetchMaterials(moduleType) {
-            if (materialsCache[moduleType]) {
-                return materialsCache[moduleType];
-            }
-            
-            const tableName = tableMapping[moduleType];
-            if (!tableName) {
-                return getFallbackMaterials(moduleType);
-            }
-            
-            try {
-                console.log(`Fetching from table: ${tableName}`);
-                const { data, error } = await supabase
-                    .from(tableName)
-                    .select('*')
-                    .eq('status', 'published')
-                    .order('module_number', { ascending: true });
-                
-                if (error) {
-                    console.error('Supabase error:', error);
-                    return getFallbackMaterials(moduleType);
-                }
-                
-                if (data && data.length > 0) {
-                    // Transform data to expected format
-                    const transformed = data.map(item => ({
-                        id: item.id,
-                        title: item.title,
-                        description: item.description,
-                        content: item.content,
-                        module_type: moduleType,
-                        unit_number: item.module_number,
-                        icon: item.icon,
-                        difficulty: item.difficulty
-                    }));
-                    materialsCache[moduleType] = transformed;
-                    console.log(`Loaded ${transformed.length} items from ${tableName}`);
-                    return transformed;
-                }
-                
-                console.log(`No data found in ${tableName}, using fallback`);
-                return getFallbackMaterials(moduleType);
-            } catch (error) {
-                console.error('Error fetching materials:', error);
-                return getFallbackMaterials(moduleType);
-            }
+        function renderUsersTab() {
+            let html = `<div class="card"><h3>All Users</h3><table><th>Email</th><th>Status</th><th>Admin</th><th>Actions</th></tr>`;
+            users.forEach(u => { html += `<tr><td>${escapeHtml(u.email)}</td><td>${u.status||'active'}</td><td>${u.is_admin?'✅':'❌'}</td><td><button class="btn-small btn-danger" onclick="adminDeleteUser('${u.id}')">Delete</button></td></tr>`; });
+            html += `</table></div><div class="card"><h3>User Progress Summary</h3>${users.map(u=>`<p>${escapeHtml(u.email)}: ${Object.values(userProgress).filter(p=>p>0).length} units started</p>`).join('')}</div>`;
+            document.getElementById('adminTabContent').innerHTML = html;
+            window.adminDeleteUser = adminDeleteUser;
         }
         
-        // Fallback materials when Supabase table is empty
-        function getFallbackMaterials(moduleType) {
-            if (moduleType === 'learner') {
-                return Array.from({ length: 21 }, (_, i) => ({
-                    id: i + 1,
-                    title: `Unit ${i + 1}: ${unitTitles[i]}`,
-                    description: `Complete NTSA unit covering ${unitTitles[i].toLowerCase()} with Kenyan road examples and safety warnings.`,
-                    content: generateUnitContent(i + 1, unitTitles[i]),
-                    module_type: 'learner',
-                    unit_number: i + 1,
-                    icon: ["🚗","🛑","🎮","🔧","🚦","↩️","🔄","🏎️","📊","🛡️","🌙","🌧️","🍺","😴","🚸","🚨","🩺","📄","🌱","✅","🏆"][i],
-                    difficulty: i < 7 ? 'beginner' : i < 14 ? 'intermediate' : 'advanced'
-                }));
-            }
-            if (moduleType === 'psv') {
-                return Array.from({ length: 10 }, (_, i) => ({
-                    id: 100 + i,
-                    title: `PSV Module ${i + 1}: ${['Licensing & Compliance', 'Professional Conduct', 'Personal Grooming', 'Passenger Safety', 'Defensive Driving', 'Route Management', 'Vehicle Care', 'Emergency Response', 'Fare Management', 'Customer Service'][i]}`,
-                    description: `Professional PSV training module.`,
-                    content: `<h2>PSV Module ${i + 1}</h2><p>Professional training content for PSV drivers.</p>`,
-                    module_type: 'psv',
-                    unit_number: i + 1,
-                    icon: "🚌",
-                    difficulty: 'intermediate'
-                }));
-            }
-            if (moduleType === 'boda') {
-                return Array.from({ length: 12 }, (_, i) => ({
-                    id: 200 + i,
-                    title: `Boda Module ${i + 1}: ${['Basic Controls', 'Protective Gear', 'Professionalism', 'Drug Prevention', 'Customer Service', 'Crime Prevention', 'Passenger Assessment', 'Night Riding', 'Entrepreneurship', 'Defensive Riding', 'Maintenance', 'Alcohol Awareness'][i]}`,
-                    description: `Motorcycle safety training module.`,
-                    content: `<h2>Boda Module ${i + 1}</h2><p>Complete boda boda safety training.</p>`,
-                    module_type: 'boda',
-                    unit_number: i + 1,
-                    icon: "🏍️",
-                    difficulty: 'beginner'
-                }));
-            }
-            if (moduleType === 'ev') {
-                return Array.from({ length: 8 }, (_, i) => ({
-                    id: 300 + i,
-                    title: `EV Module ${i + 1}: ${['Introduction to EVs', 'Battery Technology', 'Charging Infrastructure', 'Maintenance', 'Safety Protocols', 'Range Management', 'Commercial Use', 'Regulations'][i]}`,
-                    description: `Electric vehicle training module.`,
-                    content: `<h2>EV Module ${i + 1}</h2><p>Complete electric vehicle training.</p>`,
-                    module_type: 'ev',
-                    unit_number: i + 1,
-                    icon: "⚡",
-                    difficulty: 'intermediate'
-                }));
-            }
-            return [];
-        }
-        
-        function generateUnitContent(unitNum, title) {
-            const safetyTips = [
-                "Always wear your seatbelt - it reduces fatal injury risk by 45%",
-                "Check your mirrors every 5-8 seconds to maintain situational awareness",
-                "Keep a 2-second following distance in dry conditions, 4 seconds in rain",
-                "Never drive under the influence - zero tolerance for commercial drivers",
-                "Rest every 2 hours on long journeys to prevent fatigue",
-                "Always signal your intentions - don't assume others know what you'll do"
-            ];
-            
-            return `<h2>UNIT ${unitNum}: ${title}</h2>
-                    <div class="visual-ref"><i class="fas fa-car" style="font-size: 3rem; color: var(--primary);"></i><p><strong>📸 Visual Reference:</strong> Kenyan road context for ${title.toLowerCase()}</p></div>
-                    <h3>🎯 Learning Objectives</h3>
-                    <ul><li>Understand key concepts of ${title.toLowerCase()}</li><li>Apply safety principles in real Kenyan driving scenarios</li><li>Master defensive techniques for this situation</li></ul>
-                    <h3>📖 Key Content</h3>
-                    <p>This unit covers essential knowledge for ${title.toLowerCase()}. Understanding these concepts is crucial for passing the NTSA driving test and becoming a safe driver on Kenyan roads.</p>
-                    <div class="safety-box"><strong>⚠️ Safety First:</strong> ${safetyTips[(unitNum - 1) % safetyTips.length]}</div>
-                    <div class="tip-box"><strong>💡 NTSA Test Tip:</strong> This topic frequently appears in the theory test. Pay special attention to Kenyan-specific rules and regulations.</div>
-                    <h3>🚦 Kenyan Context</h3>
-                    <p>In Kenya, drivers face unique challenges including matatus, boda bodas, pedestrians, and varying road conditions. Always stay alert and anticipate unexpected movements from other road users.</p>
-                    <div class="tip-box"><strong>👨‍🏫 Instructor Guidance:</strong> Practice these skills in a safe environment before encountering real-world situations.</div>`;
-        }
-        
-        // Fetch user progress from Supabase
-        async function fetchUserProgress() {
-            if (!currentUser) return {};
-            try {
-                const { data, error } = await supabase
-                    .from('user_progress')
-                    .select('*')
-                    .eq('user_id', currentUser.id);
-                if (error) throw error;
-                const progress = {};
-                if (data) data.forEach(p => { progress[p.material_id] = p.progress_percentage || 0; });
-                userProgress = progress;
-                return progress;
-            } catch (error) { 
-                console.log('No user_progress table yet, using local');
-                return {}; 
-            }
-        }
-        
-        // Update progress in Supabase
-        async function updateProgress(materialId, progress) {
-            if (!currentUser) { showToast('Please login to track progress', 'error'); return false; }
-            try {
-                await supabase.from('user_progress').upsert({
-                    user_id: currentUser.id, 
-                    material_id: materialId, 
-                    progress_percentage: progress,
-                    status: progress === 100 ? 'completed' : 'in_progress', 
-                    last_accessed_at: new Date().toISOString(),
-                    completed_at: progress === 100 ? new Date().toISOString() : null
+        async function renderModulesTab() {
+            let html = `<div class="card"><h3>Manage Modules</h3><select id="moduleTypeSelect"><option value="learner">Learner Units</option><option value="psv">PSV</option><option value="boda">Boda</option><option value="ev">EV</option></select><button class="btn-small" onclick="showAddModuleModal()">+ Add Module</button><div id="modulesList"></div></div>`;
+            document.getElementById('adminTabContent').innerHTML = html;
+            const renderList = async (type) => {
+                let mods = await fetchMaterials(type);
+                let listHtml = `<table><th>#</th><th>Title</th><th>Price</th><th>Locked</th><th>Actions</th></tr>`;
+                mods.forEach(m => {
+                    listHtml += `<tr><td>${m.unit_number}</td><td>${escapeHtml(m.title)}</td><td><input type="number" id="price-${m.id}" value="${m.price}" step="0.01" style="width:80px"></td><td><input type="checkbox" id="lock-${m.id}" ${m.is_locked?'checked':''}></td>
+                    <td><button class="btn-small" onclick="updateModuleFields('${type}',${m.id})">Save</button> <button class="btn-small btn-danger" onclick="adminDeleteModule('${type}',${m.id})">Delete</button></td></tr>`;
                 });
-                userProgress[materialId] = progress;
-                showToast(progress === 100 ? 'Unit completed! 🎉' : 'Progress saved', 'success');
-                return true;
-            } catch (error) { 
-                showToast('Error saving progress', 'error'); 
-                return false; 
-            }
+                listHtml += `</table>`;
+                document.getElementById('modulesList').innerHTML = listHtml;
+                window.updateModuleFields = async (type, id) => {
+                    const price = parseFloat(document.getElementById(`price-${id}`).value);
+                    const is_locked = document.getElementById(`lock-${id}`).checked;
+                    await adminUpdateModule(type, id, { price, is_locked });
+                    renderList(type);
+                };
+                window.adminDeleteModule = adminDeleteModule;
+            };
+            document.getElementById('moduleTypeSelect').addEventListener('change', (e) => renderList(e.target.value));
+            renderList('learner');
+            window.showAddModuleModal = () => {
+                const type = document.getElementById('moduleTypeSelect').value;
+                const newNumber = prompt('Enter module number');
+                const title = prompt('Enter title');
+                if(newNumber && title) adminAddModule(type, { module_number: parseInt(newNumber), title, content: '<p>New content</p>', price: 0, is_locked: false, status: 'published' });
+            };
         }
         
-        // Render functions
-        function renderCard(material, type) {
-            const progress = userProgress[material.id] || 0;
-            const icon = material.icon || (type === 'learner' ? '📚' : '📘');
-            return `<div class="card" onclick="viewMaterial(${material.id}, '${type}')">
-                <span class="unit-badge">${type === 'learner' ? `Unit ${material.unit_number}` : type.toUpperCase()}</span>
-                <div style="font-size: 2.5rem; margin-bottom: 10px;">${icon}</div>
-                <h3 style="color: var(--text-primary); font-size: 1rem; margin-bottom: 8px;">${escapeHtml(material.title)}</h3>
-                <p style="color: var(--text-secondary); font-size: 0.8rem;">${escapeHtml(material.description?.substring(0, 100) || '')}...</p>
-                <div class="progress-bar"><div class="progress-fill" style="width: ${progress}%"></div></div>
-                <button class="btn-small" style="margin-top: 8px;">📖 View Unit →</button>
-            </div>`;
+        function renderPaymentsTab() {
+            let html = `<div class="card"><h3>Payments</h3>能<table><tr><th>User</th><th>Module</th><th>Amount</th><th>Status</th><th>Action</th></tr>`;
+            payments.forEach(p => {
+                html += `<tr><td>${escapeHtml(p.user_profiles?.full_name || p.user_id)}</td><td>${p.module_type} #${p.module_id}</td><td>$${p.amount}</td><td>${p.status}</td><td>${p.status==='pending'?`<button class="btn-small" onclick="adminUpdatePayment(${p.id},'approved')">Approve</button> <button onclick="adminUpdatePayment(${p.id},'defaulted')" class="btn-small btn-danger">Default</button>`:p.status==='defaulted'?`<button onclick="adminUpdatePayment(${p.id},'pending')">Reset</button>`:'✅ Approved'}</td></tr>`;
+            });
+            html += `</table></div>`;
+            document.getElementById('adminTabContent').innerHTML = html;
+            window.adminUpdatePayment = adminUpdatePayment;
         }
         
-        function escapeHtml(text) { 
-            if (!text) return ''; 
-            return String(text).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c] || c)); 
-        }
-        
-        async function renderModulePage(moduleType) {
-            currentModuleType = moduleType;
-            const container = document.getElementById('page-content');
-            container.innerHTML = '<div class="spinner"></div>';
-            currentMaterials = await fetchMaterials(moduleType);
-            
-            let title = { 
-                learner: '📚 Learner Driver Hub - 21 Complete NTSA Units', 
-                psv: '🚌 PSV Professional Course', 
-                boda: '🏍️ Boda Boda Safety Course', 
-                ev: '⚡ Electric Vehicle Training', 
-                academy: '🎓 Advanced Driver Academy' 
-            }[moduleType] || moduleType.toUpperCase();
-            
-            if (currentMaterials.length === 0) {
-                container.innerHTML = `<div class="hero"><h1>${title}</h1><p>Loading materials from database...</p><div class="spinner"></div></div>`;
-                return;
-            }
-            
-            let cards = currentMaterials.map(m => renderCard(m, moduleType)).join('');
-            container.innerHTML = `<div class="hero"><h1>${title}</h1><p>NTSA-compliant syllabus with Kenyan road examples and instructor guidance</p></div><div class="grid">${cards}</div>`;
-        }
-        
-        // View material with Next/Previous buttons
-        window.viewMaterial = async function(id, type) {
-            const materials = await fetchMaterials(type);
-            const material = materials.find(m => m.id == id);
-            if (!material) return;
-            
-            const currentIndex = materials.findIndex(m => m.id == id);
-            const prevMaterial = currentIndex > 0 ? materials[currentIndex - 1] : null;
-            const nextMaterial = currentIndex < materials.length - 1 ? materials[currentIndex + 1] : null;
-            
-            const progress = userProgress[material.id] || 0;
-            const content = material.content || `<h2>${escapeHtml(material.title)}</h2><p>${escapeHtml(material.description)}</p>`;
-            
-            let navButtons = `<div class="nav-buttons-container">`;
-            if (prevMaterial) {
-                navButtons += `<button class="btn btn-nav" onclick="viewMaterial(${prevMaterial.id}, '${type}')"><i class="fas fa-arrow-left"></i> Previous: ${escapeHtml(prevMaterial.title).substring(0, 30)}</button>`;
-            } else {
-                navButtons += `<div></div>`;
-            }
-            if (nextMaterial) {
-                navButtons += `<button class="btn btn-nav" onclick="viewMaterial(${nextMaterial.id}, '${type}')">Next: ${escapeHtml(nextMaterial.title).substring(0, 30)} <i class="fas fa-arrow-right"></i></button>`;
-            } else {
-                navButtons += `<button class="btn btn-primary" onclick="showToast('🎉 Congratulations! You completed all ${materials.length} units!', 'success')"><i class="fas fa-trophy"></i> Course Complete! 🎉</button>`;
-            }
-            navButtons += `</div>`;
-            
-            document.getElementById('page-content').innerHTML = `<div style="background:var(--bg-card);border-radius:24px;padding:24px;margin:20px 0;border:1px solid var(--border);">
-                <div style="display:flex;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
-                    <h2 style="color:var(--primary);">${escapeHtml(material.title)}</h2>
-                    <button class="btn-small" onclick="navigateTo('${type}')"><i class="fas fa-th-large"></i> All Units</button>
-                </div>
-                <div class="unit-content">${content}</div>
-                <div class="progress-bar"><div class="progress-fill" style="width: ${progress}%"></div></div>
-                <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:20px;">
-                    <button class="btn" style="flex:1;" onclick="updateProgress(${material.id}, 100)"><i class="fas fa-check-circle"></i> Mark Complete</button>
-                </div>
-                ${navButtons}
-            </div>`;
-            window.scrollTo({ top: 0 });
-        };
-        
-        function renderHome() {
-            document.getElementById('page-content').innerHTML = `
-                <div class="hero"><h1><span class="highlight">Learn Smart. Pass NTSA Test Like A Pro.</span></h1><p>Drive Smart. Stay Safe. Arrive Home.</p><div class="hero-buttons"><button class="btn" onclick="navigateTo('learner')">📚 Start 21-Unit Course</button><button class="btn-ev" onclick="navigateTo('ev')">⚡ EV Training</button></div></div>
-                <div class="stats-grid"><div class="stat-card"><div class="stat-number">21</div><div>Learner Units</div></div><div class="stat-card"><div class="stat-number">1000+</div><div>Practice Qs</div></div><div class="stat-card"><div class="stat-number">6+</div><div>Course Categories</div></div><div class="stat-card"><div class="stat-number">NTSA</div><div>Certified</div></div></div>
-                <div class="grid">
-                    <div class="card" onclick="navigateTo('learner')"><div style="font-size:2rem;">📚</div><h3>21-Unit Learner Hub</h3><p style="color: var(--text-secondary);">Complete NTSA driving syllabus with Next/Prev navigation</p><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('psv')"><div style="font-size:2rem;">🚌</div><h3>PSV Course</h3><p style="color: var(--text-secondary);">Professional driver training</p><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('boda')"><div style="font-size:2rem;">🏍️</div><h3>Boda Safety</h3><p style="color: var(--text-secondary);">Rider safety course</p><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('ev')"><div style="font-size:2rem;">⚡</div><h3>EV Training</h3><p style="color: var(--text-secondary);">Electric vehicle education</p><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('academy')"><div style="font-size:2rem;">🎓</div><h3>Academy</h3><p style="color: var(--text-secondary);">Advanced driver program</p><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('library')"><div style="font-size:2rem;">📖</div><h3>Library</h3><p style="color: var(--text-secondary);">Resources & manuals</p><button class="btn-small">Start →</button></div>
-                    <div class="card" onclick="navigateTo('quiz')"><div style="font-size:2rem;">📝</div><h3>NTSA Quiz</h3><p style="color: var(--text-secondary);">Practice test questions</p><button class="btn-small">Start →</button></div>
-                </div>
-            `;
-        }
-        
-        function renderLibrary() {
-            const resources = ['Kenya Highway Code', 'EV Driver Handbook', 'NTSA Test Guide', 'PSV Manual', 'Boda Safety Guide'];
-            document.getElementById('page-content').innerHTML = `<div class="hero"><h1>📖 Resource Library</h1><p>Official NTSA documents and manuals</p></div><div class="grid">${resources.map(r => `<div class="card" onclick="showToast('Download started: ${r}','success')"><div style="font-size:2rem;">📄</div><h3>${r}</h3><button class="btn-small">Download →</button></div>`).join('')}</div>`;
-        }
-        
-        function renderQuiz() {
-            const questions = [
-                { text: "What is the legal blood alcohol limit for commercial drivers in Kenya?", options: ["0.00%", "0.05%", "0.08%", "0.10%"] },
-                { text: "What is the maximum speed limit in a residential area?", options: ["30 km/h", "40 km/h", "50 km/h", "60 km/h"] },
-                { text: "What should you do if your vehicle starts to skid?", options: ["Steer into the skid", "Steer away", "Brake hard", "Accelerate"] }
-            ];
-            document.getElementById('page-content').innerHTML = `<div class="hero"><h1>📝 NTSA Practice Test</h1><p>Test your knowledge with real exam questions</p></div>
-                ${questions.map((q, idx) => `<div class="question-card"><div class="question-text"><strong>${idx+1}.</strong> ${q.text}</div><div class="options-group">${q.options.map((opt, i) => `<div class="option" onclick="showToast('Check answer in full version', 'info')">${String.fromCharCode(65+i)}. ${opt}</div>`).join('')}</div></div>`).join('')}
-                <div class="tip-box" style="margin-top: 20px; text-align: center;"><strong>💡 Full quiz with 50+ questions available after login!</strong></div>`;
-        }
-        
-        window.navigateTo = async function(page) {
-            currentPage = page;
-            document.getElementById('page-content').innerHTML = '<div class="spinner"></div>';
-            if (page === 'home') renderHome();
-            else if (page === 'library') renderLibrary();
-            else if (page === 'quiz') renderQuiz();
-            else await renderModulePage(page);
-            document.getElementById('navLinks')?.classList.remove('show');
-            window.scrollTo({ top: 0 });
-        };
-        
-        // Auth functions
-        async function checkSession() {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) { 
-                currentUser = session.user; 
-                await fetchUserProgress(); 
-                console.log('User logged in:', currentUser.email);
-            }
-            updateAuthUI();
-        }
-        
-        function updateAuthUI() {
-            const authDiv = document.getElementById('authButtons');
-            if (!authDiv) return;
-            if (currentUser) {
-                authDiv.innerHTML = `<div class="profile-link" onclick="showProfileModal()">👤 ${currentUser.email?.split('@')[0]}</div><button onclick="logout()" style="background:transparent; border:none; color:var(--text-secondary); cursor:pointer;">🚪 Logout</button>`;
-            } else {
-                authDiv.innerHTML = `<button onclick="showLoginModal()" style="background:transparent; border:none; color:var(--text-secondary); cursor:pointer; padding:8px 16px;">🔑 Login</button><button onclick="showSignupModal()" style="background:transparent; border:none; color:var(--text-secondary); cursor:pointer; padding:8px 16px;">📝 Sign Up</button>`;
-            }
-        }
-        
-        async function logout() { 
-            await supabase.auth.signOut(); 
-            currentUser = null; 
-            userProgress = {}; 
-            updateAuthUI(); 
-            showToast('Logged out', 'info'); 
-            navigateTo('home'); 
-        }
-        
-        function showLoginModal() { alert('🔐 Login with Supabase Auth\n\nUse "Sign Up" to create an account, then login to track your progress across devices!'); }
-        function showSignupModal() { alert('📝 Create Account\n\nAfter signing up via Supabase, your progress will be saved to the cloud!'); }
-        function showProfileModal() { 
-            if (!currentUser) return; 
-            alert(`👤 Profile\n\nEmail: ${currentUser.email}\n\nYour progress is saved to the cloud!`); 
-        }
-        
-        function showToast(message, type) { 
-            const toast = document.createElement('div'); 
-            toast.className = 'toast'; 
-            toast.innerHTML = `${type === 'success' ? '✅' : 'ℹ️'} ${message}`; 
-            document.getElementById('toast-root').appendChild(toast); 
-            setTimeout(() => toast.remove(), 3000); 
-        }
-        
-        // Mobile menu
-        document.getElementById('mobileMenuBtn')?.addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            document.getElementById('navLinks')?.classList.toggle('show'); 
+        document.getElementById('adminTabs').addEventListener('click', (e) => {
+            const tab = e.target.closest('.admin-tab');
+            if(!tab) return;
+            document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
+            tab.classList.add('active');
+            if(tab.dataset.tab === 'users') renderUsersTab();
+            if(tab.dataset.tab === 'modules') renderModulesTab();
+            if(tab.dataset.tab === 'payments') renderPaymentsTab();
         });
-        
-        document.addEventListener('click', (e) => {
-            const btn = e.target.closest('[data-nav]');
-            if (btn) navigateTo(btn.getAttribute('data-nav'));
-            const navLinks = document.getElementById('navLinks');
-            const mobileBtn = document.getElementById('mobileMenuBtn');
-            if (navLinks?.classList.contains('show') && !navLinks.contains(e.target) && mobileBtn && !mobileBtn.contains(e.target)) {
-                navLinks.classList.remove('show');
-            }
-        });
-        
-        window.viewMaterial = viewMaterial;
-        window.navigateTo = navigateTo;
-        window.updateProgress = updateProgress;
-        window.logout = logout;
-        window.showLoginModal = showLoginModal;
-        window.showSignupModal = showSignupModal;
-        window.showProfileModal = showProfileModal;
-        window.showToast = showToast;
-        
-        await checkSession();
-        navigateTo('home');
-    </script>
+        renderUsersTab();
+    }
+    
+    // ==================== RENDER USER PAGES ====================
+    async function renderModulePage(moduleType) {
+        const container = document.getElementById('page-content');
+        container.innerHTML = '<div class="spinner"></div>';
+        const materials = await fetchMaterials(moduleType);
+        const cards = materials.map(m => `<div class="card" onclick="viewMaterial(${m.id}, '${moduleType}')"><h3>${escapeHtml(m.title)}</h3><p>${m.price ? `$${m.price}` : 'Free'}</p><button class="btn-small">View →</button></div>`).join('');
+        container.innerHTML = `<div class="hero"><h1>${moduleType.toUpperCase()} Course</h1></div><div class="grid">${cards}</div>`;
+    }
+    
+    function renderHome() {
+        document.getElementById('page-content').innerHTML = `<div class="hero"><h1>Learn Smart. Pass NTSA Test Like A Pro.</h1><button class="btn" onclick="navigateTo('learner')">Start 21-Unit Course</button></div>
+        <div class="grid"><div class="card" onclick="navigateTo('learner')"><h3>📚 Learner Hub</h3></div><div class="card" onclick="navigateTo('psv')"><h3>🚌 PSV</h3></div><div class="card" onclick="navigateTo('boda')"><h3>🏍️ Boda</h3></div><div class="card" onclick="navigateTo('ev')"><h3>⚡ EV</h3></div></div>`;
+    }
+    function renderQuiz() { document.getElementById('page-content').innerHTML = `<div class="hero"><h1>📝 NTSA Quiz</h1><p>Coming soon</p></div>`; }
+    
+    // ==================== AUTH & ADMIN DETECTION ====================
+    async function checkSession() {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+            currentUser = session.user;
+            const { data: profile, error } = await supabase
+                .from('user_profiles')
+                .select('is_admin')
+                .eq('id', currentUser.id)
+                .maybeSingle();
+            isAdmin = (!error && profile?.is_admin === true);
+            await fetchUserProgress();
+            console.log('User:', currentUser.email, 'Admin:', isAdmin);
+        } else {
+            currentUser = null;
+            isAdmin = false;
+            userProgress = {};
+        }
+        updateAuthUI();
+        if (currentPage === 'admin' && !isAdmin) navigateTo('home');
+        else navigateTo(currentPage);
+    }
+    
+    function updateAuthUI() {
+        const authDiv = document.getElementById('authButtons');
+        const adminNavLink = document.getElementById('adminNavLink');
+        if (!authDiv) return;
+        if (currentUser) {
+            authDiv.innerHTML = `<div class="profile-link">👤 ${currentUser.email.split('@')[0]}</div><button onclick="logout()">Logout</button>`;
+            if (adminNavLink) adminNavLink.style.display = isAdmin ? 'inline-block' : 'none';
+        } else {
+            authDiv.innerHTML = `<button onclick="showLoginModal()">Login</button><button onclick="showSignupModal()">Sign Up</button>`;
+            if (adminNavLink) adminNavLink.style.display = 'none';
+        }
+    }
+    
+    async function logout() { await supabase.auth.signOut(); currentUser=null; isAdmin=false; userProgress={}; updateAuthUI(); navigateTo('home'); }
+    function showLoginModal() { alert('Use Sign Up first, then login.'); }
+    function showSignupModal() { alert('Sign up via Supabase Auth.'); }
+    
+    window.navigateTo = async function(page) {
+        currentPage = page;
+        if (page === 'admin' && isAdmin) await renderAdminDashboard();
+        else if (page === 'home') renderHome();
+        else if (page === 'quiz') renderQuiz();
+        else if (['learner', 'psv', 'boda', 'ev'].includes(page)) await renderModulePage(page);
+        else renderHome();
+        document.getElementById('navLinks')?.classList.remove('show');
+        window.scrollTo({ top: 0 });
+    };
+    
+    // Expose globals
+    window.viewMaterial = viewMaterial;
+    window.navigateTo = navigateTo;
+    window.updateProgress = updateProgress;
+    window.logout = logout;
+    window.adminDeleteUser = adminDeleteUser;
+    window.adminDeleteModule = adminDeleteModule;
+    window.adminUpdatePayment = adminUpdatePayment;
+    
+    // Mobile menu toggle (simple)
+    document.getElementById('mobileMenuBtn')?.addEventListener('click', () => document.getElementById('navLinks')?.classList.toggle('show'));
+    
+    // Start
+    checkSession();
+</script>
 </body>
 </html>
