@@ -163,6 +163,8 @@
         .quiz-option { padding: 12px 16px; background: var(--dark-hover); border-radius: 12px; cursor: pointer; transition: 0.2s; border: 1px solid var(--border); }
         .quiz-option:hover { border-color: var(--primary); background: rgba(212,175,55,0.1); }
         .quiz-feedback { margin-top: 1rem; padding: 12px; border-radius: 12px; }
+        .quiz-nav { display: flex; justify-content: space-between; margin-top: 1.5rem; gap: 1rem; }
+        .quiz-score { text-align: right; font-size: 0.9rem; color: var(--primary); margin-bottom: 1rem; }
         
         /* Library Grid */
         .library-grid {
@@ -237,20 +239,22 @@
             <div class="logo"><i class="fas fa-car"></i> MEI DRIVE AFRICA</div>
             <div class="mobile-menu" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></div>
             <div class="nav-links" id="navLinks">
-                <a href="#" class="active" onclick="scrollToSection('home');return false">Home</a>
+                <a href="#" onclick="scrollToSection('home');return false">Home</a>
                 <a href="#" onclick="scrollToSection('modules');return false">Courses</a>
                 <a href="#" onclick="scrollToSection('quiz');return false">Quiz Demo</a>
                 <a href="#" onclick="scrollToSection('library');return false">Library</a>
                 <a href="#" id="authNavBtn" class="btn-nav" onclick="openAuthModal();return false">Sign In</a>
+                <a href="#" id="logoutBtn" style="display:none;" onclick="logout();return false">Logout</a>
             </div>
         </div>
     </nav>
 
     <main>
+        <!-- UPDATED HERO SECTION with new text -->
         <section id="home" class="hero">
             <div class="hero-content">
-                <h1>Drive with Confidence.<br><span>NTSA-Approved Training</span></h1>
-                <p>Master the road with Kenya's most comprehensive driver education platform. From Learner to Professional — get certified, stay safe.</p>
+                <h1>Practice Daily. Revise Smarter. Pass with Confidence.</h1>
+                <p>For Learners and Experienced Drivers — Refresh Your Skills with MEI DRIVE AFRICA.</p>
                 <div class="btn-group">
                     <button class="btn btn-primary" onclick="scrollToSection('modules')"><i class="fas fa-road"></i> Explore Courses</button>
                     <button class="btn btn-outline" onclick="openAuthModal()"><i class="fas fa-user-graduate"></i> Get Started</button>
@@ -299,15 +303,29 @@
         </div>
     </div>
 
+    <!-- Checkout Modal (Demo) -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <h3><i class="fas fa-credit-card"></i> Demo Checkout</h3>
+            <p id="checkoutCourseName"></p>
+            <p>Total: KES <span id="checkoutAmount">0</span></p>
+            <input type="text" placeholder="Card Number (demo: 4111 1111 1111 1111)">
+            <button class="btn btn-primary" style="width:100%;" id="confirmPaymentBtn">Pay & Enroll</button>
+            <button class="btn btn-outline" style="width:100%; margin-top:0.5rem;" onclick="closeCheckoutModal()">Cancel</button>
+        </div>
+    </div>
+
     <div id="toastContainer" class="toast-container"></div>
 
     <script>
         // ============================================
-        // MEI DRIVE AFRICA - FRONTEND PLATFORM
-        // Fully functional with admin panel integration
+        // MEI DRIVE AFRICA - FULLY FUNCTIONAL
+        // Hero text updated as requested.
+        // All previous fixes retained: multi-quiz, user enrollment, logout,
+        // real download simulation, checkout modal, etc.
         // ============================================
         
-        // Data Store (synchronized with localStorage)
+        // Data Store
         let courseModules = [
             { id: 1, name: "Learner Hub", price: 0, duration: "25 hours", lessons: 21, description: "Complete NTSA-approved driver training - theory & practical prep", icon: "fa-id-card", enrolled: 1245, popular: true },
             { id: 2, name: "EV Drivers & Riders", price: 0, duration: "12 hours", lessons: 8, description: "Electric vehicle safety, charging & efficiency training", icon: "fa-charging-station", enrolled: 567, popular: false },
@@ -320,17 +338,21 @@
         let quizQuestions = [
             { id: 1, question: "What is the minimum age for a private vehicle learner's licence in Kenya?", options: ["16 years", "17 years", "18 years", "21 years"], correct: 2, explanation: "According to NTSA, you must be 18 years to apply for a learner's licence." },
             { id: 2, question: "What does a continuous yellow line on a two-way road mean?", options: ["Overtaking encouraged", "No overtaking", "Parking allowed", "Slow down only"], correct: 1, explanation: "A solid yellow line indicates no overtaking due to limited visibility." },
-            { id: 3, question: "What is the legal blood alcohol limit for a private vehicle driver in Kenya?", options: ["0.00%", "0.05%", "0.08%", "0.10%"], correct: 1, explanation: "Kenya's legal BAC limit is 0.05% for private drivers." }
+            { id: 3, question: "What is the legal blood alcohol limit for a private vehicle driver in Kenya?", options: ["0.00%", "0.05%", "0.08%", "0.10%"], correct: 1, explanation: "Kenya's legal BAC limit is 0.05% for private drivers." },
+            { id: 4, question: "When should you use your hazard lights?", options: ["When parking illegally", "To thank another driver", "To warn of a temporary hazard ahead", "While reversing"], correct: 2, explanation: "Hazard lights warn other road users of a hazard." },
+            { id: 5, question: "What is the recommended following distance in normal conditions?", options: ["1 second", "2 seconds", "3 seconds", "4 seconds"], correct: 1, explanation: "The 'two-second rule' is standard for dry conditions." }
         ];
         
         let libraryResources = [
-            { id: 1, title: "Kenya Highway Code", type: "PDF", icon: "fa-book", downloads: 1245 },
-            { id: 2, title: "NTSA Driving Test Guide", type: "PDF", icon: "fa-file-alt", downloads: 892 },
-            { id: 3, title: "Defensive Driving Manual", type: "PDF", icon: "fa-shield", downloads: 567 },
-            { id: 4, title: "EV Safety Handbook", type: "PDF", icon: "fa-leaf", downloads: 345 }
+            { id: 1, title: "Kenya Highway Code", type: "PDF", icon: "fa-book", downloads: 1245, content: "Kenya Highway Code - Official Rules of the Road" },
+            { id: 2, title: "NTSA Driving Test Guide", type: "PDF", icon: "fa-file-alt", downloads: 892, content: "Complete NTSA driving test preparation guide." },
+            { id: 3, title: "Defensive Driving Manual", type: "PDF", icon: "fa-shield", downloads: 567, content: "Defensive driving techniques for Kenyan roads." },
+            { id: 4, title: "EV Safety Handbook", type: "PDF", icon: "fa-leaf", downloads: 345, content: "Electric vehicle charging and safety protocols." }
         ];
         
-        let currentUser = null; // { name, email, isAdmin }
+        let currentUser = null;
+        let currentQuizIndex = 0;
+        let quizAnswers = [];
         
         // Helper Functions
         function showToast(message, type = 'info') {
@@ -351,7 +373,9 @@
         function renderModules() {
             const grid = document.getElementById('modulesGrid');
             if (!grid) return;
-            grid.innerHTML = courseModules.map(module => `
+            grid.innerHTML = courseModules.map(module => {
+                const isEnrolled = currentUser && currentUser.enrolledCourses && currentUser.enrolledCourses.includes(module.id);
+                return `
                 <div class="module-card">
                     ${module.popular ? '<div class="module-badge">⭐ MOST POPULAR</div>' : ''}
                     <i class="fas ${module.icon}" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem; display: inline-block;"></i>
@@ -363,35 +387,75 @@
                         <li><i class="fas fa-book-open"></i> ${module.lessons} Lessons</li>
                         <li><i class="fas fa-users"></i> ${module.enrolled.toLocaleString()} enrolled</li>
                     </ul>
-                    <button class="btn btn-primary btn-block" onclick="enrollCourse(${module.id})"><i class="fas fa-graduation-cap"></i> ${module.price === 0 ? 'Start Free Course' : 'Purchase & Enroll'}</button>
+                    ${isEnrolled ? 
+                        `<button class="btn btn-outline btn-block" disabled><i class="fas fa-check-circle"></i> Enrolled</button>` :
+                        `<button class="btn btn-primary btn-block" onclick="enrollCourse(${module.id})"><i class="fas fa-graduation-cap"></i> ${module.price === 0 ? 'Start Free Course' : 'Purchase & Enroll'}</button>`
+                    }
                 </div>
-            `).join('');
+            `}).join('');
         }
         
         function renderQuiz() {
             const container = document.getElementById('quizDemoContainer');
             if (!container) return;
-            const q = quizQuestions[0];
+            const q = quizQuestions[currentQuizIndex];
+            const userAnswer = quizAnswers[currentQuizIndex];
+            const score = calculateScore();
             container.innerHTML = `
-                <div style="margin-bottom: 1rem;"><span style="background: var(--primary); color:#000; padding:4px 12px; border-radius:50px;">Sample Question</span></div>
+                <div class="quiz-score">Score: ${score} / ${quizQuestions.length}</div>
+                <div style="margin-bottom: 1rem;"><span style="background: var(--primary); color:#000; padding:4px 12px; border-radius:50px;">Question ${currentQuizIndex+1} of ${quizQuestions.length}</span></div>
                 <div class="quiz-question">${escapeHtml(q.question)}</div>
                 <div class="quiz-options" id="quizOptions">
-                    ${q.options.map((opt, idx) => `<div class="quiz-option" onclick="checkAnswer(${idx})">${escapeHtml(opt)}</div>`).join('')}
+                    ${q.options.map((opt, idx) => `
+                        <div class="quiz-option ${userAnswer !== undefined && userAnswer === idx ? (idx === q.correct ? 'correct-option' : 'wrong-option') : ''}" 
+                             style="${userAnswer !== undefined && idx === q.correct ? 'border-color:#2ecc71; background:rgba(46,204,113,0.1);' : ''}
+                                    ${userAnswer !== undefined && userAnswer === idx && idx !== q.correct ? 'border-color:#e74c3c; background:rgba(231,76,60,0.1);' : ''}"
+                             onclick="if(${userAnswer === undefined}) checkAnswer(${idx})">
+                            ${escapeHtml(opt)}
+                        </div>
+                    `).join('')}
                 </div>
-                <div id="quizFeedback" class="quiz-feedback"></div>
+                <div id="quizFeedback" class="quiz-feedback">
+                    ${userAnswer !== undefined ? `<span style="color: ${userAnswer === q.correct ? '#2ecc71' : '#e74c3c'}">${userAnswer === q.correct ? '✓ Correct!' : '✗ Incorrect'}</span> ${escapeHtml(q.explanation)}` : ''}
+                </div>
+                <div class="quiz-nav">
+                    <button class="btn btn-outline" onclick="prevQuestion()" ${currentQuizIndex === 0 ? 'disabled' : ''}>◀ Previous</button>
+                    <button class="btn btn-outline" onclick="nextQuestion()" ${currentQuizIndex === quizQuestions.length-1 ? 'disabled' : ''}>Next ▶</button>
+                </div>
             `;
         }
         
+        function calculateScore() {
+            let correct = 0;
+            quizQuestions.forEach((q, idx) => {
+                if (quizAnswers[idx] !== undefined && quizAnswers[idx] === q.correct) correct++;
+            });
+            return correct;
+        }
+        
         window.checkAnswer = (selected) => {
-            const q = quizQuestions[0];
-            const isCorrect = (selected === q.correct);
-            const feedbackDiv = document.getElementById('quizFeedback');
-            if (isCorrect) {
-                feedbackDiv.innerHTML = `<span style="color: #2ecc71;">✓ Correct! ${escapeHtml(q.explanation)}</span>`;
-                showToast('Great answer! +10 XP', 'success');
+            if (quizAnswers[currentQuizIndex] !== undefined) return;
+            const q = quizQuestions[currentQuizIndex];
+            quizAnswers[currentQuizIndex] = selected;
+            renderQuiz();
+            if (selected === q.correct) {
+                showToast('Correct! +10 XP', 'success');
             } else {
-                feedbackDiv.innerHTML = `<span style="color: #e74c3c;">✗ Oops! Correct answer: ${escapeHtml(q.options[q.correct])}. ${escapeHtml(q.explanation)}</span>`;
-                showToast('Keep learning! Review the material.', 'info');
+                showToast(`Wrong! Correct: ${q.options[q.correct]}`, 'info');
+            }
+        };
+        
+        window.prevQuestion = () => {
+            if (currentQuizIndex > 0) {
+                currentQuizIndex--;
+                renderQuiz();
+            }
+        };
+        
+        window.nextQuestion = () => {
+            if (currentQuizIndex < quizQuestions.length-1) {
+                currentQuizIndex++;
+                renderQuiz();
             }
         };
         
@@ -411,10 +475,55 @@
         window.downloadResource = (id) => {
             const res = libraryResources.find(r => r.id === id);
             if (res) {
-                showToast(`Downloading: ${res.title}`, 'success');
-                // Simulate download
+                const content = `${res.title}\n\n${res.content}\n\n-- MEI DRIVE AFRICA Resource --`;
+                const blob = new Blob([content], {type: 'application/pdf'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${res.title.replace(/ /g, '_')}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast(`Downloaded: ${res.title}`, 'success');
             }
         };
+        
+        let pendingEnrollCourse = null;
+        function openCheckoutModal(module) {
+            pendingEnrollCourse = module;
+            document.getElementById('checkoutCourseName').innerText = `Course: ${module.name}`;
+            document.getElementById('checkoutAmount').innerText = module.price;
+            document.getElementById('checkoutModal').classList.add('active');
+        }
+        window.closeCheckoutModal = () => {
+            document.getElementById('checkoutModal').classList.remove('active');
+            pendingEnrollCourse = null;
+        };
+        document.getElementById('confirmPaymentBtn')?.addEventListener('click', () => {
+            if (pendingEnrollCourse) {
+                completeEnrollment(pendingEnrollCourse);
+                closeCheckoutModal();
+            }
+        });
+        
+        function completeEnrollment(module) {
+            if (!currentUser) {
+                showToast('Please sign in first', 'error');
+                return;
+            }
+            if (!currentUser.enrolledCourses) currentUser.enrolledCourses = [];
+            if (currentUser.enrolledCourses.includes(module.id)) {
+                showToast(`You already enrolled in ${module.name}`, 'info');
+                return;
+            }
+            currentUser.enrolledCourses.push(module.id);
+            module.enrolled += 1;
+            saveUserToLocalStorage();
+            renderModules();
+            updateStats();
+            showToast(`🎉 Successfully enrolled in ${module.name}!`, 'success');
+        }
         
         window.enrollCourse = (moduleId) => {
             const module = courseModules.find(m => m.id === moduleId);
@@ -424,21 +533,19 @@
                 openAuthModal();
                 return;
             }
-            if (module.price > 0) {
-                showToast(`Payment of KES ${module.price} required. (Demo: enrollment simulated)`, 'info');
-                setTimeout(() => showToast(`Enrolled in ${module.name}! 🎉`, 'success'), 1500);
-            } else {
-                showToast(`You've enrolled in ${module.name}! Start learning now.`, 'success');
+            if (currentUser.enrolledCourses && currentUser.enrolledCourses.includes(module.id)) {
+                showToast('You are already enrolled in this course', 'info');
+                return;
             }
-            // Simulate enrollment count increment
-            module.enrolled += 1;
-            renderModules();
-            updateStats();
+            if (module.price > 0) {
+                openCheckoutModal(module);
+            } else {
+                completeEnrollment(module);
+            }
         };
         
-        // Auth & Admin Link
-        let authMode = 'login'; // 'login' or 'register'
-        
+        // Auth
+        let authMode = 'login';
         window.openAuthModal = () => {
             authMode = 'login';
             document.getElementById('authTitle').innerHTML = '<i class="fas fa-lock"></i> Sign In';
@@ -468,7 +575,59 @@
             document.getElementById('authModal').classList.remove('active');
         };
         
-        // Handle Auth Action
+        function saveUserToLocalStorage() {
+            if (currentUser) {
+                localStorage.setItem('mei_user', JSON.stringify(currentUser));
+            } else {
+                localStorage.removeItem('mei_user');
+            }
+        }
+        
+        function updateAuthUI() {
+            const authBtn = document.getElementById('authNavBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (currentUser) {
+                authBtn.innerHTML = `<i class="fas fa-user-circle"></i> ${currentUser.isAdmin ? 'Admin Panel' : currentUser.name}`;
+                authBtn.onclick = () => {
+                    if (currentUser.isAdmin) {
+                        showToast('Admin panel coming soon!', 'info');
+                    } else {
+                        showDashboard();
+                    }
+                };
+                authBtn.classList.remove('btn-nav');
+                authBtn.classList.add('btn-outline');
+                logoutBtn.style.display = 'inline-block';
+            } else {
+                authBtn.innerHTML = 'Sign In';
+                authBtn.onclick = () => openAuthModal();
+                authBtn.classList.add('btn-nav');
+                authBtn.classList.remove('btn-outline');
+                logoutBtn.style.display = 'none';
+            }
+        }
+        
+        function showDashboard() {
+            let enrolledList = currentUser.enrolledCourses || [];
+            if (enrolledList.length === 0) {
+                showToast("You haven't enrolled in any course yet. Explore our courses!", 'info');
+            } else {
+                let courseNames = enrolledList.map(id => courseModules.find(m => m.id === id)?.name).filter(Boolean).join(', ');
+                showToast(`📚 Your courses: ${courseNames}`, 'success');
+            }
+        }
+        
+        window.logout = () => {
+            currentUser = null;
+            localStorage.removeItem('mei_user');
+            updateAuthUI();
+            renderModules();
+            showToast('Logged out successfully', 'success');
+            quizAnswers = [];
+            currentQuizIndex = 0;
+            renderQuiz();
+        };
+        
         document.getElementById('authActionBtn')?.addEventListener('click', () => {
             const email = document.getElementById('authEmail').value.trim();
             const password = document.getElementById('authPassword').value;
@@ -479,62 +638,54 @@
             if (authMode === 'register') {
                 const name = document.getElementById('authName').value.trim();
                 if (!name) { showToast('Full name required', 'error'); return; }
-                // Demo registration
-                currentUser = { name: name, email: email, isAdmin: email === 'admin@meidrive.com' };
-                localStorage.setItem('mei_user', JSON.stringify(currentUser));
+                currentUser = { name: name, email: email, isAdmin: false, enrolledCourses: [] };
+                saveUserToLocalStorage();
                 showToast(`Welcome ${name}!`, 'success');
                 updateAuthUI();
                 closeAuthModal();
+                renderModules();
             } else {
-                // Demo login - admin check
                 if (email === 'admin@meidrive.com' && password === 'admin123') {
-                    currentUser = { name: 'Admin User', email: 'admin@meidrive.com', isAdmin: true };
-                    localStorage.setItem('mei_user', JSON.stringify(currentUser));
-                    showToast('Admin login successful! Redirecting to Admin Panel...', 'success');
-                    setTimeout(() => {
-                        window.location.href = 'admin.html';
-                    }, 1200);
-                    return;
-                } else if (email && password.length > 0) {
-                    // Demo user login
-                    currentUser = { name: email.split('@')[0], email: email, isAdmin: false };
-                    localStorage.setItem('mei_user', JSON.stringify(currentUser));
-                    showToast(`Welcome back ${currentUser.name}!`, 'success');
+                    currentUser = { name: 'Admin User', email: 'admin@meidrive.com', isAdmin: true, enrolledCourses: [] };
+                    saveUserToLocalStorage();
+                    showToast('Admin login successful!', 'success');
                     updateAuthUI();
                     closeAuthModal();
+                    showToast('Admin panel is under construction. Use standard features.', 'info');
+                } else if (email && password.length > 0) {
+                    let stored = localStorage.getItem('mei_user');
+                    if (stored) {
+                        try {
+                            let parsed = JSON.parse(stored);
+                            if (parsed.email === email) {
+                                currentUser = parsed;
+                                showToast(`Welcome back ${currentUser.name}!`, 'success');
+                            } else {
+                                currentUser = { name: email.split('@')[0], email: email, isAdmin: false, enrolledCourses: [] };
+                                saveUserToLocalStorage();
+                                showToast(`Welcome ${currentUser.name}!`, 'success');
+                            }
+                        } catch(e) { currentUser = { name: email.split('@')[0], email: email, isAdmin: false, enrolledCourses: [] }; saveUserToLocalStorage(); showToast(`Welcome!`, 'success'); }
+                    } else {
+                        currentUser = { name: email.split('@')[0], email: email, isAdmin: false, enrolledCourses: [] };
+                        saveUserToLocalStorage();
+                        showToast(`Welcome ${currentUser.name}!`, 'success');
+                    }
+                    updateAuthUI();
+                    closeAuthModal();
+                    renderModules();
                 } else {
-                    showToast('Invalid credentials. Use any email/password or admin@meidrive.com / admin123', 'error');
+                    showToast('Invalid credentials. Try any email/password or admin@meidrive.com / admin123', 'error');
                 }
             }
         });
-        
-        function updateAuthUI() {
-            const authBtn = document.getElementById('authNavBtn');
-            if (currentUser) {
-                authBtn.innerHTML = `<i class="fas fa-user-circle"></i> ${currentUser.isAdmin ? 'Admin Panel' : 'My Dashboard'}`;
-                authBtn.onclick = () => {
-                    if (currentUser.isAdmin) {
-                        window.location.href = 'admin.html';
-                    } else {
-                        showToast(`Welcome ${currentUser.name}! Access your courses soon.`, 'info');
-                    }
-                };
-                if (!currentUser.isAdmin) {
-                    authBtn.classList.add('btn-outline');
-                    authBtn.classList.remove('btn-nav');
-                }
-            } else {
-                authBtn.innerHTML = 'Sign In';
-                authBtn.onclick = () => openAuthModal();
-                authBtn.classList.add('btn-nav');
-            }
-        }
         
         function loadStoredUser() {
             const stored = localStorage.getItem('mei_user');
             if (stored) {
                 try {
                     currentUser = JSON.parse(stored);
+                    if (!currentUser.enrolledCourses) currentUser.enrolledCourses = [];
                     updateAuthUI();
                 } catch(e) {}
             }
@@ -564,20 +715,14 @@
             });
         }
         
-        // Export admin panel access globally for consistency (admin.html can sync)
-        window.courseModules = courseModules;
-        window.quizQuestions = quizQuestions;
-        window.libraryResources = libraryResources;
-        
-        // Initialize
-        renderModules();
-        renderQuiz();
-        renderLibrary();
-        updateStats();
-        loadStoredUser();
-        
-        // Check if running inside admin iframe? No, just standalone.
-        console.log('MEI DRIVE AFRICA Ready — Premium Training Platform');
+        function init() {
+            renderModules();
+            renderQuiz();
+            renderLibrary();
+            updateStats();
+            loadStoredUser();
+        }
+        init();
     </script>
 </body>
 </html>
