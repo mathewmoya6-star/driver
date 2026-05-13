@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>MEI DRIVE AFRICA | Admin + Learner Platform</title>
-    <meta name="description" content="Complete NTSA driver training with full admin dashboard">
-    <meta name="theme-color" content="#00d084">
+    <title>MEI DRIVE AFRICA | Learn Smart Pass NTSA Test Like Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -13,11 +11,9 @@
         body { font-family: 'Inter', sans-serif; background: #0B0F19; color: #E8EDF5; }
         :root {
             --primary: #00d084;
-            --primary-dark: #00a86b;
             --bg-card: #121B2C;
             --border: #1E2A3E;
             --danger: #EF4444;
-            --warning: #F59E0B;
         }
         .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
         .navbar { background: rgba(11,15,25,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,208,132,0.3); padding: 12px 0; position: sticky; top: 0; z-index: 100; }
@@ -26,7 +22,7 @@
         .nav-links { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
         .nav-links button, .nav-links .nav-item { background: transparent; border: none; color: #A0B3D9; padding: 8px 16px; border-radius: 50px; cursor: pointer; }
         .nav-links button:hover { background: rgba(0,208,132,0.1); color: var(--primary); }
-        .btn { padding: 12px 24px; border-radius: 50px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border: none; font-weight: bold; cursor: pointer; }
+        .btn { padding: 12px 24px; border-radius: 50px; background: linear-gradient(135deg, var(--primary), #00a86b); border: none; font-weight: bold; cursor: pointer; }
         .btn-small { padding: 6px 12px; border-radius: 40px; background: var(--primary); border: none; cursor: pointer; font-size: 12px; }
         .btn-danger { background: var(--danger); color: white; }
         .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 20px; }
@@ -37,15 +33,13 @@
         .admin-tab.active { background: var(--primary); color: #0B0F19; }
         table { width: 100%; border-collapse: collapse; }
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
-        input, select, textarea { background: #0F1622; border: 1px solid var(--border); padding: 8px 12px; border-radius: 12px; color: white; width: 100%; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: var(--bg-card); padding: 24px; border-radius: 24px; max-width: 600px; width: 90%; }
-        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--bg-card); border-left: 4px solid var(--primary); padding: 12px 20px; border-radius: 12px; z-index: 1100; }
-        .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        input, select { background: #0F1622; border: 1px solid var(--border); padding: 8px 12px; border-radius: 12px; color: white; }
         .hero { text-align: center; padding: 40px 20px; background: radial-gradient(circle at 10% 30%, rgba(0,208,132,0.08), #0B0F19); border-radius: 32px; margin: 20px 0; }
         .profile-link { background: rgba(0,208,132,0.15); border-radius: 40px; padding: 6px 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
-        @media (max-width: 768px) { .nav-links { display: none; } .mobile-menu-btn { display: block; } }
+        .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--bg-card); border-left: 4px solid var(--primary); padding: 12px 20px; border-radius: 12px; z-index: 1100; }
+        @media (max-width: 768px) { .nav-links { display: none; } }
     </style>
 </head>
 <body>
@@ -60,7 +54,6 @@
                 <button data-nav="boda">🏍️ Boda</button>
                 <button data-nav="ev">⚡ EV</button>
                 <button data-nav="quiz">📝 Quiz</button>
-                <div id="adminNavLink" style="display:none;"><button data-nav="admin">🛡️ Admin</button></div>
                 <div id="authButtons"></div>
             </div>
         </div>
@@ -71,110 +64,77 @@
 
 <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/+esm';
-    
-    // ==================== SUPABASE CONFIG ====================
     const supabaseUrl = 'https://jeksrwrzzrczamxijvwl.supabase.co';
     const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impla3Nyd3J6enJjemFteGlqdndsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzYyMjAsImV4cCI6MjA5NDI1MjIyMH0.1poYpJKNFEVe2NTBkXBTH2bIHGk2yT8aqCU-OlJc4vs';
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
     
-    // ==================== GLOBAL STATE ====================
     let currentUser = null;
     let isAdmin = false;
     let userProgress = {};
     let currentPage = 'home';
-    let currentMaterials = [];
     let materialsCache = {};
-    
     const tableMapping = { learner: 'learner_units', psv: 'psv_modules', boda: 'boda_modules', ev: 'ev_modules' };
     const unitTitles = ["Intro to Driving","Highway Code","Vehicle Controls","Maintenance","Moving Off","Turning","Roundabouts","Overtaking","Speed Limits","Defensive Driving","Night Driving","Adverse Weather","Alcohol & Drugs","Fatigue","Pedestrian Safety","Emergency Procedures","First Aid","Insurance","Environmental Driving","NTSA Prep","Advanced Skills"];
     
-    // ==================== HELPER FUNCTIONS ====================
-    function showToast(msg, type) {
-        const toast = document.createElement('div'); 
-        toast.className = 'toast'; 
-        toast.innerHTML = `${type==='success'?'✅':'ℹ️'} ${msg}`;
-        document.getElementById('toast-root').appendChild(toast); 
-        setTimeout(()=>toast.remove(), 3000);
-    }
-    function escapeHtml(t) { return t?.replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]||c)) || ''; }
+    function showToast(msg, type) { const toast=document.createElement('div'); toast.className='toast'; toast.innerHTML=`${type==='success'?'✅':'ℹ️'} ${msg}`; document.getElementById('toast-root').appendChild(toast); setTimeout(()=>toast.remove(),3000); }
+    function escapeHtml(t){ return t?.replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]||c)) || ''; }
     
-    // ==================== FETCH MATERIALS (with fallback) ====================
     async function fetchMaterials(moduleType) {
-        if (materialsCache[moduleType]) return materialsCache[moduleType];
-        const table = tableMapping[moduleType];
-        if (!table) return getFallbackMaterials(moduleType);
+        if(materialsCache[moduleType]) return materialsCache[moduleType];
+        const table=tableMapping[moduleType];
+        if(!table) return getFallbackMaterials(moduleType);
         try {
-            const { data, error } = await supabase.from(table).select('*').order('module_number', {ascending:true});
-            if (error || !data?.length) return getFallbackMaterials(moduleType);
-            const transformed = data.map(item => ({ ...item, unit_number: item.module_number, module_type: moduleType, price: item.price || 0, is_locked: item.is_locked || false }));
-            materialsCache[moduleType] = transformed;
+            const {data,error}=await supabase.from(table).select('*').order('module_number',{ascending:true});
+            if(error||!data?.length) return getFallbackMaterials(moduleType);
+            const transformed=data.map(item=>({...item, unit_number:item.module_number, module_type:moduleType, price:item.price||0, is_locked:item.is_locked||false}));
+            materialsCache[moduleType]=transformed;
             return transformed;
-        } catch(e) { return getFallbackMaterials(moduleType); }
+        } catch(e){ return getFallbackMaterials(moduleType); }
     }
-    
     function getFallbackMaterials(moduleType) {
-        if (moduleType === 'learner') return Array.from({length:21},(_,i)=>({ id:i+1, title:`Unit ${i+1}: ${unitTitles[i]}`, description:`NTSA unit`, content:generateUnitContent(i+1,unitTitles[i]), module_type:'learner', unit_number:i+1, icon:"🚗", difficulty:i<7?'beginner':'intermediate', price:19.99, is_locked:false }));
-        if (moduleType === 'psv') return Array.from({length:8},(_,i)=>({ id:100+i, title:`PSV: ${['Licensing','Conduct','Safety','Defensive','Routes','Emergencies','Fares','Customer'][i]}`, content:'<p>PSV content</p>', price:29.99, is_locked:false }));
-        if (moduleType === 'boda') return Array.from({length:10},(_,i)=>({ id:200+i, title:`Boda: ${['Controls','Gear','Professionalism','Drugs','Service','Crime','Passengers','Night','Biz','Defensive'][i]}`, content:'<p>Boda training</p>', price:14.99, is_locked:false }));
-        if (moduleType === 'ev') return Array.from({length:8},(_,i)=>({ id:300+i, title:`EV: ${['Intro','Battery','Charging','Maintenance','Safety','Range','Commercial','Rules'][i]}`, content:'<p>EV knowledge</p>', price:39.99, is_locked:false }));
+        if(moduleType==='learner') return Array.from({length:21},(_,i)=>({ id:i+1, title:`Unit ${i+1}: ${unitTitles[i]}`, description:`NTSA unit`, content:generateUnitContent(i+1,unitTitles[i]), module_type:'learner', unit_number:i+1, icon:"🚗", price:19.99, is_locked:false }));
+        if(moduleType==='psv') return Array.from({length:8},(_,i)=>({ id:100+i, title:`PSV: ${['Licensing','Conduct','Safety','Defensive','Routes','Emergencies','Fares','Customer'][i]}`, content:'<p>PSV content</p>', price:29.99, is_locked:false }));
+        if(moduleType==='boda') return Array.from({length:10},(_,i)=>({ id:200+i, title:`Boda: ${['Controls','Gear','Professionalism','Drugs','Service','Crime','Passengers','Night','Biz','Defensive'][i]}`, content:'<p>Boda training</p>', price:14.99, is_locked:false }));
+        if(moduleType==='ev') return Array.from({length:8},(_,i)=>({ id:300+i, title:`EV: ${['Intro','Battery','Charging','Maintenance','Safety','Range','Commercial','Rules'][i]}`, content:'<p>EV knowledge</p>', price:39.99, is_locked:false }));
         return [];
     }
-    function generateUnitContent(num, title) { return `<h2>Unit ${num}: ${title}</h2><div class="safety-box">Safety first!</div><p>Full NTSA content.</p>`; }
+    function generateUnitContent(num,title){ return `<h2>Unit ${num}: ${title}</h2><div class="safety-box">Safety first!</div><p>Full NTSA content.</p>`; }
     
-    // ==================== USER PROGRESS ====================
     async function fetchUserProgress() { if(!currentUser) return {}; try { const {data}=await supabase.from('user_progress').select('*').eq('user_id',currentUser.id); const prog={}; data?.forEach(p=>{ prog[p.material_id]=p.progress_percentage||0; }); userProgress=prog; return prog; } catch(e){ return {}; } }
     async function updateProgress(materialId, progress) { if(!currentUser) return false; await supabase.from('user_progress').upsert({ user_id:currentUser.id, material_id:materialId, progress_percentage:progress, status:progress===100?'completed':'in_progress', last_accessed_at:new Date() }); userProgress[materialId]=progress; showToast(progress===100?'Unit completed!':'Progress saved','success'); return true; }
     
-    // ==================== ADMIN FUNCTIONS ====================
-    async function adminGetAllUsers() {
-        const { data: profiles } = await supabase.from('user_profiles').select('id, is_admin, status, full_name');
-        const users = [];
-        for (const p of profiles || []) {
-            const { data: authUser } = await supabase.auth.admin.getUserById(p.id);
-            const email = authUser?.user?.email || 'unknown';
-            users.push({ ...p, email });
-        }
-        return users;
-    }
+    // Admin functions (same as before)
+    async function adminGetAllUsers() { const {data:profiles}=await supabase.from('user_profiles').select('id,is_admin,status,full_name'); const users=[]; for(const p of profiles||[]){ const {data:authUser}=await supabase.auth.admin.getUserById(p.id); const email=authUser?.user?.email||'unknown'; users.push({...p,email}); } return users; }
     async function adminDeleteUser(userId) { if(!confirm('Permanently delete user?')) return; await supabase.from('user_progress').delete().eq('user_id',userId); await supabase.from('payments').delete().eq('user_id',userId); await supabase.from('user_profiles').delete().eq('id',userId); await supabase.auth.admin.deleteUser(userId); showToast('User deleted','success'); }
     async function adminUpdateModule(moduleType, moduleId, updates) { const table=tableMapping[moduleType]; await supabase.from(table).update(updates).eq('id',moduleId); materialsCache={}; showToast('Module updated','success'); }
     async function adminDeleteModule(moduleType, moduleId) { if(confirm('Delete this module?')){ await supabase.from(tableMapping[moduleType]).delete().eq('id',moduleId); materialsCache={}; showToast('Deleted','success'); } }
     async function adminAddModule(moduleType, data) { const table=tableMapping[moduleType]; await supabase.from(table).insert(data); materialsCache={}; showToast('Module added','success'); }
-    async function adminGetPayments() { const { data } = await supabase.from('payments').select('*, user_profiles(full_name)'); return data || []; }
-    async function adminUpdatePayment(paymentId, status) { await supabase.from('payments').update({ status, updated_at:new Date() }).eq('id',paymentId); showToast(`Payment ${status}`, 'success'); }
+    async function adminGetPayments() { const {data}=await supabase.from('payments').select('*, user_profiles(full_name)'); return data||[]; }
+    async function adminUpdatePayment(paymentId, status) { await supabase.from('payments').update({ status, updated_at:new Date() }).eq('id',paymentId); showToast(`Payment ${status}`,'success'); }
     
-    // ==================== VIEW MATERIAL ====================
     window.viewMaterial = async function(id, type) {
         const materials = await fetchMaterials(type);
         const material = materials.find(m => m.id == id);
         if (!material) return;
-        if (material.is_locked && (!currentUser || !isAdmin)) { showToast('This module is locked. Please purchase or contact admin.','error'); return; }
+        if (material.is_locked && (!currentUser || !isAdmin)) { showToast('This module is locked.','error'); return; }
         const progress = userProgress[material.id] || 0;
         const content = material.content || `<h2>${escapeHtml(material.title)}</h2><p>${escapeHtml(material.description)}</p>`;
-        document.getElementById('page-content').innerHTML = `
-            <div class="card"><h2>${escapeHtml(material.title)}</h2>
-            <div class="unit-content">${content}</div>
-            <div class="progress-bar"><div class="progress-fill" style="width: ${progress}%"></div></div>
-            <button class="btn" onclick="updateProgress(${material.id}, 100)">Mark Complete</button>
-            <button class="btn-small" onclick="navigateTo('${type}')">← Back</button></div>`;
+        document.getElementById('page-content').innerHTML = `<div class="card"><h2>${escapeHtml(material.title)}</h2><div>${content}</div><div class="progress-bar"><div class="progress-fill" style="width: ${progress}%"></div></div><button class="btn" onclick="updateProgress(${material.id},100)">Mark Complete</button><button class="btn-small" onclick="navigateTo('${type}')">← Back</button></div>`;
     };
     
-    // ==================== RENDER ADMIN DASHBOARD ====================
     async function renderAdminDashboard() {
         if (!isAdmin) { navigateTo('home'); return; }
         const container = document.getElementById('page-content');
         container.innerHTML = `<div class="admin-section"><div class="admin-tabs" id="adminTabs"><div class="admin-tab active" data-tab="users">👥 Users</div><div class="admin-tab" data-tab="modules">📦 Modules</div><div class="admin-tab" data-tab="payments">💰 Payments</div></div><div id="adminTabContent"></div></div>`;
         const users = await adminGetAllUsers();
         const payments = await adminGetPayments();
-        
         function renderUsersTab() {
             let html = `<div class="card"><h3>All Users</h3><table><th>Email</th><th>Status</th><th>Admin</th><th>Actions</th></tr>`;
             users.forEach(u => { html += `<tr><td>${escapeHtml(u.email)}</td><td>${u.status||'active'}</td><td>${u.is_admin?'✅':'❌'}</td><td><button class="btn-small btn-danger" onclick="adminDeleteUser('${u.id}')">Delete</button></td></tr>`; });
-            html += `</table></div><div class="card"><h3>User Progress Summary</h3>${users.map(u=>`<p>${escapeHtml(u.email)}: ${Object.values(userProgress).filter(p=>p>0).length} units started</p>`).join('')}</div>`;
+            html += `<\/table></div><div class="card"><h3>Progress Summary</h3>${users.map(u=>`<p>${escapeHtml(u.email)}: ${Object.values(userProgress).filter(p=>p>0).length} units started</p>`).join('')}</div>`;
             document.getElementById('adminTabContent').innerHTML = html;
             window.adminDeleteUser = adminDeleteUser;
         }
-        
         async function renderModulesTab() {
             let html = `<div class="card"><h3>Manage Modules</h3><select id="moduleTypeSelect"><option value="learner">Learner Units</option><option value="psv">PSV</option><option value="boda">Boda</option><option value="ev">EV</option></select><button class="btn-small" onclick="showAddModuleModal()">+ Add Module</button><div id="modulesList"></div></div>`;
             document.getElementById('adminTabContent').innerHTML = html;
@@ -185,7 +145,7 @@
                     listHtml += `<tr><td>${m.unit_number}</td><td>${escapeHtml(m.title)}</td><td><input type="number" id="price-${m.id}" value="${m.price}" step="0.01" style="width:80px"></td><td><input type="checkbox" id="lock-${m.id}" ${m.is_locked?'checked':''}></td>
                     <td><button class="btn-small" onclick="updateModuleFields('${type}',${m.id})">Save</button> <button class="btn-small btn-danger" onclick="adminDeleteModule('${type}',${m.id})">Delete</button></td></tr>`;
                 });
-                listHtml += `</table>`;
+                listHtml += `<\/table>`;
                 document.getElementById('modulesList').innerHTML = listHtml;
                 window.updateModuleFields = async (type, id) => {
                     const price = parseFloat(document.getElementById(`price-${id}`).value);
@@ -204,17 +164,15 @@
                 if(newNumber && title) adminAddModule(type, { module_number: parseInt(newNumber), title, content: '<p>New content</p>', price: 0, is_locked: false, status: 'published' });
             };
         }
-        
         function renderPaymentsTab() {
-            let html = `<div class="card"><h3>Payments</h3>能<table><tr><th>User</th><th>Module</th><th>Amount</th><th>Status</th><th>Action</th></tr>`;
+            let html = `<div class="card"><h3>Payments</h3>能ables><tr><th>User</th><th>Module</th><th>Amount</th><th>Status</th><th>Action</th></tr>`;
             payments.forEach(p => {
                 html += `<tr><td>${escapeHtml(p.user_profiles?.full_name || p.user_id)}</td><td>${p.module_type} #${p.module_id}</td><td>$${p.amount}</td><td>${p.status}</td><td>${p.status==='pending'?`<button class="btn-small" onclick="adminUpdatePayment(${p.id},'approved')">Approve</button> <button onclick="adminUpdatePayment(${p.id},'defaulted')" class="btn-small btn-danger">Default</button>`:p.status==='defaulted'?`<button onclick="adminUpdatePayment(${p.id},'pending')">Reset</button>`:'✅ Approved'}</td></tr>`;
             });
-            html += `</table></div>`;
+            html += `<\/table></div>`;
             document.getElementById('adminTabContent').innerHTML = html;
             window.adminUpdatePayment = adminUpdatePayment;
         }
-        
         document.getElementById('adminTabs').addEventListener('click', (e) => {
             const tab = e.target.closest('.admin-tab');
             if(!tab) return;
@@ -227,7 +185,6 @@
         renderUsersTab();
     }
     
-    // ==================== RENDER USER PAGES ====================
     async function renderModulePage(moduleType) {
         const container = document.getElementById('page-content');
         container.innerHTML = '<div class="spinner"></div>';
@@ -242,7 +199,6 @@
     }
     function renderQuiz() { document.getElementById('page-content').innerHTML = `<div class="hero"><h1>📝 NTSA Quiz</h1><p>Coming soon</p></div>`; }
     
-    // ==================== AUTH & ADMIN DETECTION ====================
     async function checkSession() {
         const { data: { session } } = await supabase.auth.getSession();
         if (session) {
@@ -254,27 +210,31 @@
                 .maybeSingle();
             isAdmin = (!error && profile?.is_admin === true);
             await fetchUserProgress();
-            console.log('User:', currentUser.email, 'Admin:', isAdmin);
         } else {
             currentUser = null;
             isAdmin = false;
             userProgress = {};
         }
         updateAuthUI();
-        if (currentPage === 'admin' && !isAdmin) navigateTo('home');
-        else navigateTo(currentPage);
+        // Check URL parameter for admin dashboard
+        const urlParams = new URLSearchParams(window.location.search);
+        const showAdmin = urlParams.get('admin') === 'true';
+        if (isAdmin && showAdmin) {
+            await renderAdminDashboard();
+            // Remove the parameter from URL without reload
+            window.history.replaceState({}, '', window.location.pathname);
+        } else {
+            navigateTo('home');
+        }
     }
     
     function updateAuthUI() {
         const authDiv = document.getElementById('authButtons');
-        const adminNavLink = document.getElementById('adminNavLink');
         if (!authDiv) return;
         if (currentUser) {
             authDiv.innerHTML = `<div class="profile-link">👤 ${currentUser.email.split('@')[0]}</div><button onclick="logout()">Logout</button>`;
-            if (adminNavLink) adminNavLink.style.display = isAdmin ? 'inline-block' : 'none';
         } else {
             authDiv.innerHTML = `<button onclick="showLoginModal()">Login</button><button onclick="showSignupModal()">Sign Up</button>`;
-            if (adminNavLink) adminNavLink.style.display = 'none';
         }
     }
     
@@ -283,17 +243,14 @@
     function showSignupModal() { alert('Sign up via Supabase Auth.'); }
     
     window.navigateTo = async function(page) {
-        currentPage = page;
-        if (page === 'admin' && isAdmin) await renderAdminDashboard();
-        else if (page === 'home') renderHome();
+        if (page === 'home') renderHome();
         else if (page === 'quiz') renderQuiz();
-        else if (['learner', 'psv', 'boda', 'ev'].includes(page)) await renderModulePage(page);
+        else if (['learner','psv','boda','ev'].includes(page)) await renderModulePage(page);
         else renderHome();
         document.getElementById('navLinks')?.classList.remove('show');
         window.scrollTo({ top: 0 });
     };
     
-    // Expose globals
     window.viewMaterial = viewMaterial;
     window.navigateTo = navigateTo;
     window.updateProgress = updateProgress;
@@ -302,10 +259,6 @@
     window.adminDeleteModule = adminDeleteModule;
     window.adminUpdatePayment = adminUpdatePayment;
     
-    // Mobile menu toggle (simple)
-    document.getElementById('mobileMenuBtn')?.addEventListener('click', () => document.getElementById('navLinks')?.classList.toggle('show'));
-    
-    // Start
     checkSession();
 </script>
 </body>
