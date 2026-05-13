@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEI DRIVE AFRICA - Admin Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>MEI DRIVE AFRICA - Enterprise Admin Panel</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -17,146 +17,304 @@
         :root {
             --primary: #00d084;
             --primary-dark: #00a86b;
+            --primary-light: #4ade80;
             --bg: #0b0f19;
             --card: #121b2c;
+            --card-hover: #1a2538;
             --border: #1f2b3d;
             --text: #ffffff;
-            --muted: #94a3b8;
+            --text-secondary: #94a3b8;
             --danger: #ef4444;
             --success: #10b981;
             --warning: #f59e0b;
+            --info: #3b82f6;
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
+            overflow-x: hidden;
         }
 
-        /* Login Screen */
+        /* Login Container */
         .login-container {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #0b0f19 0%, #0a0e17 100%);
+            background: linear-gradient(135deg, #0b0f19 0%, #06080f 100%);
             padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0,208,132,0.1) 0%, transparent 70%);
+            top: -150px;
+            right: -150px;
+            border-radius: 50%;
+        }
+
+        .login-container::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0,208,132,0.05) 0%, transparent 70%);
+            bottom: -200px;
+            left: -200px;
+            border-radius: 50%;
         }
 
         .login-card {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 40px;
+            border-radius: 32px;
+            padding: 48px 40px;
             width: 100%;
-            max-width: 440px;
+            max-width: 480px;
+            backdrop-filter: blur(10px);
+            z-index: 1;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .login-card h1 {
             text-align: center;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            margin-bottom: 12px;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
+        .login-card p {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+            background: var(--bg);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--card);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-header .logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .admin-info {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #000;
+        }
+
+        .nav-menu {
+            padding: 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            margin-bottom: 4px;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(0, 208, 132, 0.1);
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 24px 32px;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .page-title h1 {
+            font-size: 1.8rem;
+            margin-bottom: 4px;
+        }
+
+        .page-title p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            background: var(--card-hover);
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        /* Sections */
+        .section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 32px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .section-header h2 {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        /* Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 0;
         }
 
         .input-group label {
             display: block;
             margin-bottom: 8px;
-            color: var(--muted);
-            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
         }
 
-        .input-group input {
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
             width: 100%;
             padding: 12px 16px;
             background: var(--bg);
             border: 1px solid var(--border);
             border-radius: 12px;
             color: var(--text);
-            font-size: 1rem;
+            font-size: 0.9rem;
+            transition: all 0.2s;
         }
 
-        .input-group input:focus {
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
             outline: none;
             border-color: var(--primary);
         }
 
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border: none;
-            border-radius: 12px;
-            color: #000;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
+        .full-width {
+            grid-column: span 2;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        /* Dashboard */
-        .dashboard {
-            display: none;
-            padding: 20px;
-        }
-
-        .topbar {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--primary);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 20px;
-        }
-
-        .stat-card h3 {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
-        .section {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-
-        .section h2 {
-            margin-bottom: 20px;
-            color: var(--primary);
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
         }
 
         table {
@@ -165,32 +323,55 @@
         }
 
         th, td {
-            padding: 12px;
+            padding: 14px;
             text-align: left;
             border-bottom: 1px solid var(--border);
         }
 
         th {
             color: var(--primary);
+            font-weight: 600;
+            font-size: 0.85rem;
         }
 
-        .status-badge {
+        td {
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        /* Badges */
+        .badge {
             padding: 4px 12px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
+            display: inline-block;
         }
 
-        .status-active {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success);
+        .badge-learner { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+        .badge-psv { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .badge-boda { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+        .badge-ev { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
         }
 
-        .btn-small {
-            padding: 6px 12px;
-            font-size: 0.75rem;
-            width: auto;
-            margin-right: 8px;
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 208, 132, 0.3);
         }
 
         .btn-danger {
@@ -198,6 +379,17 @@
             color: white;
         }
 
+        .btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.75rem;
+        }
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -205,7 +397,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(8px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -218,24 +411,30 @@
         .modal-content {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 30px;
+            border-radius: 24px;
+            padding: 32px;
             width: 90%;
             max-width: 600px;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
         }
 
-        .toast {
+        /* Toast */
+        .toast-container {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: var(--card);
-            border-left: 4px solid var(--primary);
-            padding: 12px 20px;
-            border-radius: 8px;
             z-index: 1100;
+        }
+
+        .toast {
+            background: var(--card);
+            border-left: 3px solid var(--primary);
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-top: 10px;
             animation: slideIn 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         @keyframes slideIn {
@@ -249,122 +448,276 @@
             }
         }
 
+        /* Loading */
         .loading {
             text-align: center;
             padding: 40px;
-            color: var(--muted);
+            color: var(--text-secondary);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 101;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 60px 16px 16px 16px;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .stat-card {
+                padding: 16px;
+            }
+            .stat-card h3 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
 
+<!-- Mobile Menu Button -->
+<div class="mobile-menu-btn" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+</div>
+
+<!-- Login Container -->
 <div id="loginContainer" class="login-container">
     <div class="login-card">
-        <h1>🚗 MEI DRIVE AFRICA</h1>
-        <p style="text-align: center; color: var(--muted); margin-bottom: 30px;">Admin Login</p>
+        <div style="text-align: center; font-size: 3rem; margin-bottom: 16px;">🚗</div>
+        <h1>MEI DRIVE AFRICA</h1>
+        <p>Secure Enterprise Admin Portal</p>
         
-        <div id="loginError" style="color: var(--danger); margin-bottom: 15px;"></div>
+        <div id="loginError" style="margin-bottom: 16px;"></div>
         
         <div class="input-group">
-            <label>Email</label>
+            <label><i class="fas fa-envelope"></i> Email Address</label>
             <input type="email" id="loginEmail" placeholder="admin@meidriveafrica.com">
         </div>
         
         <div class="input-group">
-            <label>Password</label>
+            <label><i class="fas fa-lock"></i> Password</label>
             <input type="password" id="loginPassword" placeholder="Enter your password">
         </div>
         
-        <button class="btn" onclick="handleLogin()">
+        <button class="btn btn-primary" onclick="handleLogin()" style="width: 100%;">
             <i class="fas fa-sign-in-alt"></i> Login
         </button>
+        
+        <div style="margin-top: 24px; text-align: center; font-size: 0.75rem; color: var(--text-secondary);">
+            <i class="fas fa-shield-alt"></i> Secure Admin Access Only
+        </div>
     </div>
 </div>
 
+<!-- Dashboard -->
 <div id="dashboard" class="dashboard">
-    <div class="topbar">
-        <div class="logo">MEI DRIVE AFRICA • ADMIN</div>
-        <div>
-            <span id="adminEmail" style="margin-right: 15px;"></span>
-            <button class="btn" style="width: auto; padding: 8px 16px;" onclick="handleLogout()">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-car"></i> MEI DRIVE
+            </div>
+            <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 4px;">Enterprise Admin</div>
+        </div>
+        
+        <div class="admin-info">
+            <div class="admin-avatar" id="adminAvatar">A</div>
+            <div>
+                <div style="font-weight: 600;" id="adminName">Administrator</div>
+                <div style="font-size: 0.7rem; color: var(--text-secondary);" id="adminRole">Super Admin</div>
+            </div>
+        </div>
+        
+        <div class="nav-menu">
+            <div class="nav-item active" onclick="setActiveTab('dashboard')">
+                <i class="fas fa-chart-line"></i> Dashboard
+            </div>
+            <div class="nav-item" onclick="setActiveTab('modules')">
+                <i class="fas fa-book"></i> Modules
+            </div>
+            <div class="nav-item" onclick="setActiveTab('add')">
+                <i class="fas fa-plus-circle"></i> Add Module
+            </div>
+            <div class="nav-item" onclick="handleLogout()">
                 <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
+            </div>
         </div>
     </div>
     
-    <div class="stats-grid" id="statsGrid">
-        <div class="stat-card">
-            <h3 id="totalLearner">0</h3>
-            <p>Learner Units</p>
-        </div>
-        <div class="stat-card">
-            <h3 id="totalPSV">0</h3>
-            <p>PSV Modules</p>
-        </div>
-        <div class="stat-card">
-            <h3 id="totalBoda">0</h3>
-            <p>Boda Modules</p>
-        </div>
-        <div class="stat-card">
-            <h3 id="totalEV">0</h3>
-            <p>EV Modules</p>
-        </div>
-    </div>
-    
-    <div class="section">
-        <h2><i class="fas fa-plus-circle"></i> Add New Module</h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-            <div class="input-group">
-                <label>Module Type</label>
-                <select id="moduleType" style="width: 100%; padding: 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; color: var(--text);">
-                    <option value="learner">Learner Driver</option>
-                    <option value="psv">PSV Commercial</option>
-                    <option value="boda">Boda Boda</option>
-                    <option value="ev">Electric Vehicle</option>
-                </select>
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-title">
+                <h1 id="pageTitle">Dashboard</h1>
+                <p id="pageSubtitle">Welcome back, Administrator</p>
             </div>
-            <div class="input-group">
-                <label>Module Number</label>
-                <input type="number" id="moduleNumber" placeholder="1, 2, 3...">
-            </div>
-            <div class="input-group">
-                <label>Title</label>
-                <input type="text" id="moduleTitle" placeholder="Module Title">
-            </div>
-            <div class="input-group">
-                <label>Duration (minutes)</label>
-                <input type="number" id="moduleDuration" placeholder="45">
-            </div>
-            <div class="input-group" style="grid-column: span 2;">
-                <label>Description</label>
-                <textarea id="moduleDescription" rows="3" style="width: 100%; padding: 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; color: var(--text);"></textarea>
+            <div>
+                <span style="background: var(--bg); padding: 8px 16px; border-radius: 12px;">
+                    <i class="fas fa-calendar"></i> <span id="currentDate"></span>
+                </span>
             </div>
         </div>
-        <button class="btn" onclick="addModule()" style="margin-top: 15px;">
-            <i class="fas fa-save"></i> Save Module
-        </button>
-    </div>
-    
-    <div class="section">
-        <h2><i class="fas fa-list"></i> All Modules</h2>
-        <div id="modulesList">
-            <div class="loading">Loading modules...</div>
+        
+        <!-- Dashboard View -->
+        <div id="dashboardView">
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <h3 id="totalLearner">0</h3>
+                    <p><i class="fas fa-graduation-cap"></i> Learner Units</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="totalPSV">0</h3>
+                    <p><i class="fas fa-bus"></i> PSV Modules</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="totalBoda">0</h3>
+                    <p><i class="fas fa-motorcycle"></i> Boda Modules</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="totalEV">0</h3>
+                    <p><i class="fas fa-charging-station"></i> EV Modules</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-list"></i> Recent Modules</h2>
+                    <button class="btn btn-primary btn-small" onclick="setActiveTab('add')">
+                        <i class="fas fa-plus"></i> Add New
+                    </button>
+                </div>
+                <div id="recentModulesList">
+                    <div class="loading">Loading modules...</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Add Module View -->
+        <div id="addView" style="display: none;">
+            <div class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-plus-circle"></i> Create New Module</h2>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label>Module Type *</label>
+                        <select id="moduleType">
+                            <option value="learner">🚗 Learner Driver</option>
+                            <option value="psv">🚌 PSV Commercial</option>
+                            <option value="boda">🏍️ Boda Boda</option>
+                            <option value="ev">⚡ Electric Vehicle</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Module Number *</label>
+                        <input type="number" id="moduleNumber" placeholder="e.g., 1, 2, 3...">
+                    </div>
+                    
+                    <div class="input-group full-width">
+                        <label>Module Title *</label>
+                        <input type="text" id="moduleTitle" placeholder="Enter module title">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Duration (minutes)</label>
+                        <input type="number" id="moduleDuration" placeholder="45" value="45">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Status</label>
+                        <select id="moduleStatus">
+                            <option value="published">Published</option>
+                            <option value="draft">Draft</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group full-width">
+                        <label>Description</label>
+                        <textarea id="moduleDescription" rows="4" placeholder="Module description..."></textarea>
+                    </div>
+                    
+                    <div class="input-group full-width">
+                        <label>Content (HTML supported)</label>
+                        <textarea id="moduleContent" rows="6" placeholder="Full module content..."></textarea>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" onclick="addModule()" style="margin-top: 20px; width: 100%;">
+                    <i class="fas fa-save"></i> Save Module
+                </button>
+            </div>
+        </div>
+        
+        <!-- Modules List View -->
+        <div id="modulesView" style="display: none;">
+            <div class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-database"></i> All Modules</h2>
+                    <div>
+                        <input type="text" id="searchModules" placeholder="🔍 Search modules..." style="padding: 8px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; color: var(--text); width: 200px;" onkeyup="filterModules()">
+                    </div>
+                </div>
+                <div class="table-container">
+                    <div id="allModulesList">
+                        <div class="loading">Loading modules...</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<div id="toastContainer" class="toast-container"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-// Supabase Configuration
+// ============================================
+// MEI DRIVE AFRICA - ADMIN PANEL
+// Admin UUID: a10f4b9e-2596-4399-8461-cc3f47e61e89
+// ============================================
+
 const SUPABASE_URL = 'https://fktjmkmzlixlapeyhhyl.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E';
+const ADMIN_UUID = 'a10f4b9e-2596-4399-8461-cc3f47e61e89';
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let currentUser = null;
+let currentTab = 'dashboard';
+let allModulesData = [];
 
-// Table mapping
 const TABLES = {
     learner: 'learner_units',
     psv: 'psv_modules',
@@ -372,33 +725,65 @@ const TABLES = {
     ev: 'ev_modules'
 };
 
-// Helper functions
+// Helper Functions
 function showToast(message, type = 'success') {
+    const container = document.getElementById('toastContainer');
     const toast = document.createElement('div');
     toast.className = 'toast';
-    toast.innerHTML = `${type === 'success' ? '✅' : '❌'} ${message}`;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 3000);
+    const icons = { success: '✅', error: '❌', info: 'ℹ️', warning: '⚠️' };
+    toast.innerHTML = `${icons[type] || '✅'} ${message}`;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 4000);
 }
 
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
+
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+}
+
+function setActiveTab(tab) {
+    currentTab = tab;
+    
+    // Update nav items
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    event?.target?.closest('.nav-item')?.classList.add('active');
+    
+    // Update views
+    document.getElementById('dashboardView').style.display = tab === 'dashboard' ? 'block' : 'none';
+    document.getElementById('addView').style.display = tab === 'add' ? 'block' : 'none';
+    document.getElementById('modulesView').style.display = tab === 'modules' ? 'block' : 'none';
+    
+    // Update page title
+    const titles = { dashboard: 'Dashboard', add: 'Add Module', modules: 'All Modules' };
+    document.getElementById('pageTitle').innerText = titles[tab];
+    
+    // Load data if needed
+    if (tab === 'modules') {
+        loadAllModules();
+    }
+}
+
+// Authentication
 async function checkSession() {
     const { data: { session } } = await supabase.auth.getSession();
     
-    if (session) {
-        // Check if user is admin
-        const { data: adminCheck } = await supabase
-            .from('admin_users')
-            .select('*')
-            .eq('user_id', session.user.id)
-            .single();
-        
-        if (adminCheck) {
-            currentUser = session.user;
-            showDashboard();
-            loadStats();
-            loadModules();
-            return true;
-        }
+    if (session && session.user.id === ADMIN_UUID) {
+        currentUser = session.user;
+        showDashboard();
+        loadStats();
+        loadRecentModules();
+        return true;
     }
     return false;
 }
@@ -416,19 +801,12 @@ async function handleLogin() {
     });
     
     if (error) {
-        errorDiv.innerHTML = error.message;
+        errorDiv.innerHTML = `<div style="color: var(--danger);">${error.message}</div>`;
         return;
     }
     
-    // Check admin status
-    const { data: adminCheck } = await supabase
-        .from('admin_users')
-        .select('*')
-        .eq('user_id', data.user.id)
-        .single();
-    
-    if (!adminCheck) {
-        errorDiv.innerHTML = 'Admin access required';
+    if (data.user.id !== ADMIN_UUID) {
+        errorDiv.innerHTML = '<div style="color: var(--danger);">Admin access required</div>';
         await supabase.auth.signOut();
         return;
     }
@@ -436,7 +814,7 @@ async function handleLogin() {
     currentUser = data.user;
     showDashboard();
     loadStats();
-    loadModules();
+    loadRecentModules();
 }
 
 async function handleLogout() {
@@ -450,9 +828,13 @@ async function handleLogout() {
 async function showDashboard() {
     document.getElementById('loginContainer').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
-    document.getElementById('adminEmail').innerHTML = `<i class="fas fa-user-shield"></i> ${currentUser.email}`;
+    document.getElementById('adminName').innerText = 'System Admin';
+    document.getElementById('adminAvatar').innerText = 'A';
+    document.getElementById('adminRole').innerText = 'Super Admin';
+    document.getElementById('currentDate').innerText = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
+// Data Loading
 async function loadStats() {
     for (const [type, table] of Object.entries(TABLES)) {
         const { count } = await supabase
@@ -465,57 +847,125 @@ async function loadStats() {
     }
 }
 
-async function loadModules() {
-    const container = document.getElementById('modulesList');
-    container.innerHTML = '<div class="loading">Loading modules...</div>';
-    
+async function loadRecentModules() {
+    const container = document.getElementById('recentModulesList');
     let allModules = [];
     
     for (const [type, table] of Object.entries(TABLES)) {
-        const { data, error } = await supabase
+        const { data } = await supabase
+            .from(table)
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(3);
+        
+        if (data && data.length > 0) {
+            allModules.push(...data.map(m => ({ ...m, type })));
+        }
+    }
+    
+    if (allModules.length === 0) {
+        container.innerHTML = '<div class="loading">No modules yet. Create your first module!</div>';
+        return;
+    }
+    
+    container.innerHTML = `
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr><th>Type</th><th>#</th><th>Title</th><th>Duration</th></tr>
+                </thead>
+                <tbody>
+                    ${allModules.slice(0, 5).map(module => `
+                        <tr>
+                            <td><span class="badge badge-${module.type}">${module.type.toUpperCase()}</span></td>
+                            <td>${module.module_number}</td>
+                            <td><strong>${escapeHtml(module.title)}</strong></td>
+                            <td>${module.duration_minutes || 0} min</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+    `;
+}
+
+async function loadAllModules() {
+    const container = document.getElementById('allModulesList');
+    allModulesData = [];
+    
+    for (const [type, table] of Object.entries(TABLES)) {
+        const { data } = await supabase
             .from(table)
             .select('*')
             .order('module_number', { ascending: true });
         
         if (data && data.length > 0) {
-            allModules.push(...data.map(m => ({ ...m, type, table })));
+            allModulesData.push(...data.map(m => ({ ...m, type, table })));
         }
     }
     
-    if (allModules.length === 0) {
-        container.innerHTML = '<div class="loading">No modules found. Create your first module above!</div>';
+    renderModuleTable(allModulesData);
+}
+
+function filterModules() {
+    const searchTerm = document.getElementById('searchModules')?.value.toLowerCase() || '';
+    const filtered = allModulesData.filter(m => 
+        m.title?.toLowerCase().includes(searchTerm) ||
+        m.type?.toLowerCase().includes(searchTerm)
+    );
+    renderModuleTable(filtered);
+}
+
+function renderModuleTable(modules) {
+    const container = document.getElementById('allModulesList');
+    
+    if (modules.length === 0) {
+        container.innerHTML = '<div class="loading">No modules found. Create your first module!</div>';
         return;
     }
     
-    let html = '<table><thead><tr><th>Type</th><th>#</th><th>Title</th><th>Duration</th><th>Actions</th></tr></thead><tbody>';
-    
-    for (const module of allModules) {
-        html += `
-            <tr>
-                <td><span class="status-badge status-active">${module.type.toUpperCase()}</span></td>
-                <td>${module.module_number}</td>
-                <td><strong>${escapeHtml(module.title)}</strong><br><small style="color: var(--muted);">${escapeHtml(module.description?.substring(0, 60)) || 'No description'}</small></td>
-                <td>${module.duration_minutes || 0} min</td>
-                <td>
-                    <button class="btn btn-small" onclick="deleteModule('${module.table}', ${module.id})" style="background: var(--danger); color: white;">
-                        <i class="fas fa-trash"></i> Delete
-                    </button>
-                </td>
-            </tr>
-        `;
-    }
-    
-    html += '</tbody></table>';
-    container.innerHTML = html;
+    container.innerHTML = `
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${modules.map(module => `
+                    <tr>
+                        <td><span class="badge badge-${module.type}">${module.type.toUpperCase()}</span></td>
+                        <td>${module.module_number}</td>
+                        <td><strong>${escapeHtml(module.title)}</strong><br><small style="color: var(--text-secondary);">${escapeHtml(module.description?.substring(0, 50)) || 'No description'}</small></td>
+                        <td>${module.duration_minutes || 0} min</td>
+                        <td><span class="badge" style="background: rgba(16,185,129,0.2); color: #10b981;">${module.status || 'published'}</span></td>
+                        <td>
+                            <button class="btn btn-danger btn-small" onclick="deleteModule('${module.table}', ${module.id})">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
 }
 
+// CRUD Operations
 async function addModule() {
     const type = document.getElementById('moduleType').value;
     const table = TABLES[type];
     const moduleNumber = parseInt(document.getElementById('moduleNumber').value);
     const title = document.getElementById('moduleTitle').value;
     const duration = parseInt(document.getElementById('moduleDuration').value) || 0;
+    const status = document.getElementById('moduleStatus').value;
     const description = document.getElementById('moduleDescription').value;
+    const content = document.getElementById('moduleContent').value;
     
     if (!title || !moduleNumber) {
         showToast('Please fill in title and module number', 'error');
@@ -528,9 +978,11 @@ async function addModule() {
             module_number: moduleNumber,
             title: title,
             description: description,
+            content: content,
             duration_minutes: duration,
-            status: 'published',
-            created_at: new Date()
+            status: status,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
         }]);
     
     if (error) {
@@ -543,16 +995,18 @@ async function addModule() {
     // Clear form
     document.getElementById('moduleNumber').value = '';
     document.getElementById('moduleTitle').value = '';
-    document.getElementById('moduleDuration').value = '';
+    document.getElementById('moduleDuration').value = '45';
     document.getElementById('moduleDescription').value = '';
+    document.getElementById('moduleContent').value = '';
     
     // Reload data
     loadStats();
-    loadModules();
+    loadRecentModules();
+    if (currentTab === 'modules') loadAllModules();
 }
 
 async function deleteModule(table, id) {
-    if (!confirm('Are you sure you want to delete this module?')) return;
+    if (!confirm('⚠️ Are you sure you want to delete this module? This action cannot be undone.')) return;
     
     const { error } = await supabase
         .from(table)
@@ -566,26 +1020,20 @@ async function deleteModule(table, id) {
     
     showToast('Module deleted successfully!');
     loadStats();
-    loadModules();
-}
-
-function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-    });
+    loadRecentModules();
+    if (currentTab === 'modules') loadAllModules();
 }
 
 // Make functions global
+window.toggleSidebar = toggleSidebar;
+window.setActiveTab = setActiveTab;
 window.handleLogin = handleLogin;
 window.handleLogout = handleLogout;
 window.addModule = addModule;
 window.deleteModule = deleteModule;
+window.filterModules = filterModules;
 
-// Check session on load
+// Initialize
 checkSession().then(hasSession => {
     if (!hasSession) {
         document.getElementById('loginContainer').style.display = 'flex';
