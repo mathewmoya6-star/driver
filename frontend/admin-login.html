@@ -3,12 +3,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MEI DRIVE AFRICA - Admin Panel</title>
+    <title>MEI DRIVE AFRICA - Admin</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            font-family: system-ui, sans-serif;
             background: linear-gradient(135deg, #0b0f19 0%, #06080f 100%);
             min-height: 100vh;
             color: #fff;
@@ -269,11 +269,9 @@ async function performLogout() {
 
 async function loadStats() {
     for (const [type, table] of Object.entries(TABLES)) {
-        const { count, error } = await supabase.from(table).select('*', { count: 'exact', head: true });
-        if (!error) {
-            const el = document.getElementById(`${type}Count`);
-            if (el) el.innerText = count || 0;
-        }
+        const { count } = await supabase.from(table).select('*', { count: 'exact', head: true });
+        const el = document.getElementById(`${type}Count`);
+        if (el) el.innerText = count || 0;
     }
 }
 
@@ -281,10 +279,8 @@ async function loadModules() {
     const container = document.getElementById('modulesList');
     let all = [];
     for (const [type, table] of Object.entries(TABLES)) {
-        const { data, error } = await supabase.from(table).select('*').order('module_number', { ascending: true });
-        if (!error && data) {
-            all.push(...data.map(m => ({ ...m, type })));
-        }
+        const { data } = await supabase.from(table).select('*').order('module_number', { ascending: true });
+        if (data) all.push(...data.map(m => ({ ...m, type })));
     }
     if (all.length === 0) {
         container.innerHTML = '<div class="loading">No modules found. Create your first module!</div>';
