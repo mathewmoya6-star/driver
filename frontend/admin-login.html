@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #0a192f; color: #ffffff; line-height: 1.5; }
@@ -36,7 +37,6 @@
         }
         .sidebar-header { padding: 24px; border-bottom: 1px solid var(--border); }
         .logo { font-size: 1.3rem; font-weight: 800; background: var(--gradient-green); -webkit-background-clip: text; background-clip: text; color: transparent; display: flex; align-items: center; gap: 8px; }
-        .logo-icon { font-size: 1.6rem; }
         .user-info { padding: 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
         .user-avatar { width: 48px; height: 48px; background: var(--gradient-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #0a192f; }
         .nav-menu { padding: 20px; }
@@ -92,7 +92,6 @@
             flex-wrap: wrap;
             gap: 16px;
         }
-        .card-header h2 { font-size: 1.3rem; font-weight: 600; }
         .data-table {
             width: 100%;
             border-collapse: collapse;
@@ -163,9 +162,11 @@
             width: 90%;
             max-width: 500px;
             padding: 32px;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         .modal-content h3 { margin-bottom: 20px; }
-        .modal-content input, .modal-content select {
+        .modal-content input, .modal-content select, .modal-content textarea {
             width: 100%;
             padding: 12px;
             margin: 8px 0 16px;
@@ -196,6 +197,9 @@
             .stats-grid { grid-template-columns: 1fr; }
         }
         .price-input { width: 100px; background: #0f1a2c; border: 1px solid var(--border); border-radius: 8px; padding: 6px; color: white; }
+        .revenue-chart { max-width: 100%; height: 300px; margin-top: 20px; }
+        .module-item { background: #0f1a2c; padding: 12px; border-radius: 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .module-title { font-weight: 600; }
     </style>
 </head>
 <body>
@@ -215,6 +219,7 @@
             <div class="nav-item" onclick="setView('payments')"><i class="fas fa-credit-card"></i> Payment Requests</div>
             <div class="nav-item" onclick="setView('users')"><i class="fas fa-users"></i> User Management</div>
             <div class="nav-item" onclick="setView('courses')"><i class="fas fa-book"></i> Course Management</div>
+            <div class="nav-item" onclick="setView('modules')"><i class="fas fa-cubes"></i> Module Manager</div>
             <div class="logout-btn"><div class="nav-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</div></div>
         </div>
     </div>
@@ -232,9 +237,8 @@
 <div id="toastContainer" class="toast-container"></div>
 
 <script>
-    // ==================== SUPABASE CREDENTIALS (REAL) ====================
+    // ==================== SUPABASE CREDENTIALS ====================
     const SUPABASE_URL = 'https://fktjmkmzlixlapeyhhyl.supabase.co';
-    // ⚠️ IMPORTANT: Replace with your actual anon key from .env
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E';
     
     let supabase;
@@ -243,6 +247,8 @@
     let users = [];
     let courses = [];
     let enrollments = [];
+    let lessons = [];
+    let revenueChart = null;
     
     function showToast(msg, type = 'info') {
         const container = document.getElementById('toastContainer');
@@ -258,35 +264,23 @@
     
     async function initAdmin() {
         supabase = window.supabaseJs.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        
-        // Check current session
-        const { data: { session }, error } = await supabase.auth.getSession();
-        if (error || !session) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
             showToast('Please login to access admin panel', 'warning');
-            setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+            setTimeout(() => window.location.href = 'index.html', 1500);
             return;
         }
         currentUser = session.user;
-        
-        // Verify admin using RPC
-        const { data: isAdmin, error: rpcError } = await supabase.rpc('is_admin_user');
-        if (rpcError || !isAdmin) {
-            showToast('Admin access denied. You do not have administrator privileges.', 'error');
+        const { data: isAdmin } = await supabase.rpc('is_admin_user');
+        if (!isAdmin) {
+            showToast('Admin access denied', 'error');
             await supabase.auth.signOut();
-            setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+            setTimeout(() => window.location.href = 'index.html', 1500);
             return;
         }
-        
-        // Fetch profile
-        const { data: profile } = await supabase
-            .from('user_profiles')
-            .select('full_name, email')
-            .eq('id', currentUser.id)
-            .single();
-        
+        const { data: profile } = await supabase.from('user_profiles').select('full_name, email').eq('id', currentUser.id).single();
         document.getElementById('userName').innerText = profile?.full_name?.split(' ')[0] || currentUser.email.split('@')[0];
         document.getElementById('userEmail').innerText = profile?.email || currentUser.email;
-        
         await loadData();
         renderCurrentView();
     }
@@ -302,7 +296,8 @@
                     user_profiles(full_name, email)
                 `).order('requested_at', { ascending: false });
                 enrollments = data || [];
-            })()
+            })(),
+            (async () => { const { data } = await supabase.from('lessons').select('*').order('order'); lessons = data || []; })()
         ]);
     }
     
@@ -314,6 +309,33 @@
         const pendingPayments = enrollments.filter(e => e.payment_status === 'pending').length;
         const verifiedEnrollments = enrollments.filter(e => e.payment_status === 'verified').length;
         return { totalUsers, activeUsers, totalCourses, totalRevenue, pendingPayments, verifiedEnrollments };
+    }
+    
+    async function getDailyRevenue() {
+        const now = new Date();
+        const sevenDaysAgo = new Date(now.setDate(now.getDate() - 7));
+        const { data } = await supabase
+            .from('enrollments')
+            .select('amount, verified_at')
+            .eq('payment_status', 'verified')
+            .gte('verified_at', sevenDaysAgo.toISOString());
+        
+        const dailyMap = new Map();
+        for (let i = 0; i < 7; i++) {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            const dateStr = d.toISOString().split('T')[0];
+            dailyMap.set(dateStr, 0);
+        }
+        (data || []).forEach(e => {
+            if (e.verified_at) {
+                const dateStr = e.verified_at.split('T')[0];
+                if (dailyMap.has(dateStr)) dailyMap.set(dateStr, dailyMap.get(dateStr) + (e.amount || 0));
+            }
+        });
+        const labels = Array.from(dailyMap.keys()).sort();
+        const values = labels.map(l => dailyMap.get(l));
+        return { labels, values };
     }
     
     function renderDashboard() {
@@ -328,12 +350,28 @@
                 <div class="stat-card"><div class="stat-info"><h3>Courses</h3><div class="stat-number">${stats.totalCourses}</div></div><div class="stat-icon"><i class="fas fa-book"></i></div></div>
             </div>
             <div class="card">
+                <h3><i class="fas fa-chart-line"></i> Daily Revenue (Last 7 Days)</h3>
+                <canvas id="revenueChart" class="revenue-chart"></canvas>
+            </div>
+            <div class="card">
                 <h3><i class="fas fa-chart-line"></i> Platform Overview</h3>
                 <p style="margin-top: 12px;">MEI DRIVE AFRICA admin panel – manage payments, courses, and users.</p>
                 <button class="btn btn-outline" onclick="refreshData()"><i class="fas fa-sync-alt"></i> Refresh Data</button>
             </div>
         `;
         document.getElementById('pageContent').innerHTML = html;
+        // Render chart
+        getDailyRevenue().then(({ labels, values }) => {
+            const ctx = document.getElementById('revenueChart')?.getContext('2d');
+            if (ctx) {
+                if (revenueChart) revenueChart.destroy();
+                revenueChart = new Chart(ctx, {
+                    type: 'line',
+                    data: { labels, datasets: [{ label: 'Revenue (KES)', data: values, borderColor: '#00ff88', backgroundColor: 'rgba(0,255,136,0.1)', tension: 0.3, fill: true }] },
+                    options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: '#fff' } } }, scales: { x: { ticks: { color: '#a0b3d9' } }, y: { ticks: { color: '#a0b3d9' }, beginAtZero: true } } }
+                });
+            }
+        });
     }
     
     function renderPaymentRequests() {
@@ -349,11 +387,8 @@
                 <td>${escapeHtml(p.courses?.name)}</td>
                 <td>${p.amount}</td>
                 <td>${new Date(p.requested_at).toLocaleString()}</td>
-                <td>
-                    <button class="btn btn-sm btn-success" onclick="approvePayment(${p.id})">✅ Approve</button>
-                    <button class="btn btn-sm btn-danger" onclick="rejectPayment(${p.id})">❌ Reject</button>
-                 </td>
-             </tr>`;
+                <td><button class="btn btn-sm btn-success" onclick="approvePayment(${p.id})">✅ Approve</button> <button class="btn btn-sm btn-danger" onclick="rejectPayment(${p.id})">❌ Reject</button></td>
+            </tr>`;
         }
         html += `</tbody></table></div>`;
         document.getElementById('pageContent').innerHTML = html;
@@ -369,8 +404,7 @@
                 <td><span class="status-badge role-admin">${user.is_admin ? 'Admin' : 'User'}</span></td>
                 <td><span class="status-badge ${user.status === 'active' ? 'status-active' : 'status-inactive'}">${user.status || 'active'}</span></td>
                 <td>${user.created_at ? new Date(user.created_at).toLocaleDateString() : '—'}</td>
-                <td>
-                    <button class="btn btn-outline btn-sm" onclick="toggleAdminRole('${user.id}', ${user.is_admin})">${user.is_admin ? 'Remove Admin' : 'Make Admin'}</button>
+                <td><button class="btn btn-outline btn-sm" onclick="toggleAdminRole('${user.id}', ${user.is_admin})">${user.is_admin ? 'Remove Admin' : 'Make Admin'}</button>
                     ${user.id !== currentUser.id ? `<button class="btn btn-danger btn-sm" onclick="deleteUserProfile('${user.id}')"><i class="fas fa-trash"></i> Delete</button>` : ''}
                 </td>
             </tr>`;
@@ -387,13 +421,32 @@
                 <td><strong>${escapeHtml(course.name)}</strong><br><small>${escapeHtml(course.description?.substring(0, 60))}</small></td>
                 <td><input type="number" id="price_${course.id}" value="${course.price}" class="price-input"></td>
                 <td><span class="status-badge ${course.active !== false ? 'status-active' : 'status-inactive'}">${course.active !== false ? 'Active' : 'Inactive'}</span></td>
-                <td>
-                    <button class="btn btn-sm btn-primary" onclick="updateCoursePrice(${course.id})">💾 Save</button>
+                <td><button class="btn btn-sm btn-primary" onclick="updateCoursePrice(${course.id})">💾 Save Price</button>
                     <button class="btn btn-sm btn-outline" onclick="toggleCourseActive(${course.id}, ${course.active !== false})">${course.active !== false ? '🔒 Disable' : '🔓 Enable'}</button>
                 </td>
             </tr>`;
         }
         html += `</tbody></table></div>`;
+        document.getElementById('pageContent').innerHTML = html;
+    }
+    
+    async function renderModuleManager() {
+        await loadData(); // ensure lessons loaded
+        let html = `<div class="card"><div class="card-header"><h2><i class="fas fa-cubes"></i> Module Manager (Lessons)</h2><button class="btn btn-primary" onclick="showAddModuleModal()"><i class="fas fa-plus"></i> Add Module</button></div>`;
+        for (const course of courses) {
+            const courseLessons = lessons.filter(l => l.course_id === course.id).sort((a,b) => a.order - b.order);
+            html += `<h3 style="margin-top:20px;">📘 ${escapeHtml(course.name)}</h3><div id="modules-${course.id}">`;
+            if (courseLessons.length === 0) html += `<p class="text-muted">No modules yet. Click "Add Module" to create lessons.</p>`;
+            else {
+                for (const lesson of courseLessons) {
+                    html += `<div class="module-item"><span class="module-title">${escapeHtml(lesson.title)} (Order: ${lesson.order})</span>
+                        <div><button class="btn btn-outline btn-sm" onclick="editModule(${lesson.id})"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteModule(${lesson.id})"><i class="fas fa-trash"></i> Delete</button></div></div>`;
+                }
+            }
+            html += `</div>`;
+        }
+        html += `</div>`;
         document.getElementById('pageContent').innerHTML = html;
     }
     
@@ -436,6 +489,55 @@
         else { showToast(`Course ${!currentActive ? 'enabled' : 'disabled'}`, 'success'); await loadData(); renderCurrentView(); }
     };
     
+    window.showAddModuleModal = () => {
+        const modalHtml = `<div class="modal active" id="moduleModal"><div class="modal-content"><h3>Add New Module</h3>
+            <label>Course</label><select id="moduleCourseId">${courses.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('')}</select>
+            <label>Title</label><input type="text" id="moduleTitle" placeholder="Module title">
+            <label>Content (HTML/text)</label><textarea id="moduleContent" rows="5" placeholder="Full lesson content"></textarea>
+            <label>Order (number)</label><input type="number" id="moduleOrder" value="1">
+            <div style="display:flex; gap:12px; margin-top:20px;"><button class="btn btn-outline" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="createModule()">Create</button></div></div></div>`;
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+    };
+    
+    window.createModule = async () => {
+        const courseId = parseInt(document.getElementById('moduleCourseId').value);
+        const title = document.getElementById('moduleTitle').value;
+        const content = document.getElementById('moduleContent').value;
+        const order = parseInt(document.getElementById('moduleOrder').value);
+        if (!title) { showToast('Title required', 'error'); return; }
+        const { data, error } = await supabase.rpc('admin_create_module', { p_course_id: courseId, p_title: title, p_content: content, p_order: order });
+        if (error || !data?.success) showToast('Failed to create module', 'error');
+        else { showToast('Module created', 'success'); closeModal(); await loadData(); renderCurrentView(); }
+    };
+    
+    window.editModule = async (moduleId) => {
+        const module = lessons.find(l => l.id === moduleId);
+        if (!module) return;
+        const modalHtml = `<div class="modal active" id="moduleModal"><div class="modal-content"><h3>Edit Module</h3>
+            <label>Title</label><input type="text" id="moduleTitle" value="${escapeHtml(module.title)}">
+            <label>Content</label><textarea id="moduleContent" rows="5">${escapeHtml(module.content || '')}</textarea>
+            <label>Order</label><input type="number" id="moduleOrder" value="${module.order}">
+            <div style="display:flex; gap:12px; margin-top:20px;"><button class="btn btn-outline" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="updateModule(${moduleId})">Save</button></div></div></div>`;
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+    };
+    
+    window.updateModule = async (moduleId) => {
+        const title = document.getElementById('moduleTitle').value;
+        const content = document.getElementById('moduleContent').value;
+        const order = parseInt(document.getElementById('moduleOrder').value);
+        if (!title) { showToast('Title required', 'error'); return; }
+        const { data, error } = await supabase.rpc('admin_update_module', { p_id: moduleId, p_title: title, p_content: content, p_order: order });
+        if (error || !data?.success) showToast('Update failed', 'error');
+        else { showToast('Module updated', 'success'); closeModal(); await loadData(); renderCurrentView(); }
+    };
+    
+    window.deleteModule = async (moduleId) => {
+        if (!confirm('Delete this module permanently?')) return;
+        const { data, error } = await supabase.rpc('admin_delete_module', { p_id: moduleId });
+        if (error || !data?.success) showToast('Delete failed', 'error');
+        else { showToast('Module deleted', 'success'); await loadData(); renderCurrentView(); }
+    };
+    
     window.refreshData = async () => {
         showToast('Refreshing...', 'info');
         await loadData();
@@ -445,6 +547,7 @@
     
     window.setView = (view) => { currentView = view; renderCurrentView(); };
     window.toggleSidebar = () => document.getElementById('sidebar').classList.toggle('open');
+    window.closeModal = () => document.querySelector('.modal.active')?.remove();
     
     async function logout() {
         await supabase.auth.signOut();
@@ -452,13 +555,14 @@
     }
     
     function renderCurrentView() {
-        const titles = { dashboard: 'Dashboard', payments: 'Payment Requests', users: 'User Management', courses: 'Course Management' };
+        const titles = { dashboard: 'Dashboard', payments: 'Payment Requests', users: 'User Management', courses: 'Course Management', modules: 'Module Manager' };
         document.getElementById('pageTitle').innerText = titles[currentView] || 'Dashboard';
         document.getElementById('pageSubtitle').innerHTML = `Welcome back, ${escapeHtml(currentUser?.email?.split('@')[0] || 'Admin')} | ${new Date().toLocaleDateString()}`;
         if (currentView === 'dashboard') renderDashboard();
         else if (currentView === 'payments') renderPaymentRequests();
         else if (currentView === 'users') renderUserManagement();
         else if (currentView === 'courses') renderCourseManagement();
+        else if (currentView === 'modules') renderModuleManager();
         else renderDashboard();
     }
     
