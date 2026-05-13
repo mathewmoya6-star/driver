@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
     <style>
+        /* Same styles as before, plus library search bar */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #ffffff; line-height: 1.5; }
         :root {
@@ -68,6 +69,11 @@
         .progress-fill { background: var(--primary); height: 6px; border-radius: 10px; width: 0%; }
         .quiz-option { padding: 12px 16px; background: #1a1a1a; border-radius: 12px; margin-bottom: 10px; cursor: pointer; border: 1px solid var(--border); transition: 0.2s; }
         .quiz-option:hover { border-color: var(--primary); background: rgba(212,175,55,0.1); }
+        .quiz-category-selector { margin-bottom: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .quiz-category-btn { background: #1a1a1a; border: 1px solid var(--border); border-radius: 50px; padding: 6px 14px; cursor: pointer; transition: 0.2s; }
+        .quiz-category-btn.active, .quiz-category-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); }
+        .search-input { background: #0f0f15; border: 1px solid var(--border); padding: 10px 16px; border-radius: 50px; color: white; width: 100%; max-width: 300px; }
+        .resource-tag { background: rgba(212,175,55,0.2); padding: 4px 8px; border-radius: 20px; font-size: 0.7rem; display: inline-block; margin: 2px; }
         .loading-spinner { width: 40px; height: 40px; border: 3px solid #333; border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 2100; max-height: 300px; overflow-y: auto; }
@@ -95,6 +101,7 @@
                 <button onclick="app.navigate('home')">🏠 Home</button>
                 <button onclick="app.navigate('courses')">📚 Courses</button>
                 <button onclick="app.navigate('quiz')">📝 Quiz</button>
+                <button onclick="app.navigate('library')">📖 Safety Library</button>
                 <button id="dashboardNavBtn" onclick="app.navigate('dashboard')" style="display:none;">📊 Dashboard</button>
                 <div id="authButtons"></div>
             </div>
@@ -279,6 +286,7 @@
             else if (appState.currentRoute === 'course-detail') await renderCourseDetail();
             else if (appState.currentRoute === 'learn') await renderLearnPage();
             else if (appState.currentRoute === 'quiz') await renderQuizPage();
+            else if (appState.currentRoute === 'library') await renderLibraryPage();
             else if (appState.currentRoute === 'dashboard') {
                 if (!appState.currentUser) { app.showLoginModal(); return; }
                 await renderDashboard();
@@ -354,7 +362,6 @@
         if (currentIndex < 0) currentIndex = 0;
         
         const { data: progressData } = await appState.supabase.from('user_progress').select('progress_percentage').eq('user_id', appState.currentUser.id).eq('course_id', courseId).maybeSingle();
-        const currentProgress = progressData?.progress_percentage || 0;
         const totalLessons = lessons.length;
         
         function renderLesson() {
@@ -430,47 +437,231 @@
         `;
     }
     
-    async function renderQuizPage() {
-        if (!appState.currentUser) { app.showLoginModal(); return; }
-        const quizQuestions = [
-            { id:1, question:"Minimum age for learner's licence in Kenya?", options:["16","17","18","21"], correct:2, explanation:"18 years required" },
-            { id:2, question:"Legal blood alcohol limit for private driver?", options:["0.00%","0.05%","0.08%","0.10%"], correct:1, explanation:"0.05% BAC limit" },
-            { id:3, question:"What does ABS stand for?", options:["Auto Brake","Anti-lock Braking","Advanced Brake","Auto Brake System"], correct:1, explanation:"Anti-lock Braking System" },
-            { id:4, question:"When should you use hazard lights?", options:["Parking illegally","To thank another driver","Warn of a temporary hazard","Reversing"], correct:2, explanation:"Hazard lights warn of danger ahead." }
-        ];
-        const shuffled = [...quizQuestions];
-        let currentQ = 0, score = 0;
-        const renderQuestion = () => {
-            if (currentQ >= shuffled.length) {
-                saveQuizScore(score, shuffled.length);
-                document.getElementById('quizContainer').innerHTML = `<div style="text-align:center;"><h3>🎉 Score: ${score}/${shuffled.length}</h3><button class="btn btn-primary" onclick="app.navigate('dashboard')">Dashboard</button><button class="btn btn-outline" onclick="app.navigate('quiz')">Retry</button></div>`;
-                return;
+    // ==================== DIGITAL SAFETY LIBRARY ====================
+    async function renderLibraryPage() {
+        // Fetch resources from Supabase (fallback to local if table missing)
+        let resources = [];
+        try {
+            const { data, error } = await appState.supabase.from('library_resources').select('*').order('id');
+            if (!error && data) resources = data;
+        } catch(e) { console.warn('Library table not ready, using local demo data'); }
+        if (resources.length === 0) {
+            // Fallback local resources
+            resources = [
+                { id: 1, title: 'Defensive Driving Checklist', description: 'Top 10 defensive driving habits', category: 'Tip', content_text: '1. Scan ahead\n2. Maintain gap\n3. Cover brake', tags: ['defensive'] },
+                { id: 2, title: 'EV Safety Handbook', description: 'Complete guide to electric vehicle safety', category: 'PDF', content_url: '#', tags: ['ev'] },
+                { id: 3, title: 'First Aid for Road Accidents', description: 'What to do before help arrives', category: 'Article', content_text: 'Check breathing, control bleeding', tags: ['first aid'] }
+            ];
+        }
+        
+        // Build search/filter UI
+        const html = `
+            <div class="container" style="padding-top:100px;">
+                <h1 class="section-title">Digital <span>Safety Library</span></h1>
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+                    <input type="text" id="librarySearch" class="search-input" placeholder="Search by title or tag..." onkeyup="app.filterLibrary()">
+                    <div id="libraryCategoryFilter" class="quiz-category-selector"></div>
+                </div>
+                <div id="libraryGrid" class="grid"></div>
+            </div>
+        `;
+        document.getElementById('page-content').innerHTML = html;
+        
+        // Populate category filter buttons
+        const categories = [...new Set(resources.map(r => r.category))];
+        const filterDiv = document.getElementById('libraryCategoryFilter');
+        filterDiv.innerHTML = `<button class="quiz-category-btn active" data-cat="all" onclick="app.filterLibrary('all')">All</button>` +
+            categories.map(cat => `<button class="quiz-category-btn" data-cat="${cat}" onclick="app.filterLibrary('${cat}')">${cat}</button>`).join('');
+        
+        window.app.libraryResources = resources;
+        window.app.filterLibrary = (category = 'all', searchTerm = null) => {
+            const search = searchTerm || document.getElementById('librarySearch')?.value.toLowerCase() || '';
+            let filtered = resources;
+            if (category !== 'all') filtered = filtered.filter(r => r.category === category);
+            if (search) {
+                filtered = filtered.filter(r => r.title.toLowerCase().includes(search) || (r.tags && r.tags.some(t => t.toLowerCase().includes(search))));
             }
-            const q = shuffled[currentQ];
-            document.getElementById('quizContainer').innerHTML = `<div class="quiz-question">${escapeHtml(q.question)}</div><div class="quiz-options">${q.options.map((opt,i)=>`<div class="quiz-option" onclick="submitAnswer(${currentQ},${i})">${escapeHtml(opt)}</div>`).join('')}</div><div id="quizFeedback"></div><div>${currentQ+1}/${shuffled.length}</div>`;
+            const grid = document.getElementById('libraryGrid');
+            grid.innerHTML = filtered.map(r => `
+                <div class="card">
+                    <i class="fas ${r.category === 'PDF' ? 'fa-file-pdf' : (r.category === 'Video' ? 'fa-video' : 'fa-lightbulb')}" style="font-size:2rem; color:var(--primary);"></i>
+                    <h3>${escapeHtml(r.title)}</h3>
+                    <p>${escapeHtml(r.description || (r.content_text ? r.content_text.substring(0, 100) : ''))}</p>
+                    <div>${(r.tags || []).map(t => `<span class="resource-tag">#${escapeHtml(t)}</span>`).join('')}</div>
+                    <button class="btn btn-outline btn-small" onclick="app.viewResource(${r.id})">View Resource</button>
+                </div>
+            `).join('');
         };
-        window.submitAnswer = (qIdx, selected) => {
-            const q = shuffled[qIdx];
-            const fb = document.getElementById('quizFeedback');
-            if (selected === q.correct) { score++; fb.innerHTML = `<span style="color:#2ecc71;">✓ Correct! ${escapeHtml(q.explanation)}</span><button class="btn btn-small" style="margin-top:10px;" onclick="nextQuestion()">Next →</button>`; }
-            else { fb.innerHTML = `<span style="color:#e74c3c;">✗ Correct: ${escapeHtml(q.options[q.correct])}</span><button class="btn btn-small" onclick="nextQuestion()">Next →</button>`; }
+        window.app.filterLibrary();
+        
+        window.app.viewResource = (id) => {
+            const res = resources.find(r => r.id === id);
+            if (res.content_url) window.open(res.content_url, '_blank');
+            else if (res.content_text) {
+                showToast(`${res.title}: ${res.content_text.substring(0, 150)}...`, 'info');
+            } else showToast('Resource preview coming soon', 'info');
         };
-        window.nextQuestion = () => { currentQ++; renderQuestion(); };
-        document.getElementById('page-content').innerHTML = `<div class="container" style="padding-top:100px;"><div class="card"><h2>📝 NTSA Practice Exam</h2><div id="quizContainer"><div class="loading-spinner"></div></div></div></div>`;
-        renderQuestion();
     }
     
-    async function saveQuizScore(score, total) {
+    // ==================== QUIZ PAGE WITH 1000+ RANDOM QUESTIONS ====================
+    let currentQuizQuestions = [];
+    let quizCurrentIndex = 0;
+    let quizScore = 0;
+    let quizUserAnswers = [];
+    
+    async function renderQuizPage() {
+        if (!appState.currentUser) { app.showLoginModal(); return; }
+        
+        // Fetch distinct categories from questions table
+        let categories = ['All'];
+        try {
+            const { data, error } = await appState.supabase.from('questions').select('category').limit(1000);
+            if (!error && data) {
+                const unique = [...new Set(data.map(q => q.category))];
+                categories = ['All', ...unique];
+            }
+        } catch(e) { console.warn('Questions table not ready'); }
+        
+        const html = `
+            <div class="container" style="padding-top:100px;">
+                <div class="card">
+                    <h2>📝 NTSA Practice Exam</h2>
+                    <div id="quizSetup">
+                        <div class="quiz-category-selector" id="quizCategorySelector"></div>
+                        <button class="btn btn-primary" onclick="app.startQuiz()">Start Randomized Quiz (20 Questions)</button>
+                    </div>
+                    <div id="quizContainer" style="display:none;"></div>
+                </div>
+            </div>
+        `;
+        document.getElementById('page-content').innerHTML = html;
+        
+        // Build category buttons
+        const selector = document.getElementById('quizCategorySelector');
+        selector.innerHTML = categories.map(cat => `<button class="quiz-category-btn ${cat === 'All' ? 'active' : ''}" data-cat="${cat}" onclick="app.selectQuizCategory('${cat}')">${cat}</button>`).join('');
+        window.app.selectedQuizCategory = 'All';
+        window.app.selectQuizCategory = (cat) => {
+            window.app.selectedQuizCategory = cat;
+            document.querySelectorAll('#quizCategorySelector .quiz-category-btn').forEach(btn => {
+                if (btn.dataset.cat === cat) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+        };
+        
+        window.app.startQuiz = async () => {
+            const category = window.app.selectedQuizCategory === 'All' ? null : window.app.selectedQuizCategory;
+            let query = appState.supabase.from('questions').select('*');
+            if (category) query = query.eq('category', category);
+            // Randomly select 20 questions
+            const { data, error } = await query;
+            if (error || !data || data.length === 0) {
+                showToast('No questions available for this category', 'error');
+                return;
+            }
+            // Shuffle and take first 20 (or all if less)
+            const shuffled = [...data];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            currentQuizQuestions = shuffled.slice(0, 20);
+            quizCurrentIndex = 0;
+            quizScore = 0;
+            quizUserAnswers = new Array(currentQuizQuestions.length).fill(null);
+            document.getElementById('quizSetup').style.display = 'none';
+            document.getElementById('quizContainer').style.display = 'block';
+            renderQuizQuestion();
+        };
+        
+        function renderQuizQuestion() {
+            if (quizCurrentIndex >= currentQuizQuestions.length) {
+                // Quiz completed
+                const percent = Math.round((quizScore / currentQuizQuestions.length) * 100);
+                saveQuizScore(percent, currentQuizQuestions.length);
+                document.getElementById('quizContainer').innerHTML = `
+                    <div style="text-align:center; padding:2rem;">
+                        <h3>🎉 Quiz Complete!</h3>
+                        <p>Your score: ${quizScore} / ${currentQuizQuestions.length} (${percent}%)</p>
+                        <button class="btn btn-primary" onclick="app.navigate('dashboard')">Dashboard</button>
+                        <button class="btn btn-outline" onclick="app.resetQuiz()">Try Again</button>
+                    </div>
+                `;
+                return;
+            }
+            const q = currentQuizQuestions[quizCurrentIndex];
+            const options = [q.option_a, q.option_b, q.option_c, q.option_d];
+            const letters = ['a','b','c','d'];
+            const currentAnswer = quizUserAnswers[quizCurrentIndex];
+            const html = `
+                <div class="quiz-question">${escapeHtml(q.question_text)}</div>
+                <div class="quiz-options">
+                    ${options.map((opt, idx) => `
+                        <div class="quiz-option ${currentAnswer !== null && letters[idx] === q.correct_option ? 'correct-option' : (currentAnswer === letters[idx] ? 'selected-option' : '')}"
+                             style="${currentAnswer !== null && letters[idx] === q.correct_option ? 'border-color:#2ecc71; background:rgba(46,204,113,0.1);' : (currentAnswer === letters[idx] ? 'border-color:#e74c3c; background:rgba(231,76,60,0.1);' : '')}"
+                             onclick="if(${currentAnswer === null}) app.submitAnswer('${letters[idx]}')">
+                            ${escapeHtml(opt)}
+                        </div>
+                    `).join('')}
+                </div>
+                <div id="quizFeedback" class="quiz-feedback">
+                    ${currentAnswer !== null ? `<span style="color: ${currentAnswer === q.correct_option ? '#2ecc71' : '#e74c3c'}">${currentAnswer === q.correct_option ? '✓ Correct!' : '✗ Incorrect'}</span> ${escapeHtml(q.explanation || '')}` : ''}
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-top:1.5rem;">
+                    <button class="btn btn-outline" onclick="app.prevQuizQuestion()" ${quizCurrentIndex === 0 ? 'disabled' : ''}>◀ Previous</button>
+                    <span>Question ${quizCurrentIndex+1} of ${currentQuizQuestions.length}</span>
+                    <button class="btn btn-primary" onclick="app.nextQuizQuestion()">Next ▶</button>
+                </div>
+            `;
+            document.getElementById('quizContainer').innerHTML = html;
+        }
+        
+        window.app.submitAnswer = (selectedLetter) => {
+            if (quizUserAnswers[quizCurrentIndex] !== null) return;
+            const q = currentQuizQuestions[quizCurrentIndex];
+            quizUserAnswers[quizCurrentIndex] = selectedLetter;
+            if (selectedLetter === q.correct_option) quizScore++;
+            renderQuizQuestion();
+            // Auto-save after each answer? we'll wait until end.
+        };
+        window.app.nextQuizQuestion = () => {
+            if (quizCurrentIndex < currentQuizQuestions.length - 1) {
+                quizCurrentIndex++;
+                renderQuizQuestion();
+            } else {
+                // Finish quiz
+                quizCurrentIndex = currentQuizQuestions.length;
+                renderQuizQuestion();
+            }
+        };
+        window.app.prevQuizQuestion = () => {
+            if (quizCurrentIndex > 0) {
+                quizCurrentIndex--;
+                renderQuizQuestion();
+            }
+        };
+        window.app.resetQuiz = () => {
+            document.getElementById('quizSetup').style.display = 'block';
+            document.getElementById('quizContainer').style.display = 'none';
+            currentQuizQuestions = [];
+        };
+    }
+    
+    async function saveQuizScore(scorePercent, total) {
         if (!appState.currentUser) return;
         try {
-            await appState.supabase.from('quiz_attempts').insert({ user_id: appState.currentUser.id, score: Math.round(score/total*100), total, completed_at: new Date() });
+            await appState.supabase.from('quiz_attempts').insert({
+                user_id: appState.currentUser.id,
+                score: scorePercent,
+                total: total,
+                completed_at: new Date()
+            });
             await loadUserStats();
-        } catch(e) {}
+        } catch(e) { console.error('Quiz save error', e); }
     }
     
     async function renderAdminDashboard() {
         if (!(await isUserAdmin())) { app.navigate('home'); showToast('Admin access denied', 'error'); return; }
-        document.getElementById('page-content').innerHTML = `<div class="container" style="padding-top:100px;"><div class="card"><h2>Admin Dashboard</h2><p>Manage users, courses, payments</p><button class="btn btn-outline" onclick="showToast('Admin panel coming soon','info')">Settings</button></div></div>`;
+        document.getElementById('page-content').innerHTML = `<div class="container" style="padding-top:100px;"><div class="card"><h2>Admin Dashboard</h2><p>Manage users, courses, payments, and quiz questions.</p><button class="btn btn-outline" onclick="showToast('Admin panel coming soon','info')">Settings</button></div></div>`;
     }
     
     function renderLegal() {
@@ -478,7 +669,7 @@
         document.getElementById('page-content').innerHTML = `<div class="container" style="padding-top:100px;"><div class="card"><h3>${page === 'privacy' ? 'Privacy Policy' : 'Terms'}</h3><p>Standard NTSA-aligned policies.</p><button class="btn btn-outline" onclick="app.navigate('home')">Back</button></div></div>`;
     }
     
-    // UI helpers
+    // UI helpers (auth, modals, etc.) – same as before
     function showLoginModal() { showAuthModal('login'); }
     function showSignupModal() { showAuthModal('signup'); }
     function showAuthModal(mode) {
@@ -503,7 +694,7 @@
     function navigateToCourse(courseType) { navigate('course-detail', { courseType }); }
     function showLegal(page) { navigate('legal', { page }); }
     
-    window.app = { navigate, navigateToCourse, showLegal, enrollNow, lessonPrev:()=>{}, lessonNext:()=>{}, lessonComplete:()=>{}, showLoginModal, showSignupModal, handleAuth, closeAuthModal, closeToast, signOut, toggleMobileMenu, showToast };
+    window.app = { navigate, navigateToCourse, showLegal, enrollNow, lessonPrev:()=>{}, lessonNext:()=>{}, lessonComplete:()=>{}, showLoginModal, showSignupModal, handleAuth, closeAuthModal, closeToast, signOut, toggleMobileMenu, showToast, filterLibrary:()=>{}, viewResource:()=>{}, startQuiz:()=>{}, submitAnswer:()=>{}, nextQuizQuestion:()=>{}, prevQuizQuestion:()=>{}, resetQuiz:()=>{}, selectQuizCategory:()=>{} };
     initSupabase();
     renderCurrentRoute();
 </script>
