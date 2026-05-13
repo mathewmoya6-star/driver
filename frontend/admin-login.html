@@ -69,10 +69,11 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.js"></script>
 <script>
-    // Supabase credentials (your new project)
+    // ==================== NEW SUPABASE CREDENTIALS ====================
     const SUPABASE_URL = 'https://jeksrwrzzrczamxijvwl.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impla3Nyd3J6enJjemFteGlqdndsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzYyMjAsImV4cCI6MjA5NDI1MjIyMH0.1poYpJKNFEVe2NTBkXBTH2bIHGk2yT8aqCU-OlJc4vs';
-    
+    // ================================================================
+
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // Helper: Ensure user profile exists (create if missing, default non-admin)
@@ -142,7 +143,7 @@
                 throw new Error('You do not have admin privileges. Please contact the system administrator.');
             }
 
-            // 4. Success - redirect to main app
+            // 4. Success - redirect to main app (which contains full admin dashboard)
             successDiv.textContent = '✅ Admin access granted! Redirecting to dashboard...';
             successDiv.style.display = 'block';
             setTimeout(() => {
