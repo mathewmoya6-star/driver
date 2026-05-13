@@ -1,248 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEI DRIVE AFRICA - Admin Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #0b0f19 0%, #06080f 100%);
-            min-height: 100vh;
-            color: #fff;
-        }
-        .login-container {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .login-card {
-            background: #121b2c;
-            border: 1px solid #1f2b3d;
-            border-radius: 24px;
-            padding: 48px;
-            width: 100%;
-            max-width: 440px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-        .login-card h1 {
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, #00d084, #4ade80);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .login-card p {
-            text-align: center;
-            color: #94a3b8;
-            margin-bottom: 32px;
-        }
-        .input-group {
-            margin-bottom: 20px;
-        }
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #94a3b8;
-            font-size: 14px;
-        }
-        .input-group input {
-            width: 100%;
-            padding: 14px 16px;
-            background: #0b0f19;
-            border: 1px solid #1f2b3d;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 15px;
-        }
-        .input-group input:focus {
-            outline: none;
-            border-color: #00d084;
-        }
-        .btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #00d084, #00a86b);
-            border: none;
-            border-radius: 12px;
-            color: #000;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .btn:hover { transform: translateY(-2px); }
-        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        .message {
-            margin-bottom: 20px;
-            padding: 12px;
-            border-radius: 12px;
-            font-size: 14px;
-            display: none;
-        }
-        .message.error { background: rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); color:#ef4444; display:block; }
-        .message.success { background: rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); color:#10b981; display:block; }
-        .message.info { background: rgba(59,130,246,0.1); border:1px solid rgba(59,130,246,0.3); color:#60a5fa; display:block; }
-        .dashboard { display: none; padding: 20px; }
-        .header {
-            background: #121b2c;
-            border: 1px solid #1f2b3d;
-            border-radius: 16px;
-            padding: 20px 24px;
-            margin-bottom: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-        .header h2 { font-size: 24px; color: #00d084; }
-        .user-info { display: flex; align-items: center; gap: 16px; }
-        .logout-btn { background: #ef4444; width: auto; padding: 8px 20px; }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-bottom: 24px;
-        }
-        .stat-card {
-            background: #121b2c;
-            border: 1px solid #1f2b3d;
-            border-radius: 16px;
-            padding: 24px;
-            transition: 0.2s;
-        }
-        .stat-card:hover { border-color: #00d084; transform: translateY(-2px); }
-        .stat-card h3 { font-size: 32px; color: #00d084; margin-bottom: 8px; }
-        .stat-card p { color: #94a3b8; font-size: 14px; }
-        .section {
-            background: #121b2c;
-            border: 1px solid #1f2b3d;
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 24px;
-        }
-        .section h3 { margin-bottom: 20px; color: #00d084; font-size: 20px; }
-        .form-group { margin-bottom: 16px; }
-        .form-group label { display: block; margin-bottom: 8px; color: #94a3b8; font-size: 14px; }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            background: #0b0f19;
-            border: 1px solid #1f2b3d;
-            border-radius: 8px;
-            color: #fff;
-            font-size: 14px;
-        }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: #00d084;
-        }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #1f2b3d; }
-        th { color: #00d084; }
-        .delete-btn {
-            background: #ef4444;
-            padding: 6px 12px;
-            border: none;
-            border-radius: 6px;
-            color: white;
-            cursor: pointer;
-            font-size: 12px;
-        }
-        .delete-btn:hover { background: #dc2626; }
-        .loading { text-align: center; padding: 40px; color: #94a3b8; }
-        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
-    </style>
-</head>
-<body>
-
-<!-- LOGIN SECTION -->
-<div id="loginSection">
-    <div class="login-container">
-        <div class="login-card">
-            <h1>🚗 MEI DRIVE AFRICA</h1>
-            <p>Administrator Login</p>
-            <div id="loginMessage" class="message"></div>
-            <div class="input-group">
-                <label>Email</label>
-                <input type="email" id="email" placeholder="admin@meidriveafrica.com">
-            </div>
-            <div class="input-group">
-                <label>Password</label>
-                <input type="password" id="password" placeholder="Enter password">
-            </div>
-            <button class="btn" id="loginBtn">Login to Dashboard</button>
-        </div>
-    </div>
-</div>
-
-<!-- DASHBOARD SECTION -->
-<div id="dashboardSection" style="display: none;">
-    <div class="dashboard">
-        <div class="header">
-            <h2>📊 MEI DRIVE Administration</h2>
-            <div class="user-info">
-                <span id="userEmail" style="color: #94a3b8;"></span>
-                <button class="btn logout-btn" id="logoutBtn">Logout</button>
-            </div>
-        </div>
-        <div class="stats-grid">
-            <div class="stat-card"><h3 id="learnerCount">0</h3><p>🚗 Learner Units</p></div>
-            <div class="stat-card"><h3 id="psvCount">0</h3><p>🚌 PSV Modules</p></div>
-            <div class="stat-card"><h3 id="bodaCount">0</h3><p>🏍️ Boda Modules</p></div>
-            <div class="stat-card"><h3 id="evCount">0</h3><p>⚡ EV Modules</p></div>
-        </div>
-        <div class="grid-2">
-            <div class="section">
-                <h3>➕ Create New Module</h3>
-                <div class="form-group">
-                    <label>Category</label>
-                    <select id="moduleType">
-                        <option value="learner">Learner Driver</option>
-                        <option value="psv">PSV Commercial</option>
-                        <option value="boda">Boda Boda</option>
-                        <option value="ev">Electric Vehicle</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Module Number</label>
-                    <input type="number" id="moduleNumber" placeholder="e.g., 1,2,3">
-                </div>
-                <div class="form-group">
-                    <label>Title</label>
-                    <input type="text" id="moduleTitle" placeholder="Module title">
-                </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea id="moduleDescription" rows="4" placeholder="Description"></textarea>
-                </div>
-                <button class="btn" id="addModuleBtn">Save Module</button>
-            </div>
-            <div class="section">
-                <h3>📚 Module Library</h3>
-                <div id="modulesList" style="max-height: 500px; overflow-y: auto;">
-                    <div class="loading">Loading modules...</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
-// SUPABASE SINGLE INSTANCE
+// ===============================
+// SUPABASE CONFIG
+// ===============================
 const supabaseUrl = 'https://fktjmkmzlixlapeyhhyl.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E';
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-// Table mapping
+const supabaseKey =
+'YOUR_SUPABASE_ANON_KEY';
+
+const supabase = window.supabase.createClient(
+    supabaseUrl,
+    supabaseKey
+);
+
+// ===============================
+// TABLE MAPPING
+// ===============================
 const TABLES = {
     learner: 'learner_units',
     psv: 'psv_modules',
@@ -252,174 +24,357 @@ const TABLES = {
 
 let currentUser = null;
 
-// Helper: show message
+// ===============================
+// MESSAGE HELPER
+// ===============================
 function showMessage(elementId, message, type) {
     const el = document.getElementById(elementId);
-    if (!el) return;
-    el.textContent = message;
+
+    el.innerHTML = message;
     el.className = `message ${type}`;
-    setTimeout(() => { if (el) el.style.display = 'none'; }, 4000);
+    el.style.display = 'block';
+
+    setTimeout(() => {
+        el.style.display = 'none';
+    }, 4000);
 }
 
-// LOGIN FUNCTION
+// ===============================
+// LOGIN
+// ===============================
 async function performLogin() {
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
-    const loginBtn = document.getElementById('loginBtn');
+
+    const email =
+        document.getElementById('email').value.trim();
+
+    const password =
+        document.getElementById('password').value;
+
+    const loginBtn =
+        document.getElementById('loginBtn');
+
     if (!email || !password) {
-        showMessage('loginMessage', 'Please enter email and password', 'error');
+        showMessage(
+            'loginMessage',
+            'Please enter email and password',
+            'error'
+        );
         return;
     }
+
     loginBtn.disabled = true;
-    loginBtn.textContent = 'Logging in...';
-    showMessage('loginMessage', 'Authenticating...', 'info');
+    loginBtn.innerText = 'Logging in...';
+
     try {
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+        const { data, error } =
+            await supabase.auth.signInWithPassword({
+                email,
+                password
+            });
+
         if (error) throw error;
+
         currentUser = data.user;
-        showMessage('loginMessage', 'Login successful! Loading dashboard...', 'success');
-        setTimeout(() => {
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('dashboardSection').style.display = 'block';
-            document.getElementById('userEmail').innerText = currentUser.email;
-            loadStats();
-            loadModules();
-        }, 1000);
+
+        showDashboard();
+
+        showMessage(
+            'loginMessage',
+            'Login successful',
+            'success'
+        );
+
     } catch (err) {
-        showMessage('loginMessage', `Login failed: ${err.message}`, 'error');
+
+        showMessage(
+            'loginMessage',
+            err.message,
+            'error'
+        );
+
     } finally {
+
         loginBtn.disabled = false;
-        loginBtn.textContent = 'Login to Dashboard';
+        loginBtn.innerText = 'Login to Dashboard';
+
     }
 }
 
-// LOGOUT FUNCTION
+// ===============================
+// SHOW DASHBOARD
+// ===============================
+function showDashboard() {
+
+    document.getElementById('loginSection')
+        .style.display = 'none';
+
+    document.getElementById('dashboardSection')
+        .style.display = 'block';
+
+    document.getElementById('userEmail')
+        .innerText = currentUser.email;
+
+    loadStats();
+    loadModules();
+}
+
+// ===============================
+// LOGOUT
+// ===============================
 async function performLogout() {
+
     await supabase.auth.signOut();
+
     currentUser = null;
-    document.getElementById('loginSection').style.display = 'block';
-    document.getElementById('dashboardSection').style.display = 'none';
+
+    document.getElementById('dashboardSection')
+        .style.display = 'none';
+
+    document.getElementById('loginSection')
+        .style.display = 'block';
+
     document.getElementById('email').value = '';
     document.getElementById('password').value = '';
 }
 
-// Load statistics
+// ===============================
+// LOAD COUNTS
+// ===============================
 async function loadStats() {
+
     for (const [type, table] of Object.entries(TABLES)) {
-        const { count, error } = await supabase.from(table).select('*', { count: 'exact', head: true });
+
+        const { count, error } =
+            await supabase
+                .from(table)
+                .select('*', {
+                    count: 'exact',
+                    head: true
+                });
+
         if (!error) {
-            const el = document.getElementById(`${type}Count`);
-            if (el) el.innerText = count || 0;
+
+            document.getElementById(
+                `${type}Count`
+            ).innerText = count || 0;
+
         }
     }
 }
 
-// Load all modules
+// ===============================
+// LOAD MODULES
+// ===============================
 async function loadModules() {
-    const container = document.getElementById('modulesList');
-    let all = [];
+
+    const container =
+        document.getElementById('modulesList');
+
+    let allModules = [];
+
     for (const [type, table] of Object.entries(TABLES)) {
-        const { data, error } = await supabase.from(table).select('*').order('module_number', { ascending: true });
+
+        const { data, error } =
+            await supabase
+                .from(table)
+                .select('*')
+                .order('module_number', {
+                    ascending: true
+                });
+
         if (!error && data) {
-            all.push(...data.map(m => ({ ...m, type })));
+
+            const formatted = data.map(item => ({
+                ...item,
+                type
+            }));
+
+            allModules.push(...formatted);
         }
     }
-    if (all.length === 0) {
-        container.innerHTML = '<div class="loading">No modules found. Create your first module!</div>';
+
+    if (allModules.length === 0) {
+
+        container.innerHTML = `
+            <div class="loading">
+                No modules found
+            </div>
+        `;
+
         return;
     }
-    let html = `</td><thead><tr><th>Type</th><th>#</th><th>Title</th><th>Action</th></tr></thead><tbody>`;
-    for (const m of all) {
-        html += `<tr>
-            <td><strong>${m.type.toUpperCase()}</strong></td>
-            <td>${m.module_number}</td>
-            <td>${escapeHtml(m.title)}</td>
-            <td><button class="delete-btn" data-type="${m.type}" data-id="${m.id}">Delete</button></td>
-        </tr>`;
-    }
-    html += `</tbody></table>`;
-    container.innerHTML = html;
-    // attach delete events
-    document.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const type = btn.getAttribute('data-type');
-            const id = parseInt(btn.getAttribute('data-id'));
-            deleteModule(type, id);
-        });
+
+    let html = `
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>No</th>
+                    <th>Title</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    allModules.forEach(module => {
+
+        html += `
+            <tr>
+                <td>${module.type.toUpperCase()}</td>
+                <td>${module.module_number}</td>
+                <td>${escapeHtml(module.title)}</td>
+                <td>
+                    <button
+                        class="delete-btn"
+                        onclick="deleteModule(
+                            '${module.type}',
+                            ${module.id}
+                        )">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        `;
     });
+
+    html += `
+            </tbody>
+        </table>
+    `;
+
+    container.innerHTML = html;
 }
 
-// Add module
+// ===============================
+// ADD MODULE
+// ===============================
 async function addModule() {
-    const type = document.getElementById('moduleType').value;
+
+    const type =
+        document.getElementById('moduleType').value;
+
     const table = TABLES[type];
-    const moduleNumber = parseInt(document.getElementById('moduleNumber').value);
-    const title = document.getElementById('moduleTitle').value.trim();
-    const description = document.getElementById('moduleDescription').value.trim();
-    if (!title || isNaN(moduleNumber)) {
-        alert('Please fill title and module number');
+
+    const module_number =
+        parseInt(
+            document.getElementById('moduleNumber').value
+        );
+
+    const title =
+        document.getElementById('moduleTitle')
+            .value.trim();
+
+    const description =
+        document.getElementById('moduleDescription')
+            .value.trim();
+
+    if (!module_number || !title) {
+        alert('Please fill all fields');
         return;
     }
-    const { error } = await supabase.from(table).insert([{
-        module_number: moduleNumber,
-        title: title,
-        description: description,
-        status: 'published',
-        created_at: new Date().toISOString()
-    }]);
+
+    const { error } = await supabase
+        .from(table)
+        .insert([
+            {
+                module_number,
+                title,
+                description,
+                status: 'published'
+            }
+        ]);
+
     if (error) {
-        alert('Error: ' + error.message);
+        alert(error.message);
         return;
     }
-    alert('Module added!');
+
+    alert('Module added successfully');
+
     document.getElementById('moduleNumber').value = '';
     document.getElementById('moduleTitle').value = '';
     document.getElementById('moduleDescription').value = '';
+
     loadStats();
     loadModules();
 }
 
-// Delete module
+// ===============================
+// DELETE MODULE
+// ===============================
 async function deleteModule(type, id) {
-    if (!confirm('Delete this module?')) return;
+
+    const confirmed =
+        confirm('Delete this module?');
+
+    if (!confirmed) return;
+
     const table = TABLES[type];
-    const { error } = await supabase.from(table).delete().eq('id', id);
+
+    const { error } =
+        await supabase
+            .from(table)
+            .delete()
+            .eq('id', id);
+
     if (error) {
-        alert('Delete error: ' + error.message);
+        alert(error.message);
         return;
     }
+
     loadStats();
     loadModules();
 }
 
-function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/[&<>]/g, (m) => {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-    });
+// ===============================
+// ESCAPE HTML
+// ===============================
+function escapeHtml(text) {
+
+    if (!text) return '';
+
+    return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
 }
 
-// Event listeners after DOM ready
+// ===============================
+// SESSION CHECK
+// ===============================
+async function checkSession() {
+
+    const {
+        data: { session }
+    } = await supabase.auth.getSession();
+
+    if (session) {
+
+        currentUser = session.user;
+
+        showDashboard();
+    }
+}
+
+// ===============================
+// EVENT LISTENERS
+// ===============================
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('loginBtn').addEventListener('click', performLogin);
-    document.getElementById('logoutBtn').addEventListener('click', performLogout);
-    document.getElementById('addModuleBtn').addEventListener('click', addModule);
-    
-    // Check existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session) {
-            currentUser = session.user;
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('dashboardSection').style.display = 'block';
-            document.getElementById('userEmail').innerText = currentUser.email;
-            loadStats();
-            loadModules();
-        }
-    });
+
+    document
+        .getElementById('loginBtn')
+        .addEventListener('click', performLogin);
+
+    document
+        .getElementById('logoutBtn')
+        .addEventListener('click', performLogout);
+
+    document
+        .getElementById('addModuleBtn')
+        .addEventListener('click', addModule);
+
+    checkSession();
 });
 </script>
-</body>
-</html>
