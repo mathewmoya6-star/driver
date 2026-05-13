@@ -3,221 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEI DRIVE - Working Admin</title>
+    <title>MEI DRIVE AFRICA - Admin Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0b0f19;
-            color: white;
-        }
-        .login-screen, .dashboard {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0b0f19 0%, #06080f 100%);
             min-height: 100vh;
+            color: #fff;
+        }
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
         }
-        .login-box {
-            max-width: 400px;
-            margin: 100px auto;
+        .login-card {
+            background: #121b2c;
+            border: 1px solid #1f2b3d;
+            border-radius: 24px;
+            padding: 48px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .login-card h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #00d084, #4ade80);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .login-card p {
+            text-align: center;
+            color: #94a3b8;
+            margin-bottom: 32px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            background: #0b0f19;
+            border: 1px solid #1f2b3d;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 15px;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #00d084;
+        }
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #00d084, #00a86b);
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .message {
+            margin-bottom: 20px;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            display: none;
+        }
+        .message.error { background: rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); color:#ef4444; display:block; }
+        .message.success { background: rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); color:#10b981; display:block; }
+        .message.info { background: rgba(59,130,246,0.1); border:1px solid rgba(59,130,246,0.3); color:#60a5fa; display:block; }
+        .dashboard { display: none; padding: 20px; }
+        .header {
             background: #121b2c;
             border: 1px solid #1f2b3d;
             border-radius: 16px;
-            padding: 40px;
-        }
-        .login-box h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #00d084;
-        }
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: #0b0f19;
-            border: 1px solid #1f2b3d;
-            border-radius: 8px;
-            color: white;
-            font-size: 14px;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #00d084;
-            border: none;
-            border-radius: 8px;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-            font-size: 16px;
-        }
-        button:hover {
-            opacity: 0.9;
-        }
-        .error {
-            color: #ff6b6b;
-            margin: 10px 0;
-            padding: 10px;
-            background: rgba(255,107,107,0.1);
-            border-radius: 8px;
-        }
-        .success {
-            color: #00d084;
-            margin: 10px 0;
-            padding: 10px;
-            background: rgba(0,208,132,0.1);
-            border-radius: 8px;
-        }
-        .dashboard {
-            display: none;
-        }
-        .header {
-            background: #121b2c;
-            border-bottom: 1px solid #1f2b3d;
-            padding: 20px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
         }
-        .content {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .stats {
+        .header h2 { font-size: 24px; color: #00d084; }
+        .user-info { display: flex; align-items: center; gap: 16px; }
+        .logout-btn { background: #ef4444; width: auto; padding: 8px 20px; }
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
         }
         .stat-card {
             background: #121b2c;
             border: 1px solid #1f2b3d;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
+            border-radius: 16px;
+            padding: 24px;
+            transition: 0.2s;
         }
-        .stat-card h2 {
-            font-size: 36px;
-            color: #00d084;
-        }
-        .card {
+        .stat-card:hover { border-color: #00d084; transform: translateY(-2px); }
+        .stat-card h3 { font-size: 32px; color: #00d084; margin-bottom: 8px; }
+        .stat-card p { color: #94a3b8; font-size: 14px; }
+        .section {
             background: #121b2c;
             border: 1px solid #1f2b3d;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
         }
-        .card h3 {
-            margin-bottom: 20px;
-            color: #00d084;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #94a3b8;
-        }
-        select, textarea {
+        .section h3 { margin-bottom: 20px; color: #00d084; font-size: 20px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 8px; color: #94a3b8; font-size: 14px; }
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background: #0b0f19;
             border: 1px solid #1f2b3d;
             border-radius: 8px;
-            color: white;
+            color: #fff;
+            font-size: 14px;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #00d084;
         }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #1f2b3d;
-        }
-        th {
-            color: #00d084;
-        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #1f2b3d; }
+        th { color: #00d084; }
         .delete-btn {
             background: #ef4444;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
             color: white;
-            padding: 5px 10px;
-            width: auto;
+            cursor: pointer;
             font-size: 12px;
-            margin: 0;
         }
-        .logout-btn {
-            background: #ef4444;
-            width: auto;
-            padding: 8px 20px;
-        }
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        @media (max-width: 768px) {
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-        }
+        .delete-btn:hover { background: #dc2626; }
+        .loading { text-align: center; padding: 40px; color: #94a3b8; }
+        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
-<div id="loginScreen" class="login-screen">
-    <div class="login-box">
-        <h1>🚗 MEI DRIVE AFRICA</h1>
-        <div id="loginMessage"></div>
-        <input type="email" id="email" placeholder="Email" value="admin@meidriveafrica.com">
-        <input type="password" id="password" placeholder="Password" value="admin123">
-        <button onclick="handleLogin()">Login</button>
-        <p style="text-align: center; margin-top: 20px; font-size: 12px; color: #94a3b8;">
-            Use: admin@meidriveafrica.com / admin123
-        </p>
+<!-- LOGIN SECTION -->
+<div id="loginSection">
+    <div class="login-container">
+        <div class="login-card">
+            <h1>🚗 MEI DRIVE AFRICA</h1>
+            <p>Administrator Login</p>
+            <div id="loginMessage" class="message"></div>
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="admin@meidriveafrica.com">
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Enter password">
+            </div>
+            <button class="btn" id="loginBtn">Login to Dashboard</button>
+        </div>
     </div>
 </div>
 
-<!-- DASHBOARD -->
-<div id="dashboard" class="dashboard">
-    <div class="header">
-        <h2>📊 MEI DRIVE Admin</h2>
-        <button class="logout-btn" onclick="handleLogout()">Logout</button>
-    </div>
-    
-    <div class="content">
-        <div class="stats">
-            <div class="stat-card">
-                <h2 id="learnerCount">0</h2>
-                <p>Learner Units</p>
-            </div>
-            <div class="stat-card">
-                <h2 id="psvCount">0</h2>
-                <p>PSV Modules</p>
-            </div>
-            <div class="stat-card">
-                <h2 id="bodaCount">0</h2>
-                <p>Boda Modules</p>
-            </div>
-            <div class="stat-card">
-                <h2 id="evCount">0</h2>
-                <p>EV Modules</p>
+<!-- DASHBOARD SECTION -->
+<div id="dashboardSection" style="display: none;">
+    <div class="dashboard">
+        <div class="header">
+            <h2>📊 MEI DRIVE Administration</h2>
+            <div class="user-info">
+                <span id="userEmail" style="color: #94a3b8;"></span>
+                <button class="btn logout-btn" id="logoutBtn">Logout</button>
             </div>
         </div>
-        
+        <div class="stats-grid">
+            <div class="stat-card"><h3 id="learnerCount">0</h3><p>🚗 Learner Units</p></div>
+            <div class="stat-card"><h3 id="psvCount">0</h3><p>🚌 PSV Modules</p></div>
+            <div class="stat-card"><h3 id="bodaCount">0</h3><p>🏍️ Boda Modules</p></div>
+            <div class="stat-card"><h3 id="evCount">0</h3><p>⚡ EV Modules</p></div>
+        </div>
         <div class="grid-2">
-            <!-- Add Module Form -->
-            <div class="card">
-                <h3>➕ Add New Module</h3>
+            <div class="section">
+                <h3>➕ Create New Module</h3>
                 <div class="form-group">
-                    <label>Module Type</label>
+                    <label>Category</label>
                     <select id="moduleType">
                         <option value="learner">Learner Driver</option>
                         <option value="psv">PSV Commercial</option>
@@ -227,7 +214,7 @@
                 </div>
                 <div class="form-group">
                     <label>Module Number</label>
-                    <input type="number" id="moduleNumber" placeholder="1, 2, 3...">
+                    <input type="number" id="moduleNumber" placeholder="e.g., 1,2,3">
                 </div>
                 <div class="form-group">
                     <label>Title</label>
@@ -235,16 +222,14 @@
                 </div>
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea id="moduleDescription" rows="3" placeholder="Module description"></textarea>
+                    <textarea id="moduleDescription" rows="4" placeholder="Description"></textarea>
                 </div>
-                <button onclick="addModule()">Save Module</button>
+                <button class="btn" id="addModuleBtn">Save Module</button>
             </div>
-            
-            <!-- Modules List -->
-            <div class="card">
+            <div class="section">
                 <h3>📚 Module Library</h3>
-                <div id="modulesList" style="max-height: 400px; overflow-y: auto;">
-                    <p style="text-align: center; padding: 20px;">Loading...</p>
+                <div id="modulesList" style="max-height: 500px; overflow-y: auto;">
+                    <div class="loading">Loading modules...</div>
                 </div>
             </div>
         </div>
@@ -252,11 +237,12 @@
 </div>
 
 <script>
-const SUPABASE_URL = 'https://fktjmkmzlixlapeyhhyl.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E';
+// SUPABASE SINGLE INSTANCE
+const supabaseUrl = 'https://fktjmkmzlixlapeyhhyl.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E';
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
+// Table mapping
 const TABLES = {
     learner: 'learner_units',
     psv: 'psv_modules',
@@ -264,105 +250,128 @@ const TABLES = {
     ev: 'ev_modules'
 };
 
-let currentSession = null;
+let currentUser = null;
+
+// Helper: show message
+function showMessage(elementId, message, type) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    el.textContent = message;
+    el.className = `message ${type}`;
+    setTimeout(() => { if (el) el.style.display = 'none'; }, 4000);
+}
 
 // LOGIN FUNCTION
-async function handleLogin() {
-    const email = document.getElementById('email').value;
+async function performLogin() {
+    const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
-    const messageDiv = document.getElementById('loginMessage');
-    
-    messageDiv.innerHTML = '<div>⏳ Logging in...</div>';
-    
-    const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password
-    });
-    
-    if (error) {
-        messageDiv.innerHTML = `<div class="error">❌ ${error.message}</div>`;
+    const loginBtn = document.getElementById('loginBtn');
+    if (!email || !password) {
+        showMessage('loginMessage', 'Please enter email and password', 'error');
         return;
     }
-    
-    messageDiv.innerHTML = '<div class="success">✅ Login successful! Loading dashboard...</div>';
-    currentSession = data.session;
-    
-    setTimeout(() => {
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('dashboard').style.display = 'block';
-        loadStats();
-        loadModules();
-    }, 1000);
+    loginBtn.disabled = true;
+    loginBtn.textContent = 'Logging in...';
+    showMessage('loginMessage', 'Authenticating...', 'info');
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        currentUser = data.user;
+        showMessage('loginMessage', 'Login successful! Loading dashboard...', 'success');
+        setTimeout(() => {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('dashboardSection').style.display = 'block';
+            document.getElementById('userEmail').innerText = currentUser.email;
+            loadStats();
+            loadModules();
+        }, 1000);
+    } catch (err) {
+        showMessage('loginMessage', `Login failed: ${err.message}`, 'error');
+    } finally {
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Login to Dashboard';
+    }
 }
 
-async function handleLogout() {
+// LOGOUT FUNCTION
+async function performLogout() {
     await supabase.auth.signOut();
-    document.getElementById('loginScreen').style.display = 'block';
-    document.getElementById('dashboard').style.display = 'none';
+    currentUser = null;
+    document.getElementById('loginSection').style.display = 'block';
+    document.getElementById('dashboardSection').style.display = 'none';
+    document.getElementById('email').value = '';
+    document.getElementById('password').value = '';
 }
 
+// Load statistics
 async function loadStats() {
     for (const [type, table] of Object.entries(TABLES)) {
-        const { count } = await supabase.from(table).select('*', { count: 'exact', head: true });
-        document.getElementById(`${type}Count`).innerText = count || 0;
-    }
-}
-
-async function loadModules() {
-    const container = document.getElementById('modulesList');
-    let allModules = [];
-    
-    for (const [type, table] of Object.entries(TABLES)) {
-        const { data } = await supabase.from(table).select('*').order('module_number');
-        if (data && data.length > 0) {
-            allModules.push(...data.map(m => ({ ...m, type })));
+        const { count, error } = await supabase.from(table).select('*', { count: 'exact', head: true });
+        if (!error) {
+            const el = document.getElementById(`${type}Count`);
+            if (el) el.innerText = count || 0;
         }
     }
-    
-    if (allModules.length === 0) {
-        container.innerHTML = '<p style="text-align: center; padding: 20px;">No modules yet. Create your first module!</p>';
-        return;
-    }
-    
-    let html = '<table><thead><tr><th>Type</th><th>#</th><th>Title</th><th>Action</th></tr></thead><tbody>';
-    for (const m of allModules) {
-        html += `<tr>
-            <td>${m.type.toUpperCase()}</td>
-            <td>${m.module_number}</td>
-            <td>${escapeHtml(m.title)}</td>
-            <td><button class="delete-btn" onclick="deleteModule('${m.type}', ${m.id})">Delete</button></td>
-        </tr>`;
-    }
-    html += '</tbody></table>';
-    container.innerHTML = html;
 }
 
+// Load all modules
+async function loadModules() {
+    const container = document.getElementById('modulesList');
+    let all = [];
+    for (const [type, table] of Object.entries(TABLES)) {
+        const { data, error } = await supabase.from(table).select('*').order('module_number', { ascending: true });
+        if (!error && data) {
+            all.push(...data.map(m => ({ ...m, type })));
+        }
+    }
+    if (all.length === 0) {
+        container.innerHTML = '<div class="loading">No modules found. Create your first module!</div>';
+        return;
+    }
+    let html = `</td><thead><tr><th>Type</th><th>#</th><th>Title</th><th>Action</th></tr></thead><tbody>`;
+    for (const m of all) {
+        html += `<tr>
+            <td><strong>${m.type.toUpperCase()}</strong></td>
+            <td>${m.module_number}</td>
+            <td>${escapeHtml(m.title)}</td>
+            <td><button class="delete-btn" data-type="${m.type}" data-id="${m.id}">Delete</button></td>
+        </tr>`;
+    }
+    html += `</tbody></table>`;
+    container.innerHTML = html;
+    // attach delete events
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const type = btn.getAttribute('data-type');
+            const id = parseInt(btn.getAttribute('data-id'));
+            deleteModule(type, id);
+        });
+    });
+}
+
+// Add module
 async function addModule() {
     const type = document.getElementById('moduleType').value;
     const table = TABLES[type];
     const moduleNumber = parseInt(document.getElementById('moduleNumber').value);
-    const title = document.getElementById('moduleTitle').value;
-    const description = document.getElementById('moduleDescription').value;
-    
-    if (!title || !moduleNumber) {
+    const title = document.getElementById('moduleTitle').value.trim();
+    const description = document.getElementById('moduleDescription').value.trim();
+    if (!title || isNaN(moduleNumber)) {
         alert('Please fill title and module number');
         return;
     }
-    
     const { error } = await supabase.from(table).insert([{
         module_number: moduleNumber,
         title: title,
         description: description,
         status: 'published',
-        created_at: new Date()
+        created_at: new Date().toISOString()
     }]);
-    
     if (error) {
         alert('Error: ' + error.message);
         return;
     }
-    
-    alert('Module added successfully!');
+    alert('Module added!');
     document.getElementById('moduleNumber').value = '';
     document.getElementById('moduleTitle').value = '';
     document.getElementById('moduleDescription').value = '';
@@ -370,21 +379,22 @@ async function addModule() {
     loadModules();
 }
 
+// Delete module
 async function deleteModule(type, id) {
     if (!confirm('Delete this module?')) return;
     const table = TABLES[type];
     const { error } = await supabase.from(table).delete().eq('id', id);
     if (error) {
-        alert('Error: ' + error.message);
-    } else {
-        loadStats();
-        loadModules();
+        alert('Delete error: ' + error.message);
+        return;
     }
+    loadStats();
+    loadModules();
 }
 
 function escapeHtml(str) {
     if (!str) return '';
-    return str.replace(/[&<>]/g, function(m) {
+    return str.replace(/[&<>]/g, (m) => {
         if (m === '&') return '&amp;';
         if (m === '<') return '&lt;';
         if (m === '>') return '&gt;';
@@ -392,20 +402,24 @@ function escapeHtml(str) {
     });
 }
 
-// Check for existing session on page load
-async function checkExistingSession() {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session) {
-        currentSession = session;
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('dashboard').style.display = 'block';
-        loadStats();
-        loadModules();
-    }
-}
-
-checkExistingSession();
+// Event listeners after DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('loginBtn').addEventListener('click', performLogin);
+    document.getElementById('logoutBtn').addEventListener('click', performLogout);
+    document.getElementById('addModuleBtn').addEventListener('click', addModule);
+    
+    // Check existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) {
+            currentUser = session.user;
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('dashboardSection').style.display = 'block';
+            document.getElementById('userEmail').innerText = currentUser.email;
+            loadStats();
+            loadModules();
+        }
+    });
+});
 </script>
-
 </body>
 </html>
