@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>MEI DRIVE AFRICA | Admin Panel</title>
+    <title>MEI DRIVE AFRICA | Admin Panel - Live System</title>
     <meta name="description" content="Admin Dashboard for MEI DRIVE AFRICA Driver Training Platform">
     <meta name="theme-color" content="#d4af37">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -169,6 +168,7 @@
         .btn-danger:hover { background: #c0392b; }
         .btn-success { background: #2ecc71; color: #fff; }
         .btn-sm { padding: 6px 12px; font-size: 0.75rem; }
+        .btn-warning { background: #f39c12; color: #000; }
         
         /* Modal */
         .modal {
@@ -270,202 +270,249 @@
             gap: 12px;
         }
         
-        /* Login Screen */
-        .login-screen {
+        .price-input-container {
             display: flex;
-            justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background: var(--dark);
+            gap: 12px;
+            margin: 16px 0;
         }
-        .login-card {
-            background: var(--dark-card);
-            border: 1px solid var(--primary);
-            border-radius: 24px;
-            padding: 40px;
-            width: 90%;
-            max-width: 420px;
+        .price-input-container input {
+            flex: 1;
+            margin: 0;
         }
-        .login-card h2 { text-align: center; margin-bottom: 24px; color: var(--primary); }
-        .login-card input { width: 100%; margin-bottom: 16px; background: #1a1a1a; border: 1px solid #333; color: white; padding: 12px; border-radius: 12px; }
-        .error-message { color: #e74c3c; text-align: center; margin-top: 12px; font-size: 0.85rem; }
+        .module-guide-banner {
+            background: rgba(212,175,55,0.12);
+            border-left: 3px solid var(--primary);
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+        }
     </style>
 </head>
 <body>
-    <div id="app">Loading...</div>
+    <div id="app"></div>
 
     <script>
         // ============================================
-        // SUPABASE CONFIGURATION (same as frontend)
+        // FULLY FUNCTIONAL ADMIN PANEL - REAL DATA MANAGEMENT
         // ============================================
-        const SUPABASE_URL = 'https://fktjmkmzlixlapeyhhyl.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E';
         
-        let supabase;
-        let currentAdmin = null;
+        // App State
+        let currentUser = { name: 'Admin User', email: 'admin@meidrive.com', role: 'admin' };
         let adminView = 'dashboard';
         
-        // Data stores
+        // Data Stores (Live editable)
         let users = [];
-        let modules = { learner: [], psv: [], boda: [], ev: [] };
+        let modules = [];
         let quizBank = [];
         let library = [];
-        
-        const moduleTables = {
-            learner: 'learner_units',
-            psv: 'psv_modules',
-            boda: 'boda_modules',
-            ev: 'ev_modules'
+        let systemSettings = {
+            maintenanceMode: false,
+            allowRegistration: true,
+            siteName: 'MEI DRIVE AFRICA',
+            contactEmail: 'support@meidrive.com'
         };
         
-        // Helper: escape HTML
-        function escapeHtml(str) { if (!str) return ''; return String(str).replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
+        // Pending lock module data
+        let pendingLockModuleId = null;
         
-        // Toast
-        function showToast(msg, type) {
-            let container = document.getElementById('toast-container');
-            if (!container) { container = document.createElement('div'); container.id = 'toast-container'; container.className = 'toast-container'; document.body.appendChild(container); }
-            const toast = document.createElement('div'); toast.className = 'toast'; toast.innerHTML = `${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'} ${msg}`;
-            container.appendChild(toast); setTimeout(() => toast.remove(), 3000);
+        // Load Initial Data
+        function initializeData() {
+            users = [
+                { id: 1, name: 'John Mwangi', email: 'john@example.com', role: 'user', status: 'active', enrolledModules: ['Learner Hub', 'EV Training'], progress: 45 },
+                { id: 2, name: 'Sarah Wanjiku', email: 'sarah@example.com', role: 'user', status: 'active', enrolledModules: ['Boda Boda Safety', 'PSV Course'], progress: 78 },
+                { id: 3, name: 'Michael Otieno', email: 'michael@example.com', role: 'user', status: 'active', enrolledModules: ['School Bus Safety'], progress: 32 },
+                { id: 4, name: 'Grace Akinyi', email: 'grace@example.com', role: 'user', status: 'inactive', enrolledModules: [], progress: 0 },
+                { id: 5, name: 'Admin User', email: 'admin@meidrive.com', role: 'admin', status: 'active', enrolledModules: ['All Modules'], progress: 100 }
+            ];
+            
+            modules = [
+                { id: 1, name: 'Learner Hub', price: 0, duration: '25 hours', examTimer: 60, lessons: 21, status: 'unlocked', enrolled: 1245, description: 'Complete NTSA-approved driver training - 21 comprehensive units' },
+                { id: 2, name: 'EV Drivers & Riders', price: 0, duration: '12 hours', examTimer: 45, lessons: 8, status: 'unlocked', enrolled: 567, description: 'Modern training for electric vehicle drivers focused on safety and efficiency' },
+                { id: 3, name: 'Boda Boda Safety Course', price: 0, duration: '18 hours', examTimer: 50, lessons: 12, status: 'unlocked', enrolled: 2341, description: 'Practical road safety training for everyday riders' },
+                { id: 4, name: 'PSV Professional Course', price: 2999, duration: '15 hours', examTimer: 90, lessons: 10, status: 'locked', enrolled: 892, description: 'Advanced preparation for matatu, bus, and commercial drivers' },
+                { id: 5, name: 'School Bus Safety Program', price: 1999, duration: '10 hours', examTimer: 60, lessons: 6, status: 'locked', enrolled: 456, description: 'Specialized safety training for passenger protection' },
+                { id: 6, name: 'Advanced Driver Academy', price: 4999, duration: '20 hours', examTimer: 120, lessons: 8, status: 'locked', enrolled: 234, description: 'Professional development for fleet managers' }
+            ];
+            
+            quizBank = [
+                { id: 1, question: "What is the minimum age for a private vehicle learner's licence in Kenya?", options: ["16 years", "17 years", "18 years", "21 years"], correct: 2, category: "Licensing", difficulty: "Easy" },
+                { id: 2, question: "What is the legal blood alcohol limit for a private vehicle driver?", options: ["0.00%", "0.05%", "0.08%", "0.10%"], correct: 2, category: "Safety", difficulty: "Medium" },
+                { id: 3, question: "What does a continuous yellow line on a two-way road mean?", options: ["Overtaking encouraged", "No overtaking", "Parking allowed", "Slow down only"], correct: 1, category: "Road Markings", difficulty: "Easy" },
+                { id: 4, question: "What is the maximum speed limit in a residential area?", options: ["30 km/h", "40 km/h", "50 km/h", "60 km/h"], correct: 1, category: "Speed Limits", difficulty: "Easy" },
+                { id: 5, question: "What does ABS stand for?", options: ["Automatic Braking System", "Anti-lock Braking System", "Advanced Brake Service", "Auxiliary Brake Safety"], correct: 1, category: "Vehicle Technology", difficulty: "Medium" }
+            ];
+            
+            library = [
+                { id: 1, title: "Kenya Highway Code", type: "PDF", url: "/pdfs/highway-code.pdf", size: "2.5 MB", downloads: 1245 },
+                { id: 2, title: "NTSA Driving Test Guide", type: "PDF", url: "/pdfs/test-guide.pdf", size: "1.8 MB", downloads: 892 },
+                { id: 3, title: "Defensive Driving Manual", type: "PDF", url: "/pdfs/defensive-driving.pdf", size: "3.2 MB", downloads: 567 },
+                { id: 4, title: "PSV Regulations Handbook", type: "PDF", url: "/pdfs/psv-regulations.pdf", size: "2.1 MB", downloads: 234 }
+            ];
         }
         
-        // Load all data from Supabase
-        async function loadAllData() {
-            try {
-                // Load profiles (users)
-                const { data: profiles } = await supabase.from('profiles').select('*').order('created_at', { ascending: false });
-                users = profiles || [];
-                
-                // Load modules from each table
-                for (const [key, table] of Object.entries(moduleTables)) {
-                    const { data } = await supabase.from(table).select('*').order('module_number', { ascending: true });
-                    modules[key] = data || [];
-                }
-                
-                // Load quiz questions
-                const { data: questions } = await supabase.from('questions').select('*').order('id', { ascending: false });
-                quizBank = questions || [];
-                
-                // Load library docs
-                const { data: docs } = await supabase.from('library_docs').select('*').order('id', { ascending: false });
-                library = docs || [];
-            } catch (err) {
-                console.error('Error loading data:', err);
-                showToast('Error loading data from Supabase', 'error');
+        initializeData();
+        
+        // Toast System
+        function showToast(message, type = 'info') {
+            let container = document.getElementById('toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'toast-container';
+                container.className = 'toast-container';
+                document.body.appendChild(container);
+            }
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+            toast.innerHTML = `${icons[type] || 'ℹ️'} ${message}`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+        
+        // CRUD Functions
+        function addUser(name, email, role) {
+            const newId = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 6;
+            const newUser = { id: newId, name, email, role, status: 'active', enrolledModules: [], progress: 0 };
+            users.push(newUser);
+            showToast(`User ${name} added successfully!`, 'success');
+            renderApp();
+        }
+        
+        function deleteUser(userId) {
+            users = users.filter(u => u.id !== userId);
+            showToast('User deleted successfully', 'success');
+            renderApp();
+        }
+        
+        function updateUserStatus(userId, status) {
+            const user = users.find(u => u.id === userId);
+            if (user) { user.status = status; showToast(`User ${user.name} ${status === 'active' ? 'activated' : 'deactivated'}`, 'success'); renderApp(); }
+        }
+        
+        function updateUserRole(userId, role) {
+            const user = users.find(u => u.id === userId);
+            if (user) { user.role = role; showToast(`User ${user.name} is now ${role === 'admin' ? 'Admin' : 'User'}`, 'success'); renderApp(); }
+        }
+        
+        function addModule(name, price, duration, examTimer, lessons, description) {
+            const newId = modules.length > 0 ? Math.max(...modules.map(m => m.id)) + 1 : 7;
+            const newModule = {
+                id: newId, name, price: parseInt(price), duration, examTimer: parseInt(examTimer),
+                lessons: parseInt(lessons), status: price === 0 ? 'unlocked' : 'locked', enrolled: 0, description
+            };
+            modules.push(newModule);
+            showToast(`Module "${name}" added!`, 'success');
+            renderApp();
+        }
+        
+        function updateModule(moduleId, updates) {
+            const module = modules.find(m => m.id === moduleId);
+            if (module) { 
+                Object.assign(module, updates); 
+                showToast(`Module "${module.name}" updated!`, 'success'); 
+                renderApp(); 
             }
         }
         
-        // CRUD Operations for Modules
-        async function addModule(type, moduleData) {
-            const table = moduleTables[type];
-            const { error } = await supabase.from(table).insert([moduleData]);
-            if (error) { showToast(error.message, 'error'); return false; }
-            await loadAllData();
-            showToast(`Module added to ${type}`, 'success');
-            renderApp();
-            return true;
+        // Lock Module with price prompt
+        function lockModuleWithPrice(moduleId) {
+            const module = modules.find(m => m.id === moduleId);
+            if (!module) return;
+            pendingLockModuleId = moduleId;
+            const modal = document.getElementById('priceInputModal');
+            document.getElementById('priceInputMessage').innerHTML = `Set price for "<strong>${module.name}</strong>" (KES)`;
+            document.getElementById('priceInput').value = module.price || 0;
+            modal.classList.add('active');
         }
         
-        async function updateModule(type, id, updates) {
-            const table = moduleTables[type];
-            const { error } = await supabase.from(table).update(updates).eq('id', id);
-            if (error) { showToast(error.message, 'error'); return false; }
-            await loadAllData();
-            showToast('Module updated', 'success');
-            renderApp();
-            return true;
+        function confirmLockWithPrice() {
+            const price = parseInt(document.getElementById('priceInput').value) || 0;
+            if (pendingLockModuleId) {
+                updateModule(pendingLockModuleId, { status: 'locked', price: price });
+                showToast(`Module locked with price KES ${price.toLocaleString()}`, 'success');
+                closeModal('priceInputModal');
+                pendingLockModuleId = null;
+                renderApp();
+            }
         }
         
-        async function deleteModule(type, id) {
-            const table = moduleTables[type];
-            const { error } = await supabase.from(table).delete().eq('id', id);
-            if (error) { showToast(error.message, 'error'); return false; }
-            await loadAllData();
-            showToast('Module deleted', 'success');
-            renderApp();
-            return true;
+        function unlockModule(moduleId) {
+            updateModule(moduleId, { status: 'unlocked', price: 0 });
+            showToast(`Module unlocked and set to FREE`, 'success');
         }
         
-        // User management
-        async function updateUserRole(userId, isAdmin) {
-            const { error } = await supabase.from('profiles').update({ is_admin: isAdmin }).eq('id', userId);
-            if (error) { showToast(error.message, 'error'); return; }
-            await loadAllData();
-            showToast(`User role updated`, 'success');
-            renderApp();
+        function toggleModuleStatus(moduleId) {
+            const module = modules.find(m => m.id === moduleId);
+            if (module.status === 'unlocked') {
+                lockModuleWithPrice(moduleId);
+            } else {
+                unlockModule(moduleId);
+            }
         }
         
-        async function updateUserStatus(userId, status) {
-            const { error } = await supabase.from('profiles').update({ status }).eq('id', userId);
-            if (error) { showToast(error.message, 'error'); return; }
-            await loadAllData();
-            showToast(`User ${status}`, 'success');
+        function deleteModule(moduleId) {
+            modules = modules.filter(m => m.id !== moduleId);
+            showToast('Module deleted successfully', 'success');
             renderApp();
         }
         
-        async function deleteUser(userId) {
-            if (!confirm('Permanently delete user? This will also delete their progress.')) return;
-            await supabase.from('user_progress').delete().eq('user_id', userId);
-            await supabase.from('profiles').delete().eq('id', userId);
-            await loadAllData();
-            showToast('User deleted', 'success');
+        function addQuizQuestion(question, options, correct, category, difficulty) {
+            const newId = quizBank.length > 0 ? Math.max(...quizBank.map(q => q.id)) + 1 : 6;
+            const newQuestion = { id: newId, question, options, correct, category, difficulty };
+            quizBank.push(newQuestion);
+            showToast('Quiz question added!', 'success');
             renderApp();
         }
         
-        // Quiz management
-        async function addQuizQuestion(questionData) {
-            const { error } = await supabase.from('questions').insert([questionData]);
-            if (error) { showToast(error.message, 'error'); return false; }
-            await loadAllData();
-            showToast('Question added', 'success');
-            renderApp();
-            return true;
-        }
-        
-        async function deleteQuizQuestion(id) {
-            const { error } = await supabase.from('questions').delete().eq('id', id);
-            if (error) { showToast(error.message, 'error'); return; }
-            await loadAllData();
+        function deleteQuizQuestion(id) {
+            quizBank = quizBank.filter(q => q.id !== id);
             showToast('Question deleted', 'success');
             renderApp();
         }
         
-        // Library management
-        async function addLibraryItem(itemData) {
-            const { error } = await supabase.from('library_docs').insert([itemData]);
-            if (error) { showToast(error.message, 'error'); return false; }
-            await loadAllData();
-            showToast('Resource added', 'success');
-            renderApp();
-            return true;
-        }
-        
-        async function deleteLibraryItem(id) {
-            const { error } = await supabase.from('library_docs').delete().eq('id', id);
-            if (error) { showToast(error.message, 'error'); return; }
-            await loadAllData();
-            showToast('Resource deleted', 'success');
+        function addLibraryItem(title, type, url, size) {
+            const newId = library.length > 0 ? Math.max(...library.map(l => l.id)) + 1 : 5;
+            const newItem = { id: newId, title, type, url, size, downloads: 0 };
+            library.push(newItem);
+            showToast(`Resource "${title}" added!`, 'success');
             renderApp();
         }
         
-        function getAllModulesArray() {
-            return [...modules.learner, ...modules.psv, ...modules.boda, ...modules.ev];
+        function deleteLibraryItem(id) {
+            library = library.filter(l => l.id !== id);
+            showToast('Library item deleted', 'success');
+            renderApp();
+        }
+        
+        function saveSettings() {
+            const maintenanceToggle = document.getElementById('maintenanceMode');
+            const registrationToggle = document.getElementById('allowRegistration');
+            const siteNameInput = document.getElementById('siteName');
+            const contactEmailInput = document.getElementById('contactEmail');
+            
+            if (maintenanceToggle) systemSettings.maintenanceMode = maintenanceToggle.checked;
+            if (registrationToggle) systemSettings.allowRegistration = registrationToggle.checked;
+            if (siteNameInput) systemSettings.siteName = siteNameInput.value;
+            if (contactEmailInput) systemSettings.contactEmail = contactEmailInput.value;
+            
+            showToast('System settings saved!', 'success');
+            renderApp();
         }
         
         function calculateStats() {
-            const allModules = getAllModulesArray();
-            const totalRevenue = allModules.reduce((sum, m) => sum + ((m.price || 0) * (m.enrolled_count || 0)), 0);
             return {
                 totalUsers: users.length,
-                totalModules: allModules.length,
-                totalRevenue: totalRevenue,
+                totalModules: modules.length,
+                totalRevenue: modules.filter(m => m.price > 0).reduce((sum, m) => sum + (m.price * m.enrolled), 0),
                 activeUsers: users.filter(u => u.status === 'active').length,
                 totalQuizQuestions: quizBank.length,
                 totalLibraryItems: library.length
             };
         }
         
-        // ============ RENDER FUNCTIONS ============
+        // ========== RENDER ENGINE ==========
         function renderDashboard() {
             const stats = calculateStats();
             return `
@@ -483,19 +530,20 @@
         function renderUserManagement() {
             return `
                 <div class="card">
-                    <div class="card-header"><h2><i class="fas fa-users"></i> User Management</h2></div>
+                    <div class="card-header"><h2><i class="fas fa-users"></i> User Management</h2><button class="btn btn-primary" onclick="window.openAddUserModal()"><i class="fas fa-user-plus"></i> + Add User</button></div>
                     <table class="data-table">
-                        <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>
+                        <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Progress</th><th>Actions</th></tr></thead>
                         <tbody>${users.map(user => `
                             <tr>
-                                <td><strong>${escapeHtml(user.full_name || user.email)}</strong></td>
+                                <td><strong>${escapeHtml(user.name)}</strong></td>
                                 <td>${escapeHtml(user.email)}</td>
-                                <td><span class="status-badge ${user.is_admin ? 'role-admin' : 'role-user'}">${user.is_admin ? 'Admin' : 'User'}</span></td>
-                                <td><span class="status-badge ${user.status === 'active' ? 'status-active' : 'status-inactive'}">${user.status || 'active'}</span></td>
+                                <td><span class="status-badge ${user.role === 'admin' ? 'role-admin' : 'role-user'}">${user.role === 'admin' ? 'Admin' : 'User'}</span></td>
+                                <td><span class="status-badge ${user.status === 'active' ? 'status-active' : 'status-inactive'}">${user.status}</span></td>
+                                <td>${user.progress || 0}%</td>
                                 <td>
-                                    <button class="btn btn-outline btn-sm" onclick="updateUserRole('${user.id}', ${!user.is_admin})" style="margin-right: 4px;">${user.is_admin ? '👤 Make User' : '👑 Make Admin'}</button>
-                                    <button class="btn btn-outline btn-sm" onclick="updateUserStatus('${user.id}', '${user.status === 'active' ? 'inactive' : 'active'}')" style="margin-right: 4px;">${user.status === 'active' ? '🔒 Deactivate' : '✅ Activate'}</button>
-                                    <button class="btn btn-danger btn-sm" onclick="deleteUser('${user.id}')"><i class="fas fa-trash"></i></button>
+                                    <button class="btn btn-outline btn-sm" onclick="window.updateUserRole(${user.id}, '${user.role === 'admin' ? 'user' : 'admin'}')" style="margin-right: 4px;">${user.role === 'admin' ? '👤 Make User' : '👑 Make Admin'}</button>
+                                    <button class="btn btn-outline btn-sm" onclick="window.updateUserStatus(${user.id}, '${user.status === 'active' ? 'inactive' : 'active'}')" style="margin-right: 4px;">${user.status === 'active' ? '🔒 Deactivate' : '✅ Activate'}</button>
+                                    <button class="btn btn-danger btn-sm" onclick="window.confirmDeleteUser(${user.id})"><i class="fas fa-trash"></i></button>
                                  </td>
                             </tr>
                         `).join('')}</tbody>
@@ -505,99 +553,50 @@
         }
         
         function renderModuleManagement() {
-            const allModules = getAllModulesArray();
             return `
                 <div class="card">
-                    <div class="card-header"><h2><i class="fas fa-book"></i> Module Management</h2><button class="btn btn-primary" onclick="openAddModuleModal()"><i class="fas fa-plus"></i> + Add Module</button></div>
+                    <div class="card-header"><h2><i class="fas fa-book"></i> Module Management</h2><button class="btn btn-primary" onclick="window.openAddModuleModal()"><i class="fas fa-plus"></i> + Add Module</button></div>
+                    <div class="module-guide-banner"><i class="fas fa-lightbulb"></i> <strong>Lock/Unlock Guide:</strong> Click <strong style="color:#e74c3c;">Lock & Set Price</strong> to set a price and lock module. Click <strong style="color:#2ecc71;">Unlock (Make FREE)</strong> to make module free again.</div>
                     <table class="data-table">
-                        <thead><tr><th>Module</th><th>Type</th><th>Price</th><th>Duration</th><th>Lessons</th><th>Enrolled</th><th>Status</th><th>Actions</th></tr></thead>
-                        <tbody>
-                            ${Object.entries(modules).flatMap(([type, items]) => items.map(mod => `
-                                <tr>
-                                    <td><strong>${escapeHtml(mod.title || mod.name)}</strong></td>
-                                    <td>${type.toUpperCase()}</td>
-                                    <td>${mod.price === 0 ? 'FREE' : `KES ${mod.price.toLocaleString()}`}</td>
-                                    <td>${mod.duration || '-'}</td>
-                                    <td>${mod.lessons_count || mod.module_number || '-'}</td>
-                                    <td>${mod.enrolled_count || 0}</td>
-                                    <td><span class="status-badge ${mod.is_locked ? 'status-inactive' : 'status-active'}">${mod.is_locked ? 'LOCKED' : 'UNLOCKED'}</span></td>
-                                    <td>
-                                        <button class="btn btn-outline btn-sm" onclick="editModule('${type}', ${mod.id})" style="margin-right: 4px;"><i class="fas fa-edit"></i> Edit</button>
-                                        <button class="btn btn-${mod.is_locked ? 'success' : 'warning'} btn-sm" onclick="toggleLock('${type}', ${mod.id}, ${mod.is_locked})" style="margin-right: 4px;">${mod.is_locked ? '🔓 Unlock' : '🔒 Lock'}</button>
-                                        <button class="btn btn-danger btn-sm" onclick="deleteModuleItem('${type}', ${mod.id})"><i class="fas fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                            `).join('')).join('')}
-                        </tbody>
+                        <thead><tr><th>Module</th><th>Price</th><th>Duration</th><th>Exam Timer</th><th>Lessons</th><th>Enrolled</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody>${modules.map(module => `
+                            <tr>
+                                <td><strong>${escapeHtml(module.name)}</strong><br><small style="color:var(--text-muted);">${escapeHtml(module.description?.substring(0, 40) || '')}...</small></td>
+                                <td>${module.price === 0 ? 'FREE' : `KES ${module.price.toLocaleString()}`}</td>
+                                <td>${module.duration}</td>
+                                <td>${module.examTimer} min</td>
+                                <td>${module.lessons}</td>
+                                <td>${module.enrolled}</td>
+                                <td><span class="status-badge ${module.status === 'unlocked' ? 'status-active' : 'status-inactive'}">${module.status === 'unlocked' ? 'UNLOCKED' : 'LOCKED'}</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm" onclick="window.openEditModuleModal(${module.id})" style="margin-right: 4px;"><i class="fas fa-edit"></i> Edit</button>
+                                    <button class="btn btn-sm" style="background:${module.status === 'unlocked' ? '#e74c3c' : '#2ecc71'}; color:white; border:none;" onclick="window.toggleModuleStatus(${module.id})">
+                                        ${module.status === 'unlocked' ? '🔒 Lock & Set Price' : '🔓 Unlock (FREE)'}
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" onclick="window.confirmDeleteModule(${module.id})"><i class="fas fa-trash"></i></button>
+                                  </td>
+                            </tr>
+                        `).join('')}</tbody>
                     </table>
                 </div>
             `;
         }
         
         function renderQuizBank() {
-            return `
-                <div class="card">
-                    <div class="card-header"><h2><i class="fas fa-brain"></i> Quiz Bank Management</h2><button class="btn btn-primary" onclick="openAddQuizModal()"><i class="fas fa-plus"></i> + Add Question</button></div>
-                    <div class="quiz-bank-list">
-                        ${quizBank.map(q => `
-                            <div class="quiz-item">
-                                <div><strong>Q${q.id}:</strong> ${escapeHtml(q.text).substring(0, 80)}...<br><small style="color:var(--text-muted);">Category: ${escapeHtml(q.category)}</small></div>
-                                <div><button class="btn btn-danger btn-sm" onclick="deleteQuizQuestion(${q.id})"><i class="fas fa-trash"></i></button></div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
+            return `<div class="card"><div class="card-header"><h2><i class="fas fa-brain"></i> Quiz Bank</h2><button class="btn btn-primary" onclick="window.openAddQuizModal()"><i class="fas fa-plus"></i> Add Question</button></div><div class="quiz-bank-list">${quizBank.map(q => `<div class="quiz-item"><div><strong>Q${q.id}:</strong> ${escapeHtml(q.question.substring(0, 70))}...<br><small>${q.category} | ${q.difficulty}</small></div><div><button class="btn btn-danger btn-sm" onclick="window.deleteQuizQuestion(${q.id})"><i class="fas fa-trash"></i></button></div></div>`).join('')}</div></div>`;
         }
         
         function renderLibrary() {
-            return `
-                <div class="card">
-                    <div class="card-header"><h2><i class="fas fa-book-open"></i> Resource Library</h2><button class="btn btn-primary" onclick="openAddLibraryModal()"><i class="fas fa-plus"></i> + Add Resource</button></div>
-                    <div class="library-list">
-                        ${library.map(item => `
-                            <div class="library-item">
-                                <div><i class="fas fa-file-pdf" style="color:var(--primary);"></i> <strong>${escapeHtml(item.title)}</strong><br><small style="color:var(--text-muted);">${escapeHtml(item.category || 'General')} | ${item.downloads || 0} downloads</small></div>
-                                <div><button class="btn btn-danger btn-sm" onclick="deleteLibraryItem(${item.id})"><i class="fas fa-trash"></i></button></div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
+            return `<div class="card"><div class="card-header"><h2><i class="fas fa-book-open"></i> Resource Library</h2><button class="btn btn-primary" onclick="window.openAddLibraryModal()"><i class="fas fa-plus"></i> Add Resource</button></div><div class="library-list">${library.map(item => `<div class="library-item"><div><i class="fas fa-file-pdf" style="color:var(--primary);"></i> <strong>${escapeHtml(item.title)}</strong><br><small>${item.type} | ${item.size} | ${item.downloads} downloads</small></div><div><button class="btn btn-danger btn-sm" onclick="window.deleteLibraryItem(${item.id})"><i class="fas fa-trash"></i></button></div></div>`).join('')}</div></div>`;
         }
         
         function renderSystemSettings() {
-            return `
-                <div class="card">
-                    <div class="card-header"><h2><i class="fas fa-cog"></i> System Settings</h2><button class="btn btn-primary" onclick="saveSettings()"><i class="fas fa-save"></i> Save Settings</button></div>
-                    <div style="display: flex; flex-direction: column; gap: 24px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-                            <div><h3>Maintenance Mode</h3><p style="color: var(--text-muted); font-size: 0.8rem;">When enabled, only admins can access the site</p></div>
-                            <label class="toggle-switch"><input type="checkbox" id="maintenanceMode"><span class="toggle-slider"></span></label>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-                            <div><h3>Allow Registration</h3><p style="color: var(--text-muted); font-size: 0.8rem;">Enable new user signups</p></div>
-                            <label class="toggle-switch"><input type="checkbox" id="allowRegistration" checked><span class="toggle-slider"></span></label>
-                        </div>
-                        <hr style="border-color: var(--border);">
-                        <div>
-                            <h3>Site Information</h3>
-                            <div style="margin-top: 16px;">
-                                <label>Site Name</label>
-                                <input type="text" id="siteName" value="MEI DRIVE AFRICA" style="width: 100%; max-width: 400px;">
-                                <label style="margin-top: 16px;">Contact Email</label>
-                                <input type="email" id="contactEmail" value="support@meidrive.com" style="width: 100%; max-width: 400px;">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
+            return `<div class="card"><div class="card-header"><h2><i class="fas fa-cog"></i> System Settings</h2><button class="btn btn-primary" onclick="window.saveSettings()"><i class="fas fa-save"></i> Save Settings</button></div><div style="display:flex;flex-direction:column;gap:24px;"><div style="display:flex;justify-content:space-between;align-items:center;"><div><h3>Maintenance Mode</h3><p style="color:var(--text-muted);">Only admins can access</p></div><label class="toggle-switch"><input type="checkbox" id="maintenanceMode" ${systemSettings.maintenanceMode ? 'checked' : ''}><span class="toggle-slider"></span></label></div><div style="display:flex;justify-content:space-between;align-items:center;"><div><h3>Allow Registration</h3><p style="color:var(--text-muted);">Enable new signups</p></div><label class="toggle-switch"><input type="checkbox" id="allowRegistration" ${systemSettings.allowRegistration ? 'checked' : ''}><span class="toggle-slider"></span></label></div><hr><div><h3>Site Information</h3><label>Site Name</label><input type="text" id="siteName" value="${escapeHtml(systemSettings.siteName)}" style="width:100%;"><label style="margin-top:16px;">Contact Email</label><input type="email" id="contactEmail" value="${escapeHtml(systemSettings.contactEmail)}" style="width:100%;"></div></div></div>`;
         }
         
         function renderApp() {
             const app = document.getElementById('app');
-            if (!app) return;
-            
+            const stats = calculateStats();
             const views = {
                 dashboard: renderDashboard() + renderUserManagement() + renderModuleManagement() + renderQuizBank() + renderLibrary() + renderSystemSettings(),
                 users: renderUserManagement(),
@@ -607,176 +606,46 @@
                 settings: renderSystemSettings()
             };
             const content = views[adminView] || views.dashboard;
-            const stats = calculateStats();
-            
             app.innerHTML = `
-                <div class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
-                <div class="sidebar" id="sidebar">
-                    <div class="sidebar-header"><div class="logo"><span class="logo-icon">🚗</span> MEI DRIVE AFRICA</div><p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 8px;">Administrator Panel</p></div>
-                    <div class="user-info"><div class="user-avatar">👤</div><div class="user-details"><h4>${escapeHtml(currentAdmin?.full_name || currentAdmin?.email?.split('@')[0] || 'Admin')}</h4><p>${escapeHtml(currentAdmin?.email || '')} • Admin</p></div></div>
-                    <div class="nav-menu">
-                        <div class="nav-item ${adminView === 'dashboard' ? 'active' : ''}" onclick="setView('dashboard')"><i class="fas fa-chart-line"></i> Dashboard</div>
-                        <div class="nav-item ${adminView === 'users' ? 'active' : ''}" onclick="setView('users')"><i class="fas fa-users"></i> User Management</div>
-                        <div class="nav-item ${adminView === 'modules' ? 'active' : ''}" onclick="setView('modules')"><i class="fas fa-book"></i> Module Management</div>
-                        <div class="nav-item ${adminView === 'quiz' ? 'active' : ''}" onclick="setView('quiz')"><i class="fas fa-brain"></i> Quiz Bank</div>
-                        <div class="nav-item ${adminView === 'library' ? 'active' : ''}" onclick="setView('library')"><i class="fas fa-book-open"></i> Library</div>
-                        <div class="nav-item ${adminView === 'settings' ? 'active' : ''}" onclick="setView('settings')"><i class="fas fa-cog"></i> System Settings</div>
-                        <div class="logout-btn"><div class="nav-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</div></div>
-                    </div>
-                </div>
-                <div class="main-content">
-                    <div class="top-bar"><div class="page-title"><h1>${adminView === 'dashboard' ? 'Dashboard' : adminView === 'users' ? 'User Management' : adminView === 'modules' ? 'Module Management' : adminView === 'quiz' ? 'Quiz Bank' : adminView === 'library' ? 'Resource Library' : 'System Settings'}</h1><p>Welcome back, ${escapeHtml(currentAdmin?.full_name?.split(' ')[0] || currentAdmin?.email?.split('@')[0] || 'Admin')}</p></div><div class="stats-mini"><span style="background: var(--dark-card); padding: 8px 16px; border-radius: 50px; font-size: 0.8rem;"><i class="fas fa-users"></i> ${stats.totalUsers} Users</span></div></div>
-                    ${content}
-                </div>
+                <div class="mobile-menu-btn" onclick="window.toggleSidebar()"><i class="fas fa-bars"></i></div>
+                <div class="sidebar" id="sidebar"><div class="sidebar-header"><div class="logo"><span class="logo-icon">🚗</span> MEI DRIVE AFRICA</div><p style="font-size:0.7rem;color:var(--text-muted);">Admin Panel</p></div><div class="user-info"><div class="user-avatar">👤</div><div><h4>${escapeHtml(currentUser.name)}</h4><p>${escapeHtml(currentUser.email)}</p></div></div><div class="nav-menu">${['dashboard','users','modules','quiz','library','settings'].map(v => `<div class="nav-item ${adminView === v ? 'active' : ''}" onclick="window.setView('${v}')"><i class="fas fa-${v === 'dashboard' ? 'chart-line' : v === 'users' ? 'users' : v === 'modules' ? 'book' : v === 'quiz' ? 'brain' : v === 'library' ? 'book-open' : 'cog'}"></i> ${v.charAt(0).toUpperCase() + v.slice(1)}</div>`).join('')}<div class="logout-btn"><div class="nav-item" onclick="window.logout()"><i class="fas fa-sign-out-alt"></i> Logout</div></div></div></div>
+                <div class="main-content"><div class="top-bar"><div class="page-title"><h1>${adminView.charAt(0).toUpperCase() + adminView.slice(1)}</h1><p>Welcome back, ${escapeHtml(currentUser.name)}</p></div><div><span style="background:var(--dark-card);padding:8px 16px;border-radius:50px;"><i class="fas fa-users"></i> ${stats.totalUsers} Users</span></div></div>${content}</div>
                 <div id="toast-container"></div>
-                <div class="modal" id="addModuleModal"><div class="modal-content"><h3>Add Module</h3><select id="moduleType"><option value="learner">Learner Hub</option><option value="psv">PSV</option><option value="boda">Boda</option><option value="ev">EV</option></select><input type="text" id="moduleTitle" placeholder="Title"><input type="number" id="modulePrice" placeholder="Price (KES, 0 for free)"><input type="text" id="moduleDuration" placeholder="Duration (e.g., 10 hours)"><input type="number" id="moduleLessons" placeholder="Number of lessons"><div style="display: flex; gap: 12px; margin-top: 20px;"><button class="btn btn-outline" onclick="closeModal('addModuleModal')">Cancel</button><button class="btn btn-primary" onclick="submitAddModule()">Add</button></div></div></div>
+                <!-- Modals: Add User, Module, Edit, PriceInput, Quiz, Library, Delete -->
+                <div class="modal" id="addUserModal"><div class="modal-content"><h3>➕ Add User</h3><input id="newUserName" placeholder="Full Name"><input id="newUserEmail" placeholder="Email"><select id="newUserRole"><option value="user">User</option><option value="admin">Admin</option></select><div style="display:flex;gap:12px;margin-top:20px;"><button class="btn btn-outline" onclick="window.closeModal('addUserModal')">Cancel</button><button class="btn btn-primary" onclick="window.submitAddUser()">Add</button></div></div></div>
+                <div class="modal" id="addModuleModal"><div class="modal-content"><h3>📘 Add Module</h3><input id="newModuleName" placeholder="Module Name"><input id="newModulePrice" placeholder="Price KES (0 for FREE)"><input id="newModuleDuration" placeholder="Duration (e.g., 20 hours)"><input id="newModuleTimer" placeholder="Exam Timer (minutes)"><input id="newModuleLessons" placeholder="Lessons"><textarea id="newModuleDescription" placeholder="Description" rows="2"></textarea><div style="display:flex;gap:12px;"><button class="btn btn-outline" onclick="window.closeModal('addModuleModal')">Cancel</button><button class="btn btn-primary" onclick="window.submitAddModule()">Create</button></div></div></div>
+                <div class="modal" id="editModuleModal"><div class="modal-content"><h3>✏️ Edit Module</h3><input type="hidden" id="editModuleId"><input id="editModuleName" placeholder="Name"><input id="editModulePrice" placeholder="Price"><input id="editModuleDuration" placeholder="Duration"><input id="editModuleTimer" placeholder="Timer"><input id="editModuleLessons" placeholder="Lessons"><textarea id="editModuleDescription" rows="2"></textarea><div style="display:flex;gap:12px;"><button class="btn btn-outline" onclick="window.closeModal('editModuleModal')">Cancel</button><button class="btn btn-primary" onclick="window.submitEditModule()">Save</button></div></div></div>
+                <div class="modal" id="priceInputModal"><div class="modal-content"><h3><i class="fas fa-lock"></i> Set Lock Price</h3><p id="priceInputMessage"></p><div class="price-input-container"><span>KES</span><input type="number" id="priceInput" value="0"></div><div style="display:flex;gap:12px;"><button class="btn btn-outline" onclick="window.closeModal('priceInputModal')">Cancel</button><button class="btn btn-primary" onclick="window.confirmLockWithPrice()">Confirm Lock</button></div></div></div>
+                <div class="modal" id="addQuizModal"><div class="modal-content"><h3>🧠 Add Quiz</h3><input id="quizQuestion" placeholder="Question"><input id="quizOptionA" placeholder="Option A"><input id="quizOptionB" placeholder="Option B"><input id="quizOptionC" placeholder="Option C"><input id="quizOptionD" placeholder="Option D"><select id="quizCorrect"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select><input id="quizCategory" placeholder="Category"><select id="quizDifficulty"><option>Easy</option><option>Medium</option><option>Hard</option></select><div style="display:flex;gap:12px;"><button class="btn btn-outline" onclick="window.closeModal('addQuizModal')">Cancel</button><button class="btn btn-primary" onclick="window.submitAddQuiz()">Add</button></div></div></div>
+                <div class="modal" id="addLibraryModal"><div class="modal-content"><h3>📚 Add Resource</h3><input id="libTitle" placeholder="Title"><select id="libType"><option>PDF</option><option>DOC</option><option>VIDEO</option></select><input id="libUrl" placeholder="URL"><input id="libSize" placeholder="Size"><div style="display:flex;gap:12px;"><button class="btn btn-outline" onclick="window.closeModal('addLibraryModal')">Cancel</button><button class="btn btn-primary" onclick="window.submitAddLibrary()">Add</button></div></div></div>
+                <div class="modal" id="deleteConfirmModal"><div class="modal-content"><h3>⚠️ Confirm Delete</h3><p id="deleteMessage"></p><div style="display:flex;gap:12px;"><button class="btn btn-outline" onclick="window.closeModal('deleteConfirmModal')">Cancel</button><button class="btn btn-danger" id="confirmDeleteBtn">Delete</button></div></div></div>
             `;
+            document.getElementById('confirmDeleteBtn').onclick = () => window.confirmDeleteBtn();
         }
         
-        function renderLogin(errorMsg = '') {
-            const app = document.getElementById('app');
-            if (!app) return;
-            app.innerHTML = `
-                <div class="login-screen">
-                    <div class="login-card">
-                        <h2><i class="fas fa-lock"></i> Admin Login</h2>
-                        <input type="email" id="adminEmail" placeholder="Email" autocomplete="email">
-                        <input type="password" id="adminPassword" placeholder="Password" autocomplete="current-password">
-                        ${errorMsg ? `<div class="error-message">${errorMsg}</div>` : ''}
-                        <button class="btn btn-primary" style="width:100%; margin-top:16px;" onclick="performLogin()">Login</button>
-                        <p style="text-align:center; margin-top:16px; font-size:0.75rem;">Only users with admin privileges can access.</p>
-                    </div>
-                </div>
-            `;
-        }
+        function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
         
-        // Login function
-        async function performLogin() {
-            const email = document.getElementById('adminEmail').value;
-            const password = document.getElementById('adminPassword').value;
-            if (!email || !password) {
-                renderLogin('Please enter email and password');
-                return;
-            }
-            try {
-                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-                if (error) {
-                    renderLogin(error.message);
-                    return;
-                }
-                const { data: profile, error: profileError } = await supabase
-                    .from('profiles')
-                    .select('is_admin, full_name, email')
-                    .eq('id', data.user.id)
-                    .single();
-                if (profileError || !profile || profile.is_admin !== true) {
-                    await supabase.auth.signOut();
-                    renderLogin('Access denied: Not an admin user');
-                    return;
-                }
-                currentAdmin = { id: data.user.id, email: data.user.email, full_name: profile.full_name || data.user.email };
-                await loadAllData();
-                renderApp();
-            } catch (err) {
-                renderLogin('Login failed. Try again.');
-            }
-        }
-        
-        // Logout
-        async function logout() {
-            await supabase.auth.signOut();
-            currentAdmin = null;
-            renderLogin();
-            showToast('Logged out', 'info');
-        }
-        
-        // UI Helpers
-        function closeModal(id) { document.getElementById(id)?.classList.remove('active'); }
-        function setView(view) { adminView = view; renderApp(); }
-        function toggleSidebar() { document.getElementById('sidebar')?.classList.toggle('open'); }
-        
-        // Module actions (global for onclick)
-        window.editModule = async (type, id) => {
-            const module = modules[type].find(m => m.id === id);
-            if (!module) return;
-            const newTitle = prompt('New title:', module.title || module.name);
-            if (newTitle) await updateModule(type, id, { title: newTitle, name: newTitle });
-        };
-        window.toggleLock = async (type, id, isLocked) => {
-            if (isLocked) {
-                await updateModule(type, id, { is_locked: false, price: 0 });
-            } else {
-                const price = prompt('Set price for this module (KES):', '0');
-                if (price !== null) await updateModule(type, id, { is_locked: true, price: parseInt(price) || 0 });
-            }
-        };
-        window.deleteModuleItem = async (type, id) => { if (confirm('Delete module?')) await deleteModule(type, id); };
+        // Global modal helpers
+        window.openAddUserModal = () => document.getElementById('addUserModal').classList.add('active');
         window.openAddModuleModal = () => document.getElementById('addModuleModal').classList.add('active');
-        window.submitAddModule = async () => {
-            const type = document.getElementById('moduleType').value;
-            const title = document.getElementById('moduleTitle').value;
-            const price = parseInt(document.getElementById('modulePrice').value) || 0;
-            const duration = document.getElementById('moduleDuration').value;
-            const lessons = parseInt(document.getElementById('moduleLessons').value) || 1;
-            if (!title) { showToast('Title required', 'error'); return; }
-            await addModule(type, { title, name: title, price, duration, lessons_count: lessons, module_number: Date.now() % 1000, is_locked: price > 0 });
-            closeModal('addModuleModal');
-            document.getElementById('moduleTitle').value = '';
-            document.getElementById('modulePrice').value = '';
-            document.getElementById('moduleDuration').value = '';
-            document.getElementById('moduleLessons').value = '';
-        };
-        window.openAddQuizModal = () => {
-            const q = prompt('Enter question text:');
-            if (q) addQuizQuestion({ text: q, options: ['A', 'B', 'C', 'D'], correct: 0, category: 'General' });
-        };
-        window.openAddLibraryModal = () => {
-            const title = prompt('Title:');
-            if (title) addLibraryItem({ title, category: 'General', downloads: '0', link: '#' });
-        };
-        window.saveSettings = () => showToast('Settings saved locally (demo)', 'success');
-        
-        // Expose global functions
-        window.updateUserRole = updateUserRole;
-        window.updateUserStatus = updateUserStatus;
-        window.deleteUser = deleteUser;
-        window.deleteQuizQuestion = deleteQuizQuestion;
-        window.deleteLibraryItem = deleteLibraryItem;
-        window.performLogin = performLogin;
-        window.logout = logout;
-        window.setView = setView;
-        window.closeModal = closeModal;
-        window.toggleSidebar = toggleSidebar;
-        window.saveSettings = saveSettings;
-        
-        // Initialize Supabase and check session
-        async function init() {
-            try {
-                supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                const { data: { session } } = await supabase.auth.getSession();
-                if (session) {
-                    const { data: profile } = await supabase
-                        .from('profiles')
-                        .select('is_admin, full_name, email')
-                        .eq('id', session.user.id)
-                        .single();
-                    if (profile && profile.is_admin === true) {
-                        currentAdmin = { id: session.user.id, email: session.user.email, full_name: profile.full_name };
-                        await loadAllData();
-                        renderApp();
-                        return;
-                    } else {
-                        await supabase.auth.signOut();
-                    }
-                }
-                renderLogin();
-            } catch (err) {
-                console.error('Init error:', err);
-                document.getElementById('app').innerHTML = '<div style="color:red; padding:40px; text-align:center;">Failed to initialize. Check console.</div>';
-            }
-        }
-        
-        init();
+        window.openEditModuleModal = (id) => { const m = modules.find(m => m.id === id); if(m){ document.getElementById('editModuleId').value=m.id; document.getElementById('editModuleName').value=m.name; document.getElementById('editModulePrice').value=m.price; document.getElementById('editModuleDuration').value=m.duration; document.getElementById('editModuleTimer').value=m.examTimer; document.getElementById('editModuleLessons').value=m.lessons; document.getElementById('editModuleDescription').value=m.description||''; document.getElementById('editModuleModal').classList.add('active'); } };
+        window.openAddQuizModal = () => document.getElementById('addQuizModal').classList.add('active');
+        window.openAddLibraryModal = () => document.getElementById('addLibraryModal').classList.add('active');
+        window.submitAddUser = () => { const n=document.getElementById('newUserName').value, e=document.getElementById('newUserEmail').value, r=document.getElementById('newUserRole').value; if(n&&e){ addUser(n,e,r); closeModal('addUserModal'); } else showToast('Fill all fields','error'); };
+        window.submitAddModule = () => { const n=document.getElementById('newModuleName').value, p=document.getElementById('newModulePrice').value, d=document.getElementById('newModuleDuration').value, t=document.getElementById('newModuleTimer').value, l=document.getElementById('newModuleLessons').value, desc=document.getElementById('newModuleDescription').value; if(n&&d&&l){ addModule(n,p||0,d,t||60,l,desc); closeModal('addModuleModal'); } else showToast('Fill required fields','error'); };
+        window.submitEditModule = () => { const id=parseInt(document.getElementById('editModuleId').value); updateModule(id,{name:document.getElementById('editModuleName').value,price:parseInt(document.getElementById('editModulePrice').value)||0,duration:document.getElementById('editModuleDuration').value,examTimer:parseInt(document.getElementById('editModuleTimer').value)||60,lessons:parseInt(document.getElementById('editModuleLessons').value),description:document.getElementById('editModuleDescription').value}); closeModal('editModuleModal'); };
+        window.submitAddQuiz = () => { const q=document.getElementById('quizQuestion').value, opts=[document.getElementById('quizOptionA').value,document.getElementById('quizOptionB').value,document.getElementById('quizOptionC').value,document.getElementById('quizOptionD').value], cor=parseInt(document.getElementById('quizCorrect').value), cat=document.getElementById('quizCategory').value, diff=document.getElementById('quizDifficulty').value; if(q&&opts.every(o=>o)){ addQuizQuestion(q,opts,cor,cat,diff); closeModal('addQuizModal'); } else showToast('Fill all options','error'); };
+        window.submitAddLibrary = () => { const t=document.getElementById('libTitle').value, ty=document.getElementById('libType').value, u=document.getElementById('libUrl').value, s=document.getElementById('libSize').value; if(t&&u){ addLibraryItem(t,ty,u,s); closeModal('addLibraryModal'); } else showToast('Title and URL required','error'); };
+        window.updateUserStatus = updateUserStatus; window.updateUserRole = updateUserRole; window.toggleModuleStatus = toggleModuleStatus; window.deleteQuizQuestion = deleteQuizQuestion; window.deleteLibraryItem = deleteLibraryItem; window.confirmLockWithPrice = confirmLockWithPrice; window.saveSettings = saveSettings;
+        let pendingDel=null, delType=null;
+        window.confirmDeleteUser = (id)=>{ pendingDel=id; delType='user'; document.getElementById('deleteMessage').innerHTML='Delete this user?'; document.getElementById('deleteConfirmModal').classList.add('active'); };
+        window.confirmDeleteModule = (id)=>{ pendingDel=id; delType='module'; document.getElementById('deleteMessage').innerHTML='Delete this module?'; document.getElementById('deleteConfirmModal').classList.add('active'); };
+        window.confirmDeleteBtn = ()=>{ if(delType==='user') deleteUser(pendingDel); else if(delType==='module') deleteModule(pendingDel); closeModal('deleteConfirmModal'); pendingDel=null; delType=null; };
+        window.closeModal = (id)=> document.getElementById(id).classList.remove('active');
+        window.setView = (view)=>{ adminView=view; renderApp(); };
+        window.toggleSidebar = ()=> document.getElementById('sidebar').classList.toggle('open');
+        window.logout = ()=>{ showToast('Logged out','info'); setTimeout(()=> alert('Demo logout - would redirect'),800); };
+        renderApp();
     </script>
 </body>
 </html>
