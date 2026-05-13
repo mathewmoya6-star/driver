@@ -1,466 +1,726 @@
-<!DOCTYPE html>
+what of this <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>MEI DRIVE AFRICA | Complete Admin Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#00d084">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>MEI DRIVE AFRICA | Admin Panel</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e0e0e0;line-height:1.5}
-        .container{max-width:1400px;margin:0 auto;padding:0 24px}
-        .navbar{border-bottom:2px solid #d4af37;padding:12px 0;background:#0a0a0a;position:sticky;top:0;z-index:100}
-        .nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-        .logo{color:#d4af37;font-weight:800;font-size:20px;display:flex;align-items:center;gap:8px}
-        .btn{background:#d4af37;color:#000;padding:10px 24px;border:none;border-radius:40px;cursor:pointer;font-weight:600;transition:0.2s}
-        .btn-outline{background:transparent;border:2px solid #d4af37;color:#d4af37}
-        .btn-small{background:#d4af37;color:#000;padding:6px 16px;border-radius:30px;font-size:12px;border:none;cursor:pointer}
-        .btn-danger{background:#c62828;color:#fff}
-        .btn-sm{background:#2c2c2c;color:#fff;padding:4px 12px;border-radius:20px;font-size:11px;border:none;cursor:pointer}
-        .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin:24px 0}
-        .stat-card{background:#111;border-radius:20px;padding:20px;text-align:center;border:1px solid #2c2c2c}
-        .stat-number{font-size:32px;font-weight:800;color:#d4af37}
-        .stat-label{font-size:12px;color:#aaa;margin-top:4px}
-        .admin-card{background:#111;border-radius:20px;border:1px solid #2a2a2a;padding:24px;margin-bottom:28px}
-        .section-title{font-size:22px;margin:28px 0 16px 0;border-left:4px solid #d4af37;padding-left:16px}
-        .form-group{margin-bottom:16px}
-        .form-group label{display:block;margin-bottom:6px;font-weight:500;color:#ddd}
-        .form-group input,.form-group select,.form-group textarea{width:100%;padding:12px;background:#1e1e1e;border:1px solid #333;border-radius:12px;color:#fff;font-family:inherit}
-        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-        .tab-bar{display:flex;gap:8px;border-bottom:1px solid #2c2c2c;margin-bottom:28px;flex-wrap:wrap}
-        .tab-btn{background:transparent;border:none;padding:12px 28px;color:#aaa;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;transition:0.2s}
-        .tab-btn.active{color:#d4af37;border-bottom-color:#d4af37}
-        .search-filter{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
-        .search-filter input{flex:1;padding:10px;background:#1e1e1e;border:1px solid #333;border-radius:30px;color:#fff}
-        .items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;margin-top:16px}
-        .item-card{background:#0f0f0f;border-radius:16px;padding:16px;border:1px solid #2c2c2c;transition:0.2s}
-        .item-card:hover{border-color:#d4af37}
-        .item-title{font-weight:700;font-size:18px;color:#d4af37;margin-bottom:8px}
-        .item-desc{font-size:13px;color:#bbb;margin-bottom:12px}
-        .item-meta{font-size:12px;color:#888;margin-bottom:12px;display:flex;gap:16px;flex-wrap:wrap}
-        .item-actions{display:flex;gap:8px;flex-wrap:wrap}
-        .toast{position:fixed;bottom:20px;right:20px;background:#1e1e1e;border-left:4px solid #d4af37;padding:12px 20px;border-radius:8px;z-index:2000}
-        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.96);z-index:1000;justify-content:center;align-items:center}
-        .modal-content{background:#111;border:1px solid #d4af37;border-radius:24px;padding:28px;max-width:600px;width:90%}
-        .login-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.98);z-index:1000;display:flex;justify-content:center;align-items:center}
-        .login-box{background:#111;border:2px solid #d4af37;border-radius:24px;padding:40px;max-width:400px;width:90%}
-        .user-badge{background:#d4af37;color:#000;padding:6px 14px;border-radius:30px;font-weight:600;font-size:12px;display:flex;align-items:center;gap:8px}
-        footer{text-align:center;padding:24px;color:#777;margin-top:30px;border-top:1px solid #222}
-        i{margin-right:6px}
-        @media(max-width:768px){.container{padding:0 16px}.form-row{grid-template-columns:1fr}}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #00d084;
+            --primary-dark: #00a86b;
+            --primary-light: #4ade80;
+            --dark: #000000;
+            --dark-card: #0a0a0a;
+            --dark-hover: #111111;
+            --border: #1a1a1a;
+            --text: #FFFFFF;
+            --text-muted: #888888;
+            --gradient-primary: linear-gradient(135deg, #00d084 0%, #4ade80 100%);
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --font-xs: 0.75rem;
+            --font-sm: 0.875rem;
+            --font-md: 1rem;
+            --font-lg: 1.25rem;
+            --font-xl: 1.5rem;
+            --font-2xl: 1.875rem;
+            --z-sidebar: 100;
+            --z-modal: 1000;
+            --z-toast: 1100;
+        }
+
+        body { font-family: 'Inter', sans-serif; background: var(--dark); color: var(--text); line-height: 1.5; }
+        
+        .loading-skeleton {
+            background: linear-gradient(90deg, var(--dark-card) 25%, var(--dark-hover) 50%, var(--dark-card) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 8px;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .admin-container { display: flex; min-height: 100vh; }
+        
+        .sidebar {
+            width: 280px;
+            background: var(--dark-card);
+            border-right: 1px solid var(--border);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: var(--z-sidebar);
+        }
+        
+        .sidebar-header { padding: var(--spacing-lg); border-bottom: 1px solid var(--border); }
+        .logo { font-size: 1.3rem; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent; display: flex; align-items: center; gap: var(--spacing-sm); }
+        
+        .user-info { padding: var(--spacing-lg); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: var(--spacing-md); }
+        .user-avatar { width: 48px; height: 48px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--dark); }
+        
+        .nav-menu { padding: var(--spacing-lg); }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: 12px;
+            color: var(--text-muted);
+            cursor: pointer;
+            margin-bottom: var(--spacing-xs);
+            transition: all 0.2s;
+        }
+        .nav-item:hover, .nav-item.active { background: rgba(0, 208, 132, 0.1); color: var(--primary); }
+        .nav-item i { width: 24px; }
+        
+        .main-content { flex: 1; margin-left: 280px; padding: var(--spacing-xl) var(--spacing-xl); }
+        
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-xl); flex-wrap: wrap; gap: var(--spacing-md); }
+        .page-title h1 { font-size: var(--font-2xl); font-weight: 700; color: var(--primary); }
+        .page-title p { color: var(--text-muted); font-size: var(--font-sm); }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        .stat-card {
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: var(--spacing-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        .stat-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+        .stat-info h3 { font-size: var(--font-sm); font-weight: 500; color: var(--text-muted); margin-bottom: var(--spacing-sm); }
+        .stat-number { font-size: var(--font-2xl); font-weight: 800; color: var(--primary); }
+        .stat-icon { width: 48px; height: 48px; background: rgba(0, 208, 132, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary); }
+        
+        .card {
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+        .card-header h2 { font-size: var(--font-lg); font-weight: 600; color: var(--primary); }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow-x: auto;
+            display: block;
+        }
+        .data-table thead, .data-table tbody { display: table; width: 100%; table-layout: fixed; }
+        .data-table th, .data-table td {
+            padding: var(--spacing-md);
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .data-table th { background: rgba(0, 208, 132, 0.05); color: var(--primary); font-weight: 600; }
+        
+        .status-badge {
+            padding: var(--spacing-xs) var(--spacing-md);
+            border-radius: 20px;
+            font-size: var(--font-xs);
+            font-weight: 600;
+            display: inline-block;
+        }
+        .status-active { background: rgba(46, 204, 113, 0.2); color: #2ecc71; }
+        .role-admin { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
+        .role-user { background: rgba(0, 208, 132, 0.2); color: var(--primary); }
+        
+        .btn {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-size: var(--font-sm);
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        .btn-primary { background: var(--gradient-primary); color: var(--dark); }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-1px); }
+        .btn-danger { background: #e74c3c; color: #fff; }
+        .btn-danger:hover { background: #c0392b; transform: translateY(-1px); }
+        .btn-sm { padding: var(--spacing-xs) var(--spacing-md); font-size: var(--font-xs); }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(12px);
+            z-index: var(--z-modal);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--dark-card);
+            border: 1px solid var(--primary);
+            border-radius: 24px;
+            width: 90%;
+            max-width: 500px;
+            padding: var(--spacing-xl);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-content input, .modal-content select, .modal-content textarea {
+            width: 100%;
+            padding: var(--spacing-md);
+            margin: var(--spacing-sm) 0;
+            background: #111;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: var(--font-md);
+        }
+        .modal-content input:focus, .modal-content select:focus, .modal-content textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .toast-container { position: fixed; bottom: var(--spacing-lg); right: var(--spacing-lg); z-index: var(--z-toast); }
+        .toast { background: var(--dark-card); border-left: 4px solid var(--primary); padding: var(--spacing-md) var(--spacing-lg); border-radius: 12px; margin-top: var(--spacing-sm); animation: slideIn 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-lg);
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+        }
+        .login-card {
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: var(--spacing-xl);
+            width: 100%;
+            max-width: 460px;
+        }
+        .login-header { text-align: center; margin-bottom: var(--spacing-xl); }
+        .login-header h1 { font-size: var(--font-2xl); color: var(--primary); margin-top: var(--spacing-md); }
+        
+        .mobile-menu-btn { display: none; position: fixed; top: var(--spacing-md); left: var(--spacing-md); z-index: 101; background: var(--dark-card); border: 1px solid var(--border); border-radius: 12px; padding: var(--spacing-md); cursor: pointer; color: var(--primary); }
+        
+        .pagination {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: center;
+            margin-top: var(--spacing-lg);
+        }
+        .pagination button {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .pagination button.active {
+            background: var(--primary);
+            color: var(--dark);
+            border-color: var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: var(--spacing-md); margin-top: 60px; }
+            .mobile-menu-btn { display: block; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .data-table { font-size: var(--font-xs); }
+            .data-table th, .data-table td { padding: var(--spacing-sm); }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
+        
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #111; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+        
+        .search-input {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: #111;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            width: 100%;
+            max-width: 300px;
+        }
     </style>
 </head>
 <body>
+    <div id="root"></div>
 
-<div class="navbar">
-    <div class="container nav">
-        <div class="logo"><i class="fas fa-crown"></i> MEI ADMIN <span style="font-size:11px;background:#d4af37;color:#000;padding:2px 8px;border-radius:20px;">COMPLETE CMS</span></div>
-        <div class="nav-links" id="navLinks"></div>
-    </div>
-</div>
-
-<div class="container" id="mainApp" style="display:none;">
-    <!-- Stats -->
-    <div class="stats-grid">
-        <div class="stat-card"><div class="stat-number" id="statLearner">0</div><div class="stat-label">Learner Units</div></div>
-        <div class="stat-card"><div class="stat-number" id="statPsv">0</div><div class="stat-label">PSV Modules</div></div>
-        <div class="stat-card"><div class="stat-number" id="statBoda">0</div><div class="stat-label">Boda Modules</div></div>
-        <div class="stat-card"><div class="stat-number" id="statSchool">0</div><div class="stat-label">School Modules</div></div>
-        <div class="stat-card"><div class="stat-number" id="statAcademy">0</div><div class="stat-label">Academy Courses</div></div>
-        <div class="stat-card"><div class="stat-number" id="statQuestions">0</div><div class="stat-label">Questions</div></div>
-        <div class="stat-card"><div class="stat-number" id="statLibrary">0</div><div class="stat-label">Library Docs</div></div>
-        <div class="stat-card"><div class="stat-number" id="statUsers">0</div><div class="stat-label">Users</div></div>
-        <div class="stat-card"><div class="stat-number" id="statPayments">0</div><div class="stat-label">Payments</div></div>
-    </div>
-    
-    <!-- Tabs -->
-    <div class="tab-bar">
-        <button class="tab-btn active" data-tab="dashboard" onclick="switchTab('dashboard')"><i class="fas fa-chart-line"></i> Dashboard</button>
-        <button class="tab-btn" data-tab="learner" onclick="switchTab('learner')"><i class="fas fa-car"></i> Learner</button>
-        <button class="tab-btn" data-tab="psv" onclick="switchTab('psv')"><i class="fas fa-bus"></i> PSV</button>
-        <button class="tab-btn" data-tab="boda" onclick="switchTab('boda')"><i class="fas fa-motorcycle"></i> Boda</button>
-        <button class="tab-btn" data-tab="school" onclick="switchTab('school')"><i class="fas fa-school"></i> School</button>
-        <button class="tab-btn" data-tab="academy" onclick="switchTab('academy')"><i class="fas fa-graduation-cap"></i> Academy</button>
-        <button class="tab-btn" data-tab="questions" onclick="switchTab('questions')"><i class="fas fa-question-circle"></i> Questions</button>
-        <button class="tab-btn" data-tab="library" onclick="switchTab('library')"><i class="fas fa-folder-open"></i> Library</button>
-        <button class="tab-btn" data-tab="users" onclick="switchTab('users')"><i class="fas fa-users"></i> Users</button>
-        <button class="tab-btn" data-tab="payments" onclick="switchTab('payments')"><i class="fas fa-credit-card"></i> Payments</button>
-    </div>
-    
-    <!-- Dashboard -->
-    <div id="dashboardTab">
-        <div class="admin-card">
-            <h3><i class="fas fa-cog"></i> System Management</h3>
-            <div class="form-row">
-                <button class="btn btn-outline" onclick="exportAllData()"><i class="fas fa-download"></i> Export All Data (JSON)</button>
-                <button class="btn btn-outline" onclick="location.reload()"><i class="fas fa-sync-alt"></i> Refresh Stats</button>
-            </div>
-        </div>
-        <div class="admin-card">
-            <h3><i class="fas fa-chart-simple"></i> Quick Overview</h3>
-            <p>✅ Supabase connected • Real-time persistence • Prices & lock/unlock work</p>
-            <p style="margin-top:12px;"><i class="fas fa-database"></i> All modules support price (USD) and lock/unlock feature. Locked modules are hidden from free users.</p>
-        </div>
-    </div>
-    
-    <!-- Dynamic Tabs (filled by JS) -->
-    <div id="learnerTab" style="display:none;"></div>
-    <div id="psvTab" style="display:none;"></div>
-    <div id="bodaTab" style="display:none;"></div>
-    <div id="schoolTab" style="display:none;"></div>
-    <div id="academyTab" style="display:none;"></div>
-    <div id="questionsTab" style="display:none;"></div>
-    <div id="libraryTab" style="display:none;"></div>
-    <div id="usersTab" style="display:none;"><div class="admin-card"><h3>👥 Manage Users</h3><button class="btn-small" onclick="loadUsers()">Refresh Users</button><div id="usersList" class="items-grid" style="margin-top:16px;"></div></div></div>
-    <div id="paymentsTab" style="display:none;"><div class="admin-card"><h3>💰 Manage Payments</h3><button class="btn-small" onclick="loadPayments()">Refresh Payments</button><div id="paymentsList" class="items-grid" style="margin-top:16px;"></div></div></div>
-</div>
-
-<!-- Edit Modal -->
-<div id="editModal" class="modal">
-    <div class="modal-content">
-        <h3 style="color:#d4af37;margin-bottom:20px;">Edit Item</h3>
-        <div class="form-group"><label>Title</label><input type="text" id="editTitle"></div>
-        <div class="form-group"><label>Description</label><textarea id="editDesc" rows="3"></textarea></div>
-        <div class="form-row">
-            <div class="form-group"><label>Price (USD)</label><input type="number" id="editPrice" step="0.01"></div>
-            <div class="form-group"><label>Locked</label><select id="editLocked"><option value="false">Unlocked</option><option value="true">Locked</option></select></div>
-        </div>
-        <div style="display:flex; gap:12px; justify-content:flex-end;">
-            <button class="btn-small" onclick="closeModal()">Cancel</button>
-            <button class="btn-small" id="saveEditBtn">Save Changes</button>
-        </div>
-    </div>
-</div>
-
-<footer>© 2026 MEI DRIVE AFRICA • Full Admin Panel</footer>
-
-<script>
-    // ============= YOUR SUPABASE CREDENTIALS =============
-    const SUPABASE_URL = "https://jeksrwrzzrczamxijvwl.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impla3Nyd3J6enJjemFteGlqdndsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzYyMjAsImV4cCI6MjA5NDI1MjIyMH0.1poYpJKNFEVe2NTBkXBTH2bIHGk2yT8aqCU-OlJc4vs";
-    
-    let supabase = null;
-    let currentUser = null;
-    let currentEditCallback = null;
-    
-    // Helper functions
-    function showToast(msg, type) {
-        const toast = document.createElement('div'); toast.className = 'toast'; toast.innerHTML = `<i class="fas ${type==='success'?'fa-check-circle':'fa-exclamation-circle'}"></i> ${msg}`;
-        document.body.appendChild(toast); setTimeout(()=>toast.remove(), 3000);
-    }
-    function escapeHtml(str) { return str?.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])) || ''; }
-    function closeModal() { document.getElementById('editModal').style.display = 'none'; }
-    function filterItems(containerId, searchText) {
-        const container = document.getElementById(containerId);
-        if(!container) return;
-        const cards = container.querySelectorAll('.item-card');
-        cards.forEach(card => {
-            const title = card.querySelector('.item-title')?.innerText.toLowerCase() || '';
-            const desc = card.querySelector('.item-desc')?.innerText.toLowerCase() || '';
-            card.style.display = (title.includes(searchText.toLowerCase()) || desc.includes(searchText.toLowerCase())) ? 'block' : 'none';
-        });
-    }
-    
-    // Initialize Supabase
-    function initSupabase() {
-        supabase = supabaseJs.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        return true;
-    }
-    
-    // Auth
-    async function loginWithSupabase() {
-        const email = document.getElementById('loginEmail').value;
-        const password = document.getElementById('loginPassword').value;
-        if (!email || !password) { showToast("Enter email and password", "error"); return; }
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) { showToast("Login failed: " + error.message, "error"); return; }
-        currentUser = data.user;
-        // Check admin
-        const { data: profile } = await supabase.from('user_profiles').select('is_admin').eq('id', currentUser.id).single();
-        if (!profile || !profile.is_admin) { showToast("Not an admin", "error"); await supabase.auth.signOut(); return; }
-        localStorage.setItem('admin_session', JSON.stringify({ user: currentUser }));
-        showToast(`Welcome ${currentUser.email}`, "success");
-        document.getElementById('loginOverlay').remove();
-        document.getElementById('mainApp').style.display = 'block';
-        loadAllData();
-        loadUsers();
-        loadPayments();
-    }
-    
-    async function logout() {
-        await supabase.auth.signOut();
-        currentUser = null;
-        localStorage.removeItem('admin_session');
-        location.reload();
-    }
-    
-    function checkSession() {
-        const session = localStorage.getItem('admin_session');
-        if (session) {
-            try {
-                const { user } = JSON.parse(session);
-                if (user) { currentUser = user; return true; }
-            } catch(e) {}
-        }
-        return false;
-    }
-    
-    function showLoginScreen() {
-        const loginHtml = `<div class="login-overlay" id="loginOverlay"><div class="login-box"><h2><i class="fas fa-lock"></i> Admin Login</h2><input type="email" id="loginEmail" placeholder="admin@meidrive.com"><input type="password" id="loginPassword" placeholder="Password"><button class="btn" style="width:100%; margin-top:10px;" onclick="loginWithSupabase()"><i class="fas fa-sign-in-alt"></i> Login</button><p style="margin-top:15px; font-size:12px; color:#888;">Ensure your user has is_admin=true in user_profiles table.</p></div></div>`;
-        document.body.insertAdjacentHTML('afterbegin', loginHtml);
-        document.getElementById('mainApp').style.display = 'none';
-    }
-    
-    // ========== MODULE RENDERING (with price & lock) ==========
-    async function loadModuleTable(tableName, containerId, statId) {
-        const { data, error } = await supabase.from(tableName).select('*').order('id', { ascending: false });
-        if (error) { console.error(error); return; }
-        const container = document.getElementById(containerId);
-        if (!container) return;
-        if (!data || data.length === 0) { container.innerHTML = '<div style="color:#888; padding:20px; text-align:center;">No items. Add one using the form below.</div>'; return; }
-        container.innerHTML = data.map(item => `
-            <div class="item-card">
-                <div class="item-title">${escapeHtml(item.title)}</div>
-                <div class="item-desc">${escapeHtml(item.description?.substring(0, 120) || '')}</div>
-                <div class="item-meta"><span><i class="fas fa-tag"></i> Price: $${item.price || 0}</span> <span><i class="fas ${item.is_locked ? 'fa-lock' : 'fa-lock-open'}"></i> ${item.is_locked ? 'Locked' : 'Unlocked'}</span></div>
-                <div class="item-actions">
-                    <button class="btn-sm" onclick="openEditModal('${tableName}', ${item.id})"><i class="fas fa-edit"></i> Edit</button>
-                    <button class="btn-sm btn-danger" onclick="deleteItem('${tableName}', ${item.id})"><i class="fas fa-trash"></i> Delete</button>
-                </div>
-            </div>
-        `).join('');
-        document.getElementById(statId).innerText = data.length;
-    }
-    
-    async function addItem(tableName, titleFieldId, descFieldId) {
-        const title = document.getElementById(titleFieldId).value.trim();
-        const description = document.getElementById(descFieldId).value.trim();
-        if (!title) { showToast("Title required", "error"); return; }
-        const { error } = await supabase.from(tableName).insert([{ title, description, price: 0, is_locked: false }]);
-        if (error) { showToast("Error: " + error.message, "error"); return; }
-        showToast(`Added`, "success");
-        document.getElementById(titleFieldId).value = '';
-        document.getElementById(descFieldId).value = '';
-        loadAllData();
-    }
-    
-    async function deleteItem(tableName, id) {
-        if (!confirm("Permanently delete?")) return;
-        const { error } = await supabase.from(tableName).delete().eq('id', id);
-        if (error) { showToast("Delete failed", "error"); return; }
-        showToast("Deleted", "success");
-        loadAllData();
-    }
-    
-    async function openEditModal(tableName, id) {
-        const { data, error } = await supabase.from(tableName).select('*').eq('id', id).single();
-        if (error) { showToast("Error loading item", "error"); return; }
-        document.getElementById('editTitle').value = data.title;
-        document.getElementById('editDesc').value = data.description || '';
-        document.getElementById('editPrice').value = data.price || 0;
-        document.getElementById('editLocked').value = data.is_locked ? 'true' : 'false';
-        const saveBtn = document.getElementById('saveEditBtn');
-        const newSave = saveBtn.cloneNode(true);
-        saveBtn.parentNode.replaceChild(newSave, saveBtn);
-        newSave.onclick = async () => {
-            const newTitle = document.getElementById('editTitle').value.trim();
-            const newDesc = document.getElementById('editDesc').value.trim();
-            const newPrice = parseFloat(document.getElementById('editPrice').value) || 0;
-            const newLocked = document.getElementById('editLocked').value === 'true';
-            if (!newTitle) { showToast("Title required", "error"); return; }
-            const { error: updateErr } = await supabase.from(tableName).update({ title: newTitle, description: newDesc, price: newPrice, is_locked: newLocked }).eq('id', id);
-            if (updateErr) { showToast("Update failed", "error"); return; }
-            showToast("Updated", "success");
-            closeModal();
-            loadAllData();
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // ==================== PRODUCTION CONFIGURATION ====================
+        // IMPORTANT: Replace these with your actual Supabase credentials
+        const SUPABASE_CONFIG = {
+            url: 'https://your-project.supabase.co',  // ← REPLACE WITH YOUR URL
+            anonKey: 'your-anon-key-here'              // ← REPLACE WITH YOUR ANON KEY
         };
-        document.getElementById('editModal').style.display = 'flex';
-    }
-    
-    // Questions & Library (simplified)
-    async function loadQuestions() {
-        const { data, error } = await supabase.from('questions').select('*').order('id', { ascending: false });
-        if (error) { console.error(error); return; }
-        const container = document.getElementById('questionsItems');
-        if (container) {
-            if (!data?.length) { container.innerHTML = '<div style="padding:20px; text-align:center;">No questions.</div>'; return; }
-            container.innerHTML = data.map(q => `
-                <div class="item-card">
-                    <div class="item-title">❓ ${escapeHtml(q.text)} <span style="background:#1f3a2c; padding:2px 10px; border-radius:20px; font-size:11px;">${escapeHtml(q.category)}</span></div>
-                    <div class="item-desc">${q.options?.map((o,i)=>`${String.fromCharCode(65+i)}. ${escapeHtml(o)}`).join(' · ')}</div>
-                    <div class="item-actions">
-                        <button class="btn-sm" onclick="editQuestion(${q.id})"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn-sm btn-danger" onclick="deleteQuestion(${q.id})"><i class="fas fa-trash"></i> Delete</button>
+        
+        // ==================== STATE MANAGEMENT ====================
+        let appState = {
+            currentUser: null,
+            currentView: 'login',
+            isLoading: false,
+            users: [],
+            modules: [],
+            quizBank: [],
+            library: [],
+            pagination: { page: 1, limit: 10, total: 0 }
+        };
+        
+        let supabase = null;
+        
+        // Initialize Supabase
+        try {
+            if (SUPABASE_CONFIG.url && !SUPABASE_CONFIG.url.includes('your-project')) {
+                supabase = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+            }
+        } catch(e) { console.error('Supabase init failed:', e); }
+        
+        // ==================== UTILITY FUNCTIONS ====================
+        function showToast(message, type = 'info') {
+            let container = document.getElementById('toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'toast-container';
+                container.className = 'toast-container';
+                document.body.appendChild(container);
+            }
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            const icons = { success: '✅', error: '❌', info: 'ℹ️', warning: '⚠️' };
+            toast.innerHTML = `${icons[type] || 'ℹ️'} ${message}`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+        
+        function sanitizeInput(str) {
+            if (!str) return '';
+            return str.replace(/[<>]/g, '').trim();
+        }
+        
+        async function apiCall(fn, errorMsg = 'Operation failed') {
+            appState.isLoading = true;
+            renderApp();
+            try {
+                const result = await fn();
+                return result;
+            } catch (error) {
+                console.error(error);
+                showToast(`${errorMsg}: ${error.message}`, 'error');
+                return null;
+            } finally {
+                appState.isLoading = false;
+                renderApp();
+            }
+        }
+        
+        // ==================== AUTHENTICATION ====================
+        async function initializeAuth() {
+            if (!supabase) {
+                showToast('Supabase not configured. Please set credentials.', 'error');
+                return false;
+            }
+            
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session?.user) {
+                const { data: profile } = await supabase
+                    .from('user_profiles')
+                    .select('*')
+                    .eq('user_id', session.user.id)
+                    .single();
+                
+                appState.currentUser = {
+                    id: session.user.id,
+                    email: session.user.email,
+                    role: profile?.role || 'viewer',
+                    name: profile?.name || session.user.email
+                };
+                appState.currentView = 'dashboard';
+                await loadDashboardData();
+                renderApp();
+                return true;
+            }
+            return false;
+        }
+        
+        async function handleLogin(email, password) {
+            if (!supabase) {
+                showToast('Supabase not configured. Please set SUPABASE_URL and ANON_KEY.', 'error');
+                return false;
+            }
+            
+            return await apiCall(async () => {
+                const { data, error } = await supabase.auth.signInWithPassword({ 
+                    email: sanitizeInput(email), 
+                    password 
+                });
+                if (error) throw error;
+                
+                const { data: profile } = await supabase
+                    .from('user_profiles')
+                    .select('*')
+                    .eq('user_id', data.user.id)
+                    .single();
+                
+                if (!profile || profile.role !== 'admin') {
+                    await supabase.auth.signOut();
+                    throw new Error('Admin access required');
+                }
+                
+                appState.currentUser = {
+                    id: data.user.id,
+                    email: data.user.email,
+                    role: profile.role,
+                    name: profile.name
+                };
+                appState.currentView = 'dashboard';
+                await loadDashboardData();
+                renderApp();
+                showToast('Login successful!', 'success');
+                return true;
+            }, 'Login failed');
+        }
+        
+        async function handleLogout() {
+            if (supabase) await supabase.auth.signOut();
+            appState.currentUser = null;
+            appState.currentView = 'login';
+            renderApp();
+            showToast('Logged out successfully', 'success');
+        }
+        
+        // ==================== DATABASE OPERATIONS ====================
+        async function loadDashboardData() {
+            if (!supabase) return;
+            
+            await apiCall(async () => {
+                const [usersRes, modulesRes, quizRes, libraryRes] = await Promise.all([
+                    supabase.from('users').select('*', { count: 'exact' }).range(0, 9),
+                    supabase.from('modules').select('*'),
+                    supabase.from('quiz_questions').select('*'),
+                    supabase.from('library_items').select('*')
+                ]);
+                
+                if (usersRes.data) appState.users = usersRes.data;
+                if (modulesRes.data) appState.modules = modulesRes.data;
+                if (quizRes.data) appState.quizBank = quizRes.data;
+                if (libraryRes.data) appState.library = libraryRes.data;
+            }, 'Failed to load data');
+        }
+        
+        async function createUser(userData) {
+            return await apiCall(async () => {
+                const { data, error } = await supabase
+                    .from('users')
+                    .insert([{ ...userData, created_at: new Date() }])
+                    .select();
+                if (error) throw error;
+                await loadDashboardData();
+                showToast('User created successfully', 'success');
+                return data;
+            }, 'Failed to create user');
+        }
+        
+        async function updateUser(userId, updates) {
+            return await apiCall(async () => {
+                const { error } = await supabase
+                    .from('users')
+                    .update(updates)
+                    .eq('id', userId);
+                if (error) throw error;
+                await loadDashboardData();
+                showToast('User updated successfully', 'success');
+            }, 'Failed to update user');
+        }
+        
+        async function deleteUser(userId) {
+            if (!confirm('Are you sure you want to delete this user?')) return;
+            return await apiCall(async () => {
+                const { error } = await supabase
+                    .from('users')
+                    .delete()
+                    .eq('id', userId);
+                if (error) throw error;
+                await loadDashboardData();
+                showToast('User deleted successfully', 'success');
+            }, 'Failed to delete user');
+        }
+        
+        // ==================== RENDER FUNCTIONS ====================
+        function renderLoading() {
+            return `<div class="stats-grid">
+                ${[...Array(6)].map(() => `<div class="stat-card"><div class="loading-skeleton" style="width:100%;height:80px;"></div></div>`).join('')}
+            </div>`;
+        }
+        
+        function renderLogin() {
+            const configWarning = (!SUPABASE_CONFIG.url || SUPABASE_CONFIG.url.includes('your-project')) ?
+                `<div class="card" style="background: rgba(231, 76, 60, 0.1); border-color: #e74c3c;">
+                    <p style="color: #e74c3c;"><i class="fas fa-exclamation-triangle"></i> ⚠️ Supabase not configured! Please edit SUPABASE_CONFIG with your project credentials.</p>
+                    <p style="margin-top: 8px; font-size: 0.875rem;">Required: Create tables (users, modules, quiz_questions, library_items, user_profiles)</p>
+                </div>` : '';
+            
+            return `
+                <div class="login-container">
+                    <div class="login-card">
+                        <div class="login-header">
+                            <div style="font-size: 3rem;">🚗</div>
+                            <h1>MEI DRIVE AFRICA</h1>
+                            <p style="color: var(--text-muted);">Administrator Login</p>
+                        </div>
+                        ${configWarning}
+                        <form id="loginForm" onsubmit="event.preventDefault(); handleLoginSubmit()">
+                            <div style="margin-bottom: var(--spacing-lg);">
+                                <label style="display: block; margin-bottom: var(--spacing-sm);">Email Address</label>
+                                <input type="email" id="loginEmail" required placeholder="admin@meidrive.com" autocomplete="email">
+                            </div>
+                            <div style="margin-bottom: var(--spacing-xl);">
+                                <label style="display: block; margin-bottom: var(--spacing-sm);">Password</label>
+                                <input type="password" id="loginPassword" required placeholder="••••••••" autocomplete="current-password">
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;" ${appState.isLoading ? 'disabled' : ''}>
+                                ${appState.isLoading ? '<i class="fas fa-spinner fa-spin"></i> Loading...' : '<i class="fas fa-sign-in-alt"></i> Sign In'}
+                            </button>
+                        </form>
+                        <div style="margin-top: var(--spacing-lg); text-align: center; font-size: var(--font-sm); color: var(--text-muted);">
+                            <p>Need an account? Contact system administrator</p>
+                            <p style="margin-top: var(--spacing-sm);">Default: Create admin user via Supabase Auth + user_profiles table</p>
+                        </div>
                     </div>
                 </div>
-            `).join('');
+            `;
         }
-        document.getElementById('statQuestions').innerText = data?.length || 0;
-    }
-    async function loadLibrary() {
-        const { data, error } = await supabase.from('library_docs').select('*').order('id', { ascending: false });
-        if (error) { console.error(error); return; }
-        const container = document.getElementById('libraryItems');
-        if (container) {
-            if (!data?.length) { container.innerHTML = '<div style="padding:20px; text-align:center;">No library resources.</div>'; return; }
-            container.innerHTML = data.map(doc => `
-                <div class="item-card">
-                    <div class="item-title"><i class="fas fa-book"></i> ${escapeHtml(doc.title)}</div>
-                    <div class="item-desc">📁 ${escapeHtml(doc.category)} | ⬇️ Downloads: ${doc.downloads} | 🔗 ${doc.link}</div>
-                    <div class="item-actions">
-                        <button class="btn-sm" onclick="editLibraryDoc(${doc.id})"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn-sm btn-danger" onclick="deleteLibraryDoc(${doc.id})"><i class="fas fa-trash"></i> Delete</button>
+        
+        function renderDashboard() {
+            if (appState.isLoading) return renderLoading();
+            
+            const stats = {
+                totalUsers: appState.users.length,
+                totalModules: appState.modules.length,
+                totalQuiz: appState.quizBank.length,
+                totalLibrary: appState.library.length
+            };
+            
+            return `
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-info"><h3>Total Users</h3><div class="stat-number">${stats.totalUsers}</div></div><div class="stat-icon"><i class="fas fa-users"></i></div></div>
+                    <div class="stat-card"><div class="stat-info"><h3>Total Modules</h3><div class="stat-number">${stats.totalModules}</div></div><div class="stat-icon"><i class="fas fa-book"></i></div></div>
+                    <div class="stat-card"><div class="stat-info"><h3>Quiz Questions</h3><div class="stat-number">${stats.totalQuiz}</div></div><div class="stat-icon"><i class="fas fa-brain"></i></div></div>
+                    <div class="stat-card"><div class="stat-info"><h3>Library Items</h3><div class="stat-number">${stats.totalLibrary}</div></div><div class="stat-icon"><i class="fas fa-book-open"></i></div></div>
+                </div>
+                ${renderUserManagement()}
+                ${renderModuleManagement()}
+            `;
+        }
+        
+        function renderUserManagement() {
+            const nonAdminUsers = appState.users.filter(u => u.role !== 'admin');
+            
+            return `<div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-users"></i> User Management</h2>
+                    <button class="btn btn-primary btn-sm" onclick="openCreateUserModal()"><i class="fas fa-plus"></i> Add User</button>
+                </div>
+                <div style="margin-bottom: var(--spacing-md);">
+                    <input type="text" id="userSearch" class="search-input" placeholder="Search users..." onkeyup="filterUsers()">
+                </div>
+                <div class="data-table">
+                    <table style="width: 100%;">
+                        <thead>
+                            <tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            ${nonAdminUsers.map(user => `
+                                <tr>
+                                    <td><strong>${escapeHtml(user.name || 'N/A')}</strong></td>
+                                    <td>${escapeHtml(user.email)}</td>
+                                    <td><span class="status-badge ${user.role === 'admin' ? 'role-admin' : 'role-user'}">${user.role || 'user'}</span></td>
+                                    <td><span class="status-badge status-active">${user.status || 'active'}</span></td>
+                                    <td>
+                                        <button class="btn btn-outline btn-sm" onclick="editUser('${user.id}')"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-danger btn-sm" onclick="deleteUser('${user.id}')"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div>`;
+        }
+        
+        function renderModuleManagement() {
+            return `<div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-book"></i> Module Management</h2>
+                    <button class="btn btn-primary btn-sm" onclick="openCreateModuleModal()"><i class="fas fa-plus"></i> Add Module</button>
+                </div>
+                <div class="data-table">
+                    <table style="width: 100%;">
+                        <thead><tr><th>Name</th><th>Price</th><th>Duration</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody>
+                            ${appState.modules.map(module => `
+                                <tr>
+                                    <td><strong>${escapeHtml(module.name)}</strong></td>
+                                    <td>${module.price === 0 ? 'FREE' : `KES ${module.price}`}</td>
+                                    <td>${module.duration || 'N/A'}</td>
+                                    <td><span class="status-badge status-active">${module.status || 'active'}</span></td>
+                                    <td>
+                                        <button class="btn btn-outline btn-sm" onclick="editModule('${module.id}')"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-danger btn-sm" onclick="deleteModule('${module.id}')"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div>`;
+        }
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        function handleLoginSubmit() {
+            const email = document.getElementById('loginEmail')?.value;
+            const password = document.getElementById('loginPassword')?.value;
+            if (email && password) handleLogin(email, password);
+        }
+        
+        function setView(view) {
+            appState.currentView = view;
+            renderApp();
+        }
+        
+        function toggleSidebar() {
+            document.getElementById('sidebar')?.classList.toggle('open');
+        }
+        
+        function openCreateUserModal() { showToast('Create user modal - Implement with form', 'info'); }
+        function openCreateModuleModal() { showToast('Create module modal - Implement with form', 'info'); }
+        function editUser(id) { showToast(`Edit user ${id}`, 'info'); }
+        function editModule(id) { showToast(`Edit module ${id}`, 'info'); }
+        function deleteModule(id) { showToast(`Delete module ${id}`, 'info'); }
+        function filterUsers() { showToast('Search functionality - Implement with debounce', 'info'); }
+        
+        function renderApp() {
+            const root = document.getElementById('root');
+            if (!root) return;
+            
+            if (appState.currentView === 'login' || !appState.currentUser) {
+                root.innerHTML = renderLogin();
+                return;
+            }
+            
+            const views = {
+                dashboard: renderDashboard(),
+                users: renderUserManagement(),
+                modules: renderModuleManagement()
+            };
+            
+            const content = views[appState.currentView] || views.dashboard;
+            
+            root.innerHTML = `
+                <div class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
+                <div class="sidebar" id="sidebar">
+                    <div class="sidebar-header">
+                        <div class="logo"><span>🚗</span> MEI DRIVE AFRICA</div>
+                        <p style="font-size: 0.7rem; color: var(--text-muted);">Administrator Panel</p>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-avatar">👑</div>
+                        <div>
+                            <h4>${escapeHtml(appState.currentUser?.name || 'Admin')}</h4>
+                            <p style="font-size: 0.75rem; color: var(--text-muted);">${escapeHtml(appState.currentUser?.email)} • ${appState.currentUser?.role}</p>
+                        </div>
+                    </div>
+                    <div class="nav-menu">
+                        <div class="nav-item ${appState.currentView === 'dashboard' ? 'active' : ''}" onclick="setView('dashboard')"><i class="fas fa-chart-line"></i> Dashboard</div>
+                        <div class="nav-item ${appState.currentView === 'users' ? 'active' : ''}" onclick="setView('users')"><i class="fas fa-users"></i> Users</div>
+                        <div class="nav-item ${appState.currentView === 'modules' ? 'active' : ''}" onclick="setView('modules')"><i class="fas fa-book"></i> Modules</div>
+                        <div class="nav-item" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Logout</div>
                     </div>
                 </div>
-            `).join('');
-        }
-        document.getElementById('statLibrary').innerText = data?.length || 0;
-    }
-    async function addQuestion() { alert("Use dashboard's SQL editor or extend this function"); }
-    async function deleteQuestion(id) { if(confirm("Delete question?")){ await supabase.from('questions').delete().eq('id', id); loadQuestions(); }}
-    async function addLibraryDoc() { alert("Use dashboard's SQL editor or extend this function"); }
-    async function deleteLibraryDoc(id) { if(confirm("Delete?")){ await supabase.from('library_docs').delete().eq('id', id); loadLibrary(); }}
-    async function editQuestion(id) { const newText = prompt("New question text:"); if(newText) await supabase.from('questions').update({ text: newText }).eq('id', id); loadQuestions(); }
-    async function editLibraryDoc(id) { const newTitle = prompt("New title:"); if(newTitle) await supabase.from('library_docs').update({ title: newTitle }).eq('id', id); loadLibrary(); }
-    
-    // Users & Payments
-    async function loadUsers() {
-        const { data: profiles, error } = await supabase.from('user_profiles').select('*');
-        if (error) { console.error(error); return; }
-        const container = document.getElementById('usersList');
-        if (container) {
-            if (!profiles?.length) { container.innerHTML = '<div class="admin-card">No users.</div>'; return; }
-            container.innerHTML = profiles.map(p => `
-                <div class="item-card">
-                    <div class="item-title">${escapeHtml(p.full_name || p.id)}</div>
-                    <div class="item-desc">ID: ${p.id}<br>Admin: ${p.is_admin ? '✅ Yes' : '❌ No'}<br>Status: ${p.status || 'active'}</div>
-                    <div class="item-actions">
-                        <button class="btn-sm" onclick="toggleAdmin('${p.id}', ${!p.is_admin})">${p.is_admin ? 'Revoke Admin' : 'Make Admin'}</button>
-                        <button class="btn-sm btn-danger" onclick="deleteUser('${p.id}')">Delete User</button>
+                <div class="main-content">
+                    <div class="top-bar">
+                        <div class="page-title">
+                            <h1>${appState.currentView.charAt(0).toUpperCase() + appState.currentView.slice(1)}</h1>
+                            <p>Welcome back, ${escapeHtml(appState.currentUser?.name || 'Admin')}</p>
+                        </div>
                     </div>
+                    ${content}
                 </div>
-            `).join('');
+                <div id="toast-container"></div>
+            `;
         }
-        document.getElementById('statUsers').innerText = profiles?.length || 0;
-    }
-    async function loadPayments() {
-        const { data, error } = await supabase.from('payments').select('*').order('created_at', { ascending: false });
-        if (error) { console.error(error); return; }
-        const container = document.getElementById('paymentsList');
-        if (container) {
-            if (!data?.length) { container.innerHTML = '<div class="admin-card">No payments.</div>'; return; }
-            container.innerHTML = data.map(p => `
-                <div class="item-card">
-                    <div class="item-title">Payment #${p.id}</div>
-                    <div class="item-desc">User: ${p.user_id}<br>Amount: $${p.amount}<br>Status: ${p.status}<br>Date: ${new Date(p.created_at).toLocaleString()}</div>
-                    <div class="item-actions">
-                        ${p.status !== 'approved' ? `<button class="btn-sm" onclick="updatePaymentStatus(${p.id}, 'approved')">Approve</button>` : ''}
-                        ${p.status !== 'rejected' ? `<button class="btn-sm btn-danger" onclick="updatePaymentStatus(${p.id}, 'rejected')">Reject</button>` : ''}
-                        ${p.status !== 'pending' ? `<button class="btn-sm" onclick="updatePaymentStatus(${p.id}, 'pending')">Reset</button>` : ''}
-                    </div>
-                </div>
-            `).join('');
-        }
-        document.getElementById('statPayments').innerText = data?.length || 0;
-    }
-    async function updatePaymentStatus(paymentId, status) {
-        await supabase.from('payments').update({ status }).eq('id', paymentId);
-        showToast(`Payment ${status}`, "success");
-        loadPayments();
-    }
-    async function toggleAdmin(userId, makeAdmin) {
-        await supabase.from('user_profiles').update({ is_admin: makeAdmin }).eq('id', userId);
-        showToast(`Admin status updated`, "success");
-        loadUsers();
-    }
-    async function deleteUser(userId) {
-        if (!confirm("Delete user permanently?")) return;
-        await supabase.from('user_profiles').delete().eq('id', userId);
-        await supabase.auth.admin.deleteUser(userId);
-        showToast("User deleted", "success");
-        loadUsers();
-    }
-    
-    // Combined load
-    async function loadAllData() {
-        await Promise.all([
-            loadModuleTable('learner_units', 'learnerItems', 'statLearner'),
-            loadModuleTable('psv_modules', 'psvItems', 'statPsv'),
-            loadModuleTable('boda_modules', 'bodaItems', 'statBoda'),
-            loadModuleTable('school_modules', 'schoolItems', 'statSchool'),
-            loadModuleTable('academy_courses', 'academyItems', 'statAcademy'),
-            loadQuestions(),
-            loadLibrary()
-        ]);
-    }
-    
-    // Build tab content dynamically (add form for each module)
-    function buildModuleTab(tableName, displayName, tabId) {
-        const tabDiv = document.getElementById(tabId);
-        if (!tabDiv) return;
-        tabDiv.innerHTML = `
-            <div class="admin-card"><h3>➕ Add ${displayName}</h3>
-            <div class="form-row"><div class="form-group"><label>Title</label><input type="text" id="${tableName}Title"></div>
-            <div class="form-group"><label>Description</label><textarea id="${tableName}Desc" rows="2"></textarea></div></div>
-            <button class="btn" onclick="addItem('${tableName}', '${tableName}Title', '${tableName}Desc')">Add ${displayName}</button></div>
-            <div class="search-filter"><input type="text" id="search${tableName}" placeholder="Search ${displayName}..." onkeyup="filterItems('${tableName}Items', this.value)"></div>
-            <div id="${tableName}Items" class="items-grid"></div>
-        `;
-    }
-    
-    function exportAllData() { showToast("Use Supabase Dashboard to export CSV/JSON", "info"); }
-    
-    // Tab switching
-    function switchTab(tabId) {
-        document.querySelectorAll('#dashboardTab, #learnerTab, #psvTab, #bodaTab, #schoolTab, #academyTab, #questionsTab, #libraryTab, #usersTab, #paymentsTab').forEach(t => t.style.display = 'none');
-        document.getElementById(tabId + 'Tab').style.display = 'block';
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
-        if (tabId !== 'dashboard') { if (tabId === 'users') loadUsers(); else if (tabId === 'payments') loadPayments(); else loadAllData(); }
-    }
-    
-    function updateNavBar() {
-        const navDiv = document.getElementById('navLinks');
-        if(currentUser) {
-            navDiv.innerHTML = `<div class="user-badge"><i class="fas fa-user-shield"></i> ${currentUser.email}</div><button onclick="logout()" class="btn-small btn-outline"><i class="fas fa-sign-out-alt"></i> Logout</button>`;
-        } else {
-            navDiv.innerHTML = `<button onclick="showLoginScreen()" class="btn-small">Login</button>`;
-        }
-    }
-    
-    // Expose functions globally
-    window.switchTab = switchTab; window.addItem = addItem; window.deleteItem = deleteItem; window.openEditModal = openEditModal;
-    window.closeModal = closeModal; window.filterItems = filterItems; window.exportAllData = exportAllData;
-    window.logout = logout; window.loginWithSupabase = loginWithSupabase;
-    window.loadUsers = loadUsers; window.loadPayments = loadPayments; window.toggleAdmin = toggleAdmin; window.deleteUser = deleteUser;
-    window.updatePaymentStatus = updatePaymentStatus; window.addQuestion = addQuestion; window.deleteQuestion = deleteQuestion;
-    window.editQuestion = editQuestion; window.addLibraryDoc = addLibraryDoc; window.deleteLibraryDoc = deleteLibraryDoc;
-    window.editLibraryDoc = editLibraryDoc;
-    
-    // Initialize
-    if (initSupabase()) {
-        if (!checkSession()) {
-            showLoginScreen();
-        } else {
-            updateNavBar();
-            document.getElementById('mainApp').style.display = 'block';
-            document.getElementById('dashboardTab').style.display = 'block';
-            // Build module tabs
-            buildModuleTab('learner_units', 'Learner Unit', 'learnerTab');
-            buildModuleTab('psv_modules', 'PSV Module', 'psvTab');
-            buildModuleTab('boda_modules', 'Boda Module', 'bodaTab');
-            buildModuleTab('school_modules', 'School Module', 'schoolTab');
-            buildModuleTab('academy_courses', 'Academy Course', 'academyTab');
-            // Build questions & library containers
-            document.getElementById('questionsTab').innerHTML = `<div class="admin-card"><h3>➕ Add Question</h3><div class="form-row"><div class="form-group"><label>Question</label><textarea id="qText" rows="2"></textarea></div><div class="form-group"><label>Category</label><input type="text" id="qCategory"></div></div><div class="form-row"><div class="form-group"><label>Option A</label><input type="text" id="qA"></div><div class="form-group"><label>Option B</label><input type="text" id="qB"></div></div><div class="form-row"><div class="form-group"><label>Option C</label><input type="text" id="qC"></div><div class="form-group"><label>Option D</label><input type="text" id="qD"></div></div><div class="form-group"><label>Correct (0=A,1=B,2=C,3=D)</label><input type="number" id="qCorrect" min="0" max="3" value="0"></div><button class="btn" onclick="addQuestion()">Add Question</button></div><div class="search-filter"><input type="text" id="searchQuestions" placeholder="Search questions..." onkeyup="filterItems('questionsItems', this.value)"></div><div id="questionsItems" class="items-grid"></div>`;
-            document.getElementById('libraryTab').innerHTML = `<div class="admin-card"><h3>➕ Add Library Resource</h3><div class="form-row"><div class="form-group"><label>Title</label><input type="text" id="libTitle"></div><div class="form-group"><label>Category</label><input type="text" id="libCategory"></div></div><div class="form-row"><div class="form-group"><label>Downloads</label><input type="text" id="libDownloads" value="0"></div><div class="form-group"><label>Link URL</label><input type="text" id="libLink" value="#"></div></div><button class="btn" onclick="addLibraryDoc()">Add Resource</button></div><div class="search-filter"><input type="text" id="searchLibrary" placeholder="Search library..." onkeyup="filterItems('libraryItems', this.value)"></div><div id="libraryItems" class="items-grid"></div>`;
-            loadAllData();
-            loadUsers();
-            loadPayments();
-        }
-    }
-</script>
+        
+        // Expose global functions
+        window.setView = setView;
+        window.toggleSidebar = toggleSidebar;
+        window.handleLoginSubmit = handleLoginSubmit;
+        window.handleLogout = handleLogout;
+        window.deleteUser = deleteUser;
+        window.openCreateUserModal = openCreateUserModal;
+        window.openCreateModuleModal = openCreateModuleModal;
+        window.editUser = editUser;
+        window.editModule = editModule;
+        window.deleteModule = deleteModule;
+        window.filterUsers = filterUsers;
+        
+        // Initialize
+        initializeAuth().then(() => renderApp());
+    </script>
 </body>
 </html>
