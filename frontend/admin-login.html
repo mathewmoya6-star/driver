@@ -1,125 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MEI DRIVE AFRICA - Admin</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-body{
-    font-family:system-ui;
-    background:#0b0f19;
-    color:#fff;
-    margin:0;
-}
-
-.container{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-}
-
-.card{
-    background:#121b2c;
-    padding:40px;
-    border-radius:16px;
-    width:350px;
-}
-
-input{
-    width:100%;
-    padding:12px;
-    margin-bottom:10px;
-    border-radius:8px;
-    border:1px solid #1f2b3d;
-    background:#0b0f19;
-    color:#fff;
-}
-
-button{
-    width:100%;
-    padding:12px;
-    background:#00d084;
-    border:none;
-    border-radius:8px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.dashboard{
-    display:none;
-    padding:20px;
-}
-</style>
+    <meta charset="UTF-8">
+    <title>MEI DRIVE AFRICA - Admin</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#0b0f19;color:#fff;font-family:system-ui}
+        .login-card{background:#121b2c;max-width:400px;margin:100px auto;padding:40px;border-radius:24px}
+        input,button{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:none}
+        button{background:#00d084;font-weight:bold;cursor:pointer}
+        .error{color:#ef4444}
+        .success{color:#10b981}
+        .dashboard{display:none;padding:20px}
+        .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+        .stat-card{background:#121b2c;padding:20px;border-radius:16px}
+        .stat-card h3{font-size:32px;color:#00d084}
+        .section{background:#121b2c;padding:20px;border-radius:16px;margin-top:20px}
+        table{width:100%}
+        th,td{padding:12px;text-align:left;border-bottom:1px solid #1f2b3d}
+        .delete-btn{background:#ef4444;padding:4px 12px;border-radius:6px;border:none;color:white;cursor:pointer}
+        @media (max-width:600px){.stats{grid-template-columns:1fr 1fr}}
+    </style>
 </head>
-
 <body>
-
-<!-- LOGIN -->
-<div id="loginPage" class="container">
-<div class="card">
-<h2 style="text-align:center;color:#00d084">MEI DRIVE</h2>
-
-<input id="email" type="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
-
-<button id="loginBtn">Login</button>
+<div id="loginCard" class="login-card">
+    <h2>🚗 MEI DRIVE LOGIN</h2>
+    <div id="msg"></div>
+    <input type="email" id="email" placeholder="admin@meidriveafrica.com">
+    <input type="password" id="password" placeholder="Password">
+    <button id="loginBtn">Login</button>
 </div>
-</div>
-
-<!-- DASHBOARD -->
 <div id="dashboard" class="dashboard">
-<h2>Welcome Admin</h2>
-<button onclick="logout()">Logout</button>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+        <h2>📊 Admin Dashboard</h2>
+        <button id="logoutBtn" style="background:#ef4444;width:auto;padding:8px 20px">Logout</button>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div class="section"><h3>➕ Add Module</h3>
+        <select id="type"><option value="learner">Learner</option><option value="psv">PSV</option><option value="boda">Boda</option><option value="ev">EV</option></select>
+        <input type="number" id="num" placeholder="Module #">
+        <input type="text" id="title" placeholder="Title">
+        <textarea id="desc" rows="2" placeholder="Description"></textarea>
+        <button id="addBtn">Save</button>
+    </div>
+    <div class="section"><h3>📚 Modules</h3><div id="moduleList"></div></div>
 </div>
-
 <script>
-
-/* ================= SUPABASE ================= */
-const supabaseUrl = "https://fktjmkmzlixlapeyhhyl.supabase.co";
-
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E";
-
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-/* ================= LOGIN ================= */
-document.getElementById("loginBtn").addEventListener("click", async () => {
-
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password
-    });
-
-    if (error) {
-        alert(error.message);
-        return;
+const supabase = window.supabase.createClient('https://fktjmkmzlixlapeyhhyl.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E');
+const tables = { learner:'learner_units', psv:'psv_modules', boda:'boda_modules', ev:'ev_modules' };
+let user = null;
+function showMsg(msg,isErr){const d=document.getElementById('msg');d.innerText=msg;d.style.color=isErr?'#ef4444':'#10b981';setTimeout(()=>d.innerText='',3000);}
+document.getElementById('loginBtn').onclick=async()=>{
+    const email=document.getElementById('email').value, pwd=document.getElementById('password').value;
+    if(!email||!pwd){showMsg('Enter email & password',1);return;}
+    const{data,error}=await supabase.auth.signInWithPassword({email,password:pwd});
+    if(error){showMsg(error.message,1);return;}
+    user=data.user;
+    document.getElementById('loginCard').style.display='none';
+    document.getElementById('dashboard').style.display='block';
+    loadStats(); loadModules();
+};
+document.getElementById('logoutBtn').onclick=async()=>{await supabase.auth.signOut();location.reload();};
+async function loadStats(){
+    const statsDiv=document.getElementById('stats');
+    statsDiv.innerHTML='';
+    for(let[t,table]of Object.entries(tables)){
+        const{count}=await supabase.from(table).select('*',{count:'exact',head:true});
+        statsDiv.innerHTML+=`<div class="stat-card"><h3>${count||0}</h3><p>${t.toUpperCase()}</p></div>`;
     }
-
-    document.getElementById("loginPage").style.display = "none";
-    document.getElementById("dashboard").style.display = "block";
-});
-
-/* ================= SESSION CHECK ================= */
-supabase.auth.getSession().then(({ data }) => {
-    if (data.session) {
-        document.getElementById("loginPage").style.display = "none";
-        document.getElementById("dashboard").style.display = "block";
-    }
-});
-
-/* ================= LOGOUT ================= */
-async function logout() {
-    await supabase.auth.signOut();
-    location.reload();
 }
-
+async function loadModules(){
+    let all=[];
+    for(let[t,table]of Object.entries(tables)){
+        const{data}=await supabase.from(table).select('*').order('module_number');
+        if(data) all.push(...data.map(m=>({...m,type:t})));
+    }
+    if(!all.length){document.getElementById('moduleList').innerHTML='<div>No modules</div>';return;}
+    let html='<table><th>Type</th><th>#</th><th>Title</th><th></th></thead><tbody>';
+    for(let m of all) html+=`<td><td>${m.type.toUpperCase()}</td><td>${m.module_number}</td><td>${m.title}</td><td><button class="delete-btn" data-type="${m.type}" data-id="${m.id}">Delete</button></td></tr>`;
+    html+='</tbody></table>';
+    document.getElementById('moduleList').innerHTML=html;
+    document.querySelectorAll('.delete-btn').forEach(btn=>btn.onclick=()=>deleteModule(btn.dataset.type,parseInt(btn.dataset.id)));
+}
+async function addModule(){
+    const type=document.getElementById('type').value, table=tables[type];
+    const num=parseInt(document.getElementById('num').value), title=document.getElementById('title').value.trim(), desc=document.getElementById('desc').value.trim();
+    if(!title||isNaN(num)){alert('Title and number required');return;}
+    const{error}=await supabase.from(table).insert([{module_number:num,title,description:desc,status:'published',created_at:new Date().toISOString()}]);
+    if(error){alert(error.message);return;}
+    alert('Added');document.getElementById('num').value='';document.getElementById('title').value='';document.getElementById('desc').value='';
+    loadStats();loadModules();
+}
+async function deleteModule(type,id){
+    if(!confirm('Delete?'))return;
+    const{error}=await supabase.from(tables[type]).delete().eq('id',id);
+    if(error)alert(error.message);else{loadStats();loadModules();}
+}
+document.getElementById('addBtn').onclick=addModule;
+supabase.auth.getSession().then(({data:{session}})=>{if(session){user=session.user;document.getElementById('loginCard').style.display='none';document.getElementById('dashboard').style.display='block';loadStats();loadModules();}});
 </script>
-
 </body>
 </html>
