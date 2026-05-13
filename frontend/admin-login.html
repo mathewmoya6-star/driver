@@ -9,23 +9,24 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #ffffff; line-height: 1.5; }
+        body { font-family: 'Inter', sans-serif; background: #0a192f; color: #ffffff; line-height: 1.5; }
         :root {
-            --primary: #d4af37;
-            --primary-dark: #b8960c;
-            --primary-light: #f0c674;
-            --dark-card: #111111;
-            --dark-hover: #1a1a1a;
-            --border: #222222;
-            --text-muted: #888888;
-            --success: #2ecc71;
-            --danger: #e74c3c;
-            --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f0c674 100%);
+            --primary: #00ff88;
+            --primary-dark: #00cc66;
+            --primary-light: #88ffcc;
+            --dark-card: #0d2137;
+            --dark-hover: #112240;
+            --border: rgba(0, 255, 136, 0.25);
+            --text-muted: #a0b3d9;
+            --success: #00ff88;
+            --danger: #ff4757;
+            --warning: #ffa502;
+            --gradient-green: linear-gradient(135deg, #00ff88 0%, #00cc66 100%);
         }
         .admin-container { display: flex; min-height: 100vh; }
         .sidebar {
             width: 280px;
-            background: #0d1117;
+            background: #0d2137;
             border-right: 1px solid var(--border);
             position: fixed;
             height: 100vh;
@@ -34,10 +35,10 @@
             z-index: 100;
         }
         .sidebar-header { padding: 24px; border-bottom: 1px solid var(--border); }
-        .logo { font-size: 1.3rem; font-weight: 800; background: var(--gradient-gold); -webkit-background-clip: text; background-clip: text; color: transparent; display: flex; align-items: center; gap: 8px; }
+        .logo { font-size: 1.3rem; font-weight: 800; background: var(--gradient-green); -webkit-background-clip: text; background-clip: text; color: transparent; display: flex; align-items: center; gap: 8px; }
         .logo-icon { font-size: 1.6rem; }
         .user-info { padding: 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
-        .user-avatar { width: 48px; height: 48px; background: var(--gradient-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .user-avatar { width: 48px; height: 48px; background: var(--gradient-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #0a192f; }
         .nav-menu { padding: 20px; }
         .nav-item {
             display: flex;
@@ -50,7 +51,7 @@
             margin-bottom: 4px;
             transition: all 0.2s;
         }
-        .nav-item:hover, .nav-item.active { background: rgba(212, 175, 55, 0.1); color: var(--primary); }
+        .nav-item:hover, .nav-item.active { background: rgba(0, 255, 136, 0.1); color: var(--primary); }
         .nav-item i { width: 24px; }
         .logout-btn { margin-top: 40px; border-top: 1px solid var(--border); padding-top: 20px; }
         .main-content { flex: 1; margin-left: 280px; padding: 24px 32px; }
@@ -75,7 +76,7 @@
         .stat-card:hover { border-color: var(--primary); transform: translateY(-2px); }
         .stat-info h3 { font-size: 0.85rem; font-weight: 500; color: var(--text-muted); margin-bottom: 8px; }
         .stat-number { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
-        .stat-icon { width: 48px; height: 48px; background: rgba(212, 175, 55, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .stat-icon { width: 48px; height: 48px; background: rgba(0, 255, 136, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary); }
         .card {
             background: var(--dark-card);
             border: 1px solid var(--border);
@@ -103,7 +104,7 @@
             text-align: left;
             border-bottom: 1px solid var(--border);
         }
-        .data-table th { background: rgba(212, 175, 55, 0.1); color: var(--primary); font-weight: 600; }
+        .data-table th { background: rgba(0, 255, 136, 0.1); color: var(--primary); font-weight: 600; }
         .data-table tr:hover { background: rgba(255,255,255,0.02); }
         @media (max-width: 768px) {
             .data-table { font-size: 12px; }
@@ -116,11 +117,11 @@
             font-weight: 600;
             display: inline-block;
         }
-        .status-active { background: rgba(46, 204, 113, 0.2); color: #2ecc71; }
-        .status-inactive { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
-        .status-pending { background: rgba(243, 156, 18, 0.2); color: #f39c12; }
-        .status-verified { background: rgba(46, 204, 113, 0.2); color: #2ecc71; }
-        .role-admin { background: rgba(212, 175, 55, 0.2); color: #d4af37; }
+        .status-active { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
+        .status-inactive { background: rgba(255, 71, 87, 0.2); color: #ff4757; }
+        .status-pending { background: rgba(255, 165, 2, 0.2); color: #ffa502; }
+        .status-verified { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
+        .role-admin { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
         .btn {
             padding: 8px 16px;
             border-radius: 50px;
@@ -133,14 +134,14 @@
             align-items: center;
             gap: 6px;
         }
-        .btn-primary { background: var(--gradient-gold); color: #000; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212,175,55,0.3); }
+        .btn-primary { background: var(--gradient-green); color: #0a192f; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3); }
         .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
         .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
-        .btn-danger { background: #e74c3c; color: #fff; }
-        .btn-danger:hover { background: #c0392b; }
+        .btn-danger { background: #ff4757; color: #fff; }
+        .btn-danger:hover { background: #e8413b; }
         .btn-sm { padding: 4px 10px; font-size: 0.7rem; }
-        .btn-success { background: #2ecc71; color: #000; }
+        .btn-success { background: #00ff88; color: #0a192f; }
         .modal {
             display: none;
             position: fixed;
@@ -168,7 +169,7 @@
             width: 100%;
             padding: 12px;
             margin: 8px 0 16px;
-            background: var(--dark-hover);
+            background: #0f1a2c;
             border: 1px solid var(--border);
             border-radius: 12px;
             color: white;
@@ -176,7 +177,7 @@
         .loading-spinner {
             width: 40px;
             height: 40px;
-            border: 3px solid #333;
+            border: 3px solid #1e2a3a;
             border-top-color: var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
@@ -186,7 +187,7 @@
         .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 1100; }
         .toast { background: var(--dark-card); border-left: 4px solid var(--primary); padding: 12px 20px; border-radius: 12px; margin-top: 8px; animation: slideIn 0.3s ease; display: flex; justify-content: space-between; gap: 12px; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        .mobile-menu-btn { display: none; position: fixed; top: 16px; left: 16px; z-index: 101; background: var(--dark-card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; cursor: pointer; }
+        .mobile-menu-btn { display: none; position: fixed; top: 16px; left: 16px; z-index: 101; background: var(--dark-card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; cursor: pointer; color: var(--primary); }
         @media (max-width: 768px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.open { transform: translateX(0); }
@@ -194,7 +195,7 @@
             .mobile-menu-btn { display: block; }
             .stats-grid { grid-template-columns: 1fr; }
         }
-        .price-input { width: 100px; background: var(--dark-hover); border: 1px solid var(--border); border-radius: 8px; padding: 6px; color: white; }
+        .price-input { width: 100px; background: #0f1a2c; border: 1px solid var(--border); border-radius: 8px; padding: 6px; color: white; }
     </style>
 </head>
 <body>
@@ -231,10 +232,10 @@
 <div id="toastContainer" class="toast-container"></div>
 
 <script>
-    // ==================== NEW SUPABASE CREDENTIALS ====================
+    // ==================== SUPABASE CREDENTIALS (REAL) ====================
     const SUPABASE_URL = 'https://fktjmkmzlixlapeyhhyl.supabase.co';
-    // ⚠️ IMPORTANT: Replace this placeholder with your actual anon key
-    const SUPABASE_ANON_KEY = 'YOUR_ACTUAL_SUPABASE_ANON_KEY_HERE';
+    // ⚠️ IMPORTANT: Replace with your actual anon key from .env
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E';
     
     let supabase;
     let currentUser = null;
@@ -257,23 +258,35 @@
     
     async function initAdmin() {
         supabase = window.supabaseJs.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) {
+        
+        // Check current session
+        const { data: { session }, error } = await supabase.auth.getSession();
+        if (error || !session) {
             showToast('Please login to access admin panel', 'warning');
-            setTimeout(() => window.location.href = 'index.html', 1500);
+            setTimeout(() => { window.location.href = 'index.html'; }, 1500);
             return;
         }
         currentUser = session.user;
-        const { data: isAdmin } = await supabase.rpc('is_admin_user');
-        if (!isAdmin) {
-            showToast('Admin access denied', 'error');
+        
+        // Verify admin using RPC
+        const { data: isAdmin, error: rpcError } = await supabase.rpc('is_admin_user');
+        if (rpcError || !isAdmin) {
+            showToast('Admin access denied. You do not have administrator privileges.', 'error');
             await supabase.auth.signOut();
-            setTimeout(() => window.location.href = 'index.html', 1500);
+            setTimeout(() => { window.location.href = 'index.html'; }, 1500);
             return;
         }
-        const { data: profile } = await supabase.from('user_profiles').select('full_name, email').eq('id', currentUser.id).single();
+        
+        // Fetch profile
+        const { data: profile } = await supabase
+            .from('user_profiles')
+            .select('full_name, email')
+            .eq('id', currentUser.id)
+            .single();
+        
         document.getElementById('userName').innerText = profile?.full_name?.split(' ')[0] || currentUser.email.split('@')[0];
         document.getElementById('userEmail').innerText = profile?.email || currentUser.email;
+        
         await loadData();
         renderCurrentView();
     }
@@ -310,7 +323,7 @@
                 <div class="stat-card"><div class="stat-info"><h3>Total Users</h3><div class="stat-number">${stats.totalUsers}</div></div><div class="stat-icon"><i class="fas fa-users"></i></div></div>
                 <div class="stat-card"><div class="stat-info"><h3>Active Users</h3><div class="stat-number">${stats.activeUsers}</div></div><div class="stat-icon"><i class="fas fa-user-check"></i></div></div>
                 <div class="stat-card"><div class="stat-info"><h3>Total Revenue</h3><div class="stat-number">KES ${stats.totalRevenue.toLocaleString()}</div></div><div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div></div>
-                <div class="stat-card"><div class="stat-info"><h3>Pending Payments</h3><div class="stat-number" style="color:#f39c12;">${stats.pendingPayments}</div></div><div class="stat-icon"><i class="fas fa-clock"></i></div></div>
+                <div class="stat-card"><div class="stat-info"><h3>Pending Payments</h3><div class="stat-number" style="color:#ffa502;">${stats.pendingPayments}</div></div><div class="stat-icon"><i class="fas fa-clock"></i></div></div>
                 <div class="stat-card"><div class="stat-info"><h3>Enrollments</h3><div class="stat-number">${stats.verifiedEnrollments}</div></div><div class="stat-icon"><i class="fas fa-graduation-cap"></i></div></div>
                 <div class="stat-card"><div class="stat-info"><h3>Courses</h3><div class="stat-number">${stats.totalCourses}</div></div><div class="stat-icon"><i class="fas fa-book"></i></div></div>
             </div>
@@ -339,8 +352,8 @@
                 <td>
                     <button class="btn btn-sm btn-success" onclick="approvePayment(${p.id})">✅ Approve</button>
                     <button class="btn btn-sm btn-danger" onclick="rejectPayment(${p.id})">❌ Reject</button>
-                </td>
-            </tr>`;
+                 </td>
+             </tr>`;
         }
         html += `</tbody></table></div>`;
         document.getElementById('pageContent').innerHTML = html;
@@ -351,9 +364,9 @@
             <table class="data-table"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Joined</th><th>Actions</th></tr></thead><tbody>`;
         for (const user of users) {
             html += `<tr>
-                <td>${escapeHtml(user.full_name || '—')}</td>
+                <td><strong>${escapeHtml(user.full_name || '—')}</strong></td>
                 <td>${escapeHtml(user.email)}</td>
-                <td><span class="status-badge ${user.is_admin ? 'role-admin' : ''}">${user.is_admin ? 'Admin' : 'User'}</span></td>
+                <td><span class="status-badge role-admin">${user.is_admin ? 'Admin' : 'User'}</span></td>
                 <td><span class="status-badge ${user.status === 'active' ? 'status-active' : 'status-inactive'}">${user.status || 'active'}</span></td>
                 <td>${user.created_at ? new Date(user.created_at).toLocaleDateString() : '—'}</td>
                 <td>
@@ -362,7 +375,7 @@
                 </td>
             </tr>`;
         }
-        html += `</tbody></tr></div>`;
+        html += `</tbody></table></div>`;
         document.getElementById('pageContent').innerHTML = html;
     }
     
