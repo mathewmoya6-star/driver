@@ -34,12 +34,6 @@
         label { display: block; margin-bottom: 8px; color: #A0B3D9; }
         input { width: 100%; padding: 12px 16px; background: #0F1622; border: 1px solid #1E2A3E; border-radius: 60px; color: white; }
         input:focus { outline: none; border-color: #00d084; }
-        .toggle-admin { display: flex; justify-content: space-between; background: #121B2C; padding: 12px 18px; border-radius: 60px; cursor: pointer; margin-bottom: 20px; }
-        .toggle-switch { width: 48px; height: 24px; background: #1E2A3E; border-radius: 40px; position: relative; transition: 0.2s; }
-        .toggle-switch.active { background: #00d084; }
-        .toggle-switch::after { content: ''; width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 4px; transition: 0.2s; }
-        .toggle-switch.active::after { left: 24px; }
-        .admin-code-group { display: none; }
         button { width: 100%; padding: 14px; background: linear-gradient(135deg, #00d084, #00a86b); border: none; border-radius: 60px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .error-msg { background: rgba(239,68,68,0.2); border-left: 3px solid #EF4444; padding: 12px; border-radius: 12px; margin-top: 20px; color: #FCA5A5; display: none; }
         .success-msg { background: rgba(0,208,132,0.2); border-left: 3px solid #00d084; padding: 12px; border-radius: 12px; margin-top: 20px; color: #A0B3D9; display: none; }
@@ -52,27 +46,18 @@
     <div class="logo">⚡ MEI DRIVE AFRICA</div>
     <div class="badge">ADMIN PORTAL</div>
     <h2>🔐 Admin Login</h2>
-    <div class="sub">Grant yourself admin rights with secret code</div>
-
-    <div class="toggle-admin" id="toggleAdminBtn">
-        <span><i class="fas fa-shield-alt"></i> Use Admin Code (ADMIN2025)</span>
-        <div class="toggle-switch" id="toggleSwitch"></div>
-    </div>
+    <div class="sub">Sign in with an admin account</div>
 
     <form id="adminForm">
         <div class="form-group">
             <label>Email</label>
-            <input type="email" id="email" required placeholder="your@email.com">
+            <input type="email" id="email" required placeholder="admin@example.com">
         </div>
         <div class="form-group">
             <label>Password</label>
             <input type="password" id="password" required>
         </div>
-        <div class="form-group admin-code-group" id="adminCodeGroup">
-            <label>Admin Secret Code</label>
-            <input type="password" id="adminCode" placeholder="Enter ADMIN2025">
-        </div>
-        <button type="submit" id="loginBtn">Login & Grant Admin</button>
+        <button type="submit" id="loginBtn">Login as Admin</button>
     </form>
 
     <div id="errorMsg" class="error-msg"></div>
@@ -84,33 +69,17 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.js"></script>
 <script>
-    const SUPABASE_URL = 'https://fktjmkmzlixlapeyhhyl.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrdGpta216bGl4bGFwZXloaHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNDkzNzEsImV4cCI6MjA5MjcyNTM3MX0.l0ZijiumKnwO7kcJYV8c7nDbvnfefBIwnMu4ieWCX2E';
+    // Supabase credentials (your new project)
+    const SUPABASE_URL = 'https://jeksrwrzzrczamxijvwl.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impla3Nyd3J6enJjemFteGlqdndsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzYyMjAsImV4cCI6MjA5NDI1MjIyMH0.1poYpJKNFEVe2NTBkXBTH2bIHGk2yT8aqCU-OlJc4vs';
+    
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Toggle admin code field
-    let adminMode = false;
-    const toggleBtn = document.getElementById('toggleAdminBtn');
-    const toggleSwitch = document.getElementById('toggleSwitch');
-    const adminCodeGroup = document.getElementById('adminCodeGroup');
-
-    toggleBtn.addEventListener('click', () => {
-        adminMode = !adminMode;
-        if (adminMode) {
-            toggleSwitch.classList.add('active');
-            adminCodeGroup.style.display = 'block';
-        } else {
-            toggleSwitch.classList.remove('active');
-            adminCodeGroup.style.display = 'none';
-        }
-    });
-
-    // Helper to ensure user profile exists and optionally set admin
-    async function ensureUserProfile(userId, makeAdmin = false) {
-        // Check if profile exists
+    // Helper: Ensure user profile exists (create if missing, default non-admin)
+    async function ensureUserProfile(userId) {
         const { data: existing, error: fetchError } = await supabase
             .from('user_profiles')
-            .select('id, is_admin')
+            .select('id')
             .eq('id', userId)
             .maybeSingle();
 
@@ -120,37 +89,22 @@
         }
 
         if (!existing) {
-            // Create profile
             const { error: insertError } = await supabase
                 .from('user_profiles')
-                .insert({ id: userId, is_admin: makeAdmin });
+                .insert({ id: userId, is_admin: false });
             if (insertError) {
                 console.error('Insert profile error:', insertError);
                 return false;
             }
-            return makeAdmin;
-        } else {
-            if (makeAdmin && !existing.is_admin) {
-                const { error: updateError } = await supabase
-                    .from('user_profiles')
-                    .update({ is_admin: true, updated_at: new Date() })
-                    .eq('id', userId);
-                if (updateError) {
-                    console.error('Update admin error:', updateError);
-                    return false;
-                }
-                return true;
-            }
-            return existing.is_admin || false;
         }
+        return true;
     }
 
-    // Main login & admin granting
+    // Main login: only allow if user has is_admin = true
     document.getElementById('adminForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
-        const adminCode = document.getElementById('adminCode').value.trim();
         const loginBtn = document.getElementById('loginBtn');
         const errorDiv = document.getElementById('errorMsg');
         const successDiv = document.getElementById('successMsg');
@@ -173,27 +127,19 @@
             if (signInError) throw new Error(signInError.message);
             const user = authData.user;
 
-            // 2. Determine if admin should be granted
-            let shouldBeAdmin = false;
-            if (adminMode) {
-                if (adminCode === 'ADMIN2025') {
-                    shouldBeAdmin = true;
-                } else {
-                    throw new Error('Invalid admin secret code. Access denied.');
-                }
-            } else {
-                // Without admin mode, check if user already has admin flag in DB
-                const { data: profile } = await supabase.from('user_profiles').select('is_admin').eq('id', user.id).maybeSingle();
-                if (profile?.is_admin !== true) {
-                    throw new Error('This account has no admin privileges. Enable admin mode and enter the correct code.');
-                }
-                shouldBeAdmin = true; // already admin
-            }
+            // 2. Ensure profile exists (creates if missing, default non-admin)
+            await ensureUserProfile(user.id);
 
-            // 3. Ensure profile and set admin flag if needed
-            const isNowAdmin = await ensureUserProfile(user.id, shouldBeAdmin);
-            if (!isNowAdmin) {
-                throw new Error('Failed to set admin privileges. Please check database permissions.');
+            // 3. Check if user has admin flag
+            const { data: profile, error: profileError } = await supabase
+                .from('user_profiles')
+                .select('is_admin')
+                .eq('id', user.id)
+                .single();
+
+            if (profileError) throw new Error('Could not verify admin status');
+            if (!profile || profile.is_admin !== true) {
+                throw new Error('You do not have admin privileges. Please contact the system administrator.');
             }
 
             // 4. Success - redirect to main app
@@ -209,7 +155,7 @@
             await supabase.auth.signOut();
         } finally {
             loginBtn.disabled = false;
-            loginBtn.innerHTML = 'Login & Grant Admin';
+            loginBtn.innerHTML = 'Login as Admin';
         }
     });
 
