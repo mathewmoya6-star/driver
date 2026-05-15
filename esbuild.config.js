@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const isDev = process.env.NODE_ENV !== 'production';
 const isWatch = process.argv.includes('--watch');
 const isServe = process.argv.includes('--serve');
 
@@ -12,40 +13,61 @@ if (!fs.existsSync('dist')) {
   fs.mkdirSync('dist');
 }
 
-// Copy public files to dist
+// Copy public files
 if (fs.existsSync('public')) {
-  const files = fs.readdirSync('public');
-  files.forEach(file => {
-    fs.copyFileSync(path.join('public', file), path.join('dist', file));
-  });
+  const copyDir = (src, dest) => {
+    if (!fs.existsSync(dest)) fs.mkdirSync(dest);
+    const files = fs.readdirSync(src);
+    for (const file of files) {
+      const srcPath = path.join(src, file);
+      const destPath = path.join(dest, file);
+      if (fs.statSync(srcPath).isDirectory()) {
+        copyDir(srcPath, destPath);
+      } else {
+        fs.copyFileSync(srcPath, destPath);
+      }
+    }
+  };
+  copyDir('public', 'dist');
+}
+
+// Copy index.html
+if (fs.existsSync('index.html')) {
+  fs.copyFileSync('index.html', 'dist/index.html');
 }
 
 const config = {
   entryPoints: ['src/index.tsx'],
   bundle: true,
   outfile: 'dist/index.js',
-  sourcemap: isWatch,
-  minify: !isWatch,
+  sourcemap: isDev,
+  minify: !isDev,
   target: ['es2020', 'chrome58', 'firefox57', 'safari11'],
   loader: {
     '.png': 'file',
     '.jpg': 'file',
+    '.jpeg': 'file',
     '.svg': 'file',
+    '.webp': 'file',
     '.css': 'css',
   },
   define: {
-    'process.env.NODE_ENV': isWatch ? '"development"' : '"production"',
-    'process.env.VITE_SUPABASE_URL': JSON.stringify(process.env.VITE_SUPABASE_URL || ''),
-    'process.env.VITE_SUPABASE_ANON_KEY': JSON.stringify(process.env.VITE_SUPABASE_ANON_KEY || ''),
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || (isDev ? 'development' : 'production')),
+    'import.meta.env.VITE_SUPABASE_URL': JSON.stringify(process.env.VITE_SUPABASE_URL),
+    'import.meta.env.VITE_SUPABASE_ANON_KEY': JSON.stringify(process.env.VITE_SUPABASE_ANON_KEY),
+    'import.meta.env.VITE_APP_NAME': JSON.stringify(process.env.VITE_APP_NAME),
+    'import.meta.env.VITE_APP_URL': JSON.stringify(process.env.VITE_APP_URL),
+    'import.meta.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL),
   },
   logLevel: 'info',
-  banner: {
-    js: '// MEI DRIVE AFRICA - Built with esbuild',
-  },
+  splitting: true,
+  format: 'esm',
+  assetNames: 'assets/[name]-[hash]',
+  chunkNames: 'chunks/[name]-[hash]',
+  metafile: true,
 };
 
 if (isServe) {
-  // Development server with hot reload
   const ctx = await esbuild.context(config);
   await ctx.watch();
   
@@ -62,21 +84,18 @@ if (isServe) {
   ║  📍 Local:    http://${host}:${port}                        ║
   ║  🔥 Hot reload: Enabled                                   ║
   ║  📦 Bundler: esbuild                                      ║
-  ║  🎨 Framework: React + TypeScript                         ║
+  ║  🎨 Mode: Development                                     ║
   ╚══════════════════════════════════════════════════════════╝
   `);
 } else if (isWatch) {
-  // Watch mode
   const ctx = await esbuild.context(config);
   await ctx.watch();
   console.log('👀 Watching for changes... Press Ctrl+C to stop');
 } else {
-  // Production build
-  esbuild.build(config).then(() => {
-    console.log(`
+  const result = await esbuild.build(config);
+  console.log(`
   ✅ Production build complete!
   📁 Output: dist/
   📦 Bundle size: ${fs.statSync('dist/index.js').size / 1024} KB
   `);
-  }).catch(() => process.exit(1));
 }
