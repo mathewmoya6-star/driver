@@ -4,117 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>MEI DRIVE AFRICA | NTSA Driver Training</title>
+    <meta name="description" content="NTSA-approved driver training platform for Kenyan drivers">
+    <meta name="keywords" content="driver training, NTSA, driving school, Kenya, EV training, boda boda">
+    <meta name="author" content="MEI DRIVE AFRICA">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a192f;
+            color: #ffffff;
+        }
+        #root {
+            min-height: 100vh;
+        }
+    </style>
 </head>
 <body>
-<div id="app">
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo" onclick="window.location.href='index.html'">
-                <i class="fas fa-car"></i> MEI DRIVE AFRICA
-            </div>
-            <div class="mobile-menu" onclick="toggleMobileMenu()">
-                <i class="fas fa-bars"></i>
-            </div>
-            <div class="nav-links" id="navLinks">
-                <a href="index.html">🏠 Home</a>
-                <a href="courses.html">📚 Courses</a>
-                <a href="quiz.html">📝 Quiz</a>
-                <a href="library.html">📖 Safety Library</a>
-                <a href="dashboard.html" id="dashboardNavBtn" style="display:none;">📊 Dashboard</a>
-                <div id="authButtons"></div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Practice Daily.<br><span>Revise Smarter. Pass with Confidence.</span></h1>
-            <p>For Learners and Experienced Drivers — Refresh Your Skills with MEI DRIVE AFRICA. NTSA-approved courses.</p>
-            <div>
-                <button class="btn btn-primary" onclick="window.location.href='courses.html'">
-                    <i class="fas fa-road"></i> Explore Courses
-                </button>
-                <button class="btn btn-outline" id="getStartedBtn">
-                    <i class="fas fa-user-graduate"></i> Get Started
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <div class="stats-bar">
-        <div class="stat-item"><h3>10K+</h3><p>Students</p></div>
-        <div class="stat-item"><h3>6</h3><p>Courses</p></div>
-        <div class="stat-item"><h3>98%</h3><p>Pass Rate</p></div>
-        <div class="stat-item"><h3>50+</h3><p>Instructors</p></div>
-    </div>
-
-    <!-- Featured Courses -->
-    <div class="container section">
-        <h2 class="section-title">Our <span>Courses</span></h2>
-        <div class="grid" id="featuredCourses"></div>
-    </div>
-
-    <!-- Features Section -->
-    <div class="container section">
-        <h2 class="section-title">Why Choose <span>Us</span></h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <i class="fas fa-certificate"></i>
-                <h3>NTSA Approved</h3>
-                <p>Fully certified and recognized by NTSA</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-clock"></i>
-                <h3>Self-Paced Learning</h3>
-                <p>Learn at your own pace, anytime anywhere</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-chalkboard-user"></i>
-                <h3>Expert Instructors</h3>
-                <p>Learn from certified professionals</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-mobile-alt"></i>
-                <h3>Mobile Friendly</h3>
-                <p>Access courses on any device</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Ready to Start Your Journey?</h2>
-            <p>Join thousands of successful drivers who trained with us</p>
-            <button class="btn btn-primary" onclick="window.location.href='courses.html'">
-                Get Started Now
-            </button>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 MEI DRIVE AFRICA | NTSA Approved Driver Training</p>
-            <p>
-                <a href="#" onclick="showLegal('privacy')">Privacy Policy</a> | 
-                <a href="#" onclick="showLegal('terms')">Terms of Service</a> | 
-                <a href="#" onclick="showLegal('contact')">Contact Us</a>
-            </p>
-        </div>
-    </footer>
-</div>
-
-<div id="toast-container" class="toast-container"></div>
-
-<script src="js/config.js"></script>
-<script src="js/utils.js"></script>
-<script src="js/auth.js"></script>
-<script src="js/main.js"></script>
+    <div id="root"></div>
+    <script src="index.js"></script>
 </body>
 </html>
