@@ -18,53 +18,199 @@
             --border: rgba(0, 255, 136, 0.25);
             --text-muted: #a0b3d9;
         }
-        /* same navbar, hero, card styles as before – keep them but I'll compress for brevity */
-        .navbar { position: fixed; top: 0; width: 100%; background: rgba(10,25,47,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 1000; padding: 0.8rem 2rem; }
-        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-        .logo { font-size: 1.3rem; font-weight: 800; background: var(--gradient-green); -webkit-background-clip: text; background-clip: text; color: transparent; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 25, 47, 0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 0.8rem 2rem;
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: var(--gradient-green);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
         .logo i { color: var(--primary); font-size: 1.5rem; }
-        .nav-links { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
-        .nav-links button, .nav-links a { background: transparent; border: none; color: #a0b3d9; padding: 8px 14px; border-radius: 50px; cursor: pointer; font-size: 13px; font-weight: 500; transition: 0.2s; }
-        .nav-links button:hover, .nav-links a:hover { background: rgba(0, 255, 136, 0.1); color: var(--primary); }
-        .btn-primary-nav { background: var(--gradient-green); color: #0a192f !important; font-weight: 700; }
-        .user-badge { background: rgba(0, 255, 136, 0.15); border-radius: 40px; padding: 6px 16px; display: flex; align-items: center; gap: 8px; font-size: 13px; }
-        .mobile-menu { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
-        @media (max-width: 768px) { .navbar { padding: 0.8rem 1rem; } .nav-links { display: none; width: 100%; flex-direction: column; padding: 1rem 0; } .nav-links.show { display: flex; } .mobile-menu { display: block; } }
-        .hero { min-height: 85vh; background: linear-gradient(135deg, rgba(10,25,47,0.95), rgba(13,33,55,0.85)), url('https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=2070&q=80'); background-size: cover; background-position: center; display: flex; align-items: center; padding: 100px 2rem 4rem; }
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .nav-links button, .nav-links a {
+            background: transparent;
+            border: none;
+            color: #a0b3d9;
+            padding: 8px 14px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .nav-links button:hover, .nav-links a:hover {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--primary);
+        }
+        .btn-primary-nav {
+            background: var(--gradient-green);
+            color: #0a192f !important;
+            font-weight: 700;
+        }
+        .user-badge {
+            background: rgba(0, 255, 136, 0.15);
+            border-radius: 40px;
+            padding: 6px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+        @media (max-width: 768px) {
+            .navbar { padding: 0.8rem 1rem; }
+            .nav-links { display: none; width: 100%; flex-direction: column; padding: 1rem 0; }
+            .nav-links.show { display: flex; }
+            .mobile-menu { display: block; }
+        }
+        .hero {
+            min-height: 85vh;
+            background: linear-gradient(135deg, rgba(10,25,47,0.95), rgba(13,33,55,0.85)), url('https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            padding: 100px 2rem 4rem;
+        }
         .hero-content { max-width: 1400px; margin: 0 auto; }
         .hero h1 { font-size: 3.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 1.5rem; }
         .hero h1 span { color: var(--primary); }
         .hero p { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin-bottom: 2rem; }
-        .btn { padding: 12px 28px; border-radius: 50px; font-weight: 700; cursor: pointer; border: none; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px; }
+        .btn {
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
         .btn-primary { background: var(--gradient-green); color: #0a192f; }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,255,136,0.3); }
         .btn-outline { border: 1px solid var(--primary); color: var(--primary); background: transparent; }
-        .stats-bar { background: #0d2137; border-bottom: 1px solid var(--border); padding: 2rem; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 2rem; text-align: center; }
+        .stats-bar {
+            background: #0d2137;
+            border-bottom: 1px solid var(--border);
+            padding: 2rem;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2rem;
+            text-align: center;
+        }
         .stat-item h3 { font-size: 2rem; color: var(--primary); }
         .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
         .section { padding: 4rem 0; }
         .section-title { text-align: center; font-size: 2.2rem; margin-bottom: 2.5rem; }
         .section-title span { color: var(--primary); }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.8rem; }
-        .card { background: #0d2137; border: 1px solid var(--border); border-radius: 20px; padding: 1.5rem; transition: 0.3s; cursor: pointer; }
+        .card {
+            background: #0d2137;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: 0.3s;
+            cursor: pointer;
+        }
         .card:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .module-price { font-size: 1.5rem; font-weight: 800; color: var(--primary); margin: 0.8rem 0; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); backdrop-filter: blur(12px); z-index: 2000; justify-content: center; align-items: center; }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.96);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
         .modal.active { display: flex; }
-        .modal-content { background: #0d2137; border: 1px solid var(--primary); border-radius: 24px; width: 90%; max-width: 500px; padding: 2rem; }
-        .modal-content input { background: #0f1a2c; border: 1px solid var(--border); padding: 12px; border-radius: 12px; color: white; width: 100%; margin: 8px 0; }
-        .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 2100; }
-        .toast { background: #0d2137; border-left: 4px solid var(--primary); padding: 12px 20px; border-radius: 12px; margin-top: 8px; display: flex; gap: 12px; animation: slideIn 0.3s ease; }
+        .modal-content {
+            background: #0d2137;
+            border: 1px solid var(--primary);
+            border-radius: 24px;
+            width: 90%;
+            max-width: 500px;
+            padding: 2rem;
+        }
+        .modal-content input {
+            background: #0f1a2c;
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 12px;
+            color: white;
+            width: 100%;
+            margin: 8px 0;
+        }
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2100;
+        }
+        .toast {
+            background: #0d2137;
+            border-left: 4px solid var(--primary);
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-top: 8px;
+            display: flex;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+        }
         @keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
         .toast-close { cursor: pointer; background: none; border: none; color: var(--text-muted); }
-        .loading-spinner { width: 40px; height: 40px; border: 3px solid #1e2a3a; border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #1e2a3a;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 40px auto;
+        }
         @keyframes spin { to { transform: rotate(360deg); } }
         footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.85rem; }
         footer a { color: var(--primary); text-decoration: none; }
-        .quiz-option { background: #0f1a2c; padding: 10px; margin: 8px 0; border-radius: 12px; cursor: pointer; transition: 0.2s; }
-        .quiz-option:hover { background: #1a2a40; }
-        .quiz-option.selected { background: var(--primary); color: #0a192f; font-weight: bold; }
-        .sign-card img { max-width: 100px; height: auto; margin-bottom: 10px; }
         @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .grid { grid-template-columns: 1fr; } }
     </style>
 </head>
@@ -77,9 +223,8 @@
             <div class="nav-links" id="navLinks">
                 <button onclick="app.navigate('home')">🏠 Home</button>
                 <button onclick="app.navigate('courses')">📚 Courses</button>
-                <button onclick="app.navigate('learner-hub')">📘 Learner Hub</button>
-                <button onclick="app.navigate('signs')">🚦 Traffic Signs</button>
-                <button onclick="app.navigate('quiz-bank')">📝 Quiz Bank</button>
+                <button onclick="app.navigate('quiz')">📝 Quiz</button>
+                <button onclick="app.navigate('library')">📖 Safety Library</button>
                 <button id="dashboardNavBtn" onclick="app.navigate('dashboard')" style="display:none;">📊 Dashboard</button>
                 <div id="authButtons"></div>
             </div>
@@ -91,10 +236,11 @@
 <div id="toast-container" class="toast-container"></div>
 
 <script>
+    // ==================== CONFIGURATION ====================
     const SUPABASE_URL = 'https://jeksrwrzzrczamxijvwl.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impla3Nyd3J6enJjemFteGlqdndsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzYyMjAsImV4cCI6MjA5NDI1MjIyMH0.1poYpJKNFEVe2NTBkXBTH2bIHGk2yT8aqCU-OlJc4vs';
     
-    let supabase;
+    let supabase = null;
     let currentUser = null;
     let isAdmin = false;
     let currentRoute = 'home';
@@ -109,6 +255,7 @@
         { id: 6, name: "Advanced Driver Academy", type: "advanced", price: 4999, description: "Professional driver excellence", icon: "fa-award" }
     ];
     
+    // ==================== HELPER FUNCTIONS ====================
     function showToast(msg, type = 'info') {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
@@ -120,193 +267,305 @@
     
     function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
     
-    // ==================== SUPABASE INIT & AUTH ====================
+    // ==================== SUPABASE INITIALIZATION ====================
     async function initSupabase() {
+        // Wait for Supabase script to load
+        if (!window.supabase) {
+            showToast("Loading Supabase... Please wait or refresh.", "warning");
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            if (!window.supabase) {
+                showToast("Failed to load Supabase library. Check your internet connection.", "error");
+                return false;
+            }
+        }
+        
         supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // Test connection
+        try {
+            const { data, error } = await supabase.from('user_profiles').select('id').limit(1);
+            if (error && error.message.includes('relation') === false) {
+                console.warn("Connection test warning:", error);
+            }
+        } catch(e) { console.warn("Supabase test:", e); }
+        
+        // Get current session
         const { data: { session } } = await supabase.auth.getSession();
         if (session) await handleUserLogin(session.user);
         updateAuthUI();
         renderCurrentRoute();
+        
+        // Listen for auth changes
         supabase.auth.onAuthStateChange(async (event, session) => {
+            console.log("Auth event:", event);
             if (event === 'SIGNED_IN' && session) await handleUserLogin(session.user);
             else if (event === 'SIGNED_OUT') handleUserLogout();
             updateAuthUI();
             renderCurrentRoute();
         });
+        
+        return true;
     }
     
     async function handleUserLogin(user) {
         currentUser = user;
+        console.log("User logged in:", user.email);
+        
+        // Ensure profile exists
         try {
-            const { data: existing } = await supabase.from('user_profiles').select('id').eq('id', user.id).maybeSingle();
-            if (!existing) await supabase.from('user_profiles').insert({ id: user.id, email: user.email, full_name: user.user_metadata?.full_name || '', is_admin: false });
-        } catch(e) { console.warn(e); }
-        const { data } = await supabase.rpc('is_admin_user');
-        isAdmin = !!data;
+            const { data: existing, error: fetchError } = await supabase
+                .from('user_profiles')
+                .select('id')
+                .eq('id', user.id)
+                .maybeSingle();
+                
+            if (fetchError && !fetchError.message.includes('not found')) {
+                console.warn("Profile fetch error:", fetchError);
+            }
+            
+            if (!existing) {
+                const { error: insertError } = await supabase
+                    .from('user_profiles')
+                    .insert({ id: user.id, email: user.email, full_name: user.user_metadata?.full_name || '', is_admin: false });
+                if (insertError) console.warn("Profile insert error:", insertError);
+                else console.log("Profile created for", user.email);
+            }
+        } catch(e) { console.warn("Profile handling error:", e); }
+        
+        // Check admin status (if RPC exists)
+        try {
+            const { data, error } = await supabase.rpc('is_admin_user');
+            if (!error) isAdmin = !!data;
+            else console.warn("Admin RPC error (might not exist):", error);
+        } catch(e) { console.warn("Admin check failed:", e); }
     }
     
-    function handleUserLogout() { currentUser = null; isAdmin = false; }
+    function handleUserLogout() {
+        currentUser = null;
+        isAdmin = false;
+        console.log("User logged out");
+    }
     
-    async function signIn(email, password) {
+    // ==================== AUTH FUNCTIONS (exposed globally) ====================
+    window.signIn = async function(email, password) {
+        if (!supabase) { showToast("System not ready. Please refresh.", "error"); return false; }
         const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) { showToast(error.message, 'error'); return false; }
-        showToast('Logged in!', 'success');
+        if (error) {
+            showToast(error.message, 'error');
+            return false;
+        }
+        showToast('Logged in successfully!', 'success');
         return true;
+    };
+    
+    window.signUp = async function(email, password, fullName) {
+        if (!supabase) { showToast("System not ready. Please refresh.", "error"); return false; }
+        const { error } = await supabase.auth.signUp({ 
+            email, 
+            password, 
+            options: { data: { full_name: fullName } } 
+        });
+        if (error) {
+            showToast(error.message, 'error');
+            return false;
+        }
+        showToast('Account created! Please check your email to verify.', 'success');
+        return true;
+    };
+    
+    window.signOut = async function() {
+        await supabase.auth.signOut();
+        showToast('Logged out', 'info');
+        navigate('home');
+    };
+    
+    // Modal handlers (global)
+    window.closeModal = function() {
+        const modal = document.getElementById('authModal');
+        if (modal) modal.remove();
+    };
+    
+    window.handleLoginSubmit = async function() {
+        const email = document.getElementById('loginEmail')?.value;
+        const password = document.getElementById('loginPassword')?.value;
+        if (!email || !password) {
+            showToast("Please enter email and password", "warning");
+            return;
+        }
+        const success = await window.signIn(email, password);
+        if (success) window.closeModal();
+    };
+    
+    window.handleSignupSubmit = async function() {
+        const name = document.getElementById('signupName')?.value;
+        const email = document.getElementById('signupEmail')?.value;
+        const password = document.getElementById('signupPassword')?.value;
+        if (!name || !email || !password) {
+            showToast("Please fill all fields", "warning");
+            return;
+        }
+        const success = await window.signUp(email, password, name);
+        if (success) window.closeModal();
+    };
+    
+    function showLoginModal() {
+        // Remove existing modal if any
+        const existing = document.getElementById('authModal');
+        if (existing) existing.remove();
+        
+        const modalHtml = `
+            <div class="modal active" id="authModal">
+                <div class="modal-content">
+                    <h2>Sign In</h2>
+                    <input type="email" id="loginEmail" placeholder="Email" autocomplete="email">
+                    <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
+                    <button class="btn" onclick="handleLoginSubmit()">Login</button>
+                    <button class="btn-outline btn" onclick="closeModal()">Cancel</button>
+                    <p style="margin-top: 12px; font-size: 12px;">Don't have an account? <a href="#" onclick="showSignupModal(); return false;">Sign up</a></p>
+                </div>
+            </div>`;
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
     }
     
-    async function signUp(email, password, fullName) {
-        const { error } = await supabase.auth.signUp({ email, password, options: { data: { full_name: fullName } } });
-        if (error) { showToast(error.message, 'error'); return false; }
-        showToast('Account created! Verify email.', 'success');
-        return true;
+    function showSignupModal() {
+        const existing = document.getElementById('authModal');
+        if (existing) existing.remove();
+        
+        const modalHtml = `
+            <div class="modal active" id="authModal">
+                <div class="modal-content">
+                    <h2>Sign Up</h2>
+                    <input type="text" id="signupName" placeholder="Full Name" autocomplete="name">
+                    <input type="email" id="signupEmail" placeholder="Email" autocomplete="email">
+                    <input type="password" id="signupPassword" placeholder="Password" autocomplete="new-password">
+                    <button class="btn" onclick="handleSignupSubmit()">Sign Up</button>
+                    <button class="btn-outline btn" onclick="closeModal()">Cancel</button>
+                    <p style="margin-top: 12px; font-size: 12px;">Already have an account? <a href="#" onclick="showLoginModal(); return false;">Login</a></p>
+                </div>
+            </div>`;
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
     }
-    
-    async function signOut() { await supabase.auth.signOut(); showToast('Logged out', 'info'); navigate('home'); }
     
     function updateAuthUI() {
         const container = document.getElementById('authButtons');
         const dashboardBtn = document.getElementById('dashboardNavBtn');
         if (!container) return;
+        
         if (currentUser) {
-            container.innerHTML = `<div class="user-badge"><i class="fas fa-user"></i> ${escapeHtml(currentUser.email?.split('@')[0])}</div><button onclick="signOut()">Logout</button>${isAdmin ? '<button class="btn-primary-nav" onclick="navigate(\'admin\')">Admin</button>' : ''}`;
+            container.innerHTML = `
+                <div class="user-badge"><i class="fas fa-user"></i> ${escapeHtml(currentUser.email?.split('@')[0])}</div>
+                <button onclick="signOut()">Logout</button>
+                ${isAdmin ? '<button class="btn-primary-nav" onclick="navigate(\'admin\')">Admin</button>' : ''}
+            `;
             if (dashboardBtn) dashboardBtn.style.display = 'inline-block';
         } else {
-            container.innerHTML = `<button onclick="showLoginModal()">Login</button><button class="btn-primary-nav" onclick="showSignupModal()">Sign Up</button>`;
+            container.innerHTML = `
+                <button onclick="showLoginModal()">Login</button>
+                <button class="btn-primary-nav" onclick="showSignupModal()">Sign Up</button>
+            `;
             if (dashboardBtn) dashboardBtn.style.display = 'none';
         }
     }
     
-    // ==================== LEARNER HUB FUNCTIONS ====================
-    async function renderLearnerHub() {
-        document.getElementById('page-content').innerHTML = `<div class="container" style="padding-top:100px;"><h1 class="section-title">Learner Hub <span>Units</span></h1><div id="unitsGrid" class="grid"><div class="loading-spinner"></div></div></div>`;
-        const { data: units, error } = await supabase.from('units').select('*').order('unit_number', { ascending: true });
-        if (error) { document.getElementById('unitsGrid').innerHTML = `<p>Error loading units: ${error.message}</p>`; return; }
-        if (!units.length) { document.getElementById('unitsGrid').innerHTML = `<p>No units found. Please run the Python upload script to add content.</p>`; return; }
-        document.getElementById('unitsGrid').innerHTML = units.map(u => `<div class="card" onclick="navigate('unit', { unitId: ${u.id}, unitNumber: ${u.unit_number}, title: '${escapeHtml(u.title)}' })"><h3>Unit ${u.unit_number}: ${escapeHtml(u.title)}</h3><p>${escapeHtml(u.content?.substring(0, 120))}...</p></div>`).join('');
-    }
-    
-    async function renderUnit() {
-        const { unitId, unitNumber, title } = routeParams;
-        if (!unitId) { navigate('learner-hub'); return; }
-        const { data: unit, error } = await supabase.from('units').select('*').eq('id', unitId).single();
-        if (error) { showToast('Error loading unit', 'error'); navigate('learner-hub'); return; }
-        document.getElementById('page-content').innerHTML = `<div class="container" style="padding-top:100px;"><div class="card"><h2>Unit ${unit.unit_number}: ${escapeHtml(unit.title)}</h2><div style="margin: 20px 0; line-height: 1.6; white-space: pre-wrap;">${escapeHtml(unit.content).replace(/\n/g, '<br>')}</div><button class="btn btn-outline" onclick="navigate('learner-hub')">← Back to Units</button></div></div>`;
-    }
-    
-    // ==================== TRAFFIC SIGNS ====================
-    async function renderSigns() {
-        document.getElementById('page-content').innerHTML = `<div class="container" style="padding-top:100px;"><h1 class="section-title">Traffic <span>Signs</span></h1><div id="signsContainer"><div class="loading-spinner"></div></div></div>`;
-        const { data: signs, error } = await supabase.from('traffic_signs').select('*');
-        if (error) { document.getElementById('signsContainer').innerHTML = `<p>Error: ${error.message}</p>`; return; }
-        if (!signs.length) { document.getElementById('signsContainer').innerHTML = `<p>No signs loaded yet. Please upload using the Python script.</p>`; return; }
-        const grouped = signs.reduce((acc, s) => { acc[s.category] = acc[s.category] || []; acc[s.category].push(s); return acc; }, {});
-        let html = '';
-        for (const [cat, items] of Object.entries(grouped)) {
-            html += `<h3 style="color: var(--primary); margin-top: 2rem;">${cat.toUpperCase()}</h3><div class="grid">`;
-            items.forEach(s => { html += `<div class="card"><h4>${escapeHtml(s.name)}</h4><p>${escapeHtml(s.description)}</p></div>`; });
-            html += `</div>`;
-        }
-        document.getElementById('signsContainer').innerHTML = html;
-    }
-    
-    // ==================== QUIZ BANK ====================
-    let currentQuizQuestions = [];
-    let currentQuizIndex = 0;
-    let userAnswers = [];
-    
-    async function renderQuizBank() {
-        document.getElementById('page-content').innerHTML = `<div class="container" style="padding-top:100px;"><h1 class="section-title">Practice <span>Quiz</span></h1><div id="quizArea"><div class="loading-spinner"></div></div></div>`;
-        const { data: questions, error } = await supabase.from('quiz_questions').select('*');
-        if (error) { document.getElementById('quizArea').innerHTML = `<p>Error: ${error.message}</p>`; return; }
-        if (!questions.length) { document.getElementById('quizArea').innerHTML = `<p>No quiz questions yet. Upload from Unit 21 of your document.</p>`; return; }
-        currentQuizQuestions = questions;
-        currentQuizIndex = 0;
-        userAnswers = new Array(questions.length).fill(null);
-        renderCurrentQuestion();
-    }
-    
-    function renderCurrentQuestion() {
-        if (currentQuizIndex >= currentQuizQuestions.length) {
-            let score = userAnswers.filter((ans, idx) => ans === currentQuizQuestions[idx].correct_answer).length;
-            document.getElementById('quizArea').innerHTML = `<div class="card"><h2>Quiz Complete!</h2><p>You scored ${score} out of ${currentQuizQuestions.length}</p><button class="btn btn-primary" onclick="renderQuizBank()">Restart Quiz</button></div>`;
-            return;
-        }
-        const q = currentQuizQuestions[currentQuizIndex];
-        const options = [
-            { letter: 'A', text: q.option_a },
-            { letter: 'B', text: q.option_b },
-            { letter: 'C', text: q.option_c },
-            { letter: 'D', text: q.option_d }
-        ].filter(opt => opt.text);
-        const selected = userAnswers[currentQuizIndex];
-        document.getElementById('quizArea').innerHTML = `
-            <div class="card">
-                <h3>Question ${currentQuizIndex+1} of ${currentQuizQuestions.length}</h3>
-                <p style="margin: 20px 0; font-size: 1.2rem;">${escapeHtml(q.question)}</p>
-                ${options.map(opt => `<div class="quiz-option ${selected === opt.letter ? 'selected' : ''}" data-letter="${opt.letter}">${opt.letter}. ${escapeHtml(opt.text)}</div>`).join('')}
-                <div style="margin-top: 20px;">
-                    <button class="btn btn-outline" onclick="previousQuestion()" ${currentQuizIndex === 0 ? 'disabled' : ''}>Previous</button>
-                    <button class="btn btn-primary" onclick="nextQuestion()">${currentQuizIndex === currentQuizQuestions.length-1 ? 'Finish' : 'Next'}</button>
+    // ==================== PAGE RENDERING (simplified for demo) ====================
+    async function renderHome() {
+        const html = `
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Practice Daily.<br><span>Revise Smarter. Pass with Confidence.</span></h1>
+                    <p>For Learners and Experienced Drivers — Refresh Your Skills with MEI DRIVE AFRICA. NTSA-approved courses.</p>
+                    <div>
+                        <button class="btn btn-primary" onclick="navigate('courses')"><i class="fas fa-road"></i> Explore Courses</button>
+                        <button class="btn btn-outline" onclick="showLoginModal()"><i class="fas fa-user-graduate"></i> Get Started</button>
+                    </div>
                 </div>
+            </section>
+            <div class="stats-bar">
+                <div class="stat-item"><h3>10K+</h3><p>Students</p></div>
+                <div class="stat-item"><h3>6</h3><p>Courses</p></div>
+                <div class="stat-item"><h3>98%</h3><p>Pass Rate</p></div>
+            </div>
+            <div class="container section">
+                <h2 class="section-title">Our <span>Courses</span></h2>
+                <div class="grid" id="homeCoursesGrid"></div>
             </div>
         `;
-        document.querySelectorAll('.quiz-option').forEach(opt => {
-            opt.addEventListener('click', () => {
-                const letter = opt.dataset.letter;
-                userAnswers[currentQuizIndex] = letter;
-                renderCurrentQuestion();
-            });
-        });
-    }
-    
-    function nextQuestion() {
-        if (userAnswers[currentQuizIndex] === null) { showToast('Please select an answer', 'warning'); return; }
-        currentQuizIndex++;
-        renderCurrentQuestion();
-    }
-    
-    function previousQuestion() { if (currentQuizIndex > 0) { currentQuizIndex--; renderCurrentQuestion(); } }
-    
-    // ==================== OTHER ROUTES ====================
-    async function renderHome() {
-        const html = `<section class="hero"><div class="hero-content"><h1>Practice Daily.<br><span>Revise Smarter. Pass with Confidence.</span></h1><p>For Learners and Experienced Drivers — Refresh Your Skills with MEI DRIVE AFRICA. NTSA-approved courses.</p><div><button class="btn btn-primary" onclick="navigate('courses')"><i class="fas fa-road"></i> Explore Courses</button><button class="btn btn-outline" onclick="showLoginModal()"><i class="fas fa-user-graduate"></i> Get Started</button></div></div></section><div class="stats-bar"><div class="stat-item"><h3>10K+</h3><p>Students</p></div><div class="stat-item"><h3>6</h3><p>Courses</p></div><div class="stat-item"><h3>98%</h3><p>Pass Rate</p></div></div><div class="container section"><h2 class="section-title">Our <span>Courses</span></h2><div class="grid" id="homeCoursesGrid"></div></div>`;
         document.getElementById('page-content').innerHTML = html;
-        document.getElementById('homeCoursesGrid').innerHTML = coursesData.map(c => `<div class="card" onclick="navigateToCourse('${c.type}')"><i class="fas ${c.icon}" style="font-size:2rem; color:var(--primary);"></i><h3>${escapeHtml(c.name)}</h3><p>${escapeHtml(c.description)}</p><div class="module-price">${c.price === 0 ? 'FREE' : `KES ${c.price.toLocaleString()}`}</div></div>`).join('');
+        document.getElementById('homeCoursesGrid').innerHTML = coursesData.map(c => `
+            <div class="card" onclick="navigateToCourse('${c.type}')">
+                <i class="fas ${c.icon}" style="font-size:2rem; color:var(--primary);"></i>
+                <h3>${escapeHtml(c.name)}</h3>
+                <p>${escapeHtml(c.description)}</p>
+                <div class="module-price">${c.price === 0 ? 'FREE' : `KES ${c.price.toLocaleString()}`}</div>
+            </div>
+        `).join('');
     }
     
     async function renderCourses() {
-        document.getElementById('page-content').innerHTML = `<div class="container" style="padding-top:100px;"><h1 class="section-title">Our <span>Courses</span></h1><div class="grid" id="coursesGrid"></div></div>`;
-        document.getElementById('coursesGrid').innerHTML = coursesData.map(c => `<div class="card" onclick="navigateToCourse('${c.type}')"><i class="fas ${c.icon}" style="font-size:2rem; color:var(--primary);"></i><h3>${escapeHtml(c.name)}</h3><p>${escapeHtml(c.description)}</p><div class="module-price">${c.price === 0 ? 'FREE' : `KES ${c.price.toLocaleString()}`}</div></div>`).join('');
+        document.getElementById('page-content').innerHTML = `
+            <div class="container" style="padding-top:100px;">
+                <h1 class="section-title">Our <span>Courses</span></h1>
+                <div class="grid" id="coursesGrid"></div>
+            </div>
+        `;
+        document.getElementById('coursesGrid').innerHTML = coursesData.map(c => `
+            <div class="card" onclick="navigateToCourse('${c.type}')">
+                <i class="fas ${c.icon}" style="font-size:2rem; color:var(--primary);"></i>
+                <h3>${escapeHtml(c.name)}</h3>
+                <p>${escapeHtml(c.description)}</p>
+                <div class="module-price">${c.price === 0 ? 'FREE' : `KES ${c.price.toLocaleString()}`}</div>
+            </div>
+        `).join('');
     }
     
     async function renderCourseDetail() {
         const type = routeParams.courseType;
         const course = coursesData.find(c => c.type === type);
         if (!course) { navigate('courses'); return; }
+        
         let isEnrolled = false;
         if (currentUser) {
-            const { data } = await supabase.from('enrollments').select('id').eq('user_id', currentUser.id).eq('course_id', course.id).eq('payment_status', 'verified').maybeSingle();
-            isEnrolled = !!data;
+            try {
+                const { data } = await supabase
+                    .from('enrollments')
+                    .select('id')
+                    .eq('user_id', currentUser.id)
+                    .eq('course_id', course.id)
+                    .eq('payment_status', 'verified')
+                    .maybeSingle();
+                isEnrolled = !!data;
+            } catch(e) { console.warn(e); }
         }
-        let startButton = '';
-        if (course.type === 'learner') {
-            startButton = `<button class="btn btn-primary" onclick="navigate('learner-hub')">Open Learner Hub</button>`;
-        } else {
-            startButton = isEnrolled ? '<button class="btn btn-primary" onclick="showToast(\'Learning content coming soon\',\'info\')">Start Learning</button>' : `<button class="btn btn-primary" onclick="enrollNow(${course.id}, ${course.price})">Enroll Now</button>`;
-        }
-        document.getElementById('page-content').innerHTML = `<div class="container" style="padding-top:100px;"><div class="card"><h2>${escapeHtml(course.name)}</h2><p>${escapeHtml(course.description)}</p><div class="module-price">${course.price === 0 ? 'FREE' : `KES ${course.price.toLocaleString()}`}</div>${startButton}<button class="btn btn-outline" onclick="navigate('courses')">Back</button></div></div>`;
+        
+        const actionButton = isEnrolled 
+            ? '<button class="btn btn-primary" onclick="showToast(\'Learning content coming soon\',\'info\')">Start Learning</button>'
+            : `<button class="btn btn-primary" onclick="enrollNow(${course.id}, ${course.price})">Enroll Now</button>`;
+        
+        document.getElementById('page-content').innerHTML = `
+            <div class="container" style="padding-top:100px;">
+                <div class="card">
+                    <h2>${escapeHtml(course.name)}</h2>
+                    <p>${escapeHtml(course.description)}</p>
+                    <div class="module-price">${course.price === 0 ? 'FREE' : `KES ${course.price.toLocaleString()}`}</div>
+                    ${actionButton}
+                    <button class="btn btn-outline" onclick="navigate('courses')">Back</button>
+                </div>
+            </div>
+        `;
     }
     
     async function enrollNow(courseId, price) {
-        if (!currentUser) { showToast('Please login', 'warning'); showLoginModal(); return; }
+        if (!currentUser) { showToast('Please login first', 'warning'); showLoginModal(); return; }
         if (price === 0) {
             await supabase.from('enrollments').upsert({ user_id: currentUser.id, course_id: courseId, payment_status: 'verified' });
             showToast('Enrolled successfully!', 'success');
+            renderCurrentRoute(); // refresh
         } else {
             showToast(`Processing payment KES ${price}...`, 'info');
             setTimeout(async () => {
                 await supabase.from('enrollments').upsert({ user_id: currentUser.id, course_id: courseId, payment_status: 'verified', amount_paid: price });
                 showToast('Payment verified! Course unlocked.', 'success');
+                renderCurrentRoute();
             }, 1000);
         }
     }
@@ -315,31 +574,22 @@
         if (currentRoute === 'home') await renderHome();
         else if (currentRoute === 'courses') await renderCourses();
         else if (currentRoute === 'course-detail') await renderCourseDetail();
-        else if (currentRoute === 'learner-hub') await renderLearnerHub();
-        else if (currentRoute === 'unit') await renderUnit();
-        else if (currentRoute === 'signs') await renderSigns();
-        else if (currentRoute === 'quiz-bank') await renderQuizBank();
         else document.getElementById('page-content').innerHTML = '<div class="container" style="padding-top:100px;"><div class="card"><h2>Coming Soon</h2></div></div>';
     }
     
-    // Auth modals & navigation
-    function showLoginModal() {
-        const modalHtml = `<div class="modal active" id="authModal"><div class="modal-content"><h2>Sign In</h2><input type="email" id="loginEmail" placeholder="Email"><input type="password" id="loginPassword" placeholder="Password"><button class="btn" onclick="handleLogin()">Login</button><button class="btn-outline btn" onclick="closeModal()">Cancel</button></div></div>`;
-        document.body.insertAdjacentHTML('beforeend', modalHtml);
-        window.handleLogin = async () => { await signIn(document.getElementById('loginEmail').value, document.getElementById('loginPassword').value); closeModal(); };
-    }
-    function showSignupModal() {
-        const modalHtml = `<div class="modal active" id="authModal"><div class="modal-content"><h2>Sign Up</h2><input type="text" id="signupName" placeholder="Full Name"><input type="email" id="signupEmail" placeholder="Email"><input type="password" id="signupPassword" placeholder="Password"><button class="btn" onclick="handleSignup()">Sign Up</button><button class="btn-outline btn" onclick="closeModal()">Cancel</button></div></div>`;
-        document.body.insertAdjacentHTML('beforeend', modalHtml);
-        window.handleSignup = async () => { await signUp(document.getElementById('signupEmail').value, document.getElementById('signupPassword').value, document.getElementById('signupName').value); closeModal(); };
-    }
-    function closeModal() { document.getElementById('authModal')?.remove(); }
-    function toggleMobileMenu() { document.getElementById('navLinks')?.classList.toggle('show'); }
+    // Navigation
     function navigate(route, params = {}) { currentRoute = route; routeParams = params; renderCurrentRoute(); }
     function navigateToCourse(type) { navigate('course-detail', { courseType: type }); }
+    function toggleMobileMenu() { document.getElementById('navLinks')?.classList.toggle('show'); }
     function showLegal(page) { alert(`${page} policy – coming soon`); }
     
-    window.app = { navigate, navigateToCourse, showLegal, toggleMobileMenu, showLoginModal, showSignupModal, closeModal, enrollNow, previousQuestion, nextQuestion };
+    // Expose global app object
+    window.app = {
+        navigate, navigateToCourse, showLegal, toggleMobileMenu,
+        showLoginModal, showSignupModal, closeModal, enrollNow
+    };
+    
+    // Start
     initSupabase();
 </script>
 </body>
