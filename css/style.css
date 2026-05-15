@@ -1,0 +1,64 @@
+:root {
+    /* Your exact colors */
+    --dark-navy: #02173A;        /* Darkest navy */
+    --mid-navy: #071B3A;         /* Mid navy */
+    --card-navy: #0d2137;        /* Card background */
+    --neon-green: #00FF88;       /* Neon emerald green */
+    --neon-green-dark: #00F58A;  /* Slightly darker green */
+    --white: #FFFFFF;            /* White text */
+    --gray-blue: #A9B7C9;        /* Muted gray-blue text */
+    
+    /* Derived colors */
+    --primary: var(--neon-green);
+    --primary-dark: var(--neon-green-dark);
+    --bg-primary: var(--dark-navy);
+    --bg-secondary: var(--mid-navy);
+    --bg-card: var(--card-navy);
+    --text-primary: var(--white);
+    --text-secondary: var(--gray-blue);
+    --border: rgba(0, 255, 136, 0.25);
+    
+    --gradient-green: linear-gradient(135deg, var(--neon-green) 0%, var(--neon-green-dark) 100%);
+}
+
+/* Apply the colors */
+body {
+    background: var(--dark-navy);
+    color: var(--white);
+}
+
+.navbar {
+    background: rgba(2, 23, 58, 0.96);  /* Using exact dark navy */
+    border-bottom: 1px solid var(--border);
+}
+
+.card, .feature-card, .auth-card, .stat-card {
+    background: var(--card-navy);
+}
+
+.hero {
+    background: linear-gradient(135deg, rgba(2, 23, 58, 0.95), rgba(7, 27, 58, 0.85)), 
+                url('https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=2070&q=80');
+}
+
+.hero h1 span, .section-title span {
+    color: var(--neon-green);
+}
+
+.btn-primary {
+    background: var(--gradient-green);
+    color: var(--dark-navy);
+}
+
+.btn-outline {
+    border: 1px solid var(--neon-green);
+    color: var(--neon-green);
+}
+
+.hero p, .section-subtitle, .text-muted {
+    color: var(--gray-blue);
+}
+
+.stat-item h3 {
+    color: var(--neon-green);
+}
