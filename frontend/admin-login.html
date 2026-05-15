@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login | MEI DRIVE AFRICA</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
     <style>
         body {
             background: #0a192f;
@@ -11,16 +11,19 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            font-family: 'Inter', system-ui;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             margin: 0;
+            padding: 16px;
         }
         .login-card {
             background: #0d2137;
             padding: 2rem;
             border-radius: 24px;
             border: 1px solid #00ff88;
-            width: 320px;
+            width: 100%;
+            max-width: 320px;
             text-align: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
         }
         input, button {
             width: 100%;
@@ -29,26 +32,58 @@
             border-radius: 12px;
             border: none;
             box-sizing: border-box;
+            font-size: 16px;
         }
         input {
             background: #0f1a2c;
             color: white;
             border: 1px solid #2c4c6e;
+            outline: none;
+        }
+        input:focus {
+            border-color: #00ff88;
         }
         button {
             background: #00ff88;
             color: #0a192f;
             font-weight: bold;
             cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
         .error {
             color: #ff4757;
             margin-top: 12px;
             font-size: 14px;
         }
+        .info {
+            color: #ffaa44;
+            margin-top: 8px;
+            font-size: 12px;
+        }
         h2 {
             margin-bottom: 1.5rem;
             color: #00ff88;
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid #0a192f;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -57,31 +92,165 @@
     <h2>🚗 Admin Login</h2>
     <input type="email" id="email" placeholder="Email" autocomplete="off">
     <input type="password" id="password" placeholder="Password">
-    <button onclick="login()">Login</button>
+    <button id="loginBtn" onclick="login()">Login</button>
     <div id="errorMsg" class="error"></div>
+    <div id="statusMsg" class="info"></div>
 </div>
 
 <script>
-    // ========== CORRECT SUPABASE CREDENTIALS (same as main platform) ==========
+    // Supabase credentials
     const SUPABASE_URL = 'https://jeksrwrzzrczamxijvwl.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impla3Nyd3J6enJjemFteGlqdndsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzYyMjAsImV4cCI6MjA5NDI1MjIyMH0.1poYpJKNFEVe2NTBkXBTH2bIHGk2yT8aqCU-OlJc4vs';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    let supabaseClient = null;
+    let scriptLoadAttempted = false;
 
-    async function login() {
-        const email = document.getElementById('email').value;
+    function showStatus(msg, isError = false) {
+        const statusDiv = document.getElementById('statusMsg');
+        const errorDiv = document.getElementById('errorMsg');
+        if (isError) {
+            errorDiv.innerText = msg;
+            statusDiv.innerText = '';
+        } else {
+            statusDiv.innerText = msg;
+            errorDiv.innerText = '';
+        }
+    }
+
+    function setLoading(isLoading) {
+        const btn = document.getElementById('loginBtn');
+        if (isLoading) {
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading-spinner"></span> Logging in...';
+        } else {
+            btn.disabled = false;
+            btn.innerHTML = 'Login';
+        }
+    }
+
+    // Load Supabase dynamically with fallback timeout
+    function loadSupabase() {
+        return new Promise((resolve, reject) => {
+            if (window.supabase) {
+                resolve(window.supabase);
+                return;
+            }
+            
+            if (scriptLoadAttempted) {
+                reject(new Error('Supabase script already attempted but failed'));
+                return;
+            }
+            
+            scriptLoadAttempted = true;
+            showStatus('Loading secure connection...');
+            
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js';
+            script.integrity = '';
+            script.crossOrigin = 'anonymous';
+            
+            script.onload = () => {
+                if (window.supabase) {
+                    showStatus('✓ Connection ready');
+                    resolve(window.supabase);
+                } else {
+                    reject(new Error('Supabase loaded but client not found'));
+                }
+            };
+            
+            script.onerror = () => {
+                reject(new Error('Failed to load Supabase library. Check your internet connection or try again.'));
+            };
+            
+            // Timeout after 8 seconds
+            const timeout = setTimeout(() => {
+                reject(new Error('Connection timeout - network may be blocking the script'));
+            }, 8000);
+            
+            script.onload = () => {
+                clearTimeout(timeout);
+                if (window.supabase) {
+                    resolve(window.supabase);
+                } else {
+                    reject(new Error('Supabase object missing after load'));
+                }
+            };
+            
+            document.head.appendChild(script);
+        });
+    }
+
+    // Initialize Supabase client
+    async function initSupabase() {
+        try {
+            const sb = await loadSupabase();
+            supabaseClient = sb.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            // Test connection quickly (optional)
+            const { error } = await supabaseClient.from('users').select('count', { count: 'exact', head: true }).limit(0);
+            // Ignore error if table doesn't exist - just check network
+            showStatus('Ready - enter credentials');
+            return true;
+        } catch (err) {
+            console.error('Supabase init error:', err);
+            showStatus(err.message || 'Failed to initialize secure connection', true);
+            document.getElementById('loginBtn').disabled = true;
+            return false;
+        }
+    }
+
+    // Login function
+    window.login = async function() {
+        const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
         const errorDiv = document.getElementById('errorMsg');
+        
         errorDiv.innerText = '';
-
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) {
-            errorDiv.innerText = error.message;
+        
+        if (!email || !password) {
+            errorDiv.innerText = 'Please enter both email and password';
             return;
         }
+        
+        if (!supabaseClient) {
+            errorDiv.innerText = 'System not ready. Please wait or refresh.';
+            return;
+        }
+        
+        setLoading(true);
+        
+        try {
+            const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+            
+            if (error) {
+                errorDiv.innerText = error.message;
+                setLoading(false);
+                return;
+            }
+            
+            if (data?.session) {
+                // Redirect to admin dashboard
+                window.location.href = 'admin.html';
+            } else {
+                errorDiv.innerText = 'Login failed - no session created';
+                setLoading(false);
+            }
+        } catch (err) {
+            console.error('Login error:', err);
+            errorDiv.innerText = 'Network error - please check your connection';
+            setLoading(false);
+        }
+    };
 
-        // After successful login, redirect to admin dashboard
-        window.location.href = 'admin.html';
-    }
+    // Auto-initialize on page load
+    (async function() {
+        await initSupabase();
+        // Enable login button if supabase ready, else it stays disabled
+        if (!supabaseClient) {
+            document.getElementById('loginBtn').disabled = true;
+        } else {
+            document.getElementById('loginBtn').disabled = false;
+        }
+    })();
 </script>
 </body>
 </html>
