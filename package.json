@@ -1,25 +1,20 @@
 {
-  "name": "mei-drive-africa",
-  "version": "2.0.0",
-  "description": "NTSA-approved driver training platform with Supabase backend",
-  "type": "module",
+  "name": "meidriveafrica-frontend",
+  "version": "1.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "vercel-build": "npm run build"
+    "build": "node esbuild.config.js",
+    "build:watch": "node esbuild.config.js --watch",
+    "serve": "node esbuild.config.js --serve",
+    "dev": "npm run build:watch & npm run serve"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.39.0",
-    "chart.js": "^4.4.0",
-    "dompurify": "^3.0.6",
-    "html2canvas": "^1.4.1",
-    "jspdf": "^2.5.1"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "vite": "^5.0.0"
-  },
-  "engines": {
-    "node": ">=18.0.0"
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "esbuild": "^0.19.0",
+    "typescript": "^5.0.0"
   }
 }
