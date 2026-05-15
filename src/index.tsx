@@ -1,17 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import './styles/global.css';
 
-// Ensure DOM is fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-  const rootElement = document.getElementById('root');
-  if (!rootElement) throw new Error('Failed to find the root element');
-  
-  const root = ReactDOM.createRoot(rootElement);
-  root.render(
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+    throw new Error('Failed to find the root element');
+}
+
+ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
-      <App />
+        <App />
     </React.StrictMode>
-  );
-});
+);
