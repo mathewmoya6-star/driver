@@ -1,17 +1,16 @@
 # Dependencies
 node_modules/
-package-lock.json
-yarn.lock
+.pnp/
+.pnp.js
 
 # Build output
 dist/
 build/
-*.local
 
-# Environment variables
+# Environment files
 .env
 .env.local
-.env.production
+.env.production.local
 
 # IDE
 .vscode/
@@ -34,6 +33,8 @@ yarn-error.log*
 # Testing
 coverage/
 
-# Misc
-*.tmp
-*.temp
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
