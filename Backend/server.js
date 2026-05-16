@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,49 +18,161 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '../dist')));
 
+// Serve static files from dist folder (where ESBuild puts everything)
+const distPath = path.join(__dirname, '../dist');
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+  console.log(`✅ Serving static files from ${distPath}`);
+} else {
+  console.warn(`⚠️ dist folder not found at ${distPath}`);
+}
+
+// Also serve public folder for images if needed
+const publicPath = path.join(__dirname, '../public');
+if (fs.existsSync(publicPath)) {
+  app.use('/public', express.static(publicPath));
+}
+
+// Session configuration
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'your_secret_key',
+    secret: process.env.SESSION_SECRET || 'your_secret_key_change_this',
     resave: false,
     saveUninitialized: false,
     cookie: { 
         secure: process.env.NODE_ENV === 'production',
-        maxAge: 3600000 
+        maxAge: 3600000,
+        httpOnly: true
     }
 }));
 
 // Database connection
-const pool = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    waitForConnections: true,
-    connectionLimit: 10
+let pool;
+try {
+    pool = mysql.createPool({
+        host: process.env.DB_HOST || 'localhost',
+        user: process.env.DB_USER || 'root',
+        password: process.env.DB_PASSWORD || '',
+        database: process.env.DB_NAME || 'login_system',
+        waitForConnections: true,
+        connectionLimit: 10,
+        queueLimit: 0
+    });
+    console.log('✅ Database connected');
+} catch (error) {
+    console.error('❌ Database connection failed:', error.message);
+}
+
+// Debug middleware - log all requests
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
 });
 
 // Routes
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '../views/login.html'));
+    const loginPath = path.join(distPath, 'login.html');
+    if (fs.existsSync(loginPath)) {
+        res.sendFile(loginPath);
+    } else {
+        // Fallback HTML if file not found
+        res.send(`
+            <!DOCTYPE html>
+            <html>
+            <head><title>Login</title></head>
+            <body>
+                <h2>Login Page</h2>
+                <form id="loginForm">
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                </form>
+                <div id="error"></div>
+                <script>
+                    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        const response = await fetch('/api/login', {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({
+                                email: document.getElementById('email').value,
+                                password: document.getElementById('password').value
+                            })
+                        });
+                        const data = await response.json();
+                        if (data.success) {
+                            window.location.href = data.redirect;
+                        } else {
+                            document.getElementById('error').textContent = data.error;
+                        }
+                    });
+                </script>
+            </body>
+            </html>
+        `);
+    }
 });
 
 app.get('/admin-dashboard', (req, res) => {
     if (!req.session.userId || req.session.role !== 'admin') {
         return res.redirect('/login');
     }
-    res.sendFile(path.join(__dirname, '../views/admin.html'));
+    const adminPath = path.join(distPath, 'admin.html');
+    if (fs.existsSync(adminPath)) {
+        res.sendFile(adminPath);
+    } else {
+        res.send(`
+            <!DOCTYPE html>
+            <html>
+            <head><title>Admin Dashboard</title></head>
+            <body>
+                <h1>Welcome Admin: ${req.session.fullname}</h1>
+                <button onclick="logout()">Logout</button>
+                <script>
+                    async function logout() {
+                        await fetch('/api/logout', {method: 'POST'});
+                        window.location.href = '/login';
+                    }
+                </script>
+            </body>
+            </html>
+        `);
+    }
 });
 
 app.get('/user-dashboard', (req, res) => {
     if (!req.session.userId || req.session.role !== 'user') {
         return res.redirect('/login');
     }
-    res.sendFile(path.join(__dirname, '../views/user.html'));
+    const userPath = path.join(distPath, 'user.html');
+    if (fs.existsSync(userPath)) {
+        res.sendFile(userPath);
+    } else {
+        res.send(`
+            <!DOCTYPE html>
+            <html>
+            <head><title>User Dashboard</title></head>
+            <body>
+                <h1>Welcome User: ${req.session.fullname}</h1>
+                <button onclick="logout()">Logout</button>
+                <script>
+                    async function logout() {
+                        await fetch('/api/logout', {method: 'POST'});
+                        window.location.href = '/login';
+                    }
+                </script>
+            </body>
+            </html>
+        `);
+    }
 });
 
 app.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
+    
+    if (!email || !password) {
+        return res.status(400).json({ error: 'Email and password required' });
+    }
     
     try {
         const [rows] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
@@ -86,7 +199,7 @@ app.post('/api/login', async (req, res) => {
         });
         
     } catch (error) {
-        console.error(error);
+        console.error('Login error:', error);
         res.status(500).json({ error: 'Server error' });
     }
 });
@@ -101,13 +214,34 @@ app.get('/api/current-user', (req, res) => {
         res.json({
             loggedIn: true,
             fullname: req.session.fullname,
-            role: req.session.role
+            role: req.session.role,
+            userId: req.session.userId
         });
     } else {
         res.json({ loggedIn: false });
     }
 });
 
+// 404 handler for undefined routes
+app.use((req, res) => {
+    console.log(`404: ${req.method} ${req.url}`);
+    res.status(404).json({ error: `Cannot ${req.method} ${req.url}` });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+    console.error('Server error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+});
+
 app.listen(PORT, () => {
-    console.log(`✅ Server running on http://localhost:${PORT}`);
+    console.log(`
+    ╔══════════════════════════════════════════════════════════╗
+    ║     🚗 MEI DRIVE AFRICA - Server Running                 ║
+    ╠══════════════════════════════════════════════════════════╣
+    ║  📍 Local:    http://localhost:${PORT}                        ║
+    ║  🔒 Session:  Enabled                                     ║
+    ║  📦 Mode:     ${process.env.NODE_ENV || 'development'}                             ║
+    ╚══════════════════════════════════════════════════════════╝
+    `);
 });
