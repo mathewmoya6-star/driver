@@ -10,30 +10,41 @@ const isServe = process.argv.includes('--serve');
 
 // Ensure dist directory exists
 if (!fs.existsSync('dist')) {
-  fs.mkdirSync('dist');
+  fs.mkdirSync('dist', { recursive: true });
 }
 
-// Copy public files
-if (fs.existsSync('public')) {
-  const copyDir = (src, dest) => {
-    if (!fs.existsSync(dest)) fs.mkdirSync(dest);
-    const files = fs.readdirSync(src);
-    for (const file of files) {
-      const srcPath = path.join(src, file);
-      const destPath = path.join(dest, file);
-      if (fs.statSync(srcPath).isDirectory()) {
-        copyDir(srcPath, destPath);
-      } else {
-        fs.copyFileSync(srcPath, destPath);
-      }
+// Function to copy directories recursively
+const copyDir = (src, dest) => {
+  if (!fs.existsSync(src)) return;
+  if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
+  const files = fs.readdirSync(src);
+  for (const file of files) {
+    const srcPath = path.join(src, file);
+    const destPath = path.join(dest, file);
+    if (fs.statSync(srcPath).isDirectory()) {
+      copyDir(srcPath, destPath);
+    } else {
+      fs.copyFileSync(srcPath, destPath);
     }
-  };
+  }
+};
+
+// Copy public folder (images, css, etc.)
+if (fs.existsSync('public')) {
   copyDir('public', 'dist');
+  console.log('✅ Copied public folder to dist/');
 }
 
-// Copy index.html
+// Copy views folder (HTML files)
+if (fs.existsSync('views')) {
+  copyDir('views', 'dist');
+  console.log('✅ Copied views folder to dist/');
+}
+
+// Copy index.html if it exists in root
 if (fs.existsSync('index.html')) {
   fs.copyFileSync('index.html', 'dist/index.html');
+  console.log('✅ Copied index.html to dist/');
 }
 
 const config = {
