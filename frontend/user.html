@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #28a745;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>User Dashboard</h1>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+        <div id="userInfo" style="margin-bottom: 20px;">
+            <p>Welcome, <strong id="username"></strong>!</p>
+        </div>
+        <div>
+            <h3>Your Profile</h3>
+            <ul>
+                <li>👤 View Profile</li>
+                <li>⚙️ Edit Settings</li>
+                <li>📧 Messages</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="/user.js"></script>
+</body>
+</html>
