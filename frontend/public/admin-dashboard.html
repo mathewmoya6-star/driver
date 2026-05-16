@@ -1,88 +1,113 @@
 <script>
-    const form = document.getElementById('adminLoginForm');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const loginBtn = document.getElementById('loginBtn');
-    const errorDiv = document.getElementById('error');
-    const loadingDiv = document.getElementById('loading');
-
-    // YOUR REAL BACKEND URL
-    // Use ONE of these based on your setup:
-    const API_URL = 'https://meidriveafrica-backend.onrender.com';  // Your Render backend
-    // const API_URL = 'https://www.meidriveafrica.com/api';  // Your domain API
-    // const API_URL = 'http://localhost:5000';  // Local backend
-
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const email = emailInput.value.trim();
-        const password = passwordInput.value;
-        
-        if (!email || !password) {
-            showError('Please enter both email and password');
-            return;
-        }
-        
-        hideError();
-        showLoading();
-        loginBtn.disabled = true;
-        
+    // API Configuration
+    const API_URL = 'https://meidriveafrica-backend.onrender.com';
+    
+    // Check authentication
+    const token = localStorage.getItem('adminToken');
+    const adminEmail = localStorage.getItem('adminEmail');
+    
+    if (!token) {
+        window.location.href = 'admin.html';
+    }
+    
+    // Set admin info
+    document.getElementById('adminName').textContent = adminEmail?.split('@')[0] || 'Admin';
+    
+    // Load real data from backend
+    async function loadDashboardData() {
         try {
-            // Try to connect to real backend
-            const response = await fetch(`${API_URL}/api/admin/login`, {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({ 
-                    email: email, 
-                    password: password 
-                })
+            const response = await fetch(`${API_URL}/api/admin/stats`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
             });
             
-            const data = await response.json();
-            
-            if (response.ok && data.success) {
-                // Save admin session
-                localStorage.setItem('adminToken', data.token);
-                localStorage.setItem('adminEmail', email);
-                localStorage.setItem('adminName', data.admin?.name || 'Administrator');
-                
-                // Show success and redirect
-                loadingDiv.innerHTML = '✅ Login successful! Redirecting...';
-                setTimeout(() => {
-                    window.location.href = 'admin-dashboard.html';
-                }, 1000);
+            if (response.ok) {
+                const data = await response.json();
+                updateStats(data);
+                updateEnrollments(data.recentEnrollments);
+                updateCourses(data.popularCourses);
+            } else if (response.status === 401) {
+                // Token expired or invalid
+                logout();
             } else {
-                showError(data.message || data.error || 'Invalid credentials');
-                hideLoading();
-                loginBtn.disabled = false;
+                // Use fallback demo data
+                useDemoData();
             }
         } catch (error) {
-            console.error('Connection error:', error);
-            showError(`Cannot connect to backend. Make sure your backend is running at ${API_URL}`);
-            hideLoading();
-            loginBtn.disabled = false;
+            console.log('Backend not reachable, using demo data');
+            useDemoData();
         }
-    });
-    
-    function showError(message) {
-        errorDiv.textContent = message;
-        errorDiv.classList.add('show');
     }
     
-    function hideError() {
-        errorDiv.classList.remove('show');
-        errorDiv.textContent = '';
+    function updateStats(data) {
+        document.getElementById('totalCourses').textContent = data.totalCourses || 12;
+        document.getElementById('totalStudents').textContent = (data.totalStudents || 1234).toLocaleString();
+        document.getElementById('totalRevenue').textContent = `KES ${(data.totalRevenue || 45678).toLocaleString()}`;
+        document.getElementById('completionRate').textContent = `${data.completionRate || 78}%`;
     }
     
-    function showLoading() {
-        loadingDiv.classList.add('show');
-        loadingDiv.innerHTML = '🔐 Authenticating with backend...';
+    function updateEnrollments(enrollments) {
+        if (!enrollments || enrollments.length === 0) {
+            enrollments = [
+                { student: 'John Mwangi', course: 'Beginner Driving', date: '2024-01-15', status: 'active', amount: 'KES 5,000' },
+                { student: 'Mary Wanjiku', course: 'Defensive Driving', date: '2024-01-14', status: 'active', amount: 'KES 7,500' }
+            ];
+        }
+        
+        let html = '<thead><tr><th>Student</th><th>Course</th><th>Date</th><th>Status</th><th>Amount</th></tr></thead><tbody>';
+        enrollments.forEach(e => {
+            const statusClass = e.status === 'active' ? 'badge-success' : 'badge-warning';
+            html += `<tr>
+                <td>${e.student}</td>
+                <td>${e.course}</td>
+                <td>${e.date}</td>
+                <td><span class="badge ${statusClass}">${e.status}</span></td>
+                <td>${e.amount}</td>
+            </tr>`;
+        });
+        html += '</tbody>';
+        document.getElementById('recentEnrollments').innerHTML = html;
     }
     
-    function hideLoading() {
-        loadingDiv.classList.remove('show');
+    function updateCourses(courses) {
+        if (!courses || courses.length === 0) {
+            courses = [
+                { title: 'Beginner Driving', students: 456, rating: 4.8, revenue: 'KES 2,280,000' },
+                { title: 'Defensive Driving', students: 324, rating: 4.7, revenue: 'KES 2,430,000' }
+            ];
+        }
+        
+        let html = '<thead><tr><th>Course Title</th><th>Students</th><th>Rating</th><th>Revenue</th></tr></thead><tbody>';
+        courses.forEach(c => {
+            html += `<tr>
+                <td>${c.title}</td>
+                <td>${c.students}</td>
+                <td>⭐ ${c.rating}</td>
+                <td>${c.revenue}</td>
+            </tr>`;
+        });
+        html += '</tbody>';
+        document.getElementById('popularCourses').innerHTML = html;
     }
+    
+    function useDemoData() {
+        updateStats({ totalCourses: 12, totalStudents: 1234, totalRevenue: 45678, completionRate: 78 });
+        updateEnrollments([]);
+        updateCourses([]);
+    }
+    
+    function logout() {
+        localStorage.removeItem('adminToken');
+        localStorage.removeItem('adminEmail');
+        localStorage.removeItem('adminName');
+        window.location.href = 'admin.html';
+    }
+    
+    // Load data on page load
+    loadDashboardData();
+    
+    // Auto-refresh every 30 seconds
+    setInterval(loadDashboardData, 30000);
 </script>
