@@ -1,335 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - MEI Drive Africa</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<script>
+    const form = document.getElementById('adminLoginForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginBtn = document.getElementById('loginBtn');
+    const errorDiv = document.getElementById('error');
+    const loadingDiv = document.getElementById('loading');
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
+    // YOUR REAL BACKEND URL
+    // Use ONE of these based on your setup:
+    const API_URL = 'https://meidriveafrica-backend.onrender.com';  // Your Render backend
+    // const API_URL = 'https://www.meidriveafrica.com/api';  // Your domain API
+    // const API_URL = 'http://localhost:5000';  // Local backend
 
-        /* Background animation */
-        body::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="white" opacity="0.05" d="M20,20 L80,20 L80,80 L20,80 Z"/></svg>');
-            animation: move 20s linear infinite;
-        }
-
-        @keyframes move {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
-        .login-container {
-            background: white;
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            width: 450px;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-            animation: slideUp 0.5s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .logo {
-            font-size: 64px;
-            margin-bottom: 20px;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        h2 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 28px;
-        }
-
-        .admin-badge {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-size: 14px;
-            display: inline-block;
-            margin-bottom: 30px;
-            font-weight: bold;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: 500;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        button {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .error {
-            color: #e74c3c;
-            margin-top: 15px;
-            font-size: 14px;
-            padding: 10px;
-            background: #fde8e8;
-            border-radius: 8px;
-            display: none;
-        }
-
-        .loading {
-            color: #667eea;
-            margin-top: 15px;
-            font-size: 14px;
-            display: none;
-        }
-
-        .loading.show, .error.show {
-            display: block;
-        }
-
-        .demo-info {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            font-size: 12px;
-            color: #666;
-        }
-
-        .demo-info strong {
-            color: #667eea;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <div class="logo">🚗</div>
-        <h2>MEI DRIVE AFRICA</h2>
-        <div class="admin-badge">Administrator Panel</div>
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
         
-        <form id="adminLoginForm">
-            <div class="input-group">
-                <label>📧 Admin Email</label>
-                <input type="email" id="email" placeholder="admin@meidrive.com" required autocomplete="off">
-            </div>
-            <div class="input-group">
-                <label>🔒 Password</label>
-                <input type="password" id="password" placeholder="••••••••" required>
-            </div>
-            <button type="submit" id="loginBtn">Login as Admin</button>
-        </form>
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
         
-        <div id="error" class="error"></div>
-        <div id="loading" class="loading">🔐 Authenticating...</div>
+        if (!email || !password) {
+            showError('Please enter both email and password');
+            return;
+        }
         
-        <div class="demo-info">
-            <strong>📝 Demo Credentials:</strong><br>
-            Email: admin@meidrive.com<br>
-            Password: admin123
-        </div>
-    </div>
-
-    <script>
-        // Get DOM elements
-        const form = document.getElementById('adminLoginForm');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const loginBtn = document.getElementById('loginBtn');
-        const errorDiv = document.getElementById('error');
-        const loadingDiv = document.getElementById('loading');
-
-        // API Configuration
-        const API_URL = 'https://meidriveafrica-backend.onrender.com'; // Replace with your backend URL
+        hideError();
+        showLoading();
+        loginBtn.disabled = true;
         
-        // Demo credentials (for testing without backend)
-        const DEMO_ADMIN = {
-            email: 'admin@meidrive.com',
-            password: 'admin123'
-        };
-
-        // Remove demo prefilled values - let user type or use demo info
-        emailInput.value = '';
-        passwordInput.value = '';
-
-        // Form submission handler
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        try {
+            // Try to connect to real backend
+            const response = await fetch(`${API_URL}/api/admin/login`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    email: email, 
+                    password: password 
+                })
+            });
             
-            const email = emailInput.value.trim();
-            const password = passwordInput.value;
+            const data = await response.json();
             
-            // Validate inputs
-            if (!email || !password) {
-                showError('Please enter both email and password');
-                return;
-            }
-            
-            // Clear previous error
-            hideError();
-            showLoading();
-            loginBtn.disabled = true;
-            
-            try {
-                // First try to connect to real backend
-                const response = await fetch(`${API_URL}/api/admin/login`, {
-                    method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({ email, password })
-                });
+            if (response.ok && data.success) {
+                // Save admin session
+                localStorage.setItem('adminToken', data.token);
+                localStorage.setItem('adminEmail', email);
+                localStorage.setItem('adminName', data.admin?.name || 'Administrator');
                 
-                const data = await response.json();
-                
-                if (response.ok && data.success) {
-                    // Successful login with backend
-                    localStorage.setItem('adminToken', data.token);
-                    localStorage.setItem('adminEmail', email);
-                    localStorage.setItem('adminName', data.admin?.name || 'Administrator');
-                    showSuccessAndRedirect();
-                } else {
-                    // Backend login failed, try demo mode
-                    if (email === DEMO_ADMIN.email && password === DEMO_ADMIN.password) {
-                        // Demo mode login
-                        localStorage.setItem('adminToken', 'demo-token-12345');
-                        localStorage.setItem('adminEmail', email);
-                        localStorage.setItem('adminName', 'Demo Administrator');
-                        showSuccessAndRedirect();
-                    } else {
-                        showError('Invalid credentials. Please check your email and password.');
-                        hideLoading();
-                        loginBtn.disabled = false;
-                    }
-                }
-            } catch (error) {
-                // Network error - try demo mode
-                console.log('Backend not reachable, trying demo mode...');
-                
-                if (email === DEMO_ADMIN.email && password === DEMO_ADMIN.password) {
-                    localStorage.setItem('adminToken', 'demo-token-12345');
-                    localStorage.setItem('adminEmail', email);
-                    localStorage.setItem('adminName', 'Demo Administrator');
-                    showSuccessAndRedirect();
-                } else {
-                    showError('⚠️ Cannot connect to server. Please check your internet connection or use demo credentials: admin@meidrive.com / admin123');
-                    hideLoading();
-                    loginBtn.disabled = false;
-                }
+                // Show success and redirect
+                loadingDiv.innerHTML = '✅ Login successful! Redirecting...';
+                setTimeout(() => {
+                    window.location.href = 'admin-dashboard.html';
+                }, 1000);
+            } else {
+                showError(data.message || data.error || 'Invalid credentials');
+                hideLoading();
+                loginBtn.disabled = false;
             }
-        });
-        
-        // Helper functions
-        function showError(message) {
-            errorDiv.textContent = message;
-            errorDiv.classList.add('show');
+        } catch (error) {
+            console.error('Connection error:', error);
+            showError(`Cannot connect to backend. Make sure your backend is running at ${API_URL}`);
+            hideLoading();
+            loginBtn.disabled = false;
         }
-        
-        function hideError() {
-            errorDiv.classList.remove('show');
-            errorDiv.textContent = '';
-        }
-        
-        function showLoading() {
-            loadingDiv.classList.add('show');
-        }
-        
-        function hideLoading() {
-            loadingDiv.classList.remove('show');
-        }
-        
-        function showSuccessAndRedirect() {
-            // Show success message
-            errorDiv.style.display = 'none';
-            loadingDiv.innerHTML = '✅ Login successful! Redirecting to dashboard...';
-            
-            // Redirect to admin dashboard
-            setTimeout(() => {
-                window.location.href = 'admin-dashboard.html';
-            }, 1500);
-        }
-        
-        // Add enter key support
-        passwordInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                form.dispatchEvent(new Event('submit'));
-            }
-        });
-    </script>
-</body>
-</html>
+    });
+    
+    function showError(message) {
+        errorDiv.textContent = message;
+        errorDiv.classList.add('show');
+    }
+    
+    function hideError() {
+        errorDiv.classList.remove('show');
+        errorDiv.textContent = '';
+    }
+    
+    function showLoading() {
+        loadingDiv.classList.add('show');
+        loadingDiv.innerHTML = '🔐 Authenticating with backend...';
+    }
+    
+    function hideLoading() {
+        loadingDiv.classList.remove('show');
+    }
+</script>
