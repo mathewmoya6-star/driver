@@ -19,6 +19,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/admin-login" element={<AdminLogin />} />
             </Routes>
         </Router>
     );
@@ -60,7 +61,6 @@ function Home() {
         <div className="app">
             <Navbar user={user} />
             
-            {/* Hero Section */}
             <section className="hero">
                 <div className="container">
                     <div className="hero-content">
@@ -68,11 +68,11 @@ function Home() {
                         <p>For Learners and Experienced Drivers — Refresh Your Skills with MEI DRIVE AFRICA. NTSA-approved courses.</p>
                         <div className="hero-buttons">
                             <Link to="/courses" className="btn btn-primary">
-                                <i className="fas fa-road"></i> Explore Courses
+                                Explore Courses
                             </Link>
                             {!user && (
                                 <Link to="/login" className="btn btn-outline">
-                                    <i className="fas fa-user-graduate"></i> Get Started
+                                    Get Started
                                 </Link>
                             )}
                         </div>
@@ -80,14 +80,12 @@ function Home() {
                 </div>
             </section>
 
-            {/* Stats Section */}
             <div className="stats-bar">
                 <div className="stat-item"><h3>10K+</h3><p>Students</p></div>
                 <div className="stat-item"><h3>6</h3><p>Courses</p></div>
                 <div className="stat-item"><h3>98%</h3><p>Pass Rate</p></div>
             </div>
 
-            {/* Featured Courses */}
             <div className="container section">
                 <h2 className="section-title">Our <span>Courses</span></h2>
                 {loading ? (
@@ -268,7 +266,6 @@ function CourseDetail() {
                 alert('STK Push sent! Please check your phone and enter PIN.');
                 setShowPayment(false);
                 
-                // Poll for payment status
                 pollPaymentStatus(data.data.paymentId);
             } else {
                 alert(data.error || 'Payment initiation failed');
@@ -315,24 +312,20 @@ function CourseDetail() {
                     
                     <div className="course-info">
                         <div className="info-item">
-                            <i className="fas fa-clock"></i>
                             <span>Duration: {course.duration || '4 weeks'}</span>
                         </div>
                         <div className="info-item">
-                            <i className="fas fa-signal"></i>
                             <span>Level: {course.level || 'Beginner'}</span>
                         </div>
                         <div className="info-item">
-                            <i className="fas fa-tag"></i>
                             <span className={course.type === 'free' ? 'price-free' : 'price-premium'}>
-                                {course.type === 'free' ? 'FREE' : `KES ${course.price.toLocaleString()}`}
+                                {course.type === 'free' ? 'FREE' : `KES ${course.price?.toLocaleString()}`}
                             </span>
                         </div>
                     </div>
 
                     {isEnrolled ? (
                         <div className="enrolled-badge">
-                            <i className="fas fa-check-circle"></i>
                             You are enrolled in this course!
                         </div>
                     ) : (
@@ -352,7 +345,7 @@ function CourseDetail() {
                                             className="btn btn-primary"
                                             onClick={() => setShowPayment(true)}
                                         >
-                                            Pay KES {course.price.toLocaleString()} via M-Pesa
+                                            Pay KES {course.price?.toLocaleString()} via M-Pesa
                                         </button>
                                     ) : (
                                         <div className="payment-form">
@@ -362,7 +355,6 @@ function CourseDetail() {
                                                 placeholder="Enter M-Pesa phone number (e.g., 0712345678)"
                                                 value={phoneNumber}
                                                 onChange={(e) => setPhoneNumber(e.target.value)}
-                                                className="payment-input"
                                             />
                                             <div className="payment-buttons">
                                                 <button 
@@ -379,9 +371,6 @@ function CourseDetail() {
                                                     Cancel
                                                 </button>
                                             </div>
-                                            <p className="payment-note">
-                                                You will receive an STK push on your phone. Enter your PIN to complete payment.
-                                            </p>
                                         </div>
                                     )}
                                 </div>
@@ -389,103 +378,6 @@ function CourseDetail() {
                         </div>
                     )}
                 </div>
-            </div>
-            <Footer />
-        </div>
-    );
-}
-
-// ============================================
-// DASHBOARD PAGE
-// ============================================
-function Dashboard() {
-    const [user, setUser] = useState(null);
-    const [enrollments, setEnrollments] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        checkAuth();
-    }, []);
-
-    async function checkAuth() {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) {
-            navigate('/login');
-            return;
-        }
-        setUser(session.user);
-        await loadEnrollments(session.user.id);
-    }
-
-    async function loadEnrollments(userId) {
-        try {
-            const response = await fetch(`${API_URL}/api/enrollments/${userId}`);
-            const data = await response.json();
-            if (data.success) {
-                setEnrollments(data.data);
-            }
-        } catch (error) {
-            console.error('Error loading enrollments:', error);
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    async function handleLogout() {
-        await supabase.auth.signOut();
-        navigate('/');
-    }
-
-    return (
-        <div>
-            <Navbar user={user} onLogout={handleLogout} />
-            <div className="container" style={{ paddingTop: '100px' }}>
-                <h2 className="section-title">My <span>Dashboard</span></h2>
-                
-                <div className="dashboard-stats">
-                    <div className="stat-card">
-                        <i className="fas fa-book"></i>
-                        <h3>{enrollments.length}</h3>
-                        <p>Enrolled Courses</p>
-                    </div>
-                    <div className="stat-card">
-                        <i className="fas fa-trophy"></i>
-                        <h3>{enrollments.filter(e => e.progress === 100).length}</h3>
-                        <p>Completed</p>
-                    </div>
-                    <div className="stat-card">
-                        <i className="fas fa-certificate"></i>
-                        <h3>0</h3>
-                        <p>Certificates</p>
-                    </div>
-                </div>
-
-                <h3>My Courses</h3>
-                {loading ? (
-                    <div className="loading-spinner"></div>
-                ) : enrollments.length === 0 ? (
-                    <div className="empty-state">
-                        <i className="fas fa-book-open"></i>
-                        <p>You haven't enrolled in any courses yet.</p>
-                        <Link to="/courses" className="btn btn-primary">Browse Courses</Link>
-                    </div>
-                ) : (
-                    <div className="grid">
-                        {enrollments.map(enrollment => (
-                            <div key={enrollment.id} className="course-card">
-                                <h3>{enrollment.courses?.title || 'Course'}</h3>
-                                <div className="progress-bar">
-                                    <div className="progress" style={{ width: `${enrollment.progress || 0}%` }}></div>
-                                </div>
-                                <p>Progress: {enrollment.progress || 0}%</p>
-                                <Link to={`/course/${enrollment.course_id}`} className="btn btn-primary">
-                                    Continue Learning
-                                </Link>
-                            </div>
-                        ))}
-                    </div>
-                )}
             </div>
             <Footer />
         </div>
@@ -538,7 +430,7 @@ function Login() {
                             required
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
+                    <button type="submit" className="btn btn-primary" disabled={loading}>
                         {loading ? 'Logging in...' : 'Login'}
                     </button>
                 </form>
@@ -611,13 +503,240 @@ function Register() {
                             required
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
+                    <button type="submit" className="btn btn-primary" disabled={loading}>
                         {loading ? 'Creating account...' : 'Sign Up'}
                     </button>
                 </form>
                 <p className="auth-footer">
                     Already have an account? <Link to="/login">Login</Link>
                 </p>
+            </div>
+        </div>
+    );
+}
+
+// ============================================
+// DASHBOARD PAGE
+// ============================================
+function Dashboard() {
+    const [user, setUser] = useState(null);
+    const [enrollments, setEnrollments] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        checkAuth();
+    }, []);
+
+    async function checkAuth() {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+            navigate('/login');
+            return;
+        }
+        setUser(session.user);
+        await loadEnrollments(session.user.id);
+    }
+
+    async function loadEnrollments(userId) {
+        try {
+            const response = await fetch(`${API_URL}/api/enrollments/${userId}`);
+            const data = await response.json();
+            if (data.success) {
+                setEnrollments(data.data);
+            }
+        } catch (error) {
+            console.error('Error loading enrollments:', error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    async function handleLogout() {
+        await supabase.auth.signOut();
+        navigate('/');
+    }
+
+    return (
+        <div>
+            <Navbar user={user} onLogout={handleLogout} />
+            <div className="container" style={{ paddingTop: '100px' }}>
+                <h2 className="section-title">My <span>Dashboard</span></h2>
+                
+                <div className="dashboard-stats">
+                    <div className="stat-card">
+                        <h3>{enrollments.length}</h3>
+                        <p>Enrolled Courses</p>
+                    </div>
+                    <div className="stat-card">
+                        <h3>{enrollments.filter(e => e.progress === 100).length}</h3>
+                        <p>Completed</p>
+                    </div>
+                </div>
+
+                <h3>My Courses</h3>
+                {loading ? (
+                    <div className="loading-spinner"></div>
+                ) : enrollments.length === 0 ? (
+                    <div className="empty-state">
+                        <p>You haven't enrolled in any courses yet.</p>
+                        <Link to="/courses" className="btn btn-primary">Browse Courses</Link>
+                    </div>
+                ) : (
+                    <div className="grid">
+                        {enrollments.map(enrollment => (
+                            <div key={enrollment.id} className="course-card">
+                                <h3>{enrollment.courses?.title || 'Course'}</h3>
+                                <div className="progress-bar">
+                                    <div className="progress" style={{ width: `${enrollment.progress || 0}%` }}></div>
+                                </div>
+                                <p>Progress: {enrollment.progress || 0}%</p>
+                                <Link to={`/course/${enrollment.course_id}`} className="btn btn-primary">
+                                    Continue Learning
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+            <Footer />
+        </div>
+    );
+}
+
+// ============================================
+// ADMIN LOGIN PAGE (NEW - WORKING VERSION)
+// ============================================
+function AdminLogin() {
+    const [email, setEmail] = useState('admin@meidrive.com');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        setError('');
+        setLoading(true);
+
+        try {
+            // First try to authenticate with Supabase
+            const { data, error: authError } = await supabase.auth.signInWithPassword({ 
+                email, 
+                password 
+            });
+
+            if (authError) {
+                setError('Invalid credentials');
+                setLoading(false);
+                return;
+            }
+
+            if (data.user) {
+                // Check if user has admin role
+                const { data: profile } = await supabase
+                    .from('profiles')
+                    .select('role')
+                    .eq('id', data.user.id)
+                    .single();
+
+                if (profile?.role === 'admin') {
+                    navigate('/admin');
+                } else {
+                    setError('This login is for administrators only.');
+                    await supabase.auth.signOut();
+                }
+            }
+        } catch (error) {
+            setError('Network error. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    return (
+        <div style={{
+            fontFamily: 'Segoe UI, sans-serif',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            height: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            margin: 0,
+            padding: 0
+        }}>
+            <div style={{
+                background: 'white',
+                padding: '40px',
+                borderRadius: '10px',
+                boxShadow: '0 15px 35px rgba(0,0,0,0.2)',
+                width: '400px',
+                textAlign: 'center'
+            }}>
+                <div style={{ fontSize: '48px', marginBottom: '20px' }}>🚗</div>
+                <h2 style={{ color: '#333', marginBottom: '10px' }}>MEI DRIVE AFRICA</h2>
+                <div style={{
+                    background: '#667eea',
+                    color: 'white',
+                    padding: '5px 15px',
+                    borderRadius: '20px',
+                    fontSize: '12px',
+                    display: 'inline-block',
+                    marginBottom: '20px'
+                }}>Administrator Panel</div>
+
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="email"
+                        placeholder="Admin Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        style={{
+                            width: '100%',
+                            padding: '12px',
+                            margin: '10px 0',
+                            border: '1px solid #ddd',
+                            borderRadius: '5px',
+                            fontSize: '16px',
+                            boxSizing: 'border-box'
+                        }}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        style={{
+                            width: '100%',
+                            padding: '12px',
+                            margin: '10px 0',
+                            border: '1px solid #ddd',
+                            borderRadius: '5px',
+                            fontSize: '16px',
+                            boxSizing: 'border-box'
+                        }}
+                        required
+                    />
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        style={{
+                            width: '100%',
+                            padding: '12px',
+                            background: '#667eea',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '5px',
+                            fontSize: '16px',
+                            cursor: 'pointer',
+                            marginTop: '10px'
+                        }}
+                    >
+                        {loading ? 'Authenticating...' : 'Login as Admin'}
+                    </button>
+                </form>
+                {error && <div style={{ color: 'red', marginTop: '10px', fontSize: '14px' }}>{error}</div>}
             </div>
         </div>
     );
@@ -638,11 +757,10 @@ function AdminDashboard() {
     async function checkAdmin() {
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) {
-            navigate('/login');
+            navigate('/admin-login');
             return;
         }
         
-        // Check if user is admin
         const { data: profile } = await supabase
             .from('profiles')
             .select('role')
@@ -671,24 +789,26 @@ function AdminDashboard() {
         }
     }
 
+    async function handleLogout() {
+        await supabase.auth.signOut();
+        navigate('/');
+    }
+
     return (
         <div>
-            <Navbar user={user} />
+            <Navbar user={user} onLogout={handleLogout} />
             <div className="container" style={{ paddingTop: '100px' }}>
                 <h2 className="section-title">Admin <span>Dashboard</span></h2>
                 <div className="dashboard-stats">
                     <div className="stat-card">
-                        <i className="fas fa-book"></i>
                         <h3>{stats.totalCourses || 0}</h3>
                         <p>Total Courses</p>
                     </div>
                     <div className="stat-card">
-                        <i className="fas fa-users"></i>
                         <h3>0</h3>
                         <p>Total Users</p>
                     </div>
                     <div className="stat-card">
-                        <i className="fas fa-credit-card"></i>
                         <h3>KES 0</h3>
                         <p>Total Revenue</p>
                     </div>
@@ -706,8 +826,7 @@ function CourseCard({ course, user }) {
     const navigate = useNavigate();
 
     return (
-        <div className="card" onClick={() => navigate(`/course/${course.id}`)}>
-            <i className="fas fa-graduation-cap" style={{ fontSize: '2rem', color: '#00ff88' }}></i>
+        <div className="card" onClick={() => navigate(`/course/${course.id}`)} style={{ cursor: 'pointer' }}>
             <h3>{course.title}</h3>
             <p>{course.description}</p>
             <div className="price">
@@ -724,7 +843,6 @@ function CourseCard({ course, user }) {
 // NAVBAR COMPONENT
 // ============================================
 function Navbar({ user, onLogout }) {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
 
@@ -752,23 +870,20 @@ function Navbar({ user, onLogout }) {
     return (
         <nav className="navbar">
             <div className="nav-container">
-                <div className="logo" onClick={() => navigate('/')}>
-                    <i className="fas fa-car"></i> MEI DRIVE AFRICA
+                <div className="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
+                    MEI DRIVE AFRICA
                 </div>
-                <div className="mobile-menu" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-                    <i className="fas fa-bars"></i>
-                </div>
-                <div className={`nav-links ${mobileMenuOpen ? 'show' : ''}`}>
+                <div className="nav-links">
                     <Link to="/">Home</Link>
                     <Link to="/courses">Courses</Link>
                     {user && <Link to="/dashboard">Dashboard</Link>}
-                    {isAdmin && <Link to="/admin" className="admin-link">Admin</Link>}
+                    {isAdmin && <Link to="/admin">Admin</Link>}
                     {user ? (
                         <button onClick={handleLogout} className="logout-btn">Logout</button>
                     ) : (
                         <>
                             <Link to="/login">Login</Link>
-                            <Link to="/register" className="btn-primary-nav">Sign Up</Link>
+                            <Link to="/register">Sign Up</Link>
                         </>
                     )}
                 </div>
@@ -785,11 +900,6 @@ function Footer() {
         <footer>
             <div className="container">
                 <p>© 2024 MEI DRIVE AFRICA | NTSA Approved Driver Training</p>
-                <p>
-                    <a href="/privacy">Privacy Policy</a> | 
-                    <a href="/terms">Terms of Service</a> | 
-                    <a href="/contact">Contact Us</a>
-                </p>
             </div>
         </footer>
     );
