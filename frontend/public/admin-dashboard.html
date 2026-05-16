@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - MEI Drive Africa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fb;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 30px 20px;
+            transition: all 0.3s;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 30px;
+        }
+
+        .sidebar-header .logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-header h3 {
+            color: #00ff88;
+            font-size: 18px;
+        }
+
+        .sidebar-header p {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        .nav-item {
+            padding: 12px 20px;
+            margin: 8px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-item:hover {
+            background: rgba(0, 255, 136, 0.1);
+            transform: translateX(5px);
+        }
+
+        .nav-item.active {
+            background: #00ff88;
+            color: #1a1a2e;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+        }
+
+        .logout-btn {
+            position: absolute;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 30px;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .top-header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .welcome h2 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .welcome p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .admin-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card h3 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Tables */
+        .section-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .section-header h3 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: #f8f9fa;
+            color: #555;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">🚗</div>
+            <h3>MEI DRIVE AFRICA</h3>
+            <p>Administrator Panel</p>
+        </div>
+        
+        <div class="nav-item active">
+            <span>📊</span> Dashboard
+        </div>
+        <div class="nav-item">
+            <span>📚</span> Courses
+        </div>
+        <div class="nav-item">
+            <span>👥</span> Users
+        </div>
+        <div class="nav-item">
+            <span>💰</span> Payments
+        </div>
+        <div class="nav-item">
+            <span>📝</span> Reports
+        </div>
+        <div class="nav-item">
+            <span>⚙️</span> Settings
+        </div>
+        
+        <button class="logout-btn" onclick="logout()">
+            <span>🚪</span> Logout
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="top-header">
+            <div class="welcome">
+                <h2>Welcome back, <span id="adminName">Administrator</span>!</h2>
+                <p>Here's what's happening with your platform today.</p>
+            </div>
+            <div class="admin-info">
+                <div class="admin-avatar">👨‍💼</div>
+                <div>
+                    <div><strong id="adminEmail">admin@meidrive.com</strong></div>
+                    <div style="font-size: 12px; color: #00ff88;">Admin</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="stat-icon">📚</div>
+                <h3 id="totalCourses">--</h3>
+                <p>Total Courses</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">👨‍🎓</div>
+                <h3 id="totalStudents">--</h3>
+                <p>Active Students</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <h3 id="totalRevenue">--</h3>
+                <p>Total Revenue</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <h3 id="completionRate">--</h3>
+                <p>Completion Rate</p>
+            </div>
+        </div>
+
+        <!-- Recent Enrollments -->
+        <div class="section-card">
+            <div class="section-header">
+                <h3>📋 Recent Enrollments</h3>
+                <button class="btn-view" style="background: none; border: none; color: #667eea; cursor: pointer;">View All →</button>
+            </div>
+            <div id="recentEnrollments">
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Loading enrollments...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popular Courses -->
+        <div class="section-card">
+            <div class="section-header">
+                <h3>⭐ Popular Courses</h3>
+                <button class="btn-view" style="background: none; border: none; color: #667eea; cursor: pointer;">Manage →</button>
+            </div>
+            <div id="popularCourses">
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Loading courses...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_URL = 'https://meidriveafrica-backend.onrender.com';
+        
+        // Check authentication
+        const token = localStorage.getItem('adminToken');
+        const adminEmail = localStorage.getItem('adminEmail');
+        const adminName = localStorage.getItem('adminName');
+        
+        if (!token) {
+            window.location.href = 'admin.html';
+        }
+        
+        // Set admin info
+        document.getElementById('adminName').textContent = adminName || 'Administrator';
+        document.getElementById('adminEmail').textContent = adminEmail || 'admin@meidrive.com';
+        
+        // Demo data
+        const demoStats = {
+            totalCourses: 12,
+            totalStudents: 1234,
+            totalRevenue: 45678,
+            completionRate: '78%'
+        };
+        
+        const demoEnrollments = [
+            { id: 1, student: 'John Mwangi', course: 'Beginner Driving', date: '2024-01-15', status: 'active', amount: 'KES 5,000' },
+            { id: 2, student: 'Mary Wanjiku', course: 'Defensive Driving', date: '2024-01-14', status: 'active', amount: 'KES 7,500' },
+            { id: 3, student: 'Peter Omondi', course: 'Advanced Course', date: '2024-01-13', status: 'completed', amount: 'KES 10,000' },
+            { id: 4, student: 'Sarah Kimani', course: 'Refresher Course', date: '2024-01-12', status: 'pending', amount: 'KES 3,000' }
+        ];
+        
+        const demoCourses = [
+            { id: 1, title: 'Beginner Driving Course', students: 456, rating: 4.8, revenue: 'KES 2,280,000' },
+            { id: 2, title: 'Defensive Driving', students: 324, rating: 4.7, revenue: 'KES 2,430,000' },
+            { id: 3, title: 'Advanced Driving', students: 234, rating: 4.9, revenue: 'KES 2,340,000' }
+        ];
+        
+        // Load dashboard data
+        async function loadDashboard() {
+            try {
+                // Try to fetch real data
+                const response = await fetch(`${API_URL}/api/admin/stats`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    updateStats(data.stats);
+                    updateEnrollments(data.enrollments);
+                    updateCourses(data.courses);
+                } else {
+                    // Use demo data
+                    useDemoData();
+                }
+            } catch (error) {
+                // Use demo data if backend not available
+                useDemoData();
+            }
+        }
+        
+        function useDemoData() {
+            updateStats(demoStats);
+            updateEnrollments(demoEnrollments);
+            updateCourses(demoCourses);
+        }
+        
+        function updateStats(stats) {
+            document.getElementById('totalCourses').textContent = stats.totalCourses || 0;
+            document.getElementById('totalStudents').textContent = stats.totalStudents?.toLocaleString() || 0;
+            document.getElementById('totalRevenue').textContent = `KES ${(stats.totalRevenue || 0).toLocaleString()}`;
+            document.getElementById('completionRate').textContent = stats.completionRate || '0%';
+        }
+        
+        function updateEnrollments(enrollments) {
+            const container = document.getElementById('recentEnrollments');
+            if (!enrollments || enrollments.length === 0) {
+                container.innerHTML = '<p style="text-align: center; padding: 20px;">No recent enrollments</p>';
+                return;
+            }
+            
+            let html = '<table><thead><tr><th>Student</th><th>Course</th><th>Date</th><th>Status</th><th>Amount</th></tr></thead><tbody>';
+            enrollments.forEach(enrollment => {
+                const statusClass = enrollment.status === 'active' ? 'badge-success' : 'badge-warning';
+                html += `<tr>
+                    <td>${enrollment.student}</td>
+                    <td>${enrollment.course}</td>
+                    <td>${enrollment.date}</td>
+                    <td><span class="badge ${statusClass}">${enrollment.status}</span></td>
+                    <td>${enrollment.amount}</td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+        
+        function updateCourses(courses) {
+            const container = document.getElementById('popularCourses');
+            if (!courses || courses.length === 0) {
+                container.innerHTML = '<p style="text-align: center; padding: 20px;">No courses available</p>';
+                return;
+            }
+            
+            let html = '<table><thead><tr><th>Course Title</th><th>Students</th><th>Rating</th><th>Revenue</th></tr></thead><tbody>';
+            courses.forEach(course => {
+                html += `<tr>
+                    <td>${course.title}</td>
+                    <td>${course.students}</td>
+                    <td>⭐ ${course.rating}</td>
+                    <td>${course.revenue}</td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+        
+        function logout() {
+            localStorage.removeItem('adminToken');
+            localStorage.removeItem('adminEmail');
+            localStorage.removeItem('adminName');
+            window.location.href = 'admin.html';
+        }
+        
+        // Load data on page load
+        loadDashboard();
+        
+        // Refresh data every 30 seconds
+        setInterval(loadDashboard, 30000);
+    </script>
+</body>
+</html>
