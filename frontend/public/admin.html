@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - MEI Drive Africa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f4f4;
+        }
+        .sidebar {
+            width: 250px;
+            background: #2c3e50;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            padding: 20px;
+        }
+        .sidebar h2 {
+            margin-bottom: 30px;
+            font-size: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar li {
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .sidebar li:hover {
+            background: #34495e;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .status-badge {
+            background: #27ae60;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>🚗 MEI DRIVE</h2>
+        <ul>
+            <li>📊 Dashboard</li>
+            <li>💰 Payment Requests</li>
+            <li>👥 User Management</li>
+            <li>📚 Course Management</li>
+            <li>🔧 Module Manager</li>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <div class="header">
+            <h1>Dashboard</h1>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+        
+        <div class="card">
+            <h3>Welcome back, <span id="adminName">Admin</span></h3>
+            <p><span class="status-badge">Connected</span> System Status: Active</p>
+        </div>
+    </div>
+
+    <script>
+        async function loadAdminInfo() {
+            try {
+                const response = await fetch('/api/current-user');
+                const data = await response.json();
+                
+                if (!data.loggedIn || data.role !== 'admin') {
+                    window.location.href = '/admin-login.html';
+                } else {
+                    document.getElementById('adminName').textContent = data.fullname;
+                }
+            } catch (error) {
+                window.location.href = '/admin-login.html';
+            }
+        }
+        
+        async function logout() {
+            await fetch('/api/logout', { method: 'POST' });
+            window.location.href = '/admin-login.html';
+        }
+        
+        loadAdminInfo();
+    </script>
+</body>
+</html>
