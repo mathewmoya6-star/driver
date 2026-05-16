@@ -1,42 +1,44 @@
 {
   "version": 2,
-  "framework": "vite",
   "buildCommand": "npm run vercel-build",
   "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "devCommand": "npm run dev",
+  "framework": null,
+  "functions": {
+    "api/*.js": {
+      "runtime": "nodejs20.x",
+      "maxDuration": 10
+    }
+  },
   "routes": [
-    { "src": "/", "dest": "/index.html" },
-    { "src": "/admin", "dest": "/admin.html" },
-    { "src": "/dashboard", "dest": "/index.html" },
-    { "src": "/courses/(.*)", "dest": "/index.html" },
-    { "src": "/learn/(.*)", "dest": "/index.html" },
-    { "src": "/quiz", "dest": "/index.html" },
-    { "src": "/library", "dest": "/index.html" },
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/(.*)\\.(js|css|png|jpg|svg|ico|json)", "dest": "/$1.$2" },
-    { "src": "/(.*)", "dest": "/index.html" }
-  ],
-  "headers": [
     {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "X-XSS-Protection", "value": "1; mode=block" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
-      ]
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
     },
     {
-      "source": "/api/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,PUT,DELETE,OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
-      ]
+      "src": "/admin-login.html",
+      "dest": "/admin-login.html"
+    },
+    {
+      "src": "/admin-dashboard.html",
+      "dest": "/admin-dashboard.html"
+    },
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ],
   "env": {
-    "VITE_SUPABASE_URL": "@supabase_url",
-    "VITE_SUPABASE_ANON_KEY": "@supabase_anon_key",
-    "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key"
+    "SUPABASE_URL": "https://jeksrwrzzrczamxijvwl.supabase.co",
+    "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impla3Nyd3J6enJjemFteGlqdndsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzYyMjAsImV4cCI6MjA5NDI1MjIyMH0.1poYpJKNFEVe2NTBkXBTH2bIHGk2yT8aqCU-OlJc4vs",
+    "MPESA_CONSUMER_KEY": "your_mpesa_consumer_key",
+    "MPESA_CONSUMER_SECRET": "your_mpesa_consumer_secret",
+    "MPESA_PASSKEY": "your_mpesa_passkey",
+    "MPESA_SHORTCODE": "174379"
   }
 }
