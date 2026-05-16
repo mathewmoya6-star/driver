@@ -1,25 +1,16 @@
 {
-  "name": "meidriveafrica",
+  "name": "meidriveafrica-backend",
   "version": "1.0.0",
   "type": "module",
-  "description": "MEI DRIVE AFRICA - NTSA Driver Training Platform",
   "scripts": {
-    "dev": "node esbuild.config.js --watch --serve",
-    "build": "node esbuild.config.js",
-    "clean": "rm -rf dist",
-    "preview": "npx serve dist"
+    "start": "node Backend/server.js",
+    "dev": "NODE_ENV=development node Backend/server.js"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.0",
-    "@supabase/supabase-js": "^2.39.0"
-  },
-  "devDependencies": {
-    "@types/react": "^18.2.55",
-    "@types/react-dom": "^18.2.19",
-    "@types/node": "^20.11.17",
-    "esbuild": "^0.20.0",
-    "typescript": "^5.3.3"
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mysql2": "^3.6.0",
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.3.1"
   }
 }
