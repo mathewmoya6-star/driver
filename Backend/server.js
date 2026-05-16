@@ -69,7 +69,29 @@ app.use((req, res, next) => {
     next();
 });
 
-// Routes
+// ========== ROUTES ==========
+
+// Serve admin-login.html directly
+app.get('/admin-login.html', (req, res) => {
+    const adminLoginPath = path.join(distPath, 'admin-login.html');
+    if (fs.existsSync(adminLoginPath)) {
+        res.sendFile(adminLoginPath);
+    } else {
+        res.status(404).send(`
+            <!DOCTYPE html>
+            <html>
+            <head><title>Admin Login Not Found</title></head>
+            <body>
+                <h1>❌ admin-login.html not found</h1>
+                <p>Please run <code>npm run build</code> to generate the file.</p>
+                <p><a href="/login">Go to login page</a></p>
+            </body>
+            </html>
+        `);
+    }
+});
+
+// Login page route
 app.get('/login', (req, res) => {
     const loginPath = path.join(distPath, 'login.html');
     if (fs.existsSync(loginPath)) {
@@ -79,7 +101,15 @@ app.get('/login', (req, res) => {
         res.send(`
             <!DOCTYPE html>
             <html>
-            <head><title>Login</title></head>
+            <head>
+                <title>Login</title>
+                <style>
+                    body { font-family: Arial; text-align: center; padding: 50px; }
+                    input { display: block; margin: 10px auto; padding: 10px; width: 250px; }
+                    button { padding: 10px 30px; background: blue; color: white; border: none; cursor: pointer; }
+                    .error { color: red; margin-top: 10px; }
+                </style>
+            </head>
             <body>
                 <h2>Login Page</h2>
                 <form id="loginForm">
@@ -87,7 +117,7 @@ app.get('/login', (req, res) => {
                     <input type="password" id="password" placeholder="Password" required>
                     <button type="submit">Login</button>
                 </form>
-                <div id="error"></div>
+                <div id="error" class="error"></div>
                 <script>
                     document.getElementById('loginForm').addEventListener('submit', async (e) => {
                         e.preventDefault();
@@ -113,6 +143,7 @@ app.get('/login', (req, res) => {
     }
 });
 
+// Admin dashboard route
 app.get('/admin-dashboard', (req, res) => {
     if (!req.session.userId || req.session.role !== 'admin') {
         return res.redirect('/login');
@@ -124,7 +155,13 @@ app.get('/admin-dashboard', (req, res) => {
         res.send(`
             <!DOCTYPE html>
             <html>
-            <head><title>Admin Dashboard</title></head>
+            <head>
+                <title>Admin Dashboard</title>
+                <style>
+                    body { font-family: Arial; text-align: center; padding: 50px; }
+                    button { padding: 10px 20px; background: red; color: white; border: none; cursor: pointer; }
+                </style>
+            </head>
             <body>
                 <h1>Welcome Admin: ${req.session.fullname}</h1>
                 <button onclick="logout()">Logout</button>
@@ -140,6 +177,7 @@ app.get('/admin-dashboard', (req, res) => {
     }
 });
 
+// User dashboard route
 app.get('/user-dashboard', (req, res) => {
     if (!req.session.userId || req.session.role !== 'user') {
         return res.redirect('/login');
@@ -151,7 +189,13 @@ app.get('/user-dashboard', (req, res) => {
         res.send(`
             <!DOCTYPE html>
             <html>
-            <head><title>User Dashboard</title></head>
+            <head>
+                <title>User Dashboard</title>
+                <style>
+                    body { font-family: Arial; text-align: center; padding: 50px; }
+                    button { padding: 10px 20px; background: red; color: white; border: none; cursor: pointer; }
+                </style>
+            </head>
             <body>
                 <h1>Welcome User: ${req.session.fullname}</h1>
                 <button onclick="logout()">Logout</button>
@@ -167,6 +211,9 @@ app.get('/user-dashboard', (req, res) => {
     }
 });
 
+// ========== API ROUTES ==========
+
+// Login API endpoint
 app.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
     
@@ -204,11 +251,13 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+// Logout API endpoint
 app.post('/api/logout', (req, res) => {
     req.session.destroy();
     res.json({ success: true });
 });
 
+// Get current user API endpoint
 app.get('/api/current-user', (req, res) => {
     if (req.session.userId) {
         res.json({
@@ -222,26 +271,40 @@ app.get('/api/current-user', (req, res) => {
     }
 });
 
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+    res.json({ 
+        status: 'ok', 
+        timestamp: new Date().toISOString(),
+        session: req.session.userId ? 'active' : 'none'
+    });
+});
+
+// ========== ERROR HANDLERS ==========
+
 // 404 handler for undefined routes
 app.use((req, res) => {
     console.log(`404: ${req.method} ${req.url}`);
     res.status(404).json({ error: `Cannot ${req.method} ${req.url}` });
 });
 
-// Error handler
+// Global error handler
 app.use((err, req, res, next) => {
     console.error('Server error:', err);
     res.status(500).json({ error: 'Internal server error' });
 });
 
+// ========== START SERVER ==========
 app.listen(PORT, () => {
     console.log(`
     ╔══════════════════════════════════════════════════════════╗
     ║     🚗 MEI DRIVE AFRICA - Server Running                 ║
     ╠══════════════════════════════════════════════════════════╣
     ║  📍 Local:    http://localhost:${PORT}                        ║
+    ║  🌐 Public:   https://www.meidriveafrica.com             ║
     ║  🔒 Session:  Enabled                                     ║
     ║  📦 Mode:     ${process.env.NODE_ENV || 'development'}                             ║
+    ║  📁 Dist:     ${distPath}                                 ║
     ╚══════════════════════════════════════════════════════════╝
     `);
 });
